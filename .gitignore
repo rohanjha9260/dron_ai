@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# ML Model Artifacts
+ml_engine/saved_models/*.pkl
+ml_engine/saved_models/*.joblib
+
+# Database
+*.db
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/

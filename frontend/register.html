@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Student Registration - Create your guidance profile">
+    <title>Dron-AI | Register</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container" id="register-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Dron-AI</h1>
+                <p>Create Your Profile</p>
+            </div>
+
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" name="full_name" placeholder="Your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" name="email" placeholder="you@university.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" name="password" placeholder="••••••••" required minlength="6">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-cohort">Cohort Year</label>
+                        <input type="number" id="reg-cohort" name="cohort_year" placeholder="2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-branch">Branch</label>
+                        <select id="reg-branch" name="academic_branch">
+                            <option value="">Select Branch</option>
+                            <option value="CSE">Computer Science</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="ECE">Electronics & Communication</option>
+                            <option value="EE">Electrical Engineering</option>
+                            <option value="ME">Mechanical Engineering</option>
+                            <option value="CE">Civil Engineering</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="register-submit-btn" class="btn btn-primary">Create Account</button>
+
+                <div id="register-error" class="error-message" style="display: none;"></div>
+                <div id="register-success" class="success-message" style="display: none;"></div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html" id="go-to-login">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

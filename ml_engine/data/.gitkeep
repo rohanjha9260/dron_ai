@@ -1,0 +1,7 @@
+# Placeholder - place the Student Career Success Prediction Dataset CSV here
+# This dataset is used by scripts/train_model.py to train the XGBoost model
+#
+# Expected columns:
+#   cgpa, attendance_pct, active_backlogs, dsa_score, python_prof, cpp_prof,
+#   aiml_knowledge, total_commits, problems_solved, contest_rating,
+#   project_count, communication_score, internship_exp, placed (0/1)

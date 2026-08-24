@@ -1,0 +1,109 @@
+{
+    "careers": {
+        "Software Engineer": {
+            "description": "Full-stack or backend software development roles",
+            "vector": {
+                "dsa_score": 90,
+                "python_prof": 80,
+                "cpp_prof": 70,
+                "aiml_knowledge": 40,
+                "total_commits": 85,
+                "problems_solved": 80,
+                "contest_rating": 70,
+                "project_count": 75,
+                "communication_score": 60,
+                "internship_exp": 70
+            }
+        },
+        "Data Analyst": {
+            "description": "Data analysis, visualization, and business intelligence roles",
+            "vector": {
+                "dsa_score": 50,
+                "python_prof": 85,
+                "cpp_prof": 30,
+                "aiml_knowledge": 70,
+                "total_commits": 50,
+                "problems_solved": 40,
+                "contest_rating": 30,
+                "project_count": 60,
+                "communication_score": 75,
+                "internship_exp": 60
+            }
+        },
+        "ML Engineer": {
+            "description": "Machine learning model development and deployment roles",
+            "vector": {
+                "dsa_score": 75,
+                "python_prof": 90,
+                "cpp_prof": 60,
+                "aiml_knowledge": 95,
+                "total_commits": 70,
+                "problems_solved": 60,
+                "contest_rating": 50,
+                "project_count": 80,
+                "communication_score": 55,
+                "internship_exp": 65
+            }
+        },
+        "Web Developer": {
+            "description": "Frontend and full-stack web development roles",
+            "vector": {
+                "dsa_score": 55,
+                "python_prof": 70,
+                "cpp_prof": 30,
+                "aiml_knowledge": 20,
+                "total_commits": 90,
+                "problems_solved": 45,
+                "contest_rating": 30,
+                "project_count": 90,
+                "communication_score": 65,
+                "internship_exp": 60
+            }
+        },
+        "DevOps Engineer": {
+            "description": "Infrastructure, CI/CD, and cloud operations roles",
+            "vector": {
+                "dsa_score": 50,
+                "python_prof": 75,
+                "cpp_prof": 40,
+                "aiml_knowledge": 30,
+                "total_commits": 85,
+                "problems_solved": 35,
+                "contest_rating": 25,
+                "project_count": 70,
+                "communication_score": 60,
+                "internship_exp": 75
+            }
+        },
+        "Cloud Architect": {
+            "description": "Cloud infrastructure design and management roles",
+            "vector": {
+                "dsa_score": 55,
+                "python_prof": 70,
+                "cpp_prof": 45,
+                "aiml_knowledge": 40,
+                "total_commits": 75,
+                "problems_solved": 40,
+                "contest_rating": 30,
+                "project_count": 80,
+                "communication_score": 70,
+                "internship_exp": 80
+            }
+        },
+        "Cybersecurity Analyst": {
+            "description": "Security analysis, penetration testing, and threat assessment roles",
+            "vector": {
+                "dsa_score": 60,
+                "python_prof": 75,
+                "cpp_prof": 65,
+                "aiml_knowledge": 35,
+                "total_commits": 55,
+                "problems_solved": 50,
+                "contest_rating": 40,
+                "project_count": 60,
+                "communication_score": 65,
+                "internship_exp": 70
+            }
+        }
+    }
+}
