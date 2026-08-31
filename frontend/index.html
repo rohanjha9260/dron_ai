@@ -3,125 +3,616 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron-AI Dashboard - Your personalized placement guidance powered by AI">
-    <title>Dron-AI | Dashboard</title>
+    <meta name="description" content="Dron-AI Desktop Dashboard - AI/ML Powered Student Career & Placement Guidance System">
+    <title>Dron-AI — Student Guidance & Placement Intelligence Dashboard</title>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="main-navbar">
-        <div class="nav-brand">
-            <h2>Dron-AI</h2>
-        </div>
-        <div class="nav-user">
-            <span id="nav-username"></span>
-            <button id="logout-btn" class="btn btn-outline">Logout</button>
-        </div>
-    </nav>
 
-    <!-- Main Dashboard -->
-    <main class="dashboard" id="main-dashboard">
-
-        <!-- Section 1: Student Profile Panel -->
-        <section class="dashboard-card" id="profile-section">
-            <div class="card-header">
-                <h2>Student Profile</h2>
-                <button id="edit-profile-btn" class="btn btn-small">Edit Profile</button>
-            </div>
-            <div class="card-body" id="profile-content">
-                <!-- Populated dynamically by profile.js -->
-                <div class="skeleton-loader" id="profile-skeleton">
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line short"></div>
-                    <div class="skeleton-line"></div>
+    <!-- ── Top Navigation Bar ── -->
+    <header>
+        <nav class="navbar" id="main-navbar">
+            <div class="nav-brand">
+                <div class="nav-logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
                 </div>
+                <div>
+                    <span class="brand-title">Dron-AI</span>
+                    <span class="brand-sub">ML Guidance Engine</span>
+                </div>
+            </div>
+
+            <div class="nav-center-stats">
+                <div class="nav-stat-item">
+                    <span>Active Target:</span>
+                    <span class="nav-stat-val" style="color: var(--color-accent-light);">Software Engineer</span>
+                </div>
+                <div class="nav-stat-item">
+                    <span>Placement Probability:</span>
+                    <span class="badge badge-success"><span class="badge-dot"></span> 87.4%</span>
+                </div>
+            </div>
+
+            <div class="nav-user">
+                <div class="user-profile-badge">
+                    <div class="user-avatar">RJ</div>
+                    <div class="user-info-text">
+                        <span class="user-name">Rohan Jha</span>
+                        <span class="user-role">CSE • Class of 2026</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline btn-small" type="button">Edit Profile</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ── Main Dashboard Layout ── -->
+    <main class="dashboard-container">
+
+        <!-- Welcome Banner -->
+        <section class="dashboard-header-banner">
+            <div class="banner-content">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <span class="badge badge-primary">AI Decision-Support System</span>
+                    <span class="badge badge-success"><span class="badge-dot"></span> Model Ready: v1.0-XGB</span>
+                </div>
+                <h1>Student Intelligence & Career Roadmap</h1>
+                <p>Synthesizing 13-dimensional academic, GitHub, LeetCode, and technical vectors for precision guidance.</p>
+            </div>
+            <div class="banner-actions">
+                <button class="btn btn-outline" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Export Report
+                </button>
+                <button class="btn btn-accent" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    Re-run ML Inference
+                </button>
             </div>
         </section>
 
-        <!-- Section 2: External Metrics (GitHub + LeetCode) -->
-        <section class="dashboard-card" id="metrics-section">
-            <div class="card-header">
-                <h2>Developer Metrics</h2>
-                <button id="fetch-metrics-btn" class="btn btn-small">Refresh Data</button>
-            </div>
-            <div class="card-body" id="metrics-content">
-                <!-- GitHub and LeetCode stats populated by metrics.js -->
-                <div class="metrics-grid">
-                    <div class="metric-card" id="github-stats">
-                        <h3>GitHub</h3>
-                        <div class="skeleton-loader" id="github-skeleton">
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
+        <!-- 12-Column Grid Layout -->
+        <div class="dashboard-grid">
+
+            <!-- LEFT COLUMN: Profile, Academics & 10D Skill Vector Inputs (Col 7) -->
+            <div class="col-7" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+                
+                <!-- Card 1: Data Entry & Profile Configuration -->
+                <section class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <h2>1. Profile & Academic Data Entry</h2>
+                        </div>
+                        <span class="badge badge-info">Manual & Synced Input</span>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Student Demographics -->
+                        <div class="section-subtitle">Student Demographics</div>
+                        <div class="form-grid-3">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" value="Rohan Jha" placeholder="e.g. Alex Smith">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Academic Branch</label>
+                                <select class="form-control">
+                                    <option selected>Computer Science & Eng (CSE)</option>
+                                    <option>Information Technology (IT)</option>
+                                    <option>Artificial Intelligence & Data Science</option>
+                                    <option>Electronics & Comm (ECE)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Graduation Year</label>
+                                <input type="number" class="form-control" value="2026" min="2023" max="2030">
+                            </div>
+                        </div>
+
+                        <!-- Academic History Metrics -->
+                        <div class="section-subtitle" style="margin-top: var(--space-md);">Academic Performance (Input Features)</div>
+                        <div class="form-grid-3">
+                            <div class="form-group">
+                                <label class="form-label">CGPA <span class="val-tag">(0.0 - 10.0)</span></label>
+                                <input type="number" step="0.01" class="form-control" value="8.65" min="0" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Attendance % <span class="val-tag">(0 - 100%)</span></label>
+                                <input type="number" step="0.1" class="form-control" value="88.5" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Active Backlogs <span class="val-tag">Count</span></label>
+                                <input type="number" class="form-control" value="0" min="0">
+                            </div>
+                        </div>
+
+                        <!-- Platform Handles Sync -->
+                        <div class="section-subtitle" style="margin-top: var(--space-md);">External Integration Sync</div>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label class="form-label">GitHub Username</label>
+                                <input type="text" class="form-control" value="rohanjha9260" placeholder="GitHub Handle">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">LeetCode Username</label>
+                                <input type="text" class="form-control" value="rohan_92" placeholder="LeetCode Username">
+                            </div>
+                        </div>
+
+                        <!-- 10-Dimensional Technical Skills Sliders -->
+                        <div class="section-subtitle" style="margin-top: var(--space-md);">10-Dimensional Vector Attributes</div>
+                        
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <span>DSA Score</span>
+                                    <span class="range-val">82 / 100</span>
+                                </div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="range-slider" min="0" max="100" value="82">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <span>Python Proficiency</span>
+                                    <span class="range-val">88 / 100</span>
+                                </div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="range-slider" min="0" max="100" value="88">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <span>C++ Proficiency</span>
+                                    <span class="range-val">74 / 100</span>
+                                </div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="range-slider" min="0" max="100" value="74">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <span>AI / ML Knowledge</span>
+                                    <span class="range-val">85 / 100</span>
+                                </div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="range-slider" min="0" max="100" value="85">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <span>Communication & Soft Skills</span>
+                                    <span class="range-val">68 / 100</span>
+                                </div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="range-slider" min="0" max="100" value="68">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <span>Internship Experience (Months)</span>
+                                    <span class="range-val">6 Mos</span>
+                                </div>
+                                <div class="range-wrapper">
+                                    <input type="range" class="range-slider" min="0" max="24" value="6">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-3" style="margin-top: var(--space-xs);">
+                            <div class="form-group">
+                                <label class="form-label">Total Commits</label>
+                                <input type="number" class="form-control" value="384">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Problems Solved</label>
+                                <input type="number" class="form-control" value="326">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contest Rating</label>
+                                <input type="number" class="form-control" value="1742">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-md);">
+                            <button class="btn btn-outline btn-small" type="button">Reset Defaults</button>
+                            <button class="btn btn-primary btn-small" type="button">Save Profile Vector</button>
                         </div>
                     </div>
-                    <div class="metric-card" id="leetcode-stats">
-                        <h3>LeetCode</h3>
-                        <div class="skeleton-loader" id="leetcode-skeleton">
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
+                </section>
+
+                <!-- Card 2: Developer Platform Metrics -->
+                <section class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <div class="card-icon" style="background: rgba(6, 182, 212, 0.12); color: var(--color-accent-light);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            </div>
+                            <h2>2. Synced Developer Metrics</h2>
+                        </div>
+                        <button class="btn btn-outline btn-small" type="button">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                            Sync Now
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="platform-grid">
+                            
+                            <!-- GitHub Metric Box -->
+                            <div class="platform-card">
+                                <div class="platform-header">
+                                    <div class="platform-title">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                                        <span>GitHub Activity</span>
+                                    </div>
+                                    <span class="badge badge-success"><span class="badge-dot"></span> Synced</span>
+                                </div>
+                                <div class="platform-stat-row">
+                                    <div class="stat-box">
+                                        <div class="stat-label">Total Commits</div>
+                                        <div class="stat-number">384</div>
+                                    </div>
+                                    <div class="stat-box">
+                                        <div class="stat-label">Public Repos</div>
+                                        <div class="stat-number">18</div>
+                                    </div>
+                                </div>
+                                <div class="prog-strip-container">
+                                    <div class="prog-legend">
+                                        <span>Language Distribution</span>
+                                        <span>Python (58%) • C++ (32%)</span>
+                                    </div>
+                                    <div class="prog-strip">
+                                        <div class="prog-segment" style="width: 58%; background: #3572A5;"></div>
+                                        <div class="prog-segment" style="width: 32%; background: #f34b7d;"></div>
+                                        <div class="prog-segment" style="width: 10%; background: #f1e05a;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- LeetCode Metric Box -->
+                            <div class="platform-card">
+                                <div class="platform-header">
+                                    <div class="platform-title">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .271 3.551 5.363 5.363 0 0 0 4.123 3.232c.28.034.56.052.839.052.483 0 .963-.058 1.428-.172a5.26 5.26 0 0 0 2.825-1.892l4.89-5.267a1.375 1.375 0 1 0-2.008-1.874l-4.89 5.267a2.518 2.518 0 0 1-1.353.906 2.583 2.583 0 0 1-1.087.057 2.614 2.614 0 0 1-2.01-1.577 2.696 2.696 0 0 1-.132-1.733c.045-.213.136-.425.269-.624l3.853-4.126 5.406-5.788A1.374 1.374 0 0 0 13.483 0z"/></svg>
+                                        <span>LeetCode Profile</span>
+                                    </div>
+                                    <span class="badge badge-success"><span class="badge-dot"></span> Synced</span>
+                                </div>
+                                <div class="platform-stat-row">
+                                    <div class="stat-box">
+                                        <div class="stat-label">Problems Solved</div>
+                                        <div class="stat-number">326</div>
+                                    </div>
+                                    <div class="stat-box">
+                                        <div class="stat-label">Contest Rating</div>
+                                        <div class="stat-number">1,742</div>
+                                    </div>
+                                </div>
+                                <div class="prog-strip-container">
+                                    <div class="prog-legend">
+                                        <span style="color: var(--color-success);">Easy: 130</span>
+                                        <span style="color: var(--color-warning);">Med: 164</span>
+                                        <span style="color: var(--color-danger);">Hard: 32</span>
+                                    </div>
+                                    <div class="prog-strip">
+                                        <div class="prog-segment" style="width: 40%; background: var(--color-success);"></div>
+                                        <div class="prog-segment" style="width: 50%; background: var(--color-warning);"></div>
+                                        <div class="prog-segment" style="width: 10%; background: var(--color-danger);"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Section 3: Placement Readiness -->
-        <section class="dashboard-card" id="placement-section">
-            <div class="card-header">
-                <h2>Placement Readiness</h2>
-                <button id="predict-btn" class="btn btn-small btn-accent">Analyze</button>
             </div>
-            <div class="card-body" id="placement-content">
-                <!-- XGBoost prediction result + gauge rendered by placement.js -->
-                <div class="placement-gauge" id="placement-gauge">
-                    <div class="gauge-container">
-                        <div class="gauge-fill" id="gauge-fill"></div>
-                        <div class="gauge-label" id="gauge-label">--</div>
+
+            <!-- RIGHT COLUMN: ML Inference, Career Recs, Gap Analysis (Col 5) -->
+            <div class="col-5" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+                
+                <!-- Card 3: Placement Readiness (XGBoost) -->
+                <section class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <div class="card-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--color-success);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
+                            <h2>3. Placement Readiness (XGBoost)</h2>
+                        </div>
+                        <span class="badge badge-success"><span class="badge-dot"></span> High Tier</span>
                     </div>
-                    <p class="readiness-tier" id="readiness-tier">Run analysis to see your score</p>
-                </div>
-            </div>
-        </section>
+                    <div class="card-body">
+                        <div class="readiness-container">
+                            <div class="gauge-wrapper">
+                                <svg class="gauge-svg" viewBox="0 0 160 160">
+                                    <defs>
+                                        <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#06B6D4" />
+                                            <stop offset="100%" stop-color="#10B981" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="gauge-bg" cx="80" cy="80" r="70" />
+                                    <circle class="gauge-fill-arc" cx="80" cy="80" r="70" />
+                                </svg>
+                                <div class="gauge-center-content">
+                                    <span class="gauge-percent">87.4%</span>
+                                    <span class="gauge-caption">Readiness</span>
+                                </div>
+                            </div>
 
-        <!-- Section 4: Career Recommendations -->
-        <section class="dashboard-card" id="career-section">
-            <div class="card-header">
-                <h2>Career Direction</h2>
-                <button id="recommend-btn" class="btn btn-small btn-accent">Get Recommendations</button>
-            </div>
-            <div class="card-body" id="career-content">
-                <!-- Cosine Similarity results rendered by career.js -->
-                <div class="career-list" id="career-list">
-                    <p class="placeholder-text">Click "Get Recommendations" to discover your best-fit careers</p>
-                </div>
-            </div>
-        </section>
+                            <div style="text-align: center;">
+                                <div class="badge badge-success" style="font-size: var(--font-size-sm); padding: 0.35rem 0.95rem;">
+                                    <span class="badge-dot"></span> Tier: Highly Prepared
+                                </div>
+                                <p style="font-size: var(--font-size-xs); color: var(--color-text-secondary); margin-top: 8px;">
+                                    Student profile demonstrates competitive placement fitness for Tier-1 engineering roles.
+                                </p>
+                            </div>
 
-        <!-- Section 5: Personalized Roadmap -->
-        <section class="dashboard-card full-width" id="roadmap-section">
-            <div class="card-header">
-                <h2>Action Plan Roadmap</h2>
+                            <div class="feature-influence-list">
+                                <div class="influence-item">
+                                    <span class="name">DSA & LeetCode Consistency</span>
+                                    <span class="impact-pos">+24% Impact</span>
+                                </div>
+                                <div class="influence-item">
+                                    <span class="name">Academic CGPA (8.65)</span>
+                                    <span class="impact-pos">+18% Impact</span>
+                                </div>
+                                <div class="influence-item">
+                                    <span class="name">Soft Skills & Communication</span>
+                                    <span class="impact-neg">-8% Gap</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card 4: Career Recommendations (Cosine Similarity) -->
+                <section class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <div class="card-icon" style="background: rgba(99, 102, 241, 0.12); color: var(--color-primary-light);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                            </div>
+                            <h2>4. Career Recommendations</h2>
+                        </div>
+                        <span class="badge badge-primary">Cosine Matching</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="career-recommendation-list">
+                            
+                            <!-- Career Item 1 (Selected) -->
+                            <div class="career-match-card active-target">
+                                <div class="career-info">
+                                    <div class="career-name-row">
+                                        <span class="career-name">Software Engineer</span>
+                                        <span class="badge badge-success btn-small" style="padding: 2px 8px; font-size: 10px;">Target Active</span>
+                                    </div>
+                                    <span class="career-desc">Core DSA, Backend APIs & System Architecture</span>
+                                </div>
+                                <div class="career-score-wrap">
+                                    <span class="score-badge">92.3%</span>
+                                </div>
+                            </div>
+
+                            <!-- Career Item 2 -->
+                            <div class="career-match-card">
+                                <div class="career-info">
+                                    <div class="career-name-row">
+                                        <span class="career-name">ML Engineer</span>
+                                    </div>
+                                    <span class="career-desc">Machine Learning Modeling & Pipeline Optimization</span>
+                                </div>
+                                <div class="career-score-wrap">
+                                    <span class="score-badge" style="color: var(--color-primary-light);">88.6%</span>
+                                    <button class="btn btn-outline btn-small" type="button">Select</button>
+                                </div>
+                            </div>
+
+                            <!-- Career Item 3 -->
+                            <div class="career-match-card">
+                                <div class="career-info">
+                                    <div class="career-name-row">
+                                        <span class="career-name">Data Analyst</span>
+                                    </div>
+                                    <span class="career-desc">BI Visualization, Statistics & SQL Analysis</span>
+                                </div>
+                                <div class="career-score-wrap">
+                                    <span class="score-badge" style="color: var(--color-text-secondary);">79.4%</span>
+                                    <button class="btn btn-outline btn-small" type="button">Select</button>
+                                </div>
+                            </div>
+
+                            <!-- Career Item 4 -->
+                            <div class="career-match-card">
+                                <div class="career-info">
+                                    <div class="career-name-row">
+                                        <span class="career-name">DevOps Engineer</span>
+                                    </div>
+                                    <span class="career-desc">CI/CD, Cloud Infrastructure & Containerization</span>
+                                </div>
+                                <div class="career-score-wrap">
+                                    <span class="score-badge" style="color: var(--color-text-secondary);">71.2%</span>
+                                    <button class="btn btn-outline btn-small" type="button">Select</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
             </div>
-            <div class="card-body" id="roadmap-content">
-                <!-- Phased roadmap rendered by roadmap.js -->
-                <div class="roadmap-timeline" id="roadmap-timeline">
-                    <p class="placeholder-text">Select a target career above to generate your personalized roadmap</p>
-                </div>
+
+            <!-- FULL WIDTH ROW: Skill Gap Analysis & Phased Action Roadmap (Col 12) -->
+            <div class="col-12">
+                <section class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <div class="card-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--color-warning);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                            </div>
+                            <div>
+                                <h2>5. Skill Gap Analysis & Personalized Roadmap</h2>
+                                <span style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Target: Software Engineer Role Requirements</span>
+                            </div>
+                        </div>
+                        <span class="badge badge-warning"><span class="badge-dot"></span> 3 Weakness Gaps Identified</span>
+                    </div>
+
+                    <div class="card-body" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: var(--space-2xl);">
+                        
+                        <!-- Left: Skill Gap Table -->
+                        <div>
+                            <div class="section-subtitle">Vector Subtraction (Ideal Target - Current)</div>
+                            <table class="gap-analysis-table">
+                                <thead>
+                                    <tr>
+                                        <th>Skill Dimension</th>
+                                        <th>Student / Target</th>
+                                        <th>Deficit Gap</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>DSA Mastery</strong></td>
+                                        <td>
+                                            <div style="font-size: 11px; margin-bottom: 4px; color: var(--color-text-secondary);">82 / 90</div>
+                                            <div class="gap-bar-bg">
+                                                <div class="gap-bar-current" style="width: 82%;"></div>
+                                                <div class="gap-bar-required" style="left: 90%;"></div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge badge-warning">-8.0 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>C++ Proficiency</strong></td>
+                                        <td>
+                                            <div style="font-size: 11px; margin-bottom: 4px; color: var(--color-text-secondary);">74 / 70</div>
+                                            <div class="gap-bar-bg">
+                                                <div class="gap-bar-current" style="width: 74%; background: var(--color-success);"></div>
+                                                <div class="gap-bar-required" style="left: 70%;"></div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge badge-success">+4.0 Exceeded</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Communication & HR</strong></td>
+                                        <td>
+                                            <div style="font-size: 11px; margin-bottom: 4px; color: var(--color-text-secondary);">68 / 80</div>
+                                            <div class="gap-bar-bg">
+                                                <div class="gap-bar-current" style="width: 68%;"></div>
+                                                <div class="gap-bar-required" style="left: 80%;"></div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge badge-danger">-12.0 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Internship Exposure</strong></td>
+                                        <td>
+                                            <div style="font-size: 11px; margin-bottom: 4px; color: var(--color-text-secondary);">6 / 8 mos</div>
+                                            <div class="gap-bar-bg">
+                                                <div class="gap-bar-current" style="width: 75%;"></div>
+                                                <div class="gap-bar-required" style="left: 100%;"></div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge badge-warning">-2.0 mos</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Right: Phased Roadmap Timeline -->
+                        <div>
+                            <div class="section-subtitle">Phased Remediation Plan</div>
+                            <div class="timeline-stepper">
+                                
+                                <!-- Phase 1 -->
+                                <div class="timeline-step">
+                                    <div class="timeline-node completed">✓</div>
+                                    <div class="step-header">
+                                        <div class="step-title-row">
+                                            <span class="badge badge-primary">Phase 1</span>
+                                            <span class="step-title">Master Advanced DSA (Graphs & Dynamic Programming)</span>
+                                        </div>
+                                        <span class="badge badge-info">4 Weeks</span>
+                                    </div>
+                                    <ul class="step-tasks-list">
+                                        <li class="task-item checked">
+                                            <span class="custom-checkbox">✓</span>
+                                            <span class="task-text">Solve 40 Graph and Dynamic Programming Mediums on LeetCode</span>
+                                        </li>
+                                        <li class="task-item checked">
+                                            <span class="custom-checkbox">✓</span>
+                                            <span class="task-text">Participate in 2 weekly LeetCode contests and maintain &gt;1700 rating</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Phase 2 -->
+                                <div class="timeline-step">
+                                    <div class="timeline-node">2</div>
+                                    <div class="step-header">
+                                        <div class="step-title-row">
+                                            <span class="badge badge-primary">Phase 2</span>
+                                            <span class="step-title">System Architecture & Production Portfolio</span>
+                                        </div>
+                                        <span class="badge badge-warning">5 Weeks • High Priority</span>
+                                    </div>
+                                    <ul class="step-tasks-list">
+                                        <li class="task-item">
+                                            <span class="custom-checkbox"></span>
+                                            <span class="task-text">Deploy end-to-end fullstack web service with Docker & CI/CD pipeline</span>
+                                        </li>
+                                        <li class="task-item">
+                                            <span class="custom-checkbox"></span>
+                                            <span class="task-text">Achieve 30+ consecutive daily commits to active GitHub repository</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Phase 3 -->
+                                <div class="timeline-step">
+                                    <div class="timeline-node">3</div>
+                                    <div class="step-header">
+                                        <div class="step-title-row">
+                                            <span class="badge badge-primary">Phase 3</span>
+                                            <span class="step-title">Soft Skills, Behavioral & Mock Technical Interviews</span>
+                                        </div>
+                                        <span class="badge badge-info">3 Weeks</span>
+                                    </div>
+                                    <ul class="step-tasks-list">
+                                        <li class="task-item">
+                                            <span class="custom-checkbox"></span>
+                                            <span class="task-text">Conduct 3 peer mock technical interviews with timed problem explanation</span>
+                                        </li>
+                                        <li class="task-item">
+                                            <span class="custom-checkbox"></span>
+                                            <span class="task-text">Refine resume project bullets with quantifiable metrics & STAR methodology</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
             </div>
-        </section>
+
+        </div>
 
     </main>
 
-    <!-- Scripts -->
-    <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/profile.js"></script>
-    <script src="js/metrics.js"></script>
-    <script src="js/placement.js"></script>
-    <script src="js/career.js"></script>
-    <script src="js/roadmap.js"></script>
-    <script src="js/app.js"></script>
 </body>
 </html>
