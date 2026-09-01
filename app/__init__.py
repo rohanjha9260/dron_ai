@@ -49,7 +49,16 @@ def create_app(config_name="development"):
     _register_blueprints(app)
 
     # Create database tables
+    # Models MUST be imported before db.create_all() so that SQLAlchemy's metadata
+    # registry knows about every table. Without these imports, create_all() is a no-op.
     with app.app_context():
+        from app.models import (  # noqa: F401
+            User,
+            AcademicHistory,
+            PlatformLink,
+            SkillVector,
+            MLPrediction,
+        )
         db.create_all()
 
     return app
