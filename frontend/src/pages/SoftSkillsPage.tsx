@@ -1,0 +1,1 @@
+export const SoftSkillsPage = () => null;
