@@ -149,6 +149,87 @@ class TestPreprocessing:
             loaded_scaler.transform(test_sample)
         )
 
+    def test_build_feature_vector_non_finite_values(self):
+        """Test that NaN, Inf, and -Inf values are safely replaced with 0.0."""
+        import math
+        from ml_engine.preprocessing import build_feature_vector
+
+        academic_data = {
+            "cgpa": float("nan"),
+            "attendance_pct": float("inf"),
+            "active_backlogs": -float("inf"),
+        }
+        skill_data = {
+            "dsa_score": np.nan,
+            "python_prof": "invalid_string",
+            "cpp_prof": None,
+        }
+
+        vector = build_feature_vector(academic_data, skill_data)
+        assert vector.shape == (13,)
+        assert not np.isnan(vector).any()
+        assert np.all(np.isfinite(vector))
+        assert vector[0] == 0.0  # cgpa from nan
+        assert vector[1] == 0.0  # attendance_pct from inf
+        assert vector[2] == 0.0  # active_backlogs from -inf
+        assert vector[3] == 0.0  # dsa_score from np.nan
+        assert vector[4] == 0.0  # python_prof from invalid string
+        assert vector[5] == 0.0  # cpp_prof from None
+
+    def test_scaler_integrity_and_security(self, tmp_path):
+        """Test security validation and tamper detection in load_scaler."""
+        from ml_engine.preprocessing import normalize_features, save_scaler, load_scaler
+
+        features = np.random.rand(10, 13)
+        _, scaler = normalize_features(features)
+
+        allowed_dir = str(tmp_path / "models")
+        os.makedirs(allowed_dir, exist_ok=True)
+        save_path = os.path.join(allowed_dir, "scaler.pkl")
+        save_scaler(scaler, save_path)
+
+        # 1. Valid load within allowed_dir
+        loaded = load_scaler(save_path, allowed_dir=allowed_dir)
+        assert loaded is not None
+
+        # 2. Path outside allowed_dir should raise ValueError
+        other_dir = str(tmp_path / "other")
+        os.makedirs(other_dir, exist_ok=True)
+        with pytest.raises(ValueError, match="outside allowed directory"):
+            load_scaler(save_path, allowed_dir=other_dir)
+
+        # 3. Tampered artifact should fail integrity verification
+        with open(save_path, "ab") as f:
+            f.write(b"tampered_bytes")
+        with pytest.raises(ValueError, match="Integrity check failed"):
+            load_scaler(save_path)
+
+    def test_prepare_dataset_features_empty_and_partial(self):
+        """Test prepare_dataset_features on empty and partial input DataFrames."""
+        import pandas as pd
+        from ml_engine.preprocessing import prepare_dataset_features, FEATURE_NAMES
+
+        # Empty DataFrame
+        empty_df = pd.DataFrame()
+        X_empty, y_empty = prepare_dataset_features(empty_df)
+        assert X_empty.shape == (0, 13)
+        assert list(X_empty.columns) == FEATURE_NAMES
+        assert y_empty.shape == (0,)
+
+        # Partial DataFrame (missing most columns)
+        partial_df = pd.DataFrame({
+            "Student_ID": ["ST01", "ST02"],
+            "CGPA": [3.5, 3.8],
+            "Placement_Status": ["Placed", "Not Placed"],
+        })
+        X_part, y_part = prepare_dataset_features(partial_df)
+        assert X_part.shape == (2, 13)
+        assert list(X_part.columns) == FEATURE_NAMES
+        assert X_part.isna().sum().sum() == 0
+        assert y_part.tolist() == [1, 0]
+        # Check scale conversion on 4.0 scale (3.5 * 2.5 = 8.75)
+        np.testing.assert_almost_equal(X_part["cgpa"].iloc[0], 8.75)
+
 
 class TestXGBoostModel:
     """Tests for XGBoost placement predictor."""
