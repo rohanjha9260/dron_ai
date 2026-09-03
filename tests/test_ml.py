@@ -234,15 +234,98 @@ class TestPreprocessing:
 class TestXGBoostModel:
     """Tests for XGBoost placement predictor."""
 
-    def test_prediction_returns_probability(self):
-        """Test that prediction returns a value between 0.0 and 1.0."""
-        # TODO: Implement
-        pass
+    @pytest.fixture
+    def trained_predictor(self, tmp_path):
+        """Fixture that provides a trained PlacementPredictor instance."""
+        import pandas as pd
+        from ml_engine.xgboost_model import PlacementPredictor
 
-    def test_prediction_with_missing_features(self):
-        """Test graceful handling of incomplete feature vectors."""
-        # TODO: Implement
-        pass
+        # Synthetic dataset for fast unit test execution
+        np.random.seed(42)
+        n_samples = 400
+        synthetic_data = {
+            "Student_ID": [f"ST{i:04d}" for i in range(n_samples)],
+            "CGPA": np.random.uniform(2.0, 4.0, n_samples),
+            "Attendance_Percentage": np.random.uniform(60, 100, n_samples),
+            "Programming_Skill": np.random.randint(1, 11, n_samples),
+            "Problem_Solving": np.random.randint(1, 11, n_samples),
+            "Projects_Completed": np.random.randint(0, 8, n_samples),
+            "Communication_Skills": np.random.randint(1, 11, n_samples),
+            "Internships": np.random.randint(0, 4, n_samples),
+            "Hackathons": np.random.randint(0, 5, n_samples),
+            "GitHub_Profile": np.random.choice(["Yes", "No"], n_samples),
+            "Major": np.random.choice(["Computer Science", "Information Technology", "AI"], n_samples),
+            "Placement_Status": np.random.choice(["Placed", "Not Placed"], n_samples, p=[0.6, 0.4]),
+        }
+        csv_path = str(tmp_path / "test_students.csv")
+        pd.DataFrame(synthetic_data).to_csv(csv_path, index=False)
+
+        predictor = PlacementPredictor(n_estimators=30, max_depth=3)
+        predictor.train(csv_path)
+        return predictor
+
+    def test_prediction_returns_probability(self, trained_predictor):
+        """Test that prediction returns a valid probability, status, and feature importances."""
+        sample_features = np.array([8.5, 90.0, 0, 85, 90, 75, 80, 120, 350, 80, 5, 88, 3], dtype=np.float64)
+
+        result = trained_predictor.predict(sample_features)
+
+        assert isinstance(result, dict)
+        assert "placement_probability" in result
+        assert "is_placed" in result
+        assert "feature_importance" in result
+        assert "top_factors" in result
+
+        assert 0.0 <= result["placement_probability"] <= 1.0
+        assert isinstance(result["is_placed"], bool)
+        assert len(result["feature_importance"]) == 13
+        assert len(result["top_factors"]) <= 3
+
+    def test_prediction_with_missing_features(self, trained_predictor):
+        """Test graceful handling of incomplete/zero feature vectors."""
+        zero_features = np.zeros(13, dtype=np.float64)
+        result = trained_predictor.predict(zero_features)
+
+        assert 0.0 <= result["placement_probability"] <= 1.0
+        assert isinstance(result["is_placed"], bool)
+
+    def test_prediction_latency(self, trained_predictor):
+        """Test that single inference execution is fast (<5ms per call)."""
+        import time
+
+        sample_features = np.array([8.0, 85.0, 0, 80, 80, 70, 60, 50, 200, 70, 4, 75, 2], dtype=np.float64)
+
+        # Warmup
+        trained_predictor.predict(sample_features)
+
+        # Measure 50 predictions
+        start_time = time.perf_counter()
+        for _ in range(50):
+            trained_predictor.predict(sample_features)
+        total_time = time.perf_counter() - start_time
+        avg_time_ms = (total_time / 50) * 1000
+
+        assert avg_time_ms < 5.0, f"Average inference time {avg_time_ms:.2f}ms exceeded 5ms SLA"
+
+    def test_model_serialization(self, trained_predictor, tmp_path):
+        """Test saving and loading the trained PlacementPredictor with integrity check."""
+        from ml_engine.xgboost_model import PlacementPredictor
+
+        model_path = str(tmp_path / "xgboost_placement.pkl")
+        trained_predictor.save(model_path)
+        assert os.path.exists(model_path)
+        assert os.path.exists(f"{model_path}.sha256")
+
+        new_predictor = PlacementPredictor()
+        new_predictor.load(model_path)
+        assert new_predictor.is_trained
+
+        sample_features = np.array([9.0, 95.0, 0, 90, 95, 85, 90, 150, 400, 90, 6, 95, 4], dtype=np.float64)
+        res_orig = trained_predictor.predict(sample_features)
+        res_loaded = new_predictor.predict(sample_features)
+
+        assert res_orig["placement_probability"] == res_loaded["placement_probability"]
+        assert res_orig["is_placed"] == res_loaded["is_placed"]
 
 
 class TestCosineRecommender:
