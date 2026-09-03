@@ -327,6 +327,43 @@ class TestXGBoostModel:
         assert res_orig["placement_probability"] == res_loaded["placement_probability"]
         assert res_orig["is_placed"] == res_loaded["is_placed"]
 
+    def test_prediction_rejects_multi_row(self, trained_predictor):
+        """Test that predict() rejects 2D matrices with more than 1 row."""
+        multi_row = np.ones((2, 13), dtype=np.float64)
+        with pytest.raises(ValueError, match="single feature vector"):
+            trained_predictor.predict(multi_row)
+
+    def test_load_fails_closed_when_checksum_absent(self, trained_predictor, tmp_path):
+        """Test that load() raises FileNotFoundError if sidecar is absent and expected_hash is None."""
+        from ml_engine.xgboost_model import PlacementPredictor
+
+        model_path = str(tmp_path / "model_no_hash.pkl")
+        trained_predictor.save(model_path)
+        # Remove checksum file
+        os.remove(f"{model_path}.sha256")
+
+        new_predictor = PlacementPredictor()
+        with pytest.raises(FileNotFoundError, match="missing checksum sidecar"):
+            new_predictor.load(model_path)
+
+    def test_load_bare_classifier_clears_scaler(self, trained_predictor, tmp_path):
+        """Test that loading a bare XGBClassifier clears self.scaler."""
+        import joblib
+        from ml_engine.xgboost_model import PlacementPredictor, _compute_sha256
+
+        bare_path = str(tmp_path / "bare_model.pkl")
+        joblib.dump(trained_predictor.model, bare_path)
+        sha256 = _compute_sha256(bare_path)
+        with open(f"{bare_path}.sha256", "w") as f:
+            f.write(sha256)
+
+        new_predictor = PlacementPredictor()
+        new_predictor.scaler = "dummy_scaler"
+        new_predictor.load(bare_path)
+
+        assert new_predictor.is_trained
+        assert new_predictor.scaler is None
+
 
 class TestCosineRecommender:
     """Tests for Cosine Similarity career recommender."""

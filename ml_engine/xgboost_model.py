@@ -102,17 +102,18 @@ class PlacementPredictor:
         X = X_df.to_numpy(dtype=np.float64)
         y = y_series.to_numpy(dtype=int)
 
-        # 1. Fit StandardScaler on features
-        X_scaled, self.scaler = normalize_features(X)
-
-        # 2. 80/20 Stratified train-test split
-        X_train, X_test, y_train, y_test = train_test_split(
-            X_scaled,
+        # 1. 80/20 Stratified train-test split BEFORE scaling to prevent data leakage
+        X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+            X,
             y,
             test_size=0.20,
             stratify=y,
             random_state=self.random_state,
         )
+
+        # 2. Fit StandardScaler only on training features, then transform test features
+        X_train, self.scaler = normalize_features(X_train_raw, scaler=None)
+        X_test, _ = normalize_features(X_test_raw, scaler=self.scaler)
 
         # 3. Instantiate and train XGBClassifier with regularization
         self.model = XGBClassifier(
@@ -172,7 +173,7 @@ class PlacementPredictor:
         scaler: Optional[StandardScaler] = None,
     ) -> Dict[str, Any]:
         """
-        Run inference on a student's feature vector.
+        Run inference on a single student's feature vector.
 
         Args:
             features: 1D numpy array of shape (13,) or 2D array of shape (1, 13) matching FEATURE_NAMES
@@ -187,7 +188,7 @@ class PlacementPredictor:
 
         Raises:
             RuntimeError: If model is not loaded or trained
-            ValueError: If features shape is invalid
+            ValueError: If features shape is invalid or has multiple rows
         """
         if self.model is None:
             raise RuntimeError("Placement model is not loaded or trained. Call train() or load() first.")
@@ -198,6 +199,10 @@ class PlacementPredictor:
                 raise ValueError(f"Expected feature array with {len(FEATURE_NAMES)} elements, got {feat_arr.shape[0]}")
             feat_arr = feat_arr.reshape(1, -1)
         elif feat_arr.ndim == 2:
+            if feat_arr.shape[0] != 1:
+                raise ValueError(
+                    f"predict() expects a single feature vector (1 row), got shape {feat_arr.shape}."
+                )
             if feat_arr.shape[1] != len(FEATURE_NAMES):
                 raise ValueError(f"Expected feature matrix with {len(FEATURE_NAMES)} columns, got {feat_arr.shape[1]}")
         else:
@@ -279,7 +284,7 @@ class PlacementPredictor:
             expected_hash: Optional expected SHA-256 checksum string
 
         Raises:
-            FileNotFoundError: If model file does not exist
+            FileNotFoundError: If model file or checksum sidecar does not exist
             ValueError: If integrity check or path validation fails
             TypeError: If deserialized object is not an XGBClassifier or valid payload
         """
@@ -293,6 +298,7 @@ class PlacementPredictor:
         if not os.path.exists(resolved_path):
             raise FileNotFoundError(f"Model file not found at: {model_path}")
 
+        # Integrity verification (fail closed if neither expected_hash nor sidecar is available)
         computed_hash = _compute_sha256(resolved_path)
         if expected_hash is not None:
             if computed_hash.lower() != expected_hash.lower():
@@ -301,13 +307,16 @@ class PlacementPredictor:
                 )
         else:
             checksum_path = f"{resolved_path}.sha256"
-            if os.path.exists(checksum_path):
-                with open(checksum_path, "r", encoding="utf-8") as f:
-                    recorded_hash = f.read().strip()
-                if recorded_hash and computed_hash.lower() != recorded_hash.lower():
-                    raise ValueError(
-                        f"Integrity check failed for {model_path}: recorded hash {recorded_hash} != {computed_hash}"
-                    )
+            if not os.path.exists(checksum_path):
+                raise FileNotFoundError(
+                    f"Integrity check failed: missing checksum sidecar file {checksum_path} for {model_path}"
+                )
+            with open(checksum_path, "r", encoding="utf-8") as f:
+                recorded_hash = f.read().strip()
+            if not recorded_hash or computed_hash.lower() != recorded_hash.lower():
+                raise ValueError(
+                    f"Integrity check failed for {model_path}: recorded hash {recorded_hash} != {computed_hash}"
+                )
 
         loaded_obj = joblib.load(resolved_path)
         if isinstance(loaded_obj, dict):
@@ -319,6 +328,7 @@ class PlacementPredictor:
             self.scaler = scaler
         elif isinstance(loaded_obj, XGBClassifier):
             self.model = loaded_obj
+            self.scaler = None  # Clear any existing scaler when loading a bare classifier
         else:
             raise TypeError(f"Loaded artifact is not a valid XGBClassifier or payload: {type(loaded_obj)}")
 
