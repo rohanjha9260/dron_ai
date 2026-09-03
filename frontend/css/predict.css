@@ -1,0 +1,365 @@
+/* ==========================================================================
+   FUTUREPREDICT AI - PREDICT ASSESSMENT WIZARD STYLES (Modular)
+   ========================================================================== */
+
+.predict-page-wrapper {
+  padding: 120px 20px 80px;
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+.wizard-container {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* Header & Quick Demo Profiles Selector */
+.wizard-header-box {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.wizard-header-box h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.wizard-header-box p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin: 0 auto 20px;
+}
+
+.demo-profiles-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px dashed var(--border-glass-bright);
+  border-radius: var(--radius-lg);
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.demo-profiles-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-demo-preset {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-demo-preset:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Stepper Progress Indicator */
+.stepper-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  position: relative;
+  padding: 0 10px;
+}
+
+.stepper-track-bg {
+  position: absolute;
+  top: 24px;
+  left: 30px;
+  right: 30px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 1;
+}
+
+.stepper-track-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--grad-primary);
+  transition: width 0.4s ease;
+}
+
+.step-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.step-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-glass);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: var(--transition-normal);
+}
+
+.step-node.active .step-circle {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.2);
+  color: #fff;
+  box-shadow: 0 0 20px var(--primary-glow);
+  transform: scale(1.08);
+}
+
+.step-node.completed .step-circle {
+  border-color: var(--emerald);
+  background: var(--emerald);
+  color: #030712;
+  box-shadow: 0 0 15px var(--emerald-glow);
+}
+
+.step-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.step-node.active .step-label {
+  color: var(--text-primary);
+}
+
+/* Wizard Form Step Cards */
+.wizard-card {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-card);
+  display: none;
+  animation: stepFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wizard-card.active {
+  display: block;
+}
+
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-step-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.step-title-group h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.step-title-group p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Backlogs Warning Alert Box */
+.backlog-alert-box {
+  display: none;
+  padding: 16px 20px;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  border-radius: var(--radius-md);
+  margin-top: 14px;
+  align-items: center;
+  gap: 12px;
+  color: var(--rose);
+  font-size: 0.88rem;
+  animation: stepFadeIn 0.3s ease;
+}
+
+.backlog-alert-box.visible {
+  display: flex;
+}
+
+/* Soft Skills Sliders */
+.soft-skill-row {
+  margin-bottom: 24px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+}
+
+.soft-skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.soft-skill-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.soft-skill-score-badge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--cyan);
+}
+
+/* LeetCode Solved 3-Column Breakdown */
+.leetcode-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.lc-stat-box {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  border: 1px solid var(--border-glass);
+}
+
+.lc-stat-box.easy {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.lc-stat-box.medium {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.lc-stat-box.hard {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+.lc-box-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.lc-easy-title { color: var(--emerald); }
+.lc-medium-title { color: var(--amber); }
+.lc-hard-title { color: var(--rose); }
+
+/* Navigation Action Buttons */
+.wizard-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-glass);
+}
+
+/* Loading Analyzing Modal Simulation */
+.ai-processing-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 4, 8, 0.95);
+  backdrop-filter: blur(25px);
+  z-index: 99999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.ai-processing-overlay.active {
+  display: flex;
+}
+
+.ai-scan-sphere {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #6366f1 0%, #06b6d4 50%, transparent 70%);
+  border: 3px solid var(--cyan);
+  box-shadow: 0 0 50px var(--cyan-glow);
+  position: relative;
+  margin-bottom: 30px;
+  animation: scanPulse 2s infinite ease-in-out;
+}
+
+@keyframes scanPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 30px var(--primary-glow); }
+  50% { transform: scale(1.15); box-shadow: 0 0 60px var(--cyan-glow); }
+  100% { transform: scale(0.95); box-shadow: 0 0 30px var(--primary-glow); }
+}
+
+.scan-status-text {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.scan-subtext {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  max-width: 460px;
+}
+
+@media (max-width: 768px) {
+  .wizard-card {
+    padding: 24px 18px;
+  }
+
+  .stepper-nav {
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .step-label {
+    display: none;
+  }
+
+  .leetcode-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

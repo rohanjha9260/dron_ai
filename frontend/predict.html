@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Career Assessment Wizard - FuturePredict AI</title>
+  <meta name="description" content="Complete your multi-dimensional profile evaluation covering CGPA, Backlogs, LeetCode, GitHub, and Soft Skills for comprehensive career prediction.">
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/predict.css">
+</head>
+<body>
+  <!-- Ambient Glowing Orbs -->
+  <div class="bg-ambient-orb orb-1"></div>
+  <div class="bg-ambient-orb orb-2"></div>
+  <div class="bg-ambient-orb orb-3"></div>
+
+  <!-- Particle Background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- AI Analysis Loading Simulation Overlay -->
+  <div id="aiProcessingOverlay" class="ai-processing-overlay">
+    <div class="ai-scan-sphere"></div>
+    <h3 id="aiScanStatusText" class="scan-status-text gradient-text">Initializing AI Career Analysis Engine...</h3>
+    <p id="aiScanSubtext" class="scan-subtext">Mapping academic history and coding credentials against 450+ global company requirements.</p>
+  </div>
+
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="header-navbar">
+      <div class="nav-container">
+        <a href="index.html" class="brand-logo">
+          <div class="brand-icon">⚡</div>
+          <span>Future<span class="gradient-text">Predict</span></span>
+          <span class="brand-badge">Assessment</span>
+        </a>
+
+        <ul class="nav-links">
+          <li class="nav-item"><a href="index.html">Home</a></li>
+          <li class="nav-item"><a href="predict.html" class="active">Assessment</a></li>
+          <li class="nav-item"><a href="dashboard.html">View Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="dashboard.html" class="btn-nav-login">Direct Demo Report</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Wizard Page Wrapper -->
+    <div class="predict-page-wrapper">
+      <div class="wizard-container">
+        <!-- Header -->
+        <div class="wizard-header-box">
+          <span class="badge badge-ai" style="margin-bottom: 12px;">📊 Step-by-Step AI Evaluation</span>
+          <h1>Comprehensive Career Diagnostic</h1>
+          <p>Fill in your verified academic standing, coding benchmarks, and soft skills to calculate your exact hiring probabilities and effort timeline.</p>
+
+          <!-- 1-Click Demo Profiles -->
+          <div class="demo-profiles-bar">
+            <span class="demo-profiles-label">⚡ Fast Demo Presets:</span>
+            <button type="button" class="btn-demo-preset" onclick="loadDemoPreset('maang_aspirant')">🏆 MAANG Top Coder</button>
+            <button type="button" class="btn-demo-preset" onclick="loadDemoPreset('tier3_struggler')">⚠️ Tier-3 with Backlog</button>
+            <button type="button" class="btn-demo-preset" onclick="loadDemoPreset('fullstack_builder')">💻 Heavy Project Builder</button>
+          </div>
+        </div>
+
+        <!-- Stepper Navigation -->
+        <div class="stepper-nav">
+          <div class="stepper-track-bg">
+            <div id="stepperTrackFill" class="stepper-track-fill"></div>
+          </div>
+
+          <div id="stepNode1" class="step-node active">
+            <div class="step-circle">1</div>
+            <span class="step-label">Academics</span>
+          </div>
+
+          <div id="stepNode2" class="step-node">
+            <div class="step-circle">2</div>
+            <span class="step-label">LeetCode & DSA</span>
+          </div>
+
+          <div id="stepNode3" class="step-node">
+            <div class="step-circle">3</div>
+            <span class="step-label">GitHub & Projects</span>
+          </div>
+
+          <div id="stepNode4" class="step-node">
+            <div class="step-circle">4</div>
+            <span class="step-label">Soft Skills</span>
+          </div>
+        </div>
+
+        <!-- Form Cards Container -->
+        <form id="assessmentForm" onsubmit="event.preventDefault();">
+          
+          <!-- STEP 1: Academic Profile & CGPA -->
+          <div id="stepCard1" class="wizard-card active">
+            <div class="wizard-step-header">
+              <div class="step-title-group">
+                <h2>Step 1: Academic Standing & Target Role</h2>
+                <p>MNCs and Product firms use GPA and backlogs as primary initial filtration criteria.</p>
+              </div>
+              <span class="badge badge-ai">1 of 4</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="candidateName">Your Full Name *</label>
+              <input type="text" id="candidateName" class="form-input" placeholder="e.g. Rohan Sharma" value="Rohan Sharma" required>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="candidateCollege">College / University Name</label>
+                <input type="text" id="candidateCollege" class="form-input" placeholder="e.g. National Institute of Tech" value="National Institute of Tech">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="candidateBranch">Degree & Branch</label>
+                <input type="text" id="candidateBranch" class="form-input" placeholder="e.g. B.Tech Computer Science" value="B.Tech Computer Science">
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="candidateCgpa">Current CGPA (Scale 0 - 10) *</label>
+                <input type="number" id="candidateCgpa" class="form-input" min="0" max="10" step="0.01" placeholder="e.g. 8.2" value="8.2" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="hasBacklogsSelect">Any Active Backlogs?</label>
+                <select id="hasBacklogsSelect" class="form-select">
+                  <option value="0" selected>No Active Backlogs (0)</option>
+                  <option value="1">1 Active Backlog</option>
+                  <option value="2">2 Active Backlogs</option>
+                  <option value="3">3+ Active Backlogs</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Backlogs Warning Alert -->
+            <div id="backlogAlert" class="backlog-alert-box">
+              <span style="font-size: 1.4rem;">⚠️</span>
+              <div>
+                <strong>Notice regarding Backlogs:</strong> Active backlogs directly impact 70%+ campus hiring eligibility criteria. The AI will provide targeted strategies to overcome this hurdle.
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+              <label class="form-label" for="targetRoleSelect">Dream Target Job Role</label>
+              <select id="targetRoleSelect" class="form-select">
+                <option value="Software Development Engineer (SDE-1)" selected>Software Development Engineer (SDE-1)</option>
+                <option value="Fullstack Web Developer">Fullstack Web Developer (MERN / Next.js)</option>
+                <option value="Backend Engineer (Java / Go / Microservices)">Backend Engineer (Java / Go / Microservices)</option>
+                <option value="AI / Machine Learning Engineer">AI / Machine Learning Engineer</option>
+                <option value="Cloud & DevOps Engineer">Cloud & DevOps Engineer (Docker/K8s/AWS)</option>
+                <option value="Data Scientist / Analyst">Data Scientist / Analyst</option>
+              </select>
+            </div>
+
+            <div class="wizard-actions-bar" style="justify-content: flex-end;">
+              <button type="button" class="btn btn-primary" onclick="nextStep(1)">
+                <span>Continue to LeetCode & DSA ➔</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: LeetCode & DSA Mastery -->
+          <div id="stepCard2" class="wizard-card">
+            <div class="wizard-step-header">
+              <div class="step-title-group">
+                <h2>Step 2: DSA & Problem Solving Benchmarks</h2>
+                <p>Breakdown your problem solving credentials on LeetCode / Codeforces / HackerRank.</p>
+              </div>
+              <span class="badge badge-ai">2 of 4</span>
+            </div>
+
+            <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 700; color: var(--text-secondary);">Total Solved Breakdown</span>
+              <span class="badge badge-success">Total: <strong id="lcTotalSolvedDisplay" style="margin-left: 4px;">185</strong> Problems</span>
+            </div>
+
+            <div class="leetcode-grid-3">
+              <div class="lc-stat-box easy">
+                <div class="lc-box-title lc-easy-title">🟢 Easy Problems</div>
+                <input type="number" id="lcEasy" class="form-input" min="0" max="1000" placeholder="e.g. 70" value="70">
+              </div>
+
+              <div class="lc-stat-box medium">
+                <div class="lc-box-title lc-medium-title">🟡 Medium Problems</div>
+                <input type="number" id="lcMedium" class="form-input" min="0" max="1000" placeholder="e.g. 100" value="100">
+              </div>
+
+              <div class="lc-stat-box hard">
+                <div class="lc-box-title lc-hard-title">🔴 Hard Problems</div>
+                <input type="number" id="lcHard" class="form-input" min="0" max="500" placeholder="e.g. 15" value="15">
+              </div>
+            </div>
+
+            <div class="form-row-2" style="margin-top: 24px;">
+              <div class="form-group">
+                <label class="form-label" for="lcContestRating">Contest Rating (Optional)</label>
+                <input type="number" id="lcContestRating" class="form-input" placeholder="e.g. 1650 (Knight/Guardian)" value="1620">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="lcStreak">Longest Consistency Streak (Days)</label>
+                <input type="number" id="lcStreak" class="form-input" placeholder="e.g. 45 days" value="45">
+              </div>
+            </div>
+
+            <div class="wizard-actions-bar">
+              <button type="button" class="btn btn-secondary" onclick="prevStep(2)">
+                <span>⬅ Back</span>
+              </button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                <span>Continue to GitHub & Projects ➔</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: GitHub & Project Portfolio -->
+          <div id="stepCard3" class="wizard-card">
+            <div class="wizard-step-header">
+              <div class="step-title-group">
+                <h2>Step 3: GitHub & Project Execution Footprint</h2>
+                <p>Tier-1 Startups and Unicorns place heavy emphasis on production-grade repositories.</p>
+              </div>
+              <span class="badge badge-ai">3 of 4</span>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="githubUsername">GitHub Handle / Username</label>
+                <div class="input-with-icon">
+                  <i>🐙</i>
+                  <input type="text" id="githubUsername" class="form-input" placeholder="e.g. rohan-codes" value="rohan-codes">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="githubRepos">Public Repositories Count</label>
+                <input type="number" id="githubRepos" class="form-input" min="0" max="100" placeholder="e.g. 8" value="8">
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="deployedProjectsCount">Live Deployed Projects (with URL)</label>
+                <input type="number" id="deployedProjectsCount" class="form-input" min="0" max="20" placeholder="e.g. 3" value="3">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="githubStars">Total GitHub Stars Earned</label>
+                <input type="number" id="githubStars" class="form-input" min="0" max="1000" placeholder="e.g. 14" value="14">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Core Tech Stacks Used</label>
+              <input type="text" id="techStacksInput" class="form-input" placeholder="e.g. React, Node.js, PostgreSQL, Docker, Redis, TypeScript" value="React, Node.js, PostgreSQL, Docker, TailwindCSS">
+            </div>
+
+            <div class="wizard-actions-bar">
+              <button type="button" class="btn btn-secondary" onclick="prevStep(3)">
+                <span>⬅ Back</span>
+              </button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                <span>Continue to Soft Skills ➔</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Soft Skills Diagnostic -->
+          <div id="stepCard4" class="wizard-card">
+            <div class="wizard-step-header">
+              <div class="step-title-group">
+                <h2>Step 4: Soft Skills & Behavioral Calibration</h2>
+                <p>35% of candidates fail at HR, Culture Fit, and Managerial Round due to communication gaps.</p>
+              </div>
+              <span class="badge badge-ai">4 of 4</span>
+            </div>
+
+            <!-- Soft Skill Slider 1 -->
+            <div class="soft-skill-row">
+              <div class="soft-skill-header">
+                <span class="soft-skill-title">🗣️ English & Technical Articulation</span>
+                <span id="commSkillVal" class="soft-skill-score-badge">7.5 / 10</span>
+              </div>
+              <input type="range" id="commSkillSlider" class="range-slider" min="1" max="10" step="0.5" value="7.5">
+            </div>
+
+            <!-- Soft Skill Slider 2 -->
+            <div class="soft-skill-row">
+              <div class="soft-skill-header">
+                <span class="soft-skill-title">🧩 Structured Problem Solving (STAR Method)</span>
+                <span id="probSkillVal" class="soft-skill-score-badge">8 / 10</span>
+              </div>
+              <input type="range" id="probSkillSlider" class="range-slider" min="1" max="10" step="0.5" value="8">
+            </div>
+
+            <!-- Soft Skill Slider 3 -->
+            <div class="soft-skill-row">
+              <div class="soft-skill-header">
+                <span class="soft-skill-title">👥 Team Collaboration & Code Review Etiquette</span>
+                <span id="teamSkillVal" class="soft-skill-score-badge">8 / 10</span>
+              </div>
+              <input type="range" id="teamSkillSlider" class="range-slider" min="1" max="10" step="0.5" value="8">
+            </div>
+
+            <!-- Soft Skill Slider 4 -->
+            <div class="soft-skill-row">
+              <div class="soft-skill-header">
+                <span class="soft-skill-title">🎯 Leadership & Handling Critical Pushback</span>
+                <span id="leadSkillVal" class="soft-skill-score-badge">7 / 10</span>
+              </div>
+              <input type="range" id="leadSkillSlider" class="range-slider" min="1" max="10" step="0.5" value="7">
+            </div>
+
+            <div class="wizard-actions-bar">
+              <button type="button" class="btn btn-secondary" onclick="prevStep(4)">
+                <span>⬅ Back</span>
+              </button>
+              <button type="button" class="btn btn-primary" onclick="submitAssessment()" style="font-size: 1.05rem; padding: 14px 34px;">
+                <span>🚀 Generate AI Career Prediction ➔</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/particles.js"></script>
+  <script src="js/predict-engine.js"></script>
+  <script src="js/predict-wizard.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

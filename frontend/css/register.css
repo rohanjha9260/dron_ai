@@ -1,0 +1,147 @@
+/* ==========================================================================
+   FUTUREPREDICT AI - REGISTRATION PAGE STYLES (Modular)
+   ========================================================================== */
+
+.register-card-container {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-card), 0 0 40px rgba(6, 182, 212, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.register-card-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #06b6d4, #6366f1, #a855f7);
+}
+
+/* Two-column grid inside register form */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Avatar Selection */
+.avatar-selection-group {
+  margin-bottom: 22px;
+}
+
+.avatar-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.avatar-option {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.avatar-option:hover {
+  border-color: var(--cyan);
+  transform: scale(1.1);
+}
+
+.avatar-option.selected {
+  border-color: var(--cyan);
+  background: rgba(6, 182, 212, 0.18);
+  box-shadow: 0 0 15px var(--cyan-glow);
+  transform: scale(1.1);
+}
+
+/* Password Strength Indicator */
+.password-strength-wrap {
+  margin-top: 8px;
+}
+
+.strength-bar-bg {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.strength-bar-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: var(--radius-full);
+}
+
+.strength-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Career Target Role Selection Chips */
+.role-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.role-pill {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.role-pill:hover {
+  border-color: var(--border-glass-bright);
+  color: var(--text-primary);
+}
+
+.role-pill.selected {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.terms-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.terms-text a {
+  color: var(--cyan);
+  text-decoration: none;
+}
