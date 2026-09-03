@@ -1,142 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Free Account - FuturePredict AI</title>
-  <meta name="description" content="Sign up for FuturePredict AI to unlock career trajectory prediction, dream company odds, and daily effort analysis.">
-  
-  <!-- Modular CSS -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/login.css">
-  <link rel="stylesheet" href="css/register.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Student Registration - Create your guidance profile">
+    <title>Dron-AI | Register</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
-  <!-- Ambient Glowing Orbs -->
-  <div class="bg-ambient-orb orb-1"></div>
-  <div class="bg-ambient-orb orb-3"></div>
+    <div class="auth-container" id="register-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Dron-AI</h1>
+                <p>Create Your Profile</p>
+            </div>
 
-  <!-- Particles Background -->
-  <canvas id="particles-canvas"></canvas>
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" name="full_name" placeholder="Your full name" required>
+                </div>
 
-  <div class="app-container">
-    <!-- Navbar Header -->
-    <header class="header-navbar">
-      <div class="nav-container">
-        <a href="index.html" class="brand-logo">
-          <div class="brand-icon">⚡</div>
-          <span>Future<span class="gradient-text">Predict</span></span>
-          <span class="brand-badge">AI 2.0</span>
-        </a>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" name="email" placeholder="you@university.edu" required>
+                </div>
 
-        <ul class="nav-links">
-          <li class="nav-item"><a href="index.html">Home</a></li>
-          <li class="nav-item"><a href="predict.html">Assessment</a></li>
-          <li class="nav-item"><a href="dashboard.html">Dashboard</a></li>
-        </ul>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" name="password" placeholder="••••••••" required minlength="6">
+                </div>
 
-        <div class="nav-actions">
-          <a href="login.html" class="btn-nav-login">Already Registered? Sign In</a>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-cohort">Cohort Year</label>
+                        <input type="number" id="reg-cohort" name="cohort_year" placeholder="2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-branch">Branch</label>
+                        <select id="reg-branch" name="academic_branch">
+                            <option value="">Select Branch</option>
+                            <option value="CSE">Computer Science</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="ECE">Electronics & Communication</option>
+                            <option value="EE">Electrical Engineering</option>
+                            <option value="ME">Mechanical Engineering</option>
+                            <option value="CE">Civil Engineering</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="register-submit-btn" class="btn btn-primary">Create Account</button>
+
+                <div id="register-error" class="error-message" style="display: none;"></div>
+                <div id="register-success" class="success-message" style="display: none;"></div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html" id="go-to-login">Login</a></p>
+            </div>
         </div>
-      </div>
-    </header>
-
-    <!-- Register Main Container -->
-    <div class="auth-page-wrapper">
-      <div class="register-card-container">
-        <div class="auth-header">
-          <div class="auth-header-icon" style="background: linear-gradient(135deg, #06b6d4, #6366f1);">🚀</div>
-          <h2>Join FuturePredict AI</h2>
-          <p>Get data-backed intelligence for your dream career</p>
-        </div>
-
-        <!-- Register Form -->
-        <form id="registerForm">
-          <!-- Avatar Selection -->
-          <div class="avatar-selection-group">
-            <label class="form-label">Choose Your AI Avatar</label>
-            <div class="avatar-options">
-              <div class="avatar-option selected">👨‍💻</div>
-              <div class="avatar-option">👩‍💻</div>
-              <div class="avatar-option">🤖</div>
-              <div class="avatar-option">⚡</div>
-              <div class="avatar-option">🎯</div>
-              <div class="avatar-option">🚀</div>
-            </div>
-          </div>
-
-          <div class="form-row-2">
-            <div class="form-group">
-              <label class="form-label" for="regName">Full Name</label>
-              <div class="input-with-icon">
-                <i>👤</i>
-                <input type="text" id="regName" class="form-input" placeholder="e.g. Rahul Sharma" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="regEmail">College / Personal Email</label>
-              <div class="input-with-icon">
-                <i>✉️</i>
-                <input type="email" id="regEmail" class="form-input" placeholder="rahul@college.edu" required>
-              </div>
-            </div>
-          </div>
-
-          <!-- Password & Strength -->
-          <div class="form-group">
-            <label class="form-label" for="regPassword">Create Secure Password</label>
-            <div class="input-with-icon">
-              <i>🔑</i>
-              <input type="password" id="regPassword" class="form-input" placeholder="Must be at least 8 characters" required>
-              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('regPassword', this)">🔒</button>
-            </div>
-            <div class="password-strength-wrap">
-              <div class="strength-bar-bg">
-                <div id="strengthBar" class="strength-bar-fill"></div>
-              </div>
-              <span id="strengthText" class="strength-text">Strength: Minimum 8 characters with numbers & symbols</span>
-            </div>
-          </div>
-
-          <!-- Target Career Stream -->
-          <div class="form-group">
-            <label class="form-label">Primary Career Aspiration</label>
-            <div class="role-pills-wrap">
-              <div class="role-pill selected">Fullstack Developer</div>
-              <div class="role-pill">SDE-1 (Backend / Java / Go)</div>
-              <div class="role-pill">Frontend / React Specialist</div>
-              <div class="role-pill">AI / ML Engineer</div>
-              <div class="role-pill">Cloud & DevOps</div>
-              <div class="role-pill">Data Analyst</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="checkbox-label" style="align-items: flex-start;">
-              <input type="checkbox" required checked style="margin-top: 4px;">
-              <span class="terms-text">
-                I agree to the <a href="#">Terms of Service</a> and allow FuturePredict AI to evaluate my academic and coding portfolio.
-              </span>
-            </label>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-submit-auth">
-            <span>Create Free Account & Start Prediction ➔</span>
-          </button>
-        </form>
-
-        <div class="auth-footer-prompt">
-          <span>Already have an account? </span>
-          <a href="login.html">Sign in here</a>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="js/particles.js"></script>
-  <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

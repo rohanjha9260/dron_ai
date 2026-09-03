@@ -1,17 +1,127 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DRON_AI — Autonomous AI Intelligence & Career Simulation Platform</title>
-    <meta name="description" content="DRON_AI: Autonomous AI Intelligence & 3D Career Simulation Platform. Analyze academics, LeetCode, GitHub, skills, and telemetry to build your personalized career roadmap." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#030408] text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white overflow-x-hidden min-h-screen">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Dashboard - Your personalized placement guidance powered by AI">
+    <title>Dron-AI | Dashboard</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="main-navbar">
+        <div class="nav-brand">
+            <h2>Dron-AI</h2>
+        </div>
+        <div class="nav-user">
+            <span id="nav-username"></span>
+            <button id="logout-btn" class="btn btn-outline">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard" id="main-dashboard">
+
+        <!-- Section 1: Student Profile Panel -->
+        <section class="dashboard-card" id="profile-section">
+            <div class="card-header">
+                <h2>Student Profile</h2>
+                <button id="edit-profile-btn" class="btn btn-small">Edit Profile</button>
+            </div>
+            <div class="card-body" id="profile-content">
+                <!-- Populated dynamically by profile.js -->
+                <div class="skeleton-loader" id="profile-skeleton">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: External Metrics (GitHub + LeetCode) -->
+        <section class="dashboard-card" id="metrics-section">
+            <div class="card-header">
+                <h2>Developer Metrics</h2>
+                <button id="fetch-metrics-btn" class="btn btn-small">Refresh Data</button>
+            </div>
+            <div class="card-body" id="metrics-content">
+                <!-- GitHub and LeetCode stats populated by metrics.js -->
+                <div class="metrics-grid">
+                    <div class="metric-card" id="github-stats">
+                        <h3>GitHub</h3>
+                        <div class="skeleton-loader" id="github-skeleton">
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card" id="leetcode-stats">
+                        <h3>LeetCode</h3>
+                        <div class="skeleton-loader" id="leetcode-skeleton">
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Placement Readiness -->
+        <section class="dashboard-card" id="placement-section">
+            <div class="card-header">
+                <h2>Placement Readiness</h2>
+                <button id="predict-btn" class="btn btn-small btn-accent">Analyze</button>
+            </div>
+            <div class="card-body" id="placement-content">
+                <!-- XGBoost prediction result + gauge rendered by placement.js -->
+                <div class="placement-gauge" id="placement-gauge">
+                    <div class="gauge-container">
+                        <div class="gauge-fill" id="gauge-fill"></div>
+                        <div class="gauge-label" id="gauge-label">--</div>
+                    </div>
+                    <p class="readiness-tier" id="readiness-tier">Run analysis to see your score</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Career Recommendations -->
+        <section class="dashboard-card" id="career-section">
+            <div class="card-header">
+                <h2>Career Direction</h2>
+                <button id="recommend-btn" class="btn btn-small btn-accent">Get Recommendations</button>
+            </div>
+            <div class="card-body" id="career-content">
+                <!-- Cosine Similarity results rendered by career.js -->
+                <div class="career-list" id="career-list">
+                    <p class="placeholder-text">Click "Get Recommendations" to discover your best-fit careers</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Personalized Roadmap -->
+        <section class="dashboard-card full-width" id="roadmap-section">
+            <div class="card-header">
+                <h2>Action Plan Roadmap</h2>
+            </div>
+            <div class="card-body" id="roadmap-content">
+                <!-- Phased roadmap rendered by roadmap.js -->
+                <div class="roadmap-timeline" id="roadmap-timeline">
+                    <p class="placeholder-text">Select a target career above to generate your personalized roadmap</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/metrics.js"></script>
+    <script src="js/placement.js"></script>
+    <script src="js/career.js"></script>
+    <script src="js/roadmap.js"></script>
+    <script src="js/app.js"></script>
+</body>
 </html>

@@ -1,437 +1,276 @@
-/* ==========================================================================
-   FUTUREPREDICT AI - DASHBOARD & PREDICTION RESULTS STYLES (Modular)
-   ========================================================================== */
+/*
+ * Dron-AI Dashboard Styles
+ *
+ * Layout and component styles for the main dashboard (index.html).
+ * Covers navbar, grid layout, cards, gauges, career list, and roadmap timeline.
+ */
 
-.dashboard-wrapper {
-  padding: 110px 20px 80px;
-  max-width: 1320px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+/* ── Navbar ── */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-bg-card);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
 }
 
-/* Dashboard Top Profile Banner */
-.dash-profile-banner {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 67, 0.8) 100%);
-  border: 1px solid var(--border-neon-primary);
-  border-radius: var(--radius-xl);
-  padding: 30px 36px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.15);
+.nav-brand h2 {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: var(--font-size-xl);
 }
 
-.candidate-info-group {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--color-text-secondary);
 }
 
-.candidate-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--grad-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  color: #fff;
-  font-weight: 800;
-  box-shadow: 0 0 20px var(--primary-glow);
+/* ── Dashboard Grid ── */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.candidate-details h2 {
-  font-size: 1.7rem;
-  font-weight: 800;
-  margin-bottom: 6px;
+/* ── Dashboard Cards ── */
+.dashboard-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.candidate-meta-tags {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+.dashboard-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-glow);
 }
 
-.meta-pill {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-glass);
+.dashboard-card.full-width {
+    grid-column: 1 / -1;
 }
 
-.meta-pill strong {
-  color: var(--cyan);
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
 }
 
-.dash-banner-actions {
-  display: flex;
-  gap: 14px;
+.card-header h2 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
 }
 
-/* 4-Grid Core KPI Overview */
-.kpi-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 30px;
+.card-body {
+    padding: var(--space-lg);
 }
 
-.kpi-stat-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: var(--transition-normal);
+/* ── Metrics Grid ── */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
 }
 
-.kpi-stat-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-glass-bright);
+.metric-card {
+    background: var(--color-bg-input);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
 }
 
-.kpi-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+.metric-card h3 {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
 }
 
-.kpi-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+/* ── Placement Gauge ── */
+.placement-gauge {
+    text-align: center;
+    padding: var(--space-lg);
 }
 
-.kpi-icon {
-  font-size: 1.25rem;
+.gauge-container {
+    width: 200px;
+    height: 200px;
+    border-radius: var(--radius-full);
+    background: conic-gradient(
+        var(--color-text-muted) 0deg,
+        var(--color-text-muted) 360deg
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-lg);
+    position: relative;
 }
 
-.kpi-main-val {
-  font-size: 2rem;
-  font-weight: 800;
-  font-family: var(--font-heading);
-  margin-bottom: 4px;
+.gauge-container::after {
+    content: '';
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-card);
+    position: absolute;
 }
 
-.kpi-subtext {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
+.gauge-label {
+    position: relative;
+    z-index: 1;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
 }
 
-/* 2-Column Dashboard Body */
-.dashboard-grid-main {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 30px;
-  margin-bottom: 30px;
+.readiness-tier {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
 }
 
-/* Prediction Cards */
-.dash-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-xl);
-  padding: 30px;
-  box-shadow: var(--shadow-glass);
-  margin-bottom: 30px;
+/* ── Career List ── */
+.career-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
 }
 
-.dash-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-glass);
+.career-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    background: var(--color-bg-input);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--transition-fast);
 }
 
-.dash-card-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.career-item:hover {
+    background: var(--color-bg-card-hover);
 }
 
-/* Company Tier Odds Bar List */
-.tier-odds-container {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+.career-item .career-name {
+    font-weight: var(--font-weight-medium);
 }
 
-.tier-odd-row {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  padding: 16px 20px;
+.career-item .career-match {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
 }
 
-.tier-name-row {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 0.95rem;
-  margin-bottom: 8px;
-}
-
-.tier-companies-sample {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-}
-
-.tier-progress-track {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.tier-progress-bar {
-  height: 100%;
-  border-radius: var(--radius-full);
-  transition: width 1s ease;
-}
-
-/* "Kitna Mehnat Karna Padega" - Effort Estimation Section */
-.effort-metric-highlight {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(99, 102, 241, 0.1) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  margin-bottom: 24px;
-}
-
-.effort-time-display {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.effort-hours-big {
-  font-size: 3rem;
-  font-weight: 800;
-  font-family: var(--font-heading);
-  color: var(--amber);
-}
-
-.effort-label-small {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.daily-schedule-breakdown {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 16px;
-}
-
-.schedule-slot {
-  background: rgba(15, 23, 42, 0.6);
-  padding: 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-glass);
-  text-align: center;
-}
-
-.schedule-slot h5 {
-  font-size: 0.85rem;
-  color: var(--cyan);
-  margin-bottom: 4px;
-}
-
-.schedule-slot p {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-/* Skill Gap & Reality Check Bottlenecks */
-.gap-items-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.gap-item-card {
-  padding: 16px 18px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  font-size: 0.9rem;
-}
-
-.gap-item-card.critical {
-  background: rgba(244, 63, 94, 0.1);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-}
-
-.gap-item-card.warning {
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.gap-item-card.good {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.gap-icon {
-  font-size: 1.25rem;
-  margin-top: 2px;
-}
-
-.gap-content h5 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.gap-content p {
-  color: var(--text-secondary);
-  font-size: 0.84rem;
-  line-height: 1.5;
-}
-
-/* 6-Month Actionable Roadmap Timeline */
+/* ── Roadmap Timeline ── */
 .roadmap-timeline {
-  position: relative;
-  padding-left: 30px;
-  margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: relative;
+    padding-left: var(--space-2xl);
 }
 
 .roadmap-timeline::before {
-  content: '';
-  position: absolute;
-  left: 9px;
-  top: 8px;
-  bottom: 8px;
-  width: 2px;
-  background: var(--border-glass-bright);
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border);
 }
 
-.timeline-phase {
-  position: relative;
-  margin-bottom: 28px;
+.roadmap-phase {
+    position: relative;
 }
 
-.timeline-node-dot {
-  position: absolute;
-  left: -30px;
-  top: 4px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--bg-dark);
-  border: 3px solid var(--primary);
-  box-shadow: 0 0 10px var(--primary-glow);
-}
-
-.phase-content {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  padding: 18px 22px;
+.roadmap-phase::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--space-2xl) + 6px);
+    top: 8px;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    border: 3px solid var(--color-bg-card);
 }
 
 .phase-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
 }
 
-.phase-month-badge {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--cyan);
+.phase-number {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.phase-tasks-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 10px;
+.phase-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
 }
 
-.phase-tasks-list li {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.phase-duration {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
 }
 
-.phase-tasks-list li::before {
-  content: '▸';
-  color: var(--primary-light);
+.phase-tasks {
+    list-style: none;
+    padding: 0;
 }
 
-/* Holographic Shareable ID Card Modal / Section */
-.holographic-pass-card {
-  max-width: 440px;
-  margin: 0 auto;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(7, 9, 19, 0.98) 100%);
-  border: 2px solid var(--cyan);
-  border-radius: var(--radius-xl);
-  padding: 28px;
-  box-shadow: 0 0 40px var(--cyan-glow);
-  position: relative;
-  overflow: hidden;
+.phase-tasks li {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    padding: var(--space-xs) 0;
+    padding-left: var(--space-md);
+    position: relative;
 }
 
-.holographic-pass-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
-  pointer-events: none;
+.phase-tasks li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
 }
 
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .dashboard-grid-main {
-    grid-template-columns: 1fr;
-  }
-
-  .kpi-grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dash-profile-banner {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-
-  .candidate-info-group {
-    flex-direction: column;
-  }
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
 }
 
-@media (max-width: 640px) {
-  .kpi-grid-4 {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 768px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
 
-  .daily-schedule-breakdown {
-    grid-template-columns: 1fr;
-  }
+    .navbar {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .dashboard {
+        padding: var(--space-md);
+    }
 }
