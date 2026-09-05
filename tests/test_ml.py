@@ -368,15 +368,65 @@ class TestXGBoostModel:
 class TestCosineRecommender:
     """Tests for Cosine Similarity career recommender."""
 
-    def test_recommendation_returns_sorted_list(self):
-        """Test that recommendations are sorted by match percentage."""
-        # TODO: Implement
-        pass
+    @pytest.fixture
+    def recommender(self):
+        """Fixture that provides a loaded CareerRecommender instance."""
+        from ml_engine.cosine_recommender import CareerRecommender
+        rec = CareerRecommender()
+        rec.load_career_vectors()
+        return rec
 
-    def test_perfect_match_returns_100_percent(self):
+    def test_recommendation_returns_sorted_list(self, recommender):
+        """Test that recommendations are sorted by match percentage."""
+        student_vector = np.array([80.0, 75.0, 60.0, 50.0, 70.0, 60.0, 50.0, 70.0, 65.0, 60.0])
+        results = recommender.recommend(student_vector, top_k=5)
+
+        assert len(results) == 5
+        for i in range(len(results) - 1):
+            assert results[i]["match_pct"] >= results[i + 1]["match_pct"]
+            assert 0.0 <= results[i]["match_pct"] <= 100.0
+            assert "career" in results[i]
+            assert "match_pct" in results[i]
+
+    def test_perfect_match_returns_100_percent(self, recommender):
         """Test that identical vectors yield 100% match."""
-        # TODO: Implement
-        pass
+        target_role = "Software Engineer"
+        ideal_vector = recommender.get_career_vector(target_role)
+
+        results = recommender.recommend(ideal_vector, top_k=5)
+        assert results[0]["career"] == target_role
+        assert results[0]["match_pct"] == pytest.approx(100.0, abs=0.01)
+
+    def test_zero_vector_and_boundary_handling(self, recommender):
+        """Test that zero vector returns 0% match without errors."""
+        zero_vector = np.zeros(10)
+        results = recommender.recommend(zero_vector, top_k=5)
+        assert len(results) == 5
+        for rec in results:
+            assert rec["match_pct"] == 0.0
+
+        # Non-finite values
+        nan_vector = np.array([np.nan, np.inf, -np.inf, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0])
+        results_nan = recommender.recommend(nan_vector, top_k=3)
+        assert len(results_nan) == 3
+        assert all(0.0 <= r["match_pct"] <= 100.0 for r in results_nan)
+
+    def test_recommend_accepts_13d_vector(self, recommender):
+        """Test that 13-D full feature vector is supported by slicing to 10-D."""
+        full_vector = np.array([9.0, 95.0, 0, 75.0, 90.0, 60.0, 95.0, 70.0, 60.0, 50.0, 80.0, 55.0, 65.0])
+        results = recommender.recommend(full_vector, top_k=5)
+        assert len(results) == 5
+        # ML Engineer has high aiml_knowledge (95), python (90), project_count (80)
+        assert results[0]["career"] == "ML Engineer"
+
+    def test_get_career_vector_shorthand_and_invalid(self, recommender):
+        """Test role retrieval, case-insensitivity, shorthand resolution, and errors."""
+        vec_exact = recommender.get_career_vector("DevOps Engineer")
+        vec_short = recommender.get_career_vector("DevOps")
+        np.testing.assert_array_equal(vec_exact, vec_short)
+
+        with pytest.raises(ValueError, match="not found"):
+            recommender.get_career_vector("NonExistentCareer")
 
 
 class TestGapAnalyzer:

@@ -65,6 +65,7 @@ class PlacementPredictor:
         n_estimators: int = 150,
         eval_metric: str = "logloss",
         random_state: int = 42,
+        n_jobs: int = 1,
     ):
         self.model: Optional[XGBClassifier] = None
         self.scaler: Optional[StandardScaler] = None
@@ -74,6 +75,9 @@ class PlacementPredictor:
         self.n_estimators = n_estimators
         self.eval_metric = eval_metric
         self.random_state = random_state
+        self.n_jobs = n_jobs
+        self._cached_feature_importance: Optional[Dict[str, float]] = None
+        self._cached_top_factors: Optional[List[str]] = None
 
     def train(
         self,
@@ -124,11 +128,13 @@ class PlacementPredictor:
             subsample=0.8,
             colsample_bytree=0.8,
             random_state=self.random_state,
+            n_jobs=self.n_jobs,
         )
 
         logger.info("Training XGBClassifier...")
         self.model.fit(X_train, y_train)
         self.is_trained = True
+        self._update_cached_importances()
 
         # 4. Evaluate on test set
         y_pred = self.model.predict(X_test)
@@ -217,26 +223,31 @@ class PlacementPredictor:
         proba = float(self.model.predict_proba(feat_arr)[0, 1])
         is_placed = bool(proba >= 0.5)
 
-        # Feature importances breakdown
+        # Feature importances breakdown (cached for fast inference)
+        if self._cached_feature_importance is None:
+            self._update_cached_importances()
+
+        return {
+            "placement_probability": round(proba, 4),
+            "is_placed": is_placed,
+            "feature_importance": self._cached_feature_importance or {},
+            "top_factors": self._cached_top_factors or [],
+        }
+
+    def _update_cached_importances(self):
+        """Precompute and cache feature importances for instant access."""
         importances = getattr(self.model, "feature_importances_", None)
         if importances is not None:
             feature_imp = {
                 name: float(imp) for name, imp in zip(FEATURE_NAMES, importances)
             }
-            sorted_imp = dict(
+            self._cached_feature_importance = dict(
                 sorted(feature_imp.items(), key=lambda item: item[1], reverse=True)
             )
-            top_factors = list(sorted_imp.keys())[:3]
+            self._cached_top_factors = list(self._cached_feature_importance.keys())[:3]
         else:
-            sorted_imp = {}
-            top_factors = []
-
-        return {
-            "placement_probability": round(proba, 4),
-            "is_placed": is_placed,
-            "feature_importance": sorted_imp,
-            "top_factors": top_factors,
-        }
+            self._cached_feature_importance = {}
+            self._cached_top_factors = []
 
     def save(self, model_path: str) -> str:
         """
@@ -332,5 +343,12 @@ class PlacementPredictor:
         else:
             raise TypeError(f"Loaded artifact is not a valid XGBClassifier or payload: {type(loaded_obj)}")
 
+        if hasattr(self.model, "set_params"):
+            try:
+                self.model.set_params(n_jobs=1)
+            except Exception:
+                pass
+
         self.is_trained = True
+        self._update_cached_importances()
         logger.info(f"Loaded XGBoost model from: {resolved_path}")
