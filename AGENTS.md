@@ -31,7 +31,7 @@ dron-ai/
 │   └── leetcode_fetcher.py# LeetCode GraphQL API: solved problems, contest rating, ranking
 ├── ml_engine/            # Machine Learning & Recommendation Core
 │   ├── preprocessing.py  # 13D feature engineering, bounds clamping, StandardScaler
-│   ├── xgboost_model.py  # XGBoost placement readiness predictor (<2ms inference)
+│   ├── xgboost_model.py  # XGBoost placement readiness predictor (<2ms target, <5ms SLA)
 │   ├── cosine_recommender.py # Cosine similarity career matching against target roles
 │   ├── gap_analyzer.py   # Vector subtraction (Ideal Role Vector - Student Vector)
 │   ├── roadmap_generator.py # Sequenced milestone and learning plan generation
@@ -99,7 +99,7 @@ Defined in `ml_engine/preprocessing.py:FEATURE_NAMES`:
    - Always perform train/test splits **before** fitting the `StandardScaler`. Transform test data using the train-fitted scaler.
 3. **Inference Latency & Semantics**:
    - `PlacementPredictor.predict(features)` enforces single-row semantics (rejecting 2D arrays with `shape[0] != 1`).
-   - Inference latency SLA is $<5\text{ms}$ (configured with `n_jobs=1` and cached feature importances).
+   - Inference latency target is $<2\text{ms}$ with a hard maximum SLA of $<5\text{ms}$ (configured with `n_jobs=1` and cached feature importances).
 4. **Resilience & Fallbacks**:
    - External fetchers (`github_fetcher.py`, `leetcode_fetcher.py`) use `@functools.lru_cache` and must return baseline zero-dictionaries on 404s, timeouts, or rate limits without crashing the backend.
    - Non-finite numbers (`NaN`, `Inf`, `-Inf`) must be sanitized to `0.0`.

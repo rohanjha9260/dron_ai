@@ -579,3 +579,46 @@ class TestRoadmapGenerator:
 
         assert generate_plan([]) == []
         assert generate_plan([{"skill": "dsa_score", "gap": 10.0}], max_phases=0) == []
+
+    def test_roadmap_sanitizes_non_finite_values(self):
+        """Regression test: verify NaN, +Inf, and -Inf are sanitized to 0.0 while preserving finite numbers."""
+        import math
+        from ml_engine.roadmap_generator import generate_plan
+
+        non_finite_gaps = [
+            {
+                "skill": "dsa_score",
+                "current": float("nan"),
+                "required": float("inf"),
+                "gap": -float("inf"),
+                "gap_pct": np.nan,
+            },
+            {
+                "skill": "python_prof",
+                "current": 45.0,
+                "required": 85.0,
+                "gap": 40.0,
+                "gap_pct": 47.1,
+            },
+        ]
+
+        plan = generate_plan(non_finite_gaps)
+        assert len(plan) == 2
+
+        # Phase 1: check sanitized non-finite values
+        p1 = plan[0]
+        assert p1["current"] == 0.0
+        assert p1["required"] == 0.0
+        assert p1["gap"] == 0.0
+        assert p1["gap_pct"] == 0.0
+        assert not math.isnan(p1["current"])
+        assert not math.isinf(p1["required"])
+        assert "nan" not in p1["milestone"].lower()
+        assert "inf" not in p1["milestone"].lower()
+
+        # Phase 2: verify finite values are properly preserved
+        p2 = plan[1]
+        assert p2["current"] == 45.0
+        assert p2["required"] == 85.0
+        assert p2["gap"] == 40.0
+        assert p2["gap_pct"] == 47.1
