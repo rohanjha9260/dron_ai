@@ -8,9 +8,22 @@ concrete tasks and estimated timelines.
 Logic Chain: "Prediction tells where you stand. Personalization tells you what to do next."
 """
 
+import math
 import logging
+from typing import List, Dict, Any
 
 logger = logging.getLogger(__name__)
+
+
+def _sanitize_metric(val: Any) -> float:
+    """Sanitize float metric values by converting NaN, +Inf, -Inf, or invalid types to 0.0."""
+    try:
+        fval = float(val)
+        if math.isnan(fval) or math.isinf(fval):
+            return 0.0
+        return fval
+    except (ValueError, TypeError):
+        return 0.0
 
 # Mapping of skill dimensions to actionable improvement phases
 SKILL_IMPROVEMENT_MAP = {
@@ -177,10 +190,11 @@ def generate_plan(skill_gaps: list, max_phases: int = 5) -> list:
     plan = []
 
     for idx, gap_item in enumerate(top_gaps, start=1):
-        skill = gap_item.get("skill", "")
-        current = gap_item.get("current", 0.0)
-        required = gap_item.get("required", 0.0)
-        gap_val = gap_item.get("gap", 0.0)
+        skill = str(gap_item.get("skill", ""))
+        current = _sanitize_metric(gap_item.get("current", 0.0))
+        required = _sanitize_metric(gap_item.get("required", 0.0))
+        gap_val = _sanitize_metric(gap_item.get("gap", 0.0))
+        gap_pct_val = _sanitize_metric(gap_item.get("gap_pct", 0.0))
 
         info = SKILL_IMPROVEMENT_MAP.get(
             skill,
@@ -217,7 +231,7 @@ def generate_plan(skill_gaps: list, max_phases: int = 5) -> list:
             "current": current,
             "required": required,
             "gap": gap_val,
-            "gap_pct": gap_item.get("gap_pct", 0.0),
+            "gap_pct": gap_pct_val,
         }
         plan.append(phase_dict)
 
