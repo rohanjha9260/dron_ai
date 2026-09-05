@@ -244,7 +244,7 @@ def load_scaler(
         Loaded StandardScaler instance
 
     Raises:
-        FileNotFoundError: If the scaler file does not exist
+        FileNotFoundError: If the scaler file or sidecar does not exist
         ValueError: If path containment or integrity check fails
         TypeError: If deserialized object is not a StandardScaler
     """
@@ -258,7 +258,7 @@ def load_scaler(
     if not os.path.exists(resolved_path):
         raise FileNotFoundError(f"Scaler file not found at: {scaler_path}")
 
-    # Integrity verification
+    # Integrity verification (fail closed if neither expected_hash nor sidecar is available)
     computed_hash = _compute_sha256(resolved_path)
     if expected_hash is not None:
         if computed_hash.lower() != expected_hash.lower():
@@ -267,13 +267,16 @@ def load_scaler(
             )
     else:
         checksum_path = f"{resolved_path}.sha256"
-        if os.path.exists(checksum_path):
-            with open(checksum_path, "r", encoding="utf-8") as f:
-                recorded_hash = f.read().strip()
-            if recorded_hash and computed_hash.lower() != recorded_hash.lower():
-                raise ValueError(
-                    f"Integrity check failed for {scaler_path}: recorded hash {recorded_hash} != {computed_hash}"
-                )
+        if not os.path.exists(checksum_path):
+            raise FileNotFoundError(
+                f"Integrity check failed: missing checksum sidecar file {checksum_path} for {scaler_path}"
+            )
+        with open(checksum_path, "r", encoding="utf-8") as f:
+            recorded_hash = f.read().strip()
+        if not recorded_hash or computed_hash.lower() != recorded_hash.lower():
+            raise ValueError(
+                f"Integrity check failed for {scaler_path}: recorded hash {recorded_hash} != {computed_hash}"
+            )
 
     scaler = joblib.load(resolved_path)
     if not isinstance(scaler, StandardScaler):
@@ -354,7 +357,7 @@ def prepare_dataset_features(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]
 
     if "Problem_Solving" in cleaned.columns:
         mapped_df["dsa_score"] = (prob_num * 10.0).clip(0.0, 100.0)
-        mapped_df["problems_solved"] = (prob_num * 25.0).clip(lower=0.0)
+        mapped_df["problems_solved"] = (prob_num * 35.0).clip(lower=0.0)
     else:
         mapped_df["dsa_score"] = prob_num.clip(0.0, 100.0)
         solved_raw = _get_column_series(cleaned, "problems_solved", default_val=0.0)
@@ -373,21 +376,21 @@ def prepare_dataset_features(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]
     # Total Commits & GitHub
     if "GitHub_Profile" in cleaned.columns:
         mapped_df["total_commits"] = cleaned["GitHub_Profile"].apply(
-            lambda g: 60.0 if str(g).strip().lower() == "yes" else 10.0
+            lambda g: 80.0 if str(g).strip().lower() == "yes" else 15.0
         )
     elif "total_commits" in cleaned.columns:
         mapped_df["total_commits"] = pd.to_numeric(cleaned["total_commits"], errors="coerce").fillna(30.0).clip(lower=0.0)
     else:
         mapped_df["total_commits"] = pd.Series(30.0, index=cleaned.index, dtype=np.float64)
 
-    # Contest Rating
+    # Contest Rating (scale aligned with runtime ratings e.g. 1000-1900 or 0-None)
     if "Hackathons" in cleaned.columns:
         hackathons = pd.to_numeric(cleaned["Hackathons"], errors="coerce").fillna(0.0)
-        mapped_df["contest_rating"] = (hackathons * 20.0 + 50.0).clip(0.0, 100.0)
+        mapped_df["contest_rating"] = (hackathons * 150.0 + 1000.0).clip(lower=0.0)
     elif "contest_rating" in cleaned.columns:
-        mapped_df["contest_rating"] = pd.to_numeric(cleaned["contest_rating"], errors="coerce").fillna(50.0).clip(0.0, 100.0)
+        mapped_df["contest_rating"] = pd.to_numeric(cleaned["contest_rating"], errors="coerce").fillna(1200.0).clip(lower=0.0)
     else:
-        mapped_df["contest_rating"] = pd.Series(50.0, index=cleaned.index, dtype=np.float64)
+        mapped_df["contest_rating"] = pd.Series(1200.0, index=cleaned.index, dtype=np.float64)
 
     # Project Count
     raw_proj = _get_column_series(cleaned, "Projects_Completed", "project_count", default_val=2.0)
@@ -405,6 +408,12 @@ def prepare_dataset_features(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]
     # Internship Experience
     raw_intern = _get_column_series(cleaned, "Internships", "internship_exp", default_val=0.0)
     mapped_df["internship_exp"] = pd.to_numeric(raw_intern, errors="coerce").fillna(0.0).clip(lower=0.0)
+
+    # Apply FEATURE_BOUNDS to all columns for consistency with runtime build_feature_vector
+    for col in FEATURE_NAMES:
+        if col in FEATURE_BOUNDS:
+            min_val, max_val = FEATURE_BOUNDS[col]
+            mapped_df[col] = mapped_df[col].clip(lower=min_val, upper=max_val)
 
     # Ensure all 13 columns are in exact FEATURE_NAMES order
     X = mapped_df[FEATURE_NAMES].astype(np.float64)

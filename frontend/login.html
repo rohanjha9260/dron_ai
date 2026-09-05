@@ -1,117 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In - FuturePredict AI</title>
-  <meta name="description" content="Sign in to your FuturePredict AI portal to access your career assessment, prediction analytics, and roadmaps.">
-  
-  <!-- Modular CSS -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Student Login - Intelligent Student Guidance Platform">
+    <title>Dron-AI | Login</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
-  <!-- Ambient Glowing Orbs -->
-  <div class="bg-ambient-orb orb-1"></div>
-  <div class="bg-ambient-orb orb-2"></div>
-
-  <!-- Particles Background -->
-  <canvas id="particles-canvas"></canvas>
-
-  <div class="app-container">
-    <!-- Navbar Header -->
-    <header class="header-navbar">
-      <div class="nav-container">
-        <a href="index.html" class="brand-logo">
-          <div class="brand-icon">⚡</div>
-          <span>Future<span class="gradient-text">Predict</span></span>
-          <span class="brand-badge">AI 2.0</span>
-        </a>
-
-        <ul class="nav-links">
-          <li class="nav-item"><a href="index.html">Home</a></li>
-          <li class="nav-item"><a href="predict.html">Assessment</a></li>
-          <li class="nav-item"><a href="dashboard.html">Dashboard</a></li>
-        </ul>
-
-        <div class="nav-actions">
-          <a href="register.html" class="btn-nav-cta">Create Free Account</a>
-        </div>
-      </div>
-    </header>
-
-    <!-- Auth Main Container -->
-    <div class="auth-page-wrapper">
-      <div class="auth-card-container">
-        <div class="auth-header">
-          <div class="auth-header-icon">🔐</div>
-          <h2>Welcome Back</h2>
-          <p>Access your personalized career prediction intelligence</p>
-        </div>
-
-        <!-- Social Login -->
-        <div class="social-auth-group">
-          <button type="button" class="btn-social" onclick="showToast('Connecting to GitHub...', 'info')">
-            <span>🐙 GitHub</span>
-          </button>
-          <button type="button" class="btn-social" onclick="showToast('Connecting to Google...', 'info')">
-            <span>🌐 Google</span>
-          </button>
-        </div>
-
-        <div class="auth-divider">
-          <span>Or Continue with Email</span>
-        </div>
-
-        <!-- Login Form -->
-        <form id="loginForm">
-          <div class="form-group">
-            <label class="form-label" for="loginEmail">Email Address</label>
-            <div class="input-with-icon">
-              <i>✉️</i>
-              <input type="email" id="loginEmail" class="form-input" placeholder="developer@futurepredict.ai" required>
+    <div class="auth-container" id="login-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Dron-AI</h1>
+                <p>Intelligent Student Guidance Platform</p>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label" for="loginPassword">Password</label>
-            <div class="input-with-icon">
-              <i>🔑</i>
-              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••••••" required>
-              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('loginPassword', this)">🔒</button>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" placeholder="you@university.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="login-submit-btn" class="btn btn-primary">Login</button>
+
+                <div id="login-error" class="error-message" style="display: none;"></div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="register.html" id="go-to-register">Register</a></p>
             </div>
-          </div>
-
-          <div class="auth-options-row">
-            <label class="checkbox-label">
-              <input type="checkbox" id="rememberMe" checked>
-              <span>Remember me</span>
-            </label>
-            <a href="#" class="forgot-link" onclick="showToast('Password reset link sent to your registered email.', 'info')">Forgot Password?</a>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-submit-auth">
-            <span>Sign In to Dashboard ➔</span>
-          </button>
-        </form>
-
-        <div class="auth-footer-prompt">
-          <span>Don't have an account yet? </span>
-          <a href="register.html">Sign up for free</a>
         </div>
-
-        <!-- Rapid Demo Fill -->
-        <div class="demo-quick-login">
-          <span>💡 Quick Testing?</span>
-          <button type="button" class="demo-fill-btn" onclick="fillDemoLogin()">Auto-Fill Demo Credentials</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="js/particles.js"></script>
-  <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
