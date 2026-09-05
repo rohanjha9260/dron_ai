@@ -473,15 +473,109 @@ class TestGapAnalyzer:
     """Tests for skill-gap analysis."""
 
     def test_gap_calculation(self):
-        """Test vector subtraction identifies correct gaps."""
-        # TODO: Implement
-        pass
+        """Test vector subtraction identifies correct gaps, sorts descending, and computes gap_pct."""
+        from ml_engine.gap_analyzer import analyze_gaps
+
+        student_vector = np.array([40.0, 80.0, 70.0, 30.0, 50.0, 40.0, 30.0, 50.0, 60.0, 50.0])
+        career_vector = np.array([90.0, 80.0, 70.0, 40.0, 85.0, 80.0, 70.0, 75.0, 60.0, 70.0])
+
+        gaps = analyze_gaps(student_vector, career_vector)
+
+        # Expected positive deltas:
+        # dsa_score: 90 - 40 = 50 (gap_pct: 55.6%)
+        # problems_solved: 80 - 40 = 40 (gap_pct: 50.0%)
+        # contest_rating: 70 - 30 = 40 (gap_pct: 57.1%)
+        # total_commits: 85 - 50 = 35 (gap_pct: 41.2%)
+        # project_count: 75 - 50 = 25 (gap_pct: 33.3%)
+        # internship_exp: 70 - 50 = 20 (gap_pct: 28.6%)
+        # aiml_knowledge: 40 - 30 = 10 (gap_pct: 25.0%)
+        # python_prof (80-80=0), cpp_prof (70-70=0), communication_score (60-60=0) -> excluded
+
+        assert len(gaps) == 7
+        assert gaps[0]["skill"] == "dsa_score"
+        assert gaps[0]["gap"] == 50.0
+        assert gaps[0]["current"] == 40.0
+        assert gaps[0]["required"] == 90.0
+        assert gaps[0]["gap_pct"] == 55.6
+
+        # Check descending order
+        for i in range(len(gaps) - 1):
+            assert gaps[i]["gap"] >= gaps[i + 1]["gap"]
+
+    def test_no_gaps_when_student_exceeds(self):
+        """Test that an empty list is returned when student exceeds all requirements."""
+        from ml_engine.gap_analyzer import analyze_gaps
+
+        student = np.full(10, 100.0)
+        career = np.full(10, 80.0)
+        gaps = analyze_gaps(student, career)
+        assert gaps == []
+
+    def test_13d_student_vector_compatibility(self):
+        """Test compatibility when student vector has 13 features (academic + skills)."""
+        from ml_engine.gap_analyzer import analyze_gaps
+
+        student_13d = np.array([9.0, 95.0, 0, 40.0, 80.0, 70.0, 30.0, 50.0, 40.0, 30.0, 50.0, 60.0, 50.0])
+        career_10d = np.array([90.0, 80.0, 70.0, 40.0, 85.0, 80.0, 70.0, 75.0, 60.0, 70.0])
+
+        gaps = analyze_gaps(student_13d, career_10d)
+        assert len(gaps) == 7
+        assert gaps[0]["skill"] == "dsa_score"
+        assert gaps[0]["gap"] == 50.0
 
 
 class TestRoadmapGenerator:
     """Tests for roadmap generation."""
 
     def test_roadmap_has_correct_phases(self):
-        """Test that generated roadmap contains expected phases."""
-        # TODO: Implement
-        pass
+        """Test that generated roadmap contains expected phases, tasks, and priorities."""
+        from ml_engine.roadmap_generator import generate_plan
+
+        sample_gaps = [
+            {"skill": "dsa_score", "current": 40.0, "required": 90.0, "gap": 50.0, "gap_pct": 55.6},
+            {"skill": "problems_solved", "current": 40.0, "required": 80.0, "gap": 40.0, "gap_pct": 50.0},
+            {"skill": "total_commits", "current": 50.0, "required": 85.0, "gap": 35.0, "gap_pct": 41.2},
+            {"skill": "project_count", "current": 50.0, "required": 75.0, "gap": 25.0, "gap_pct": 33.3},
+        ]
+
+        roadmap = generate_plan(sample_gaps, max_phases=4)
+        assert len(roadmap) == 4
+
+        # Phase 1
+        p1 = roadmap[0]
+        assert p1["phase"] == 1
+        assert p1["skill"] == "dsa_score"
+        assert p1["priority"] == "high"
+        assert len(p1["tasks"]) > 0
+        assert "duration" in p1
+        assert "milestone" in p1
+
+        # Phase 2
+        p2 = roadmap[1]
+        assert p2["phase"] == 2
+        assert p2["priority"] == "high"
+
+        # Phase 3
+        p3 = roadmap[2]
+        assert p3["phase"] == 3
+        assert p3["priority"] == "medium"
+
+    def test_roadmap_respects_max_phases(self):
+        """Test that max_phases caps the output correctly."""
+        from ml_engine.roadmap_generator import generate_plan
+
+        sample_gaps = [
+            {"skill": "dsa_score", "current": 40.0, "required": 90.0, "gap": 50.0, "gap_pct": 55.6},
+            {"skill": "problems_solved", "current": 40.0, "required": 80.0, "gap": 40.0, "gap_pct": 50.0},
+            {"skill": "total_commits", "current": 50.0, "required": 85.0, "gap": 35.0, "gap_pct": 41.2},
+        ]
+
+        assert len(generate_plan(sample_gaps, max_phases=2)) == 2
+        assert len(generate_plan(sample_gaps, max_phases=5)) == 3
+
+    def test_roadmap_empty_on_zero_gaps(self):
+        """Test that empty plan is returned when no skill gaps exist."""
+        from ml_engine.roadmap_generator import generate_plan
+
+        assert generate_plan([]) == []
+        assert generate_plan([{"skill": "dsa_score", "gap": 10.0}], max_phases=0) == []

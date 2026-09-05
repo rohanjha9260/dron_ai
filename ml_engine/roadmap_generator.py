@@ -104,6 +104,46 @@ SKILL_IMPROVEMENT_MAP = {
         ],
         "duration": "8 weeks",
     },
+    "contest_rating": {
+        "title": "Boost Competitive Programming Contest Rating",
+        "tasks": [
+            "Participate in weekly LeetCode and competitive programming contests",
+            "Analyze and upsolve problems missed during contest rounds",
+            "Study speed optimization and time complexity under pressure",
+            "Target advancing global ranking and rating tier",
+        ],
+        "duration": "6 weeks",
+    },
+    "cgpa": {
+        "title": "Improve Academic CGPA",
+        "tasks": [
+            "Review core syllabus and previous examination question papers",
+            "Establish structured daily study routines for upcoming semester exams",
+            "Attend academic office hours and subject tutorial sessions",
+            "Target score improvement in low-grade subjects",
+        ],
+        "duration": "8 weeks",
+    },
+    "attendance_pct": {
+        "title": "Improve Academic Attendance",
+        "tasks": [
+            "Maintain consistent daily lecture and laboratory attendance",
+            "Track attendance weekly against institutional threshold",
+            "Coordinate with academic advisors on condonation/leave policies",
+            "Avoid unauthorized absences",
+        ],
+        "duration": "4 weeks",
+    },
+    "active_backlogs": {
+        "title": "Clear Active Academic Backlogs",
+        "tasks": [
+            "Register for supplementary examinations at the earliest opportunity",
+            "Prepare focused study plans for each backlog subject",
+            "Solve past 5 years' university question papers",
+            "Complete necessary remedial classes and internal assessments",
+        ],
+        "duration": "6 weeks",
+    },
 }
 
 
@@ -124,14 +164,61 @@ def generate_plan(skill_gaps: list, max_phases: int = 5) -> list:
                 "skill": "dsa_score",
                 "duration": "6 weeks",
                 "tasks": [...],
-                "priority": "high"
+                "priority": "high",
+                "milestone": "Reach target proficiency of 90.0 (current: 40.0)"
             },
             ...
         ]
     """
-    # TODO: Implement
-    # 1. Take top max_phases gaps
-    # 2. Map each gap to SKILL_IMPROVEMENT_MAP
-    # 3. Assign phase numbers and priority levels
-    # 4. Return ordered phase list
-    pass
+    if not skill_gaps or max_phases <= 0:
+        return []
+
+    top_gaps = skill_gaps[:max_phases]
+    plan = []
+
+    for idx, gap_item in enumerate(top_gaps, start=1):
+        skill = gap_item.get("skill", "")
+        current = gap_item.get("current", 0.0)
+        required = gap_item.get("required", 0.0)
+        gap_val = gap_item.get("gap", 0.0)
+
+        info = SKILL_IMPROVEMENT_MAP.get(
+            skill,
+            {
+                "title": f"Improve {skill.replace('_', ' ').title()}",
+                "tasks": [
+                    f"Study fundamental concepts of {skill.replace('_', ' ')}",
+                    f"Complete hands-on practice exercises in {skill.replace('_', ' ')}",
+                    "Work on practical project applications",
+                    "Assess progress through periodic practice evaluations",
+                ],
+                "duration": "4 weeks",
+            },
+        )
+
+        # Assign priority based on sequence / severity
+        if idx <= 2:
+            priority = "high"
+        elif idx <= 4:
+            priority = "medium"
+        else:
+            priority = "low"
+
+        milestone = f"Achieve target {skill.replace('_', ' ')} of {required} (current: {current}, gap: {gap_val})"
+
+        phase_dict = {
+            "phase": idx,
+            "title": info["title"],
+            "skill": skill,
+            "duration": info["duration"],
+            "tasks": list(info["tasks"]),
+            "priority": priority,
+            "milestone": milestone,
+            "current": current,
+            "required": required,
+            "gap": gap_val,
+            "gap_pct": gap_item.get("gap_pct", 0.0),
+        }
+        plan.append(phase_dict)
+
+    return plan
