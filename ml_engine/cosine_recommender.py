@@ -52,6 +52,7 @@ class CareerRecommender:
     """
 
     def __init__(self, path: Optional[str] = None):
+        self.path = path
         self.career_vectors: Dict[str, np.ndarray] = {}
         self.career_names: List[str] = []
         self.career_descriptions: Dict[str, str] = {}
@@ -60,7 +61,7 @@ class CareerRecommender:
 
         # Load career vectors if default or custom path is valid
         try:
-            self.load_career_vectors(path)
+            self.load_career_vectors(self.path)
         except Exception as e:
             logger.warning(f"Initial load of career vectors skipped: {e}")
 
@@ -69,9 +70,12 @@ class CareerRecommender:
         Load predefined career vectors from JSON file.
 
         Args:
-            path: Path to career_vectors.json (uses default if None)
+            path: Path to career_vectors.json (uses self.path or default if None)
         """
-        file_path = path or CAREER_VECTORS_PATH
+        if path is not None:
+            self.path = path
+
+        file_path = path or self.path or CAREER_VECTORS_PATH
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Career vectors file not found at: {file_path}")
 
@@ -149,7 +153,7 @@ class CareerRecommender:
             Sorted by match_pct descending
         """
         if not self.career_vectors or self._matrix is None:
-            self.load_career_vectors()
+            self.load_career_vectors(self.path)
 
         if top_k <= 0:
             return []
@@ -203,7 +207,7 @@ class CareerRecommender:
             ValueError: If career_name is not found
         """
         if not self.career_vectors:
-            self.load_career_vectors()
+            self.load_career_vectors(self.path)
 
         if not career_name:
             raise ValueError("career_name cannot be empty")

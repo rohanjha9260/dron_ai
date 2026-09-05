@@ -428,6 +428,46 @@ class TestCosineRecommender:
         with pytest.raises(ValueError, match="not found"):
             recommender.get_career_vector("NonExistentCareer")
 
+    def test_custom_path_lazy_reload_retries_configured_path(self, tmp_path):
+        """Test that custom path is preserved and retried on lazy reload if initial load failed."""
+        import json
+        from ml_engine.cosine_recommender import CareerRecommender
+
+        custom_path = str(tmp_path / "custom_careers.json")
+        # Initialize with a path to a file that does not exist yet
+        rec = CareerRecommender(path=custom_path)
+        assert rec.path == custom_path
+        assert len(rec.career_vectors) == 0
+
+        # Now create the custom file
+        custom_data = {
+            "careers": {
+                "Robotics Specialist": {
+                    "description": "Hardware and robotics",
+                    "vector": {
+                        "dsa_score": 80,
+                        "python_prof": 85,
+                        "cpp_prof": 95,
+                        "aiml_knowledge": 70,
+                        "total_commits": 60,
+                        "problems_solved": 50,
+                        "contest_rating": 40,
+                        "project_count": 90,
+                        "communication_score": 60,
+                        "internship_exp": 70,
+                    }
+                }
+            }
+        }
+        with open(custom_path, "w", encoding="utf-8") as f:
+            json.dump(custom_data, f)
+
+        # Calling recommend should lazily reload the custom path, not fallback to CAREER_VECTORS_PATH
+        recs = rec.recommend([80, 85, 95, 70, 60, 50, 40, 90, 60, 70], top_k=1)
+        assert len(recs) == 1
+        assert recs[0]["career"] == "Robotics Specialist"
+        assert rec.path == custom_path
+
 
 class TestGapAnalyzer:
     """Tests for skill-gap analysis."""
