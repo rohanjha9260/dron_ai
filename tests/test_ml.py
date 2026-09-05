@@ -840,7 +840,8 @@ class TestEndToEndPipeline:
         from ml_engine.gap_analyzer import analyze_gaps
         from ml_engine.roadmap_generator import generate_plan
 
-        dataset_path = "ml_engine/data/student_career_success_dataset.csv"
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        dataset_path = os.path.join(base_dir, "ml_engine", "data", "student_career_success_dataset.csv")
         if not os.path.exists(dataset_path):
             pytest.skip("Dataset file not available for smoke test")
 
@@ -972,6 +973,7 @@ class TestModelLoaderSingleton:
             t.join()
 
         assert len(models) == 10
+        assert models[0] is not None
         assert all(m is models[0] for m in models)
 
     def test_missing_model_file_logs_warning_and_allows_retry(self, tmp_path, caplog):
