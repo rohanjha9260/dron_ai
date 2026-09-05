@@ -50,6 +50,11 @@ def _compute_sha256(filepath: str) -> str:
     return hasher.hexdigest()
 
 
+class ChecksumNotFoundError(FileNotFoundError, ValueError):
+    """Raised when the SHA-256 checksum sidecar is absent, inheriting from FileNotFoundError and ValueError."""
+    pass
+
+
 class PlacementPredictor:
     """
     XGBoost-based placement readiness predictor.
@@ -319,7 +324,7 @@ class PlacementPredictor:
         else:
             checksum_path = f"{resolved_path}.sha256"
             if not os.path.exists(checksum_path):
-                raise FileNotFoundError(
+                raise ChecksumNotFoundError(
                     f"Integrity check failed: missing checksum sidecar file {checksum_path} for {model_path}"
                 )
             with open(checksum_path, "r", encoding="utf-8") as f:
