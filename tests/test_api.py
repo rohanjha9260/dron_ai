@@ -226,6 +226,299 @@ class TestAuthEndpoints:
         assert resp.status_code in (401, 422)
 
 
+# ── Profile Endpoint Tests ───────────────────────────────────────────────────
+
+class TestProfileEndpoints:
+    """Tests for /api/users/profile endpoints."""
+
+    def test_get_profile_unauthorized(self, client):
+        """GET /api/users/profile without JWT returns 401."""
+        resp = client.get("/api/users/profile")
+        assert resp.status_code == 401
+
+    def test_get_profile_success(self, client, registered_user):
+        """GET /api/users/profile returns 200 with complete student stats."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert resp.status_code == 200
+        body = resp.get_json()
+
+        assert "user" in body
+        assert body["user"]["email"] == registered_user["email"]
+        assert body["user"]["full_name"] == registered_user["full_name"]
+        assert "password_hash" not in body["user"]
+
+        assert "academics" in body
+        assert isinstance(body["academics"], list)
+
+        assert "platform_links" in body
+        assert "links" in body
+        assert "skills" in body
+        assert "dsa_score" in body["skills"]
+        assert "total_commits" in body["skills"]
+        assert "problems_solved" in body["skills"]
+
+    def test_update_profile_user_info(self, client, registered_user):
+        """PUT /api/users/profile updates basic user profile fields."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        update_payload = {
+            "full_name": "Updated Name",
+            "cohort_year": 2026,
+            "academic_branch": "Computer Science",
+        }
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps(update_payload),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+        body = resp.get_json()
+        assert body["message"] == "Profile updated successfully"
+
+        # Verify via GET
+        get_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        get_body = get_resp.get_json()
+        assert get_body["user"]["full_name"] == "Updated Name"
+        assert get_body["user"]["cohort_year"] == 2026
+        assert get_body["user"]["academic_branch"] == "Computer Science"
+
+    def test_update_profile_academics_upsert(self, client, registered_user):
+        """PUT /api/users/profile upserts semester-wise academic records."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        academics_payload = {
+            "academics": [
+                {"semester": 1, "cgpa": 8.5, "attendance_pct": 92.0, "active_backlogs": 0},
+                {"semester": 2, "cgpa": 8.7, "attendance_pct": 95.0, "active_backlogs": 0},
+            ]
+        }
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps(academics_payload),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+
+        # Update semester 1 and add semester 3
+        upsert_payload = {
+            "academics": [
+                {"semester": 1, "cgpa": 8.9, "attendance_pct": 93.0, "active_backlogs": 1},
+                {"semester": 3, "cgpa": 9.1, "attendance_pct": 90.0, "active_backlogs": 0},
+            ]
+        }
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps(upsert_payload),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+
+        get_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        get_body = get_resp.get_json()
+        sems = get_body["academics"]
+        assert len(sems) == 3
+        sem1 = next(s for s in sems if s["semester"] == 1)
+        assert sem1["cgpa"] == 8.9
+        assert sem1["active_backlogs"] == 1
+
+    def test_update_profile_platform_links(self, client, registered_user):
+        """PUT /api/users/profile updates external platform identifiers."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        links_payload = {
+            "platform_links": {
+                "github_username": "octocat",
+                "leetcode_username": "tourist",
+                "linkedin_url": "https://linkedin.com/in/octocat",
+            }
+        }
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps(links_payload),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+
+        get_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        links = get_resp.get_json()["platform_links"]
+        assert links["github_username"] == "octocat"
+        assert links["leetcode_username"] == "tourist"
+        assert links["linkedin_url"] == "https://linkedin.com/in/octocat"
+
+    def test_update_profile_skills(self, client, registered_user):
+        """PUT /api/users/profile updates skill metrics."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        skills_payload = {
+            "skills": {
+                "dsa_score": 85.5,
+                "python_prof": 90.0,
+                "cpp_prof": 75.0,
+                "aiml_knowledge": 80.0,
+                "project_count": 5,
+                "communication_score": 88.0,
+                "internship_exp": 6,
+            }
+        }
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps(skills_payload),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+
+        get_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        skills = get_resp.get_json()["skills"]
+        assert skills["dsa_score"] == 85.5
+        assert skills["python_prof"] == 90.0
+        assert skills["project_count"] == 5
+        assert skills["internship_exp"] == 6
+
+    def test_update_profile_validation_errors(self, client, registered_user):
+        """PUT /api/users/profile rejects invalid input with 400."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+
+        # Invalid CGPA > 10
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({"academics": [{"semester": 1, "cgpa": 12.0}]}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+
+        # Negative attendance
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({"academics": [{"semester": 1, "cgpa": 8.0, "attendance_pct": -5.0}]}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+
+        # Invalid semester
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({"academics": [{"semester": 0, "cgpa": 8.0}]}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+
+        # Skill score > 100
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({"skills": {"dsa_score": 150.0}}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+
+
+# ── Metrics Endpoint Tests ────────────────────────────────────────────────────
+
+class TestMetricsEndpoints:
+    """Tests for /api/metrics/ endpoints."""
+
+    def test_fetch_metrics_unauthorized(self, client):
+        """POST /api/metrics/fetch without JWT returns 401."""
+        resp = client.post("/api/metrics/fetch")
+        assert resp.status_code == 401
+
+    def test_fetch_metrics_no_handles(self, client, registered_user):
+        """POST /api/metrics/fetch with no handles returns 400."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        resp = client.post(
+            "/api/metrics/fetch",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+        body = resp.get_json()
+        assert "error" in body
+
+    def test_fetch_metrics_success_with_mock(self, client, registered_user, monkeypatch):
+        """POST /api/metrics/fetch syncs metrics and updates skill vector."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+
+        mock_github = {
+            "total_repos": 15,
+            "total_commits": 128,
+            "languages": ["Python", "JavaScript"],
+            "top_language": "Python",
+        }
+        mock_leetcode = {
+            "problems_solved": 210,
+            "easy_solved": 70,
+            "medium_solved": 110,
+            "hard_solved": 30,
+            "contest_rating": 1680.5,
+            "ranking": 45000,
+        }
+
+        monkeypatch.setattr(
+            "app.services.metrics_service.fetch_github_stats",
+            lambda username: mock_github,
+        )
+        monkeypatch.setattr(
+            "app.services.metrics_service.fetch_leetcode_stats",
+            lambda username: mock_leetcode,
+        )
+
+        resp = client.post(
+            "/api/metrics/fetch",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({
+                "github_handle": "dev_student",
+                "leetcode_username": "coder_student",
+            }),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+        body = resp.get_json()
+
+        assert "github" in body
+        assert body["github"]["total_commits"] == 128
+        assert body["github"]["repos"] == 15
+        assert "leetcode" in body
+        assert body["leetcode"]["problems_solved"] == 210
+        assert body["leetcode"]["rating"] == 1680.5
+
+        # Verify that profile and skill_vector were updated in the database
+        profile_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        profile_body = profile_resp.get_json()
+
+        assert profile_body["skills"]["total_commits"] == 128
+        assert profile_body["skills"]["problems_solved"] == 210
+        assert profile_body["skills"]["contest_rating"] == 1680.5
+        assert profile_body["skills"]["dsa_score"] >= 70.0
+
+        assert profile_body["platform_links"]["github_username"] == "dev_student"
+        assert profile_body["platform_links"]["leetcode_username"] == "coder_student"
+        assert profile_body["platform_links"]["last_synced"] is not None
+
+
 # ── Placeholder Tests (other feature areas) ───────────────────────────────────
 
 class TestPredictionEndpoints:
@@ -253,3 +546,4 @@ class TestRoadmapEndpoints:
         """Test roadmap generation for a target career."""
         # TODO: Implement
         pass
+
