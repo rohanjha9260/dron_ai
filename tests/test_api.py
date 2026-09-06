@@ -455,6 +455,18 @@ class TestMetricsEndpoints:
         body = resp.get_json()
         assert "error" in body
 
+    def test_fetch_metrics_invalid_payload(self, client, registered_user):
+        """POST /api/metrics/fetch with non-object JSON returns 400."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        resp = client.post(
+            "/api/metrics/fetch",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps(["not", "an", "object"]),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+        assert resp.get_json()["error"] == "Request body must be a JSON object"
+
     def test_fetch_metrics_success_with_mock(self, client, registered_user, monkeypatch):
         """POST /api/metrics/fetch syncs metrics and updates skill vector."""
         token = _get_jwt(client, registered_user["email"], registered_user["password"])
