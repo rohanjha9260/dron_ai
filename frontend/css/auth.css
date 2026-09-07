@@ -161,6 +161,12 @@
     padding-left: 2.75rem;
 }
 
+/* Reserve space on the right so the password-toggle button never overlaps typed text */
+.input-with-icon input[type="password"],
+.input-with-icon input[type="text"].password-visible {
+    padding-right: 2.75rem;
+}
+
 .input-with-icon input:focus ~ .input-icon,
 .input-with-icon select:focus ~ .input-icon {
     color: var(--color-primary);
