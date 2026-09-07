@@ -16,15 +16,18 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 .nav-brand h2 {
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+    background: var(--gradient-gold-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: -0.02em;
 }
 
 .nav-user {
@@ -51,6 +54,7 @@
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: var(--shadow-md);
 }
 
 .dashboard-card:hover {

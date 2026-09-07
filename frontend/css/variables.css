@@ -1,73 +1,130 @@
 /*
  * Dron-AI Design System Variables
  *
- * Central design tokens for colors, typography, spacing, and effects.
- * All components reference these variables for consistency.
+ * Theme: Premium Obsidian & Champagne Gold
+ * Central design tokens for colors, typography, spacing, elevations, and animations.
+ * All UI components reference these tokens for high visual fidelity and consistency.
  */
 
 :root {
-    /* ── Color Palette ── */
-    --color-primary: #6C63FF;
-    --color-primary-dark: #5A52E0;
-    --color-primary-light: #8B85FF;
+    /* ── Background Obsidian / Deep Black Hierarchy ── */
+    --color-bg-dark: #0A0A0C;       /* Base Canvas */
+    --color-bg-base: #0A0A0C;       /* Alias: Obsidian base */
+    --color-bg-card: #121217;       /* Surface / Cards */
+    --color-bg-surface: #121217;    /* Alias: Surface */
+    --color-bg-card-hover: #1A1A22; /* Card Hover / Elevated Surface */
+    --color-bg-input: #1A1A22;      /* Input fields */
+    --color-bg-glass: rgba(18, 18, 23, 0.82); /* Glassmorphism background */
+    --color-bg-glass-subtle: rgba(26, 26, 34, 0.55);
 
-    --color-accent: #00D4AA;
-    --color-accent-dark: #00B892;
+    /* ── Primary Champagne & Metallic Gold Hierarchy ── */
+    --color-primary: #D4AF37;        /* Metallic Gold */
+    --color-primary-light: #F3E5AB;  /* Light Gold / Text Accent */
+    --color-primary-dark: #AA7C11;   /* Deep Gold / Shadow */
+    --color-gold: #D4AF37;           /* Semantic Alias */
+    --color-gold-light: #F3E5AB;     /* Semantic Alias */
+    --color-gold-dark: #AA7C11;      /* Semantic Alias */
+    --color-gold-metallic: #D4AF37;  /* Semantic Alias */
 
-    --color-bg-dark: #0F0F1A;
-    --color-bg-card: #1A1A2E;
-    --color-bg-card-hover: #222240;
-    --color-bg-input: #16162B;
+    /* ── Secondary / Accent Glow ── */
+    --color-accent: #E5C158;         /* Bright Gold Accent */
+    --color-accent-dark: #C9A038;    /* Amber Gold Shade */
+    --color-accent-light: #FFF0BD;   /* Pale Gold Highlight */
 
-    --color-text-primary: #EAEAEA;
-    --color-text-secondary: #9E9EB8;
-    --color-text-muted: #6B6B85;
+    /* ── Text Hierarchy ── */
+    --color-text-primary: #FFFFFF;   /* Primary Headers & High-Contrast */
+    --color-text-header: #FFFFFF;    /* Header alias */
+    --color-text-secondary: #E0D8C3; /* Body Gold-Tinted */
+    --color-text-body: #E0D8C3;      /* Body alias */
+    --color-text-muted: #8A8A99;     /* Muted / Subtext / Placeholders */
+    --color-text-gold: #F3E5AB;      /* Highlight gold text */
 
-    --color-success: #00D68F;
-    --color-warning: #FFAA00;
-    --color-danger: #FF6B6B;
-    --color-info: #339AF0;
+    /* ── Status Colors ── */
+    --color-success: #10B981;        /* Emerald Success */
+    --color-success-bg: rgba(16, 185, 129, 0.12);
+    --color-success-border: rgba(16, 185, 129, 0.35);
 
-    --color-border: #2A2A45;
-    --color-border-focus: #6C63FF;
+    --color-warning: #E5A93C;        /* Amber Gold Warning */
+    --color-warning-bg: rgba(229, 169, 60, 0.12);
+    --color-warning-border: rgba(229, 169, 60, 0.35);
+
+    --color-danger: #EF4444;         /* Ruby Danger */
+    --color-danger-bg: rgba(239, 68, 68, 0.12);
+    --color-danger-border: rgba(239, 68, 68, 0.35);
+
+    --color-info: #38BDF8;           /* Cyan Info */
+    --color-info-bg: rgba(56, 189, 248, 0.12);
+    --color-info-border: rgba(56, 189, 248, 0.35);
+
+    /* ── Borders & Outlines ── */
+    --color-border: #2A2720;         /* Subtle Gold-Black Border */
+    --color-border-subtle: #2A2720;  /* Alias */
+    --color-border-hover: rgba(212, 175, 55, 0.4);
+    --color-border-focus: #D4AF37;   /* Active Focus Glowing Gold */
+    --color-border-glow: rgba(212, 175, 55, 0.55);
+
+    /* ── Gradients ── */
+    --gradient-gold: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
+    --gradient-gold-hover: linear-gradient(135deg, #FFF0BD 0%, #E5C158 50%, #D4AF37 100%);
+    --gradient-gold-text: linear-gradient(135deg, #FFFFFF 0%, #F3E5AB 40%, #D4AF37 100%);
+    --gradient-gold-subtle: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(18, 18, 23, 0.6) 100%);
+    --gradient-dark-card: linear-gradient(180deg, rgba(26, 26, 34, 0.75) 0%, rgba(18, 18, 23, 0.95) 100%);
+    --gradient-border-gold: linear-gradient(135deg, rgba(212, 175, 55, 0.45) 0%, rgba(42, 39, 32, 0.6) 50%, rgba(212, 175, 55, 0.2) 100%);
 
     /* ── Typography ── */
-    --font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
-    --font-size-base: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2rem;
+    --font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-family-display: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    --font-size-xs: 0.75rem;     /* 12px */
+    --font-size-sm: 0.875rem;    /* 14px */
+    --font-size-base: 1rem;      /* 16px */
+    --font-size-lg: 1.125rem;    /* 18px */
+    --font-size-xl: 1.25rem;     /* 20px */
+    --font-size-2xl: 1.5rem;     /* 24px */
+    --font-size-3xl: 2rem;       /* 32px */
+    --font-size-4xl: 2.5rem;     /* 40px */
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
 
     /* ── Spacing ── */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
+    --space-2xs: 0.125rem;       /* 2px */
+    --space-xs: 0.25rem;         /* 4px */
+    --space-sm: 0.5rem;          /* 8px */
+    --space-md: 1rem;            /* 16px */
+    --space-lg: 1.5rem;          /* 24px */
+    --space-xl: 2rem;            /* 32px */
+    --space-2xl: 3rem;           /* 48px */
+    --space-3xl: 4rem;           /* 64px */
 
     /* ── Border Radius ── */
-    --radius-sm: 6px;
-    --radius-md: 10px;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
     --radius-lg: 16px;
-    --radius-full: 50%;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
 
-    /* ── Shadows ── */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 0 20px rgba(108, 99, 255, 0.15);
+    /* ── Shadows & Glow Effects ── */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
+    --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.85);
 
-    /* ── Transitions ── */
-    --transition-fast: 150ms ease;
-    --transition-base: 250ms ease;
-    --transition-slow: 400ms ease;
+    /* Gold Glow Tokens */
+    --shadow-glow: 0 0 15px rgba(212, 175, 55, 0.25);
+    --shadow-gold-glow: 0 0 15px rgba(212, 175, 55, 0.25);
+    --shadow-gold-hover: 0 0 25px rgba(212, 175, 55, 0.4);
+    --shadow-gold-focus: 0 0 0 3px rgba(212, 175, 55, 0.2), 0 0 18px rgba(212, 175, 55, 0.3);
+    --shadow-card-gold: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.08), inset 0 1px 0 rgba(243, 229, 171, 0.15);
+
+    /* ── Transitions & Animations ── */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }

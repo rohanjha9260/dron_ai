@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron-AI Student Login - Intelligent Student Guidance Platform">
-    <title>Dron-AI | Login</title>
+    <meta name="description" content="Dron-AI Student Login - Intelligent AI-Powered Student Guidance and Placement Platform">
+    <title>Dron-AI | Student Login</title>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/auth.css">
@@ -13,28 +13,54 @@
     <div class="auth-container" id="login-container">
         <div class="auth-card">
             <div class="auth-header">
+                <div class="auth-logo-badge" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
                 <h1>Dron-AI</h1>
-                <p>Intelligent Student Guidance Platform</p>
+                <p>Intelligent Student Career Platform</p>
+                <span class="auth-tag">Student Portal</span>
             </div>
 
-            <form id="login-form" class="auth-form">
+            <form id="login-form" class="auth-form" novalidate>
                 <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" name="email" placeholder="you@university.edu" required>
+                    <label for="login-email">Email Address</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="login-email" name="email" placeholder="student@university.edu" required autocomplete="email">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect width="20" height="16" x="2" y="4" rx="2"/>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+                    <div class="input-with-icon">
+                        <input type="password" id="login-password" name="password" placeholder="••••••••" required autocomplete="current-password">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <button type="button" class="password-toggle-btn" data-target="login-password" aria-label="Toggle password visibility">
+                            <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
-                <button type="submit" id="login-submit-btn" class="btn btn-primary">Login</button>
+                <div id="login-error" class="error-message" style="display: none;" role="alert"></div>
 
-                <div id="login-error" class="error-message" style="display: none;"></div>
+                <button type="submit" id="login-submit-btn" class="btn btn-primary">
+                    <span>Sign In</span>
+                </button>
             </form>
 
             <div class="auth-footer">
-                <p>Don't have an account? <a href="register.html" id="go-to-register">Register</a></p>
+                <p>Don't have an account? <a href="register.html" id="go-to-register">Register Now</a></p>
             </div>
         </div>
     </div>

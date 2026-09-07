@@ -64,10 +64,18 @@ async function apiRequest(endpoint, options = {}) {
             body: options.body ? JSON.stringify(options.body) : undefined,
         });
 
-        const data = await response.json();
+        let data = {};
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            data = await response.json();
+        } else {
+            const text = await response.text();
+            data = { error: text || `HTTP ${response.status}: ${response.statusText}` };
+        }
 
         if (!response.ok) {
-            throw new Error(data.error || `Request failed with status ${response.status}`);
+            const errorMessage = data.error || data.msg || data.message || `Request failed with status ${response.status}`;
+            throw new Error(errorMessage);
         }
 
         return data;
