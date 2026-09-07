@@ -2,11 +2,16 @@
 Predictions Blueprint
 
 Endpoints:
-    POST /api/predictions/placement  — Get XGBoost placement readiness score
+    POST /api/predictions/placement  — Calculate placement probability & readiness tier
 """
 
-from flask import Blueprint, request, jsonify
+import logging
+from flask import Blueprint, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
+from app.services import prediction_service
+
+logger = logging.getLogger(__name__)
 
 predictions_bp = Blueprint("predictions", __name__)
 
@@ -17,18 +22,50 @@ def predict_placement():
     """
     Run XGBoost inference to predict placement readiness.
 
-    Uses the student's complete skill vector + academic history
-    to generate a placement probability score (0.0 to 1.0) and
-    a human-readable readiness tier.
+    Uses the student's latest academic record and skill vector to generate
+    a placement probability score (0.0–1.0) and a human-readable readiness
+    tier. The result is also persisted to the ml_predictions audit table.
+
+    No request body is required — all data is fetched from the student's
+    existing profile using the JWT identity.
 
     Returns:
         200: {
-            "placement_probability": float,
-            "readiness_tier": "string",  // "Highly Prepared", "Prepared", "Needs Improvement", etc.
-            "feature_importance": { ... }
+            "prediction_id":         int,
+            "placement_probability": float,   // 0.0 – 1.0
+            "readiness_tier":        str,     // "Highly Prepared" | "Prepared" |
+                                              // "Needs Improvement" |
+                                              // "High Risk / Action Required"
+            "feature_importance":    dict,    // feature name → relative weight
+            "top_factors":           list     // top 3 contributing feature names
         }
-        400: { "error": "Incomplete profile - cannot predict" }
+        400: { "error": "Incomplete profile — cannot predict. Missing: ..." }
+        503: { "error": "ML model not available. Please contact an administrator." }
+        500: { "error": "Internal server error" }
     """
-    # TODO: Implement using prediction_service (calls xgboost_model)
-    student_id = get_jwt_identity()
-    return jsonify({"message": "placement prediction - not yet implemented"}), 501
+    student_id = int(get_jwt_identity())
+
+    try:
+        result = prediction_service.predict_placement(student_id=student_id)
+
+    except ValueError as exc:
+        err_msg = str(exc)
+        if "Student not found" in err_msg:
+            return jsonify({"error": "Student not found"}), 404
+        # Incomplete profile — missing academic records or skill vector
+        return jsonify({"error": err_msg}), 400
+
+    except RuntimeError as exc:
+        # XGBoost singleton not loaded (model file missing / not trained yet)
+        logger.error("ML model unavailable for student %s: %s", student_id, exc)
+        return jsonify(
+            {"error": "ML model not available. Please contact an administrator."}
+        ), 503
+
+    except Exception:
+        logger.exception(
+            "Unexpected error during placement prediction for student %s", student_id
+        )
+        return jsonify({"error": "Internal server error"}), 500
+
+    return jsonify(result), 200
