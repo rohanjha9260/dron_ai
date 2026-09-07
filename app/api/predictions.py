@@ -43,7 +43,10 @@ def predict_placement():
         503: { "error": "ML model not available. Please contact an administrator." }
         500: { "error": "Internal server error" }
     """
-    student_id = int(get_jwt_identity())
+    try:
+        student_id = int(get_jwt_identity())
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid token identity"}), 422
 
     try:
         result = prediction_service.predict_placement(student_id=student_id)

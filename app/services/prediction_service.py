@@ -14,6 +14,8 @@ from typing import Dict, Any
 
 from app.extensions import db
 from app.models import User, AcademicHistory, SkillVector, MLPrediction
+from ml_engine.preprocessing import build_feature_vector
+from ml_engine.model_loader import get_placement_model
 
 logger = logging.getLogger(__name__)
 
@@ -78,7 +80,7 @@ def predict_placement(student_id: int) -> Dict[str, Any]:
     # ── 3. Fetch skill vector (one-to-one) ─────────────────────────────────────
     skill_vector = SkillVector.query.filter_by(student_id=student_id).first()
 
-    # ── 4. Guard — both records must exist ────────────────────────────────────
+    # ── 4. Guard — both records must exist before we can build a feature vector ─
     missing = []
     if latest_academic is None:
         missing.append("academic records")
@@ -91,8 +93,6 @@ def predict_placement(student_id: int) -> Dict[str, Any]:
         )
 
     # ── 5. Build 13-dimensional feature vector ─────────────────────────────────
-    from ml_engine.preprocessing import build_feature_vector
-
     academic_data: Dict[str, Any] = {
         "cgpa": latest_academic.cgpa,
         "attendance_pct": latest_academic.attendance_pct,
@@ -119,8 +119,6 @@ def predict_placement(student_id: int) -> Dict[str, Any]:
     logger.debug("Built feature vector for student %s: %s", student_id, features)
 
     # ── 6. Load singleton model and run inference ──────────────────────────────
-    from ml_engine.model_loader import get_placement_model
-
     model = get_placement_model()
     if model is None:
         raise RuntimeError(
@@ -144,7 +142,7 @@ def predict_placement(student_id: int) -> Dict[str, Any]:
         readiness_tier,
     )
 
-    # ── 8. Persist prediction audit row ───────────────────────────────────────
+    # ── 8. Persist prediction audit row (with rollback on commit failure) ───────
     prediction_row = MLPrediction(
         student_id=student_id,
         placement_probability=placement_probability,
@@ -152,7 +150,14 @@ def predict_placement(student_id: int) -> Dict[str, Any]:
         feature_importance=json.dumps(feature_importance),
     )
     db.session.add(prediction_row)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logger.exception(
+            "Failed to persist MLPrediction for student %s — rolling back.", student_id
+        )
+        raise
 
     # ── 9. Return response payload ─────────────────────────────────────────────
     return {
