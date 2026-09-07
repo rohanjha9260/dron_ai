@@ -140,6 +140,11 @@ function initLoginForm() {
             return;
         }
 
+        if (!emailInput.checkValidity()) {
+            displayError(errorDiv, "Please enter a valid email address.");
+            return;
+        }
+
         if (errorDiv) errorDiv.style.display = "none";
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span class="spinner"></span> <span>Signing In...</span>`;
@@ -202,7 +207,7 @@ function initRegisterForm() {
         const fullName = nameInput ? nameInput.value.trim() : "";
         const email = emailInput ? emailInput.value.trim() : "";
         const password = passwordInput ? passwordInput.value : "";
-        const cohortYear = cohortInput && cohortInput.value ? parseInt(cohortInput.value, 10) : null;
+        const cohortYear = cohortInput && cohortInput.value ? Number(cohortInput.value) : null;
         const branch = branchInput ? branchInput.value : null;
 
         // Basic front-end validations
@@ -211,8 +216,18 @@ function initRegisterForm() {
             return;
         }
 
+        if (!emailInput.checkValidity()) {
+            displayError(errorDiv, "Please enter a valid email address.");
+            return;
+        }
+
         if (password.length < 6) {
             displayError(errorDiv, "Password must be at least 6 characters long.");
+            return;
+        }
+
+        if (cohortYear !== null && (!Number.isInteger(cohortYear) || cohortYear < 2000 || cohortYear > 2099)) {
+            displayError(errorDiv, "Cohort year must be between 2000 and 2099.");
             return;
         }
 

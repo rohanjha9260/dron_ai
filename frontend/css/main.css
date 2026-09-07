@@ -5,7 +5,7 @@
  * Base reset, typography, buttons, form elements, alert banners, and utility classes.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
 
 /* ── Reset & Base ── */
 *, *::before, *::after {
@@ -269,7 +269,7 @@ a:hover {
     gap: 0.65rem;
     backdrop-filter: blur(12px);
     transition: opacity var(--transition-base), transform var(--transition-base);
-    animation: fadeInSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fade-in-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .error-message {
@@ -300,7 +300,7 @@ a:hover {
     border-left: 3px solid var(--color-info);
 }
 
-@keyframes fadeInSlideDown {
+@keyframes fade-in-slide-down {
     from {
         opacity: 0;
         transform: translateY(-6px);
