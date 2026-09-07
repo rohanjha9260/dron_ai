@@ -23,10 +23,10 @@ class BaseConfig:
     DB_USER = os.getenv("DB_USER", "root")
     DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 
-    default_mysql_uri = (
-        f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL",
+        f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
     )
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", default_mysql_uri)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
