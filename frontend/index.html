@@ -31,11 +31,28 @@
                 <button id="edit-profile-btn" class="btn btn-small">Edit Profile</button>
             </div>
             <div class="card-body" id="profile-content">
-                <!-- Populated dynamically by profile.js -->
+                <!-- Skeleton loader displayed until profile API resolves -->
                 <div class="skeleton-loader" id="profile-skeleton">
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line short"></div>
-                    <div class="skeleton-line"></div>
+                    <div class="skeleton-profile-header">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-user-details">
+                            <div class="skeleton-line" style="width: 55%; height: 20px;"></div>
+                            <div class="skeleton-line short" style="width: 35%;"></div>
+                            <div class="skeleton-line short" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-badges-grid">
+                        <div class="skeleton-badge"></div>
+                        <div class="skeleton-badge"></div>
+                        <div class="skeleton-badge"></div>
+                        <div class="skeleton-badge"></div>
+                    </div>
+                    <div class="skeleton-skills-list">
+                        <div class="skeleton-line" style="width: 45%; height: 16px; margin-bottom: 12px;"></div>
+                        <div class="skeleton-line" style="height: 12px; margin-bottom: 10px;"></div>
+                        <div class="skeleton-line" style="height: 12px; margin-bottom: 10px;"></div>
+                        <div class="skeleton-line" style="height: 12px; margin-bottom: 10px;"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -113,6 +130,141 @@
         </section>
 
     </main>
+
+    <!-- Edit Student Profile Modal Dialog -->
+    <div class="modal-backdrop" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 id="profile-modal-title">Edit Student Profile</h3>
+                <button type="button" class="modal-close-btn" id="close-profile-modal" aria-label="Close modal">&times;</button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="modal-tabs" role="tablist">
+                <button type="button" class="modal-tab active" role="tab" aria-selected="true" data-tab="tab-personal">Personal</button>
+                <button type="button" class="modal-tab" role="tab" aria-selected="false" data-tab="tab-academic">Academic</button>
+                <button type="button" class="modal-tab" role="tab" aria-selected="false" data-tab="tab-handles">Handles</button>
+                <button type="button" class="modal-tab" role="tab" aria-selected="false" data-tab="tab-skills">Skills</button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="edit-profile-form" class="modal-form" novalidate>
+                <!-- Form Error Container -->
+                <div id="modal-form-error" class="error-message" style="display: none; margin: 0 var(--space-lg) var(--space-md);"></div>
+
+                <div class="modal-body">
+                    <!-- Tab 1: Personal Info -->
+                    <div class="tab-pane active" id="tab-personal" role="tabpanel">
+                        <div class="form-group">
+                            <label for="edit-full-name">Full Name *</label>
+                            <input type="text" id="edit-full-name" name="full_name" placeholder="e.g. Alex Morgan" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-branch">Academic Branch</label>
+                                <input type="text" id="edit-branch" name="academic_branch" placeholder="e.g. Computer Science">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-cohort">Cohort / Grad Year</label>
+                                <input type="number" id="edit-cohort" name="cohort_year" placeholder="e.g. 2025" min="1900" max="2100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Academic Info -->
+                    <div class="tab-pane" id="tab-academic" role="tabpanel" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-semester">Current Semester (1-12) *</label>
+                                <input type="number" id="edit-semester" name="semester" min="1" max="12" placeholder="e.g. 6" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-cgpa">Cumulative GPA (0.00 - 10.00) *</label>
+                                <input type="number" id="edit-cgpa" name="cgpa" step="0.01" min="0" max="10" placeholder="e.g. 8.50" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-attendance">Attendance % (0 - 100)</label>
+                                <input type="number" id="edit-attendance" name="attendance_pct" step="0.1" min="0" max="100" placeholder="e.g. 85.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-backlogs">Active Backlogs (0+)</label>
+                                <input type="number" id="edit-backlogs" name="active_backlogs" min="0" placeholder="e.g. 0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Coding Handles -->
+                    <div class="tab-pane" id="tab-handles" role="tabpanel" style="display: none;">
+                        <div class="form-group">
+                            <label for="edit-github">GitHub Username</label>
+                            <input type="text" id="edit-github" name="github_username" placeholder="e.g. alexmorgan">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-leetcode">LeetCode Username</label>
+                            <input type="text" id="edit-leetcode" name="leetcode_username" placeholder="e.g. alex_code">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-linkedin">LinkedIn Profile URL</label>
+                            <input type="url" id="edit-linkedin" name="linkedin_url" placeholder="https://linkedin.com/in/alexmorgan">
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Skills Matrix -->
+                    <div class="tab-pane" id="tab-skills" role="tabpanel" style="display: none;">
+                        <p class="tab-helper-text">Enter skill ratings from 0 to 100.</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-dsa">DSA Score (0-100)</label>
+                                <input type="number" id="edit-dsa" name="dsa_score" min="0" max="100" step="1" placeholder="e.g. 75">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-python">Python Proficiency (0-100)</label>
+                                <input type="number" id="edit-python" name="python_prof" min="0" max="100" step="1" placeholder="e.g. 80">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-cpp">C++ Proficiency (0-100)</label>
+                                <input type="number" id="edit-cpp" name="cpp_prof" min="0" max="100" step="1" placeholder="e.g. 65">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-aiml">AI / ML Knowledge (0-100)</label>
+                                <input type="number" id="edit-aiml" name="aiml_knowledge" min="0" max="100" step="1" placeholder="e.g. 70">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-communication">Communication Score (0-100)</label>
+                                <input type="number" id="edit-communication" name="communication_score" min="0" max="100" step="1" placeholder="e.g. 85">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-projects">Project Count (0+)</label>
+                                <input type="number" id="edit-projects" name="project_count" min="0" placeholder="e.g. 3">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-internship">Internship Experience (Months)</label>
+                                <input type="number" id="edit-internship" name="internship_exp" min="0" placeholder="e.g. 3">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-contest">LeetCode Contest Rating</label>
+                                <input type="number" id="edit-contest" name="contest_rating" min="0" step="1" placeholder="e.g. 1650">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-profile-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-profile-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="js/api.js"></script>
