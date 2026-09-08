@@ -86,20 +86,408 @@
 /* ── Metrics Grid ── */
 .metrics-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
 }
 
 .metric-card {
-    background: var(--color-bg-input);
+    background: var(--gradient-dark-card);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 260px;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: var(--shadow-md);
+}
+
+/* Metric Card Header */
+.metric-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(42, 39, 32, 0.7);
+}
+
+.metric-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.metric-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-light);
 }
 
 .metric-card h3 {
     font-size: var(--font-size-base);
-    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.metric-handle-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--font-size-xs);
+    color: var(--color-primary-light);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-family-mono);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.metric-handle-badge:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--color-primary);
+    color: #FFFFFF;
+}
+
+/* Stats Summary Row / Grid */
+.metric-stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
     margin-bottom: var(--space-md);
+}
+
+.stat-box {
+    background: rgba(10, 10, 12, 0.6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: border-color var(--transition-fast);
+}
+
+.stat-box:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.stat-box-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    font-family: var(--font-family-display);
+}
+
+.stat-box-value.highlight-gold {
+    background: var(--gradient-gold-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-box-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+/* GitHub Language Badges */
+.languages-section {
+    margin-top: var(--space-sm);
+}
+
+.languages-header {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.language-pills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.language-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    background: rgba(26, 26, 34, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.language-pill:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-light);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+
+.language-pill.top-lang {
+    border-color: var(--color-primary);
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--color-primary-light);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* LeetCode Difficulty Grid & Color Coding */
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.difficulty-box {
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-xs);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    transition: transform var(--transition-fast);
+}
+
+.difficulty-box:hover {
+    transform: translateY(-2px);
+}
+
+.diff-easy {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.text-emerald-500,
+.diff-easy .diff-count {
+    color: #10B981;
+}
+
+.diff-medium {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.text-amber-500,
+.diff-medium .diff-count {
+    color: #F59E0B;
+}
+
+.diff-hard {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.text-ruby-500,
+.text-danger-500,
+.diff-hard .diff-count {
+    color: #EF4444;
+}
+
+.diff-count {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-display);
+    line-height: 1.1;
+}
+
+.diff-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+/* LeetCode Distribution Progress Bar */
+.diff-progress-bar {
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: rgba(26, 26, 34, 0.8);
+    display: flex;
+    overflow: hidden;
+    margin-bottom: var(--space-md);
+    border: 1px solid rgba(42, 39, 32, 0.5);
+}
+
+.progress-segment {
+    height: 100%;
+    transition: width 0.5s ease-out;
+}
+
+.progress-segment.easy {
+    background: #10B981;
+}
+
+.progress-segment.medium {
+    background: #F59E0B;
+}
+
+.progress-segment.hard {
+    background: #EF4444;
+}
+
+/* LeetCode Contest / Extra Meta */
+.leetcode-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    border-top: 1px solid rgba(42, 39, 32, 0.6);
+}
+
+.meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.meta-pill strong {
+    color: var(--color-primary-light);
+}
+
+/* Empty State / Unlinked CTA */
+.metric-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-sm);
+    min-height: 200px;
+}
+
+.empty-state-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px dashed rgba(212, 175, 55, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-light);
+    margin-bottom: 0.25rem;
+}
+
+.empty-state-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.empty-state-text {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    max-width: 280px;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-xs);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: var(--color-primary-light);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.empty-state-btn:hover {
+    background: var(--gradient-gold);
+    color: #0A0A0C;
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+
+/* Partial Failure / Error State */
+.metric-error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-xs);
+    min-height: 200px;
+    background: rgba(239, 68, 68, 0.04);
+    border-radius: var(--radius-sm);
+}
+
+.error-state-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--color-danger);
+    margin-bottom: 0.25rem;
+}
+
+.error-state-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: #FCA5A5;
+}
+
+.error-state-text {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    max-width: 260px;
+    margin-bottom: 0.5rem;
+}
+
+.error-retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--font-size-xs);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-xs);
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid var(--color-danger-border);
+    color: #FCA5A5;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.error-retry-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    color: #FFFFFF;
 }
 
 /* ── Placement Gauge ── */
