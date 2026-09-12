@@ -1,6 +1,7 @@
 /*
  * Dron-AI Authentication Page Styles
  *
+ * Theme: Premium Obsidian & Champagne Gold
  * Styles for login.html and register.html
  */
 
@@ -9,55 +10,233 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: var(--space-xl);
-    background: radial-gradient(ellipse at top, #1A1A3E, var(--color-bg-dark));
+    padding: var(--space-xl) var(--space-md);
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(170, 124, 17, 0.08) 0%, transparent 50%),
+        var(--color-bg-dark);
+    position: relative;
+    overflow: hidden;
 }
 
+/* Subtle Ambient Background Mesh */
+.auth-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Centered Glassmorphism Auth Card ── */
 .auth-card {
     width: 100%;
-    max-width: 440px;
-    background: var(--color-bg-card);
+    max-width: 460px;
+    background: var(--color-bg-glass);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-2xl);
-    box-shadow: var(--shadow-lg);
+    padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+    box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.8),
+        0 0 35px rgba(212, 175, 55, 0.08),
+        inset 0 1px 0 rgba(243, 229, 171, 0.2);
+    position: relative;
+    z-index: 1;
+    transition: box-shadow var(--transition-slow), border-color var(--transition-slow);
 }
 
+.auth-card.auth-card-wide {
+    max-width: 520px;
+}
+
+.auth-card:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 
+        0 28px 70px rgba(0, 0, 0, 0.85),
+        0 0 45px rgba(212, 175, 55, 0.14),
+        inset 0 1px 0 rgba(243, 229, 171, 0.3);
+}
+
+/* Top Gold Glow Accent Line */
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-primary-light), var(--color-primary), transparent);
+    border-radius: var(--radius-full);
+}
+
+/* ── Header ── */
 .auth-header {
     text-align: center;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+}
+
+.auth-logo-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(18, 18, 23, 0.9));
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    margin-bottom: var(--space-md);
+    color: var(--color-primary);
+}
+
+.auth-logo-badge svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--color-primary);
 }
 
 .auth-header h1 {
     font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+    font-weight: var(--font-weight-extrabold);
+    background: var(--gradient-gold-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: -0.02em;
     margin-bottom: var(--space-xs);
 }
 
 .auth-header p {
     color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
 }
 
+.auth-header .auth-tag {
+    display: inline-block;
+    margin-top: var(--space-xs);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ── Form Styling ── */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form .form-group {
+    margin-bottom: var(--space-md);
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    width: 18px;
+    height: 18px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transition: color var(--transition-fast);
+}
+
+.input-with-icon input,
+.input-with-icon select {
+    padding-left: 2.75rem;
+}
+
+/* Reserve space on the right so the password-toggle button never overlaps typed text */
+.input-with-icon input[type="password"],
+.input-with-icon input[type="text"].password-visible {
+    padding-right: 2.75rem;
+}
+
+.input-with-icon input:focus ~ .input-icon,
+.input-with-icon select:focus ~ .input-icon {
+    color: var(--color-primary);
+}
+
+/* Password Visibility Toggle */
+.password-toggle-btn {
+    position: absolute;
+    right: 0.85rem;
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-xs);
+    transition: color var(--transition-fast);
+}
+
+.password-toggle-btn:hover {
+    color: var(--color-primary-light);
+}
+
+.password-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Submit Button */
 .auth-form .btn-primary {
     width: 100%;
-    padding: var(--space-md);
+    padding: 0.85rem 1.5rem;
     margin-top: var(--space-sm);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
+    letter-spacing: 0.02em;
 }
 
+/* ── Footer ── */
 .auth-footer {
     text-align: center;
-    margin-top: var(--space-lg);
+    margin-top: var(--space-xl);
     padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid rgba(42, 39, 32, 0.8);
 }
 
 .auth-footer p {
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
     font-size: var(--font-size-sm);
+}
+
+.auth-footer a {
+    color: var(--color-primary-light);
+    font-weight: var(--font-weight-semibold);
+    margin-left: 0.25rem;
+}
+
+.auth-footer a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* ── Responsive Polish ── */
+@media (max-width: 480px) {
+    .auth-card {
+        padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .auth-header h1 {
+        font-size: var(--font-size-2xl);
+    }
 }
