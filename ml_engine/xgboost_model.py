@@ -18,6 +18,7 @@ from typing import Dict, Any, Optional, Tuple, List, Union
 import numpy as np
 import pandas as pd
 import joblib
+import shap
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
@@ -83,6 +84,7 @@ class PlacementPredictor:
         self.n_jobs = n_jobs
         self._cached_feature_importance: Optional[Dict[str, float]] = None
         self._cached_top_factors: Optional[List[str]] = None
+        self._explainer: Optional[shap.TreeExplainer] = None
 
     def train(
         self,
@@ -232,15 +234,31 @@ class PlacementPredictor:
         if self._cached_feature_importance is None:
             self._update_cached_importances()
 
+        # SHAP Values (Explainable AI)
+        if self._explainer is None:
+            self._explainer = shap.TreeExplainer(self.model)
+        
+        shap_vals = self._explainer.shap_values(feat_arr)
+        if isinstance(shap_vals, list):
+            shap_array = shap_vals[1][0]
+        else:
+            shap_array = shap_vals[0] if shap_vals.ndim == 2 else shap_vals
+            
+        shap_dict = {
+            name: float(val) for name, val in zip(FEATURE_NAMES, shap_array)
+        }
+
         return {
             "placement_probability": round(proba, 4),
             "is_placed": is_placed,
             "feature_importance": self._cached_feature_importance or {},
             "top_factors": self._cached_top_factors or [],
+            "shap_values": shap_dict,
         }
 
     def _update_cached_importances(self):
         """Precompute and cache feature importances for instant access."""
+        self._explainer = None
         importances = getattr(self.model, "feature_importances_", None)
         if importances is not None:
             feature_imp = {
