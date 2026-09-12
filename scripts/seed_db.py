@@ -134,6 +134,7 @@ def seed(reset=False):
         db.create_all()
 
         seeded_count = 0
+        seeded_emails = []
         for student_data in SAMPLE_STUDENTS:
             existing = User.query.filter_by(email=student_data["email"]).first()
             if existing:
@@ -189,12 +190,15 @@ def seed(reset=False):
             )
             db.session.add(vector)
             seeded_count += 1
+            seeded_emails.append(student_data["email"])
 
         db.session.commit()
         print(f"Sample data seeded successfully! ({seeded_count} new accounts added)")
-        print("\nDefault Demo Accounts:")
-        for s in SAMPLE_STUDENTS:
-            print(f"  - {s['full_name']}: {s['email']} (password: {s['password']})")
+        if seeded_emails:
+            print("\nNewly Created Demo Accounts:")
+            for s in SAMPLE_STUDENTS:
+                if s["email"] in seeded_emails:
+                    print(f"  - {s['full_name']}: {s['email']} (password: {s['password']})")
 
 
 if __name__ == "__main__":

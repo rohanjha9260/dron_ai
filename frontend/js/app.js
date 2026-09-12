@@ -214,9 +214,9 @@ function setupProfileActions() {
                 cohort_year: parseInt(document.getElementById("input-cohort")?.value) || 2026,
                 academics: [
                     {
-                        semester: 6,
-                        cgpa: parseFloat(document.getElementById("input-cgpa")?.value) || 8.0,
-                        attendance_pct: parseFloat(document.getElementById("input-attendance")?.value) || 85.0,
+                        semester: cachedStudentData?.academics?.[0]?.semester ?? 6,
+                        cgpa: (() => { const v = parseFloat(document.getElementById("input-cgpa")?.value); return Number.isFinite(v) ? v : 8.0; })(),
+                        attendance_pct: (() => { const v = parseFloat(document.getElementById("input-attendance")?.value); return Number.isFinite(v) ? v : 85.0; })(),
                         active_backlogs: parseInt(document.getElementById("input-backlogs")?.value) || 0,
                     },
                 ],
@@ -234,7 +234,7 @@ function setupProfileActions() {
                     total_commits: parseInt(document.getElementById("input-commits")?.value) || 0,
                     problems_solved: parseInt(document.getElementById("input-solved")?.value) || 0,
                     contest_rating: parseFloat(document.getElementById("input-rating")?.value) || 0,
-                    project_count: 4,
+                    project_count: cachedStudentData?.skills?.project_count ?? 4,
                 },
             };
 

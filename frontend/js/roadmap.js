@@ -20,11 +20,16 @@ const SKILL_DISPLAY_NAMES = {
     internship_exp: "Internship Exposure",
 };
 
+let _activeRoadmapRequestId = 0;
+
 /**
  * Generate and render personalized roadmap & skill gaps.
  * @param {string} targetCareer - The target career role (e.g. "Software Engineer")
+ * @param {number} [requestId] - Optional monotonic request ID to prevent stale responses
  */
-async function generateRoadmap(targetCareer) {
+async function generateRoadmap(targetCareer, requestId) {
+    const myRequestId = requestId ?? ++_activeRoadmapRequestId;
+    _activeRoadmapRequestId = Math.max(_activeRoadmapRequestId, myRequestId);
     const timeline = document.getElementById("roadmap-timeline");
     const gapTbody = document.getElementById("gap-analysis-tbody");
     const gapBadge = document.getElementById("roadmap-gap-badge");
@@ -46,6 +51,9 @@ async function generateRoadmap(targetCareer) {
 
         const skillGaps = data.skill_gaps || [];
         const roadmap = data.roadmap || [];
+
+        // Guard against stale responses
+        if (myRequestId !== _activeRoadmapRequestId) return;
 
         // 1. Update Gap Badge
         if (gapBadge) {
@@ -125,9 +133,11 @@ async function generateRoadmap(targetCareer) {
                 const tasksListHtml = (phase.tasks || []).map((task, tIdx) => {
                     const taskId = `phase-${phase.phase}-task-${tIdx}`;
                     return `
-                        <li class="task-item" style="cursor: pointer;" onclick="toggleTaskCheckbox(this)">
-                            <span class="custom-checkbox"></span>
-                            <span class="task-text">${task}</span>
+                        <li class="task-item">
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="${taskId}" class="task-checkbox" style="margin-top: 3px; accent-color: var(--color-primary);" onchange="toggleTaskCheckbox(this.closest('.task-item'))">
+                                <span class="task-text">${task}</span>
+                            </label>
                         </li>
                     `;
                 }).join("");
@@ -155,8 +165,17 @@ async function generateRoadmap(targetCareer) {
 
     } catch (error) {
         console.error("Failed to generate roadmap:", error);
+        // Guard against stale error responses
+        if (myRequestId !== _activeRoadmapRequestId) return;
         if (timeline) {
             timeline.innerHTML = `<div style="padding: 1rem; color: var(--color-danger);">Failed to load roadmap: ${error.message}</div>`;
+        }
+        if (gapTbody) {
+            gapTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--color-danger); padding: 1.5rem;">Failed to load skill gap data.</td></tr>`;
+        }
+        if (gapBadge) {
+            gapBadge.className = "badge badge-danger";
+            gapBadge.innerHTML = `<span class="badge-dot"></span> Analysis Failed`;
         }
     }
 }

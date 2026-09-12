@@ -7,7 +7,8 @@
  *   - Selecting target roles to drive skill gap analysis & roadmaps
  */
 
-let selectedCareer = "Software Engineer";
+let selectedCareer = null;
+let _roadmapRequestId = 0;
 
 /**
  * Fetch and render career recommendations.
@@ -65,7 +66,8 @@ async function getCareerRecommendations() {
 
         // Trigger roadmap for current selected career if not already loaded
         if (typeof generateRoadmap === "function" && selectedCareer) {
-            generateRoadmap(selectedCareer);
+            const reqId = ++_roadmapRequestId;
+            generateRoadmap(selectedCareer, reqId);
         }
 
     } catch (error) {
@@ -131,7 +133,8 @@ function selectCareer(careerName) {
 
     // Trigger roadmap generation for the newly selected career
     if (typeof generateRoadmap === "function") {
-        generateRoadmap(careerName);
+        const reqId = ++_roadmapRequestId;
+        generateRoadmap(careerName, reqId);
     }
 }
 

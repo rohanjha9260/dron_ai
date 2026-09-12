@@ -101,7 +101,7 @@ async function analyzePlacement() {
             influenceList.innerHTML = "";
             const entries = Object.entries(data.feature_importance);
             // Sort by importance descending
-            entries.sort((a, b) => b[1] - a[1]);
+            entries.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
 
             // Display top 4 influential factors
             const topEntries = entries.slice(0, 4);
@@ -121,6 +121,17 @@ async function analyzePlacement() {
 
     } catch (error) {
         console.error("Failed to run placement prediction:", error);
+        if (gaugePercent) {
+            gaugePercent.textContent = "--%";
+        }
+        if (gaugeArc) {
+            gaugeArc.style.transition = "stroke-dashoffset 0.6s ease";
+            gaugeArc.style.strokeDashoffset = 440;
+        }
+        if (navProb) {
+            navProb.innerHTML = `<span class="badge-dot"></span> N/A`;
+            navProb.className = "badge badge-danger";
+        }
         if (tierText) {
             tierText.textContent = "Analysis Error";
         }
