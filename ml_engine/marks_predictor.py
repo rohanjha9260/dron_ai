@@ -119,18 +119,38 @@ class MarksPredictor:
             "r2_score": r2,
         }
 
-    def predict(self, features: Dict[str, float]) -> Dict[str, Any]:
+    def predict(
+        self,
+        features: np.ndarray,
+        scaler: Optional[Any] = None,
+    ) -> Dict[str, Any]:
         """
-        Predict CGPA for a student based on input features mapping.
+        Predict CGPA for a single student.
+
+        Args:
+            features: 1D array of shape (3,) or 2D array of shape (1, 3) matching MARKS_FEATURES
+            scaler: Optional scaler (ignored by RandomForest, kept for API consistency)
         """
         if self.model is None:
             raise RuntimeError("MarksPredictor model is not loaded or trained.")
 
-        feat_vector = []
-        for feat in MARKS_FEATURES:
-            feat_vector.append(float(features.get(feat, 0.0)))
+        feat_arr = np.asarray(features, dtype=np.float64)
+        if feat_arr.ndim == 1:
+            if feat_arr.shape[0] != len(MARKS_FEATURES):
+                raise ValueError(f"Expected feature array with {len(MARKS_FEATURES)} elements, got {feat_arr.shape[0]}")
+            feat_arr = feat_arr.reshape(1, -1)
+        elif feat_arr.ndim == 2:
+            if feat_arr.shape[0] != 1:
+                raise ValueError(
+                    f"predict() expects a single feature vector (1 row), got shape {feat_arr.shape}."
+                )
+            if feat_arr.shape[1] != len(MARKS_FEATURES):
+                raise ValueError(f"Expected feature matrix with {len(MARKS_FEATURES)} columns, got {feat_arr.shape[1]}")
+        else:
+            raise ValueError(f"Invalid feature array dimensions: {feat_arr.ndim}")
         
-        feat_arr = np.array(feat_vector, dtype=np.float64).reshape(1, -1)
+        # Handle NaN/Inf gracefully
+        feat_arr = np.nan_to_num(feat_arr, nan=0.0, posinf=0.0, neginf=0.0)
         
         predicted_cgpa = float(self.model.predict(feat_arr)[0])
         # Bound it between 0.0 and 10.0
