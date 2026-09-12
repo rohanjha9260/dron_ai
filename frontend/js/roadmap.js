@@ -1,20 +1,42 @@
 /**
- * Dron-AI Roadmap Module
+ * Dron-AI Roadmap & Skill Gap Module
  *
  * Handles:
- *   - Triggering personalized roadmap generation
- *   - Rendering the phased action plan timeline
- *   - Displaying skill gaps and improvement tasks
+ *   - Calling /api/roadmap/generate for the selected career target
+ *   - Rendering the Vector Subtraction skill gap table
+ *   - Rendering the Phased Remediation Roadmap timeline with milestones & tasks
  */
 
+const SKILL_DISPLAY_NAMES = {
+    dsa_score: "DSA Mastery",
+    python_prof: "Python Proficiency",
+    cpp_prof: "C++ Proficiency",
+    aiml_knowledge: "AI / ML Knowledge",
+    total_commits: "GitHub Commit Activity",
+    problems_solved: "LeetCode Practice",
+    contest_rating: "Contest Rating",
+    project_count: "Completed Projects",
+    communication_score: "Communication & Soft Skills",
+    internship_exp: "Internship Exposure",
+};
+
 /**
- * Generate a personalized roadmap for the selected career.
- * @param {string} targetCareer - The target career path
+ * Generate and render personalized roadmap & skill gaps.
+ * @param {string} targetCareer - The target career role (e.g. "Software Engineer")
  */
 async function generateRoadmap(targetCareer) {
     const timeline = document.getElementById("roadmap-timeline");
+    const gapTbody = document.getElementById("gap-analysis-tbody");
+    const gapBadge = document.getElementById("roadmap-gap-badge");
 
-    timeline.innerHTML = `<p class="placeholder-text">Generating roadmap for ${targetCareer}...</p>`;
+    if (timeline) {
+        timeline.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: var(--color-text-secondary);">
+                <span class="spinner" style="display: inline-block; width: 24px; height: 24px; border: 2px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+                <p style="margin-top: 10px; font-size: var(--font-size-sm);">Calculating skill gaps & generating learning roadmap for ${targetCareer}...</p>
+            </div>
+        `;
+    }
 
     try {
         const data = await apiRequest("/roadmap/generate", {
@@ -22,38 +44,131 @@ async function generateRoadmap(targetCareer) {
             body: { target_career: targetCareer },
         });
 
-        // TODO: Render roadmap
-        // 1. Clear placeholder
-        // 2. For each phase, create a roadmap-phase element
-        // 3. Show phase number, title, duration, and tasks
-        timeline.innerHTML = "";
-
+        const skillGaps = data.skill_gaps || [];
         const roadmap = data.roadmap || [];
-        if (roadmap.length === 0) {
-            timeline.innerHTML = `<p class="placeholder-text">No roadmap available</p>`;
-            return;
+
+        // 1. Update Gap Badge
+        if (gapBadge) {
+            if (skillGaps.length > 0) {
+                gapBadge.className = "badge badge-warning";
+                gapBadge.innerHTML = `<span class="badge-dot"></span> ${skillGaps.length} Weakness Gaps Identified`;
+            } else {
+                gapBadge.className = "badge badge-success";
+                gapBadge.innerHTML = `<span class="badge-dot"></span> Profile Meets All Baseline Targets`;
+            }
         }
 
-        roadmap.forEach((phase) => {
-            const phaseEl = document.createElement("div");
-            phaseEl.className = "roadmap-phase";
+        // 2. Render Skill Gap Analysis Table
+        if (gapTbody) {
+            gapTbody.innerHTML = "";
 
-            const tasksHTML = phase.tasks
-                .map((task) => `<li>${task}</li>`)
-                .join("");
+            if (skillGaps.length === 0) {
+                gapTbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: var(--color-text-muted); padding: 1.5rem;">
+                            No significant skill gaps detected for this role! Your profile exceeds baseline thresholds.
+                        </td>
+                    </tr>
+                `;
+            } else {
+                skillGaps.forEach((item) => {
+                    const skillKey = item.skill;
+                    const label = SKILL_DISPLAY_NAMES[skillKey] || skillKey;
+                    const currentVal = Number(item.current || 0);
+                    const requiredVal = Number(item.required || 0);
+                    const gapVal = Number(item.gap || 0);
 
-            phaseEl.innerHTML = `
-                <div class="phase-header">
-                    <span class="phase-number">Phase ${phase.phase}</span>
-                    <span class="phase-duration">${phase.duration}</span>
-                </div>
-                <h3 class="phase-title">${phase.title}</h3>
-                <ul class="phase-tasks">${tasksHTML}</ul>
-            `;
+                    // Clamp percentages for visual bars
+                    const maxVal = Math.max(requiredVal, 100);
+                    const currentPct = Math.min(100, Math.max(0, (currentVal / maxVal) * 100));
+                    const requiredPct = Math.min(100, Math.max(0, (requiredVal / maxVal) * 100));
 
-            timeline.appendChild(phaseEl);
-        });
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><strong>${label}</strong></td>
+                        <td>
+                            <div style="font-size: 11px; margin-bottom: 4px; color: var(--color-text-secondary);">
+                                ${currentVal.toFixed(0)} / ${requiredVal.toFixed(0)}
+                            </div>
+                            <div class="gap-bar-bg" style="position: relative; height: 6px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                                <div class="gap-bar-current" style="width: ${currentPct}%; height: 100%; background: ${currentPct >= requiredPct ? "var(--color-success)" : "var(--color-primary-light)"}; border-radius: 4px;"></div>
+                                <div class="gap-bar-required" style="position: absolute; left: ${requiredPct}%; top: 0; bottom: 0; width: 2px; background: #FFFFFF; opacity: 0.8;"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-warning">-${gapVal.toFixed(0)} pts</span></td>
+                    `;
+                    gapTbody.appendChild(tr);
+                });
+            }
+        }
+
+        // 3. Render Phased Action Roadmap Timeline
+        if (timeline) {
+            timeline.innerHTML = "";
+
+            if (roadmap.length === 0) {
+                timeline.innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">
+                        <p>No active remediation phases required. Focus on advanced elective projects and mock interviews!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            roadmap.forEach((phase, idx) => {
+                const stepEl = document.createElement("div");
+                stepEl.className = "timeline-step";
+
+                const isFirst = idx === 0;
+                const priorityClass = phase.priority === "high" ? "badge-warning" : "badge-info";
+
+                const tasksListHtml = (phase.tasks || []).map((task, tIdx) => {
+                    const taskId = `phase-${phase.phase}-task-${tIdx}`;
+                    return `
+                        <li class="task-item" style="cursor: pointer;" onclick="toggleTaskCheckbox(this)">
+                            <span class="custom-checkbox"></span>
+                            <span class="task-text">${task}</span>
+                        </li>
+                    `;
+                }).join("");
+
+                stepEl.innerHTML = `
+                    <div class="timeline-node ${isFirst ? "" : ""}">
+                        ${phase.phase}
+                    </div>
+                    <div class="step-header">
+                        <div class="step-title-row">
+                            <span class="badge badge-primary">Phase ${phase.phase}</span>
+                            <span class="step-title">${phase.title}</span>
+                        </div>
+                        <span class="badge ${priorityClass}">${phase.duration} • ${phase.priority ? phase.priority.toUpperCase() : "NORMAL"}</span>
+                    </div>
+                    ${phase.milestone ? `<div style="font-size: 11px; color: var(--color-accent-light); margin-bottom: 8px; font-weight: 500;">🎯 Goal: ${phase.milestone}</div>` : ""}
+                    <ul class="step-tasks-list">
+                        ${tasksListHtml}
+                    </ul>
+                `;
+
+                timeline.appendChild(stepEl);
+            });
+        }
+
     } catch (error) {
-        timeline.innerHTML = `<p class="error-message">${error.message}</p>`;
+        console.error("Failed to generate roadmap:", error);
+        if (timeline) {
+            timeline.innerHTML = `<div style="padding: 1rem; color: var(--color-danger);">Failed to load roadmap: ${error.message}</div>`;
+        }
+    }
+}
+
+/**
+ * Interactive helper for task checkboxes in roadmap.
+ */
+function toggleTaskCheckbox(itemEl) {
+    if (!itemEl) return;
+    itemEl.classList.toggle("checked");
+    const checkSpan = itemEl.querySelector(".custom-checkbox");
+    if (checkSpan) {
+        checkSpan.textContent = itemEl.classList.contains("checked") ? "✓" : "";
     }
 }
