@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Placement Prediction — XGBoost-powered readiness analysis">
+    <title>Dron-AI — Placement Prediction</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-primary">Supervised Machine Learning</span>
+                <span class="badge badge-success"><span class="badge-dot"></span> Latency &lt; 2ms Target</span>
+            </div>
+            <h1>Placement Readiness Prediction</h1>
+            <p>High-precision XGBoost classifier trained on multi-dimensional academic, algorithmic, and engineering vectors.</p>
+        </div>
+        <button class="btn btn-primary" id="predict-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            <span>Run Placement Analysis</span>
+        </button>
+    </section>
+
+    <!-- Main Prediction Layout -->
+    <div class="dashboard-grid">
+
+        <!-- Left Column: Gauge & Prediction Result -->
+        <div class="col-6">
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--color-success);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <h2>Placement Readiness Score</h2>
+                    </div>
+                    <span class="badge badge-success" id="readiness-tier"><span class="badge-dot"></span> Ready</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="gauge-card-body" style="padding: var(--space-xl) 0;">
+                        <!-- Circular Gauge Visualization -->
+                        <div class="gauge-wrapper">
+                            <svg class="gauge-svg" viewBox="0 0 160 160">
+                                <defs>
+                                    <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="var(--color-primary)" />
+                                        <stop offset="100%" stop-color="var(--color-accent)" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="gauge-bg" cx="80" cy="80" r="70" />
+                                <circle class="gauge-fill-arc" id="gauge-fill-arc" cx="80" cy="80" r="70" />
+                            </svg>
+                            <div class="gauge-center-content">
+                                <span class="gauge-percent" id="gauge-label">--%</span>
+                                <span class="gauge-caption">Readiness Index</span>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: var(--space-lg); max-width: 360px;">
+                            <p id="prediction-summary-text" style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                                Click <strong>Run Placement Analysis</strong> to synthesize your academic GPA, LeetCode metrics, and GitHub contributions through the XGBoost inference model.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column: SHAP Feature Importance & Factor Breakdown -->
+        <div class="col-6">
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon" style="background: rgba(212, 175, 55, 0.12); color: var(--color-primary);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                        <h2>Key Contributing Factors</h2>
+                    </div>
+                    <span class="badge badge-info">Relative Importance</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="section-subtitle">Top Model Influence Dimensions</div>
+                    <div class="feature-influence-list" id="feature-influence-list">
+                        <div class="influence-item">
+                            <span class="name">Data Structures &amp; Algorithms Score</span>
+                            <span class="impact-pos">+26% Impact</span>
+                        </div>
+                        <div class="influence-item">
+                            <span class="name">Cumulative GPA (Academic Standing)</span>
+                            <span class="impact-pos">+21% Impact</span>
+                        </div>
+                        <div class="influence-item">
+                            <span class="name">LeetCode Consistency &amp; Contest Rating</span>
+                            <span class="impact-pos">+18% Impact</span>
+                        </div>
+                        <div class="influence-item">
+                            <span class="name">Active Projects &amp; GitHub Activity</span>
+                            <span class="impact-pos">+14% Impact</span>
+                        </div>
+                        <div class="influence-item">
+                            <span class="name">Soft Skills &amp; Communication Score</span>
+                            <span class="impact-neg" id="comm-influence">-7% Gap</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--space-xl); padding: var(--space-md); background: rgba(212, 175, 55, 0.05); border: 1px dashed rgba(212, 175, 55, 0.25); border-radius: var(--radius-md);">
+                        <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-primary-light); margin-bottom: 4px;">
+                            Model Architecture Note
+                        </div>
+                        <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary); line-height: 1.5;">
+                            Inference enforces single-row scalar transforms using pre-fitted <code>StandardScaler</code> parameters with SHA-256 verified checkpoints to guarantee reproducible predictions under 2ms.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/placement.js"></script>
+</body>
+</html>

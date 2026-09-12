@@ -270,6 +270,47 @@ function initRegisterForm() {
 }
 
 /**
+ * Handle Guest Login flow.
+ */
+function initGuestLogin() {
+    const guestBtn = document.getElementById("guest-login-btn");
+    if (!guestBtn) return;
+
+    guestBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const errorDiv = document.getElementById("login-error") || document.getElementById("register-error");
+        if (errorDiv) errorDiv.style.display = "none";
+
+        const originalHtml = guestBtn.innerHTML;
+        guestBtn.disabled = true;
+        guestBtn.innerHTML = `<span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> <span>Entering Guest Mode...</span>`;
+
+        try {
+            const data = await apiRequest("/auth/guest", {
+                method: "POST",
+            });
+
+            if (data && data.access_token) {
+                setToken(data.access_token);
+                localStorage.setItem("dron_is_guest", "true");
+                window.location.href = "index.html";
+            } else {
+                throw new Error(data.error || "Unable to enter guest session.");
+            }
+        } catch (error) {
+            let errorMsg = error.message;
+            if (errorMsg.includes("Failed to fetch") || errorMsg.includes("NetworkError")) {
+                errorMsg = "Unable to connect to Dron-AI server. Please verify the backend is running.";
+            }
+            if (errorDiv) displayError(errorDiv, errorMsg);
+            guestBtn.disabled = false;
+            guestBtn.innerHTML = originalHtml;
+        }
+    });
+}
+
+/**
  * Handle logout button click.
  */
 function initLogout() {
@@ -278,6 +319,7 @@ function initLogout() {
 
     logoutBtn.addEventListener("click", () => {
         clearToken();
+        localStorage.removeItem("dron_is_guest");
         window.location.href = "login.html";
     });
 }
@@ -287,5 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initPasswordToggles();
     initLoginForm();
     initRegisterForm();
+    initGuestLogin();
     initLogout();
 });
+
