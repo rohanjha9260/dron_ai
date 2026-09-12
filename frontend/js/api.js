@@ -33,6 +33,7 @@ function setToken(token) {
  */
 function clearToken() {
     localStorage.removeItem("dron_ai_token");
+    localStorage.removeItem("dron_is_guest");
 }
 
 /**

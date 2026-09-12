@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Profile — Manage your academic records, skills, and platform integrations">
+    <title>Dron-AI — Profile & Data Entry</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <div class="dashboard-grid">
+
+        <!-- LEFT COLUMN: Profile & Academic Data (Col 7) -->
+        <div class="col-7" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+
+            <!-- Card 1: Data Entry & Profile -->
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <h2>Profile & Academic Data Entry</h2>
+                    </div>
+                    <span class="badge badge-info">Manual & Synced Input</span>
+                </div>
+
+                <div class="card-body">
+                    <!-- Student Demographics -->
+                    <div class="section-subtitle">Student Demographics</div>
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="input-full-name" class="form-control" value="" placeholder="e.g. Alex Smith">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Academic Branch</label>
+                            <select id="input-branch" class="form-control">
+                                <option value="Computer Science & Engineering" selected>Computer Science & Eng (CSE)</option>
+                                <option value="Information Technology">Information Technology (IT)</option>
+                                <option value="Artificial Intelligence & Data Science">AI & Data Science</option>
+                                <option value="Electronics & Communication">Electronics & Comm (ECE)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Graduation Year</label>
+                            <input type="number" id="input-cohort" class="form-control" value="2026" min="2023" max="2030">
+                        </div>
+                    </div>
+
+                    <!-- Academic Metrics -->
+                    <div class="section-subtitle" style="margin-top: var(--space-md);">Academic Performance</div>
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label class="form-label">CGPA <span class="val-tag">(0.0 - 10.0)</span></label>
+                            <input type="number" step="0.01" id="input-cgpa" class="form-control" value="8.5" min="0" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Attendance % <span class="val-tag">(0 - 100%)</span></label>
+                            <input type="number" step="0.1" id="input-attendance" class="form-control" value="88.0" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Active Backlogs <span class="val-tag">Count</span></label>
+                            <input type="number" id="input-backlogs" class="form-control" value="0" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Platform Handles -->
+                    <div class="section-subtitle" style="margin-top: var(--space-md);">External Integration Sync</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">GitHub Username</label>
+                            <input type="text" id="input-github" class="form-control" value="" placeholder="GitHub Handle">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">LeetCode Username</label>
+                            <input type="text" id="input-leetcode" class="form-control" value="" placeholder="LeetCode Username">
+                        </div>
+                    </div>
+
+                    <!-- 10D Technical Skills Sliders -->
+                    <div class="section-subtitle" style="margin-top: var(--space-md);">10-Dimensional Skill Vector</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <div class="form-label"><span>DSA Score</span><span class="range-val" id="val-dsa">80 / 100</span></div>
+                            <div class="range-wrapper"><input type="range" id="slider-dsa" class="range-slider" min="0" max="100" value="80"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label"><span>Python Proficiency</span><span class="range-val" id="val-python">85 / 100</span></div>
+                            <div class="range-wrapper"><input type="range" id="slider-python" class="range-slider" min="0" max="100" value="85"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label"><span>C++ Proficiency</span><span class="range-val" id="val-cpp">75 / 100</span></div>
+                            <div class="range-wrapper"><input type="range" id="slider-cpp" class="range-slider" min="0" max="100" value="75"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label"><span>AI / ML Knowledge</span><span class="range-val" id="val-aiml">70 / 100</span></div>
+                            <div class="range-wrapper"><input type="range" id="slider-aiml" class="range-slider" min="0" max="100" value="70"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label"><span>Communication & Soft Skills</span><span class="range-val" id="val-comm">70 / 100</span></div>
+                            <div class="range-wrapper"><input type="range" id="slider-comm" class="range-slider" min="0" max="100" value="70"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label"><span>Internship Experience (Months)</span><span class="range-val" id="val-internship">3 Mos</span></div>
+                            <div class="range-wrapper"><input type="range" id="slider-internship" class="range-slider" min="0" max="24" value="3"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-3" style="margin-top: var(--space-xs);">
+                        <div class="form-group">
+                            <label class="form-label">Total Commits</label>
+                            <input type="number" id="input-commits" class="form-control" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Problems Solved</label>
+                            <input type="number" id="input-solved" class="form-control" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contest Rating</label>
+                            <input type="number" id="input-rating" class="form-control" value="0">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-md); align-items: center;">
+                        <span id="profile-save-status" style="display: none; font-size: var(--font-size-xs); font-weight: 500; margin-right: auto;"></span>
+                        <button class="btn btn-outline btn-small" type="button" id="btn-reset-profile">Reset Defaults</button>
+                        <button class="btn btn-primary btn-small" type="button" id="btn-save-profile">Save Profile Vector</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- RIGHT COLUMN: Synced Developer Metrics (Col 5) -->
+        <div class="col-5" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+
+            <!-- Card 2: Developer Platform Metrics -->
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon" style="background: rgba(56, 189, 248, 0.1); color: var(--color-info);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        </div>
+                        <h2>Synced Developer Metrics</h2>
+                    </div>
+                    <button class="btn btn-outline btn-small" type="button" id="fetch-metrics-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                        <span>Sync Now</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="platform-grid">
+                        <!-- GitHub -->
+                        <div class="platform-card" id="github-stats">
+                            <div class="platform-header">
+                                <div class="platform-title">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                                    <span>GitHub Activity</span>
+                                </div>
+                                <span class="badge badge-success"><span class="badge-dot"></span> Synced</span>
+                            </div>
+                            <div class="platform-stat-row">
+                                <div class="stat-box"><div class="stat-label">Total Commits</div><div class="stat-number" id="metric-github-commits">--</div></div>
+                                <div class="stat-box"><div class="stat-label">Public Repos</div><div class="stat-number" id="metric-github-repos">--</div></div>
+                            </div>
+                        </div>
+
+                        <!-- LeetCode -->
+                        <div class="platform-card" id="leetcode-stats">
+                            <div class="platform-header">
+                                <div class="platform-title">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .271 3.551 5.363 5.363 0 0 0 4.123 3.232c.28.034.56.052.839.052.483 0 .963-.058 1.428-.172a5.26 5.26 0 0 0 2.825-1.892l4.89-5.267a1.375 1.375 0 1 0-2.008-1.874l-4.89 5.267a2.518 2.518 0 0 1-1.353.906 2.583 2.583 0 0 1-1.087.057 2.614 2.614 0 0 1-2.01-1.577 2.696 2.696 0 0 1-.132-1.733c.045-.213.136-.425.269-.624l3.853-4.126 5.406-5.788A1.374 1.374 0 0 0 13.483 0z"/></svg>
+                                    <span>LeetCode Profile</span>
+                                </div>
+                                <span class="badge badge-success"><span class="badge-dot"></span> Synced</span>
+                            </div>
+                            <div class="platform-stat-row">
+                                <div class="stat-box"><div class="stat-label">Problems Solved</div><div class="stat-number" id="metric-leetcode-solved">--</div></div>
+                                <div class="stat-box"><div class="stat-label">Contest Rating</div><div class="stat-number" id="metric-leetcode-rating">--</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/metrics.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
