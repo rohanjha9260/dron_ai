@@ -9,6 +9,8 @@ Endpoints:
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+from app.services import profile_service
+
 users_bp = Blueprint("users", __name__)
 
 
@@ -25,9 +27,12 @@ def get_profile():
         200: { "user": {...}, "academics": [...], "links": {...}, "skills": {...} }
         404: { "error": "Profile not found" }
     """
-    # TODO: Implement using profile_service
-    student_id = get_jwt_identity()
-    return jsonify({"message": "get profile - not yet implemented"}), 501
+    student_id = int(get_jwt_identity())
+    profile = profile_service.get_student_profile(student_id)
+    if not profile:
+        return jsonify({"error": "Profile not found"}), 404
+
+    return jsonify(profile), 200
 
 
 @users_bp.route("/profile", methods=["PUT"])
@@ -42,7 +47,7 @@ def update_profile():
             "cohort_year": int,
             "academic_branch": "string",
             "academics": [
-                { "semester_index": int, "cgpa": float, "active_backlogs": int, "attendance_pct": float }
+                { "semester": int, "cgpa": float, "active_backlogs": int, "attendance_pct": float }
             ],
             "platform_links": {
                 "github_handle": "string",
@@ -58,9 +63,29 @@ def update_profile():
         }
 
     Returns:
-        200: { "message": "Profile updated successfully" }
+        200: { "message": "Profile updated successfully", "profile": {...} }
         400: { "error": "Validation error" }
+        404: { "error": "Profile not found" }
     """
-    # TODO: Implement using profile_service
-    student_id = get_jwt_identity()
-    return jsonify({"message": "update profile - not yet implemented"}), 501
+    student_id = int(get_jwt_identity())
+    data = request.get_json(silent=True)
+    if data is None or not isinstance(data, dict):
+        return jsonify({"error": "Request body must be valid JSON object"}), 400
+
+    try:
+        updated_profile = profile_service.update_student_profile(student_id, data)
+    except ValueError as exc:
+        msg = str(exc)
+        if msg == "Profile not found":
+            return jsonify({"error": msg}), 404
+        return jsonify({"error": f"Validation error: {msg}"}), 400
+
+    return (
+        jsonify(
+            {
+                "message": "Profile updated successfully",
+                "profile": updated_profile,
+            }
+        ),
+        200,
+    )

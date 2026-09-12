@@ -8,7 +8,11 @@ Endpoints:
 """
 
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
+from app.extensions import db
+from app.models.user import User
+from app.services import auth_service
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -29,11 +33,23 @@ def register():
 
     Returns:
         201: { "message": "Registration successful", "student_id": int }
-        400: { "error": "Validation error message" }
+        400: { "error": "Missing required fields: email, password, full_name" }
         409: { "error": "Email already registered" }
     """
-    # TODO: Implement registration logic using auth_service
-    return jsonify({"message": "register endpoint - not yet implemented"}), 501
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"error": "Request body must be valid JSON"}), 400
+
+    try:
+        result = auth_service.register_student(data)
+    except ValueError as exc:
+        reason = str(exc)
+        if reason == "email_taken":
+            return jsonify({"error": "Email already registered"}), 409
+        # missing_fields or any other validation error
+        return jsonify({"error": "Missing required fields: email, password, full_name"}), 400
+
+    return jsonify(result), 201
 
 
 @auth_bp.route("/login", methods=["POST"])
@@ -49,10 +65,25 @@ def login():
 
     Returns:
         200: { "access_token": "string", "student_id": int }
+        400: { "error": "email and password are required" }
         401: { "error": "Invalid credentials" }
     """
-    # TODO: Implement login logic using auth_service
-    return jsonify({"message": "login endpoint - not yet implemented"}), 501
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"error": "Request body must be valid JSON"}), 400
+
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "email and password are required"}), 400
+
+    try:
+        result = auth_service.authenticate_student(email, password)
+    except ValueError:
+        return jsonify({"error": "Invalid credentials"}), 401
+
+    return jsonify(result), 200
 
 
 @auth_bp.route("/me", methods=["GET"])
@@ -61,9 +92,19 @@ def get_current_user():
     """
     Get the profile of the currently authenticated user.
 
+    Requires:
+        Authorization: Bearer <JWT access token>
+
     Returns:
-        200: User profile dictionary
-        401: Unauthorized
+        200: User profile dictionary (password_hash excluded)
+        401: Unauthorized (missing or invalid token — handled by flask-jwt-extended)
+        404: { "error": "User not found" }
     """
-    # TODO: Implement using get_jwt_identity() to fetch user
-    return jsonify({"message": "me endpoint - not yet implemented"}), 501
+    # get_jwt_identity() returns the string we encoded at login time
+    student_id = int(get_jwt_identity())
+
+    user = db.session.get(User, student_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    return jsonify(user.to_dict()), 200

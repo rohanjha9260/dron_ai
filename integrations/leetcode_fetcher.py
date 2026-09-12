@@ -54,6 +54,9 @@ query userContestRankingInfo($username: String!) {
 """
 
 
+import functools
+
+@functools.lru_cache(maxsize=128)
 def fetch_leetcode_stats(username: str) -> dict:
     """
     Fetch public LeetCode statistics for a given username.
@@ -74,11 +77,6 @@ def fetch_leetcode_stats(username: str) -> dict:
         ConnectionError: If LeetCode API is unreachable
         ValueError: If username is not found
     """
-    # TODO: Implement
-    # 1. Send POST to LEETCODE_GRAPHQL_URL with USER_PROFILE_QUERY
-    # 2. Parse acSubmissionNum for difficulty breakdown
-    # 3. Send POST with CONTEST_RATING_QUERY for contest stats
-    # 4. Return structured stats dict
     logger.info(f"Fetching LeetCode stats for: {username}")
 
     result = {
@@ -89,6 +87,64 @@ def fetch_leetcode_stats(username: str) -> dict:
         "contest_rating": 0.0,
         "ranking": 0,
     }
+    
+    if not username:
+        return result
 
-    # Placeholder - to be implemented
-    return result
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0",
+    }
+
+    try:
+        # 1. Profile Query
+        payload1 = {
+            "query": USER_PROFILE_QUERY,
+            "variables": {"username": username}
+        }
+        r1 = requests.post(LEETCODE_GRAPHQL_URL, json=payload1, headers=headers, timeout=10)
+        
+        if r1.status_code == 200:
+            data = r1.json().get("data", {})
+            matched_user = data.get("matchedUser")
+            
+            if matched_user is None:
+                logger.warning(f"LeetCode user not found: {username}")
+                return result
+                
+            stats = matched_user.get("submitStats", {}).get("acSubmissionNum", [])
+            for stat in stats:
+                diff = stat.get("difficulty")
+                count = stat.get("count", 0)
+                if diff == "All":
+                    result["problems_solved"] = count
+                elif diff == "Easy":
+                    result["easy_solved"] = count
+                elif diff == "Medium":
+                    result["medium_solved"] = count
+                elif diff == "Hard":
+                    result["hard_solved"] = count
+                    
+        # 2. Contest Query
+        payload2 = {
+            "query": CONTEST_RATING_QUERY,
+            "variables": {"username": username}
+        }
+        r2 = requests.post(LEETCODE_GRAPHQL_URL, json=payload2, headers=headers, timeout=10)
+        
+        if r2.status_code == 200:
+            data = r2.json().get("data", {})
+            contest_info = data.get("userContestRanking")
+            
+            if contest_info:
+                result["contest_rating"] = contest_info.get("rating", 0.0)
+                result["ranking"] = contest_info.get("globalRanking", 0)
+
+        return result
+        
+    except requests.RequestException as e:
+        logger.error(f"Error fetching LeetCode stats for {username}: {e}")
+        return result
+    except Exception as e:
+        logger.error(f"Unexpected error fetching LeetCode stats for {username}: {e}")
+        return result

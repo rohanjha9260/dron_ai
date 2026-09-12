@@ -15,6 +15,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
+<<<<<<< HEAD
 }
 
 .nav-brand {
@@ -74,6 +75,20 @@
     font-family: var(--font-mono);
     color: var(--color-text-primary);
     font-weight: var(--font-weight-bold);
+=======
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.nav-brand h2 {
+    background: var(--gradient-gold-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: -0.02em;
+>>>>>>> b83b82cbed320491f8703b0d7687739adb9bbc1e
 }
 
 .nav-user {
@@ -185,8 +200,13 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+<<<<<<< HEAD
     transition: all var(--transition-base);
     position: relative;
+=======
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: var(--shadow-md);
+>>>>>>> b83b82cbed320491f8703b0d7687739adb9bbc1e
 }
 
 .card:hover {
