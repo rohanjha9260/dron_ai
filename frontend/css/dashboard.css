@@ -609,6 +609,11 @@
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
 }
 
+.empty-state-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
 /* Partial Failure / Error State */
 .metric-error-state {
     display: flex;
@@ -660,6 +665,11 @@
 .error-retry-btn:hover {
     background: rgba(239, 68, 68, 0.25);
     color: #FFFFFF;
+}
+
+.error-retry-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 /* ── Placement Gauge ── */

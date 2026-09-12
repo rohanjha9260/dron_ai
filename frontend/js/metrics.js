@@ -204,7 +204,7 @@ function renderGithubStats(githubData, username) {
                 </div>
                 <h3>GitHub</h3>
             </div>
-            <a href="https://github.com/${encodeURIComponent(username)}" target="_blank" rel="noopener noreferrer" class="metric-handle-badge" title="View GitHub Profile">
+            <a href="https://github.com/${encodeURIComponent(username || "")}" target="_blank" rel="noopener noreferrer" class="metric-handle-badge" title="View GitHub Profile">
                 <span>@${escapeMetricsHtml(username)}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
@@ -254,10 +254,13 @@ function renderLeetcodeStats(leetcodeData, username) {
     const ranking = leetcodeData.ranking || 0;
 
     // Calculate difficulty distribution percentages for the progress bar
-    const sumDiff = (easy + medium + hard) || totalSolved || 1;
-    const easyPct = Math.round((easy / sumDiff) * 100);
-    const mediumPct = Math.round((medium / sumDiff) * 100);
-    const hardPct = Math.max(0, 100 - easyPct - mediumPct);
+    const totalSolvedForPct = easy + medium + hard;
+    let easyPct = 0, mediumPct = 0, hardPct = 0;
+    if (totalSolvedForPct > 0) {
+        easyPct = Math.round((easy / totalSolvedForPct) * 100);
+        mediumPct = Math.round((medium / totalSolvedForPct) * 100);
+        hardPct = Math.max(0, 100 - easyPct - mediumPct);
+    }
 
     const formattedRating = rating > 0 ? Math.round(rating) : "Unrated";
     const formattedRanking = ranking > 0 ? `#${ranking.toLocaleString()}` : "Unranked";
