@@ -17,8 +17,8 @@ An AI/ML-based decision-support system that analyzes a student's multidimensiona
 | Layer | Technology |
 |---|---|
 | Frontend | Vanilla HTML5, CSS3, JavaScript (ES6+) |
-| Backend API | Python 3.11+, Flask (Application Factory), SQLAlchemy, PyMySQL |
-| Database | MySQL 8.0+ |
+| Backend API | Python 3.11+, Flask (Application Factory), SQLAlchemy |
+| Database | SQLite 3 |
 | ML Engine & AI | Scikit-learn, XGBoost, Random Forest, SHAP (Explainable AI), Cosine Similarity, NumPy, Pandas |
 | External Integrations | GitHub REST API, LeetCode GraphQL API |
 | Security & Auth | JWT (Flask-JWT-Extended), Flask-Limiter (Rate Limiting), Bcrypt |
@@ -40,7 +40,6 @@ dron-ai/
 
 ### Prerequisites
 - Python 3.11+
-- MySQL 8.0+
 
 ### Installation
 
@@ -59,7 +58,7 @@ pip install -r requirements.txt
 
 # 4. Configure environment
 cp .env.example .env
-# Edit .env with your database credentials and API keys
+# (Optional) Edit .env with your secret keys and GitHub token
 
 # 5. Initialize database
 python scripts/seed_db.py
