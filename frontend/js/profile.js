@@ -29,7 +29,7 @@ function escapeHtml(str) {
  * Helper: Extract user initials from name for avatar display.
  */
 function getInitials(name) {
-    if (!name || typeof name !== "string") return "ST";
+    if (!name || typeof name !== "string" || name.trim() === "") return "ST";
     const parts = name.trim().split(/\s+/);
     if (parts.length === 1) {
         return parts[0].substring(0, 2).toUpperCase();
