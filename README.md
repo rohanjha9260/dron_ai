@@ -4,47 +4,49 @@ An AI/ML-based decision-support system that analyzes a student's multidimensiona
 
 ## Core Features
 
-1. **Student Profile Creation** — Unified profile from academic records + GitHub + LeetCode
-2. **Placement Readiness Prediction** — XGBoost-powered probability scoring
-3. **Career Recommendation** — Cosine Similarity vector matching to ideal career paths
-4. **Skill-Gap Analysis** — Vector subtraction to identify weaknesses
-5. **Personalized Roadmap** — Sequenced action plan for improvement
+1. **Student Profile Creation** — Unified profile from academic records + live GitHub & LeetCode metrics aggregation.
+2. **Placement Readiness Prediction** — XGBoost-powered probability scoring.
+3. **Explainable AI (XAI)** — SHAP integration to provide transparent "Why?" explanations for placement predictions.
+4. **Academic Performance Forecasting** — RandomForestRegressor to predict next semester CGPA based on engagement.
+5. **Career Recommendation** — Cosine Similarity vector matching to ideal career paths.
+6. **Skill-Gap Analysis** — Vector subtraction to identify weaknesses.
+7. **Personalized Roadmap** — Sequenced action plan for improvement.
 
 ## Tech Stack
 
-
 | Layer | Technology |
 |---|---|
-| Frontend | HTML5, CSS3, JavaScript (ES6+) |
-| Backend | Python 3.x + Flask |
-| Database | MySQL |
-| ML Engine | Pandas, NumPy, Scikit-learn, XGBoost |
-| Auth | JWT (JSON Web Tokens) |
+| Frontend | Vanilla HTML5, CSS3, JavaScript (ES6+) |
+| Backend API | Python 3.11+, Flask (Application Factory), SQLAlchemy, PyMySQL |
+| Database | MySQL 8.0+ |
+| ML Engine & AI | Scikit-learn, XGBoost, Random Forest, SHAP (Explainable AI), Cosine Similarity, NumPy, Pandas |
+| External Integrations | GitHub REST API, LeetCode GraphQL API |
+| Security & Auth | JWT (Flask-JWT-Extended), Flask-Limiter (Rate Limiting), Bcrypt |
+| Testing | Pytest |
 
 ## Project Structure
 
-```
+```text
 dron-ai/
 ├── app/              # Flask Application Factory (Backend API)
-├── integrations/     # GitHub & LeetCode data fetchers
-├── ml_engine/        # XGBoost, Cosine Similarity, Roadmap generation
-├── frontend/         # HTML/CSS/JS Dashboard
+├── integrations/     # GitHub & LeetCode live data fetchers
+├── ml_engine/        # XGBoost, RandomForest, SHAP, Cosine Similarity
+├── frontend/         # HTML/CSS/JS Dashboard UI
 ├── scripts/          # DB seeding & model training utilities
 └── tests/            # Test suite
 ```
 
-## Setup Instructions
+## Setup & Run Instructions
 
 ### Prerequisites
-- Python 3.9+
+- Python 3.11+
 - MySQL 8.0+
-- pip
 
 ### Installation
 
 ```bash
 # 1. Clone the repository
-git clone <repo-url>
+git clone https://github.com/rohanjha9260/dron_ai.git
 cd dron-ai
 
 # 2. Create virtual environment
@@ -62,34 +64,35 @@ cp .env.example .env
 # 5. Initialize database
 python scripts/seed_db.py
 
-# 6. Train ML models (first time only)
+# 6. Train ML models & generate checksums (first time only)
 python scripts/train_model.py
-
-# 7. Run the application
-python run.py
 ```
 
-The application will be available at `http://localhost:5000`
+### Running the Application
+
+To run Dron-AI locally, you must start both the backend API and the frontend dashboard in **separate terminal windows**.
+
+**Terminal 1 (Backend API):**
+```bash
+# Ensure your virtual environment is activated
+python run.py
+# The backend API will be available at http://localhost:5000
+```
+
+**Terminal 2 (Frontend Dashboard):**
+```bash
+cd frontend
+python -m http.server 8000
+# The frontend UI will be available at http://localhost:8000
+```
 
 ## Team
 
-- **Member 1 (ML Engineer)**: `ml_engine/`, `integrations/`, `scripts/train_model.py`
-- **Member 2 (Backend Developer)**: `app/`, `config.py`, `run.py`
-- **Member 3 (Frontend Developer)**: `frontend/`, `scripts/seed_db.py`
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/register` | Register new student |
-| POST | `/api/auth/login` | Login & get JWT |
-| GET | `/api/users/profile` | Get student profile |
-| PUT | `/api/users/profile` | Update student profile |
-| POST | `/api/metrics/fetch` | Fetch GitHub + LeetCode data |
-| POST | `/api/predictions/placement` | Get placement readiness score |
-| POST | `/api/career/recommend` | Get career recommendations |
-| POST | `/api/roadmap/generate` | Generate personalized roadmap |
+- [Rohan Jha](https://github.com/rohanjha9260) — AI/ML Lead
+- [Aman Sharma](https://github.com/Aetherion-S) — Backend Lead & Team Leader
+- [Suruchi Kumari](https://github.com/jhasuruchi864) — Frontend Lead
 
 ## License
 
 This project is developed as an academic mini-project.
+
