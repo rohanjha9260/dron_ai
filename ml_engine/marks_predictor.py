@@ -72,8 +72,13 @@ class MarksPredictor:
         if "CGPA" not in cleaned_df.columns:
             raise ValueError("Target column 'CGPA' not found in dataset.")
 
+        cleaned_df["CGPA"] = pd.to_numeric(cleaned_df["CGPA"], errors="coerce")
+        valid_df = cleaned_df.dropna(subset=["CGPA"])
+        if len(valid_df) < 10:
+            raise ValueError("Insufficient valid CGPA target rows remaining after filtering.")
+
         # Prepare X and y
-        X_df = cleaned_df[MARKS_FEATURES].copy()
+        X_df = valid_df[MARKS_FEATURES].copy()
         
         # Fill missing numeric values just in case
         for col in MARKS_FEATURES:
@@ -81,7 +86,7 @@ class MarksPredictor:
                 X_df[col] = 0.0
             X_df[col] = pd.to_numeric(X_df[col], errors="coerce").fillna(0.0)
 
-        y_series = pd.to_numeric(cleaned_df["CGPA"], errors="coerce").fillna(0.0)
+        y_series = valid_df["CGPA"]
 
         X = X_df.to_numpy(dtype=np.float64)
         y = y_series.to_numpy(dtype=np.float64)
@@ -193,11 +198,14 @@ class MarksPredictor:
         loaded_obj = joblib.load(resolved_path)
         if isinstance(loaded_obj, dict):
             model = loaded_obj.get("model")
+            feature_names = loaded_obj.get("feature_names")
             if not isinstance(model, RandomForestRegressor):
                 raise TypeError("Payload does not contain a valid RandomForestRegressor.")
+            if feature_names != MARKS_FEATURES:
+                raise ValueError(f"Payload feature metadata mismatch. Expected {MARKS_FEATURES}, got {feature_names}")
             self.model = model
         elif isinstance(loaded_obj, RandomForestRegressor):
-            self.model = loaded_obj
+            raise ValueError("Raw legacy RandomForestRegressor objects without feature metadata are rejected.")
         else:
             raise TypeError("Loaded artifact is not a valid model payload.")
 
