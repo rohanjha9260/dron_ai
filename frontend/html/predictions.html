@@ -40,7 +40,7 @@
                         </div>
                         <h2>Placement Readiness Score</h2>
                     </div>
-                    <span class="badge badge-success" id="readiness-tier"><span class="badge-dot"></span> Ready</span>
+                    <span class="badge badge-success" id="readiness-tier-badge"><span class="badge-dot"></span> <span id="readiness-tier-text">Ready</span></span>
                 </div>
 
                 <div class="card-body">
@@ -58,13 +58,13 @@
                                 <circle class="gauge-fill-arc" id="gauge-fill-arc" cx="80" cy="80" r="70" />
                             </svg>
                             <div class="gauge-center-content">
-                                <span class="gauge-percent" id="gauge-label">--%</span>
+                                <span class="gauge-percent" id="gauge-percent">--%</span>
                                 <span class="gauge-caption">Readiness Index</span>
                             </div>
                         </div>
 
                         <div style="text-align: center; margin-top: var(--space-lg); max-width: 360px;">
-                            <p id="prediction-summary-text" style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                            <p id="readiness-tier-desc" style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
                                 Click <strong>Run Placement Analysis</strong> to synthesize your academic GPA, LeetCode metrics, and GitHub contributions through the XGBoost inference model.
                             </p>
                         </div>

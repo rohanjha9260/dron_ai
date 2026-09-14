@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Academic Outlook & Regression Forecasting">
+    <title>Dron AI — Academic Outlook &amp; Forecast</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item active">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Academic <span>Outlook</span></h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-cyan">
+                            <i class="fa-solid fa-chart-line"></i> Regression Engine
+                        </span>
+                        <span class="badge badge-success">
+                            <span class="badge-dot"></span> Low Backlog Risk
+                        </span>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="app-content">
+                <!-- Banner -->
+                <div class="page-intro-banner">
+                    <div class="page-intro-text">
+                        <h1>Academic Regression &amp; Trajectory Forecast</h1>
+                        <p>Evaluates historical semester grades, credit progression, and curriculum rigor against department benchmarks to forecast graduating CGPA.</p>
+                    </div>
+                    <span class="badge badge-purple" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        <i class="fa-solid fa-graduation-cap"></i> Target: Distinction (&gt;8.5)
+                    </span>
+                </div>
+
+                <!-- Main Chart Card -->
+                <div class="dash-card" style="margin-bottom: 2rem;">
+                    <div class="dash-card-header">
+                        <div class="dash-card-title-group">
+                            <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h2>Detailed 8-Semester Regression Curve</h2>
+                        </div>
+                        <span class="badge badge-cyan">95% Confidence Interval</span>
+                    </div>
+                    <div class="dash-card-body">
+                        <div style="height: 320px; position: relative;">
+                            <canvas id="academicRegressionChart"></canvas>
+                        </div>
+                        <div class="chart-subtitle-note" style="margin-top: 1.5rem;">
+                            <strong>Statistical Model Finding:</strong> The polynomial trend exhibits an upward slope of <strong>+0.12 CGPA/semester</strong> in upper-division computer science courses. Probability of graduating above 8.75 CGPA is estimated at <strong>89.4%</strong> with 0 current backlogs.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2-Column Assessment: Backlog Risk + Semester Table -->
+                <div class="dashboard-grid-2x2">
+                    <!-- Backlog Risk Assessment -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--status-success);">
+                                    <i class="fa-solid fa-shield-check"></i>
+                                </div>
+                                <h2>Backlog Risk Assessment</h2>
+                            </div>
+                            <span class="badge badge-success">Risk Index: 4 / 100</span>
+                        </div>
+                        <div class="dash-card-body">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                                Multi-variable evaluation calculating probability of academic delay or backlog accumulation:
+                            </p>
+                            <div class="placement-factors-list">
+                                <div class="factor-item" style="padding: 0.75rem 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Current Active Backlogs</div>
+                                        <div style="font-size: 0.72rem; color: var(--text-muted);">No recorded arrears across 5 terms</div>
+                                    </div>
+                                    <span class="badge badge-success">0 Backlogs</span>
+                                </div>
+                                <div class="factor-item" style="padding: 0.75rem 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Course Attendance Compliance</div>
+                                        <div style="font-size: 0.72rem; color: var(--text-muted);">88.5% average (Mandatory threshold: 75%)</div>
+                                    </div>
+                                    <span class="badge badge-cyan">Safe Margin (+13.5%)</span>
+                                </div>
+                                <div class="factor-item" style="padding: 0.75rem 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Credits Cleared Velocity</div>
+                                        <div style="font-size: 0.72rem; color: var(--text-muted);">118 of 160 credits completed (73.7%)</div>
+                                    </div>
+                                    <span class="badge badge-purple">On Schedule</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semester-by-Semester Breakdown Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                    <i class="fa-solid fa-table-list"></i>
+                                </div>
+                                <h2>Semester Grade Velocity</h2>
+                            </div>
+                            <span class="badge badge-purple">Historical Records</span>
+                        </div>
+                        <div class="dash-card-body" style="padding: 0;">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Term</th>
+                                            <th>SGPA</th>
+                                            <th>Attendance</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Sem 1</strong></td>
+                                            <td style="font-family: var(--font-mono); color: var(--accent-cyan-light);">8.10</td>
+                                            <td>86%</td>
+                                            <td><span class="badge badge-success">Cleared</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sem 2</strong></td>
+                                            <td style="font-family: var(--font-mono); color: var(--accent-cyan-light);">8.35</td>
+                                            <td>89%</td>
+                                            <td><span class="badge badge-success">Cleared</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sem 3</strong></td>
+                                            <td style="font-family: var(--font-mono); color: var(--accent-cyan-light);">8.50</td>
+                                            <td>91%</td>
+                                            <td><span class="badge badge-success">Cleared</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sem 4</strong></td>
+                                            <td style="font-family: var(--font-mono); color: var(--accent-cyan-light);">8.90</td>
+                                            <td>92%</td>
+                                            <td><span class="badge badge-success">Best SGPA</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sem 5</strong></td>
+                                            <td style="font-family: var(--font-mono); color: var(--accent-cyan-light);">8.65</td>
+                                            <td>88%</td>
+                                            <td><span class="badge badge-success">Cleared</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

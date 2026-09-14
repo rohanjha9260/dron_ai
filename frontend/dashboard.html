@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Intelligent Student Future & Career Guidance System Mentorship Dashboard">
+    <title>Dron AI — Mentorship Analytical Dashboard</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item active">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Top Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Welcome back, <span id="header-greeting-name">Rohan</span> 👋</h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-purple" id="header-sem-badge">
+                            <span class="badge-dot badge-pulse"></span> Semester 6
+                        </span>
+                        <span class="badge badge-success">
+                            <span class="badge-dot"></span> Ready for Placement
+                        </span>
+                        <span class="badge badge-neutral" id="header-updated-badge">
+                            Updated Today
+                        </span>
+                    </div>
+
+                    <a href="input.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-user-pen"></i>
+                        <span>Edit Profile Data</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Workspace Body -->
+            <div class="app-content">
+
+                <!-- KPI Ribbon Summary Bar -->
+                <section class="kpi-ribbon-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-cyan">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Cumulative GPA</span>
+                            <span class="kpi-value" id="kpi-cgpa-val">8.65</span>
+                            <span class="kpi-subtext" style="color: var(--status-success);">
+                                <i class="fa-solid fa-arrow-trend-up"></i> +0.15 Trend
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-purple">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Attendance Rate</span>
+                            <span class="kpi-value" id="kpi-attendance-val">88.5%</span>
+                            <span class="kpi-subtext" style="color: var(--status-success);">
+                                <i class="fa-solid fa-circle-check"></i> Eligible (&gt;75%)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-success">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Academic Backlogs</span>
+                            <span class="kpi-value" id="kpi-backlogs-val">0 Active</span>
+                            <span class="kpi-subtext" style="color: var(--status-success);">
+                                <i class="fa-solid fa-check-double"></i> Clean Transcript
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-cyan">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">LeetCode Practice</span>
+                            <span class="kpi-value" id="kpi-solved-val">242+</span>
+                            <span class="kpi-subtext">Medium &amp; Hard focus</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-purple">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Git Commit Activity</span>
+                            <span class="kpi-value" id="kpi-commits-val">184+</span>
+                            <span class="kpi-subtext">Active repository pipeline</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══════════════════════════════════════════════════════════════
+                     Core 4-Card Analytical Grid
+                     ═══════════════════════════════════════════════════════════════ -->
+                <section class="dashboard-grid-2x2">
+
+                    <!-- ── Card 1: Academic Outlook ── -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                    <i class="fa-solid fa-chart-area"></i>
+                                </div>
+                                <h2>Academic Outlook</h2>
+                            </div>
+                            <span class="badge badge-cyan">Regression Model</span>
+                        </div>
+
+                        <div class="dash-card-body">
+                            <div class="chart-container-relative">
+                                <canvas id="academicTrajectoryChart"></canvas>
+                            </div>
+
+                            <div class="chart-subtitle-note">
+                                <strong>AI Prognosis:</strong> Steady growth in core courses. Maintain current trajectory to graduate with First Class with Distinction (Predicted CGPA: <strong>8.85</strong>).
+                            </div>
+                        </div>
+
+                        <div class="dash-card-footer">
+                            <span>Historical Sem 1–Sem 5 records</span>
+                            <a href="academic.html">
+                                <span>Deep-Dive Regression Curve</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 2: Placement Insight ── -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                </div>
+                                <h2>Placement Insight</h2>
+                            </div>
+                            <span class="badge badge-purple">XGBoost Inference</span>
+                        </div>
+
+                        <div class="dash-card-body">
+                            <div class="placement-gauge-wrapper">
+                                <div class="gauge-chart-box">
+                                    <canvas id="placementGaugeChart"></canvas>
+                                    <div class="gauge-center-stat">
+                                        <span class="gauge-percent-text" id="gauge-readout-percent">74%</span>
+                                        <span class="gauge-label-text">Readiness Index</span>
+                                    </div>
+                                </div>
+
+                                <div class="target-indicator-bar">
+                                    <span class="target-info">
+                                        <i class="fa-solid fa-flag-checkered" style="color: var(--accent-cyan); margin-right: 4px;"></i>
+                                        Target Benchmark:
+                                    </span>
+                                    <span class="target-badge">85% Tier-1 Readiness</span>
+                                </div>
+
+                                <div class="placement-factors-list">
+                                    <div class="factor-item">
+                                        <span>Academic CGPA Filter (Cleared)</span>
+                                        <span style="color: var(--status-success); font-weight: 700;">92%</span>
+                                    </div>
+                                    <div class="factor-item">
+                                        <span>Algorithmic DSA Competency</span>
+                                        <span style="color: var(--accent-cyan-light); font-weight: 700;">78%</span>
+                                    </div>
+                                    <div class="factor-item">
+                                        <span>Soft Skills &amp; Communication</span>
+                                        <span style="color: var(--status-warning); font-weight: 700;">68%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.75rem; text-align: center;">
+                                Strong technical skills in Python &amp; DSA. Focus on project portfolio depth and soft skills to bridge the final 11% gap.
+                            </p>
+                        </div>
+
+                        <div class="dash-card-footer">
+                            <span>Evaluated across 13 engineering dimensions</span>
+                            <a href="placement.html">
+                                <span>View Classification Factors</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 3: Career Direction ── -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                    <i class="fa-solid fa-compass"></i>
+                                </div>
+                                <h2>Career Direction</h2>
+                            </div>
+                            <span class="badge badge-cyan">Cosine Similarity</span>
+                        </div>
+
+                        <div class="dash-card-body">
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                                Geometric vector alignment between student profile and benchmark requirements of industry roles:
+                            </p>
+
+                            <div class="career-match-list" id="career-matches-container">
+                                <!-- Populated dynamically by app.js -->
+                                <div class="career-item-card">
+                                    <div class="career-item-header">
+                                        <div class="career-title-wrap">
+                                            <span class="career-rank-pill rank-1">#1</span>
+                                            <span class="career-name">Data Engineer</span>
+                                        </div>
+                                        <span class="career-score-pill">88% Match</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill fill-cyan" style="width: 88%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="career-item-card">
+                                    <div class="career-item-header">
+                                        <div class="career-title-wrap">
+                                            <span class="career-rank-pill rank-2">#2</span>
+                                            <span class="career-name">Machine Learning Engineer</span>
+                                        </div>
+                                        <span class="career-score-pill">82% Match</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill fill-purple" style="width: 82%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="career-item-card">
+                                    <div class="career-item-header">
+                                        <div class="career-title-wrap">
+                                            <span class="career-rank-pill rank-3">#3</span>
+                                            <span class="career-name">Backend Developer</span>
+                                        </div>
+                                        <span class="career-score-pill">75% Match</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill fill-slate" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dash-card-footer">
+                            <span>Ranked against 10 target careers</span>
+                            <a href="career.html">
+                                <span>View Detailed Match Breakdown</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 4: Action Plan / Roadmap Preview ── -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                    <i class="fa-solid fa-timeline"></i>
+                                </div>
+                                <h2>Action Plan / Roadmap Preview</h2>
+                            </div>
+                            <span class="badge badge-purple">Phased Sequencer</span>
+                        </div>
+
+                        <div class="dash-card-body">
+                            <div class="milestone-timeline">
+                                <!-- Phase 1 -->
+                                <div class="timeline-phase">
+                                    <div class="timeline-dot">1</div>
+                                    <div class="timeline-header">
+                                        <span class="phase-tag">Phase 1: Immediate (Weeks 1–2)</span>
+                                    </div>
+                                    <ul class="timeline-tasks">
+                                        <li class="timeline-task-item">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span>Complete Python data analysis &amp; SQL pipeline module</span>
+                                        </li>
+                                        <li class="timeline-task-item">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span>Schedule mock technical coding interview</span>
+                                        </li>
+                                        <li class="timeline-task-item">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span>Refine resume with ATS optimization keywords</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Phase 2 -->
+                                <div class="timeline-phase">
+                                    <div class="timeline-dot">2</div>
+                                    <div class="timeline-header">
+                                        <span class="phase-tag">Phase 2: Next Month (Weeks 3–6)</span>
+                                    </div>
+                                    <ul class="timeline-tasks">
+                                        <li class="timeline-task-item">
+                                            <i class="fa-solid fa-clock" style="color: var(--accent-purple);"></i>
+                                            <span>Start final year capstone project (ML/Data pipeline focus)</span>
+                                        </li>
+                                        <li class="timeline-task-item">
+                                            <i class="fa-solid fa-clock" style="color: var(--accent-purple);"></i>
+                                            <span>Attend campus career fair workshop &amp; alumni mixer</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Phase 3 -->
+                                <div class="timeline-phase">
+                                    <div class="timeline-dot">3</div>
+                                    <div class="timeline-header">
+                                        <span class="phase-tag">Phase 3: Future Target (Weeks 7–12)</span>
+                                    </div>
+                                    <ul class="timeline-tasks">
+                                        <li class="timeline-task-item">
+                                            <i class="fa-regular fa-circle" style="color: var(--text-muted);"></i>
+                                            <span>Secure Tier-1 software engineering placement offer</span>
+                                        </li>
+                                        <li class="timeline-task-item">
+                                            <i class="fa-regular fa-circle" style="color: var(--text-muted);"></i>
+                                            <span>Smoothly transition into professional engineering role</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dash-card-footer">
+                            <span>Remediating identified skill gaps</span>
+                            <a href="roadmap.html">
+                                <span>Interactive Remediation Roadmap</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

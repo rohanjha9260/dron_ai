@@ -100,17 +100,18 @@ function populateDashboardFields(data) {
     if (inputCohort && user.cohort_year) inputCohort.value = user.cohort_year;
 
     // 3. Academic Metrics (Latest semester)
-    let latestSem = academics.length > 0
+    const hasAcademicRecord = Array.isArray(academics) && academics.length > 0;
+    const latestSem = hasAcademicRecord
         ? [...academics].sort((a, b) => (b.semester || 0) - (a.semester || 0))[0]
-        : { cgpa: 8.5, attendance_pct: 88.0, active_backlogs: 0 };
+        : null;
 
     const inputCgpa = document.getElementById("input-cgpa");
     const inputAttendance = document.getElementById("input-attendance");
     const inputBacklogs = document.getElementById("input-backlogs");
 
-    if (inputCgpa && latestSem.cgpa !== undefined) inputCgpa.value = latestSem.cgpa;
-    if (inputAttendance && latestSem.attendance_pct !== undefined) inputAttendance.value = latestSem.attendance_pct;
-    if (inputBacklogs && latestSem.active_backlogs !== undefined) inputBacklogs.value = latestSem.active_backlogs;
+    if (inputCgpa && latestSem && latestSem.cgpa !== undefined) inputCgpa.value = latestSem.cgpa;
+    if (inputAttendance && latestSem && latestSem.attendance_pct !== undefined) inputAttendance.value = latestSem.attendance_pct;
+    if (inputBacklogs && latestSem && latestSem.active_backlogs !== undefined) inputBacklogs.value = latestSem.active_backlogs;
 
     // 4. Platform Handles
     const inputGithub = document.getElementById("input-github");
@@ -144,21 +145,45 @@ function populateDashboardFields(data) {
     const gCommits = document.getElementById("metric-github-commits");
     const lSolved = document.getElementById("metric-leetcode-solved");
     const lRating = document.getElementById("metric-leetcode-rating");
+    const ghBadge = document.getElementById("github-sync-badge");
+    const lcBadge = document.getElementById("leetcode-sync-badge");
 
-    if (gCommits && skills.total_commits !== undefined) gCommits.textContent = skills.total_commits;
-    if (lSolved && skills.problems_solved !== undefined) lSolved.textContent = skills.problems_solved;
-    if (lRating && skills.contest_rating !== undefined) lRating.textContent = Math.round(skills.contest_rating);
+    if (gCommits && skills.total_commits !== undefined && skills.total_commits !== null) {
+        gCommits.textContent = skills.total_commits;
+        if (ghBadge && (skills.total_commits > 0 || links.github_username || links.github_handle)) {
+            ghBadge.className = "badge badge-success";
+            ghBadge.innerHTML = '<span class="badge-dot"></span> Synced';
+        }
+    }
+    if (lSolved && skills.problems_solved !== undefined && skills.problems_solved !== null) {
+        lSolved.textContent = skills.problems_solved;
+        if (lcBadge && (skills.problems_solved > 0 || links.leetcode_username)) {
+            lcBadge.className = "badge badge-success";
+            lcBadge.innerHTML = '<span class="badge-dot"></span> Synced';
+        }
+    }
+    if (lRating && skills.contest_rating !== undefined && skills.contest_rating !== null) {
+        lRating.textContent = Math.round(skills.contest_rating);
+    }
 
     // 6. Hub Snapshot Stats
     const hubCgpa = document.getElementById("hub-stat-cgpa");
     const hubAttendance = document.getElementById("hub-stat-attendance");
-    if (hubCgpa && latestSem.cgpa !== undefined) {
-        hubCgpa.textContent = Number(latestSem.cgpa).toFixed(2);
+    if (hubCgpa) {
+        if (latestSem && latestSem.cgpa !== undefined && latestSem.cgpa !== null) {
+            hubCgpa.textContent = Number(latestSem.cgpa).toFixed(2);
+        } else {
+            hubCgpa.textContent = "N/A";
+        }
     }
     if (hubAttendance) {
-        const att = latestSem.attendance_pct !== undefined ? latestSem.attendance_pct : 88;
-        const bkl = latestSem.active_backlogs !== undefined ? latestSem.active_backlogs : 0;
-        hubAttendance.textContent = `Attendance: ${att}% • ${bkl} Backlogs`;
+        if (latestSem && (latestSem.attendance_pct !== undefined || latestSem.active_backlogs !== undefined)) {
+            const att = (latestSem.attendance_pct !== undefined && latestSem.attendance_pct !== null) ? `${latestSem.attendance_pct}%` : "N/A";
+            const bkl = (latestSem.active_backlogs !== undefined && latestSem.active_backlogs !== null) ? latestSem.active_backlogs : "N/A";
+            hubAttendance.textContent = `Attendance: ${att} • ${bkl} Backlogs`;
+        } else {
+            hubAttendance.textContent = "Attendance: N/A • Backlogs: N/A";
+        }
     }
 }
 

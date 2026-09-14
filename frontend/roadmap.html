@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Interactive Skill Gap Remediation Roadmap">
+    <title>Dron AI — Skill Gap Remediation Roadmap</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .roadmap-item {
+            background: rgba(18, 25, 39, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .roadmap-item:hover {
+            border-color: var(--accent-cyan);
+            background: var(--bg-card-hover);
+        }
+
+        .roadmap-item.completed {
+            border-color: rgba(16, 185, 129, 0.35);
+            background: rgba(16, 185, 129, 0.04);
+        }
+
+        .roadmap-check-wrap {
+            margin-top: 3px;
+        }
+
+        .roadmap-task-check {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+        }
+
+        .roadmap-item-content {
+            flex: 1;
+        }
+
+        .roadmap-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.35rem;
+        }
+
+        .roadmap-item-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .roadmap-item.completed .roadmap-item-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .roadmap-item-desc {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 0.75rem;
+        }
+
+        .roadmap-item-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item active">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Action <span>Roadmap</span></h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-cyan">
+                            <i class="fa-solid fa-crosshairs"></i> Target: Software Development
+                        </span>
+                        <span class="badge badge-purple">
+                            Focus: Data Structures &amp; Algorithms
+                        </span>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="app-content">
+                <!-- Banner -->
+                <div class="page-intro-banner">
+                    <div class="page-intro-text">
+                        <h1>Personalized Skill-Gap Remediation Plan</h1>
+                        <p>Targeted deficiency breakdown generated via Vector Subtraction (<em>Ideal Career Benchmark &minus; Student Skill Vector</em>) with interactive milestone sequencing.</p>
+                    </div>
+                    <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        <i class="fa-solid fa-clock"></i> Est. Completion: 8 Weeks
+                    </span>
+                </div>
+
+                <!-- Progress Header Card -->
+                <div class="dash-card" style="margin-bottom: 2rem;">
+                    <div class="dash-card-body" style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <div>
+                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;">Remediation Velocity</span>
+                                <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Interactive DSA Milestone Progress</h3>
+                            </div>
+                            <span id="roadmap-progress-percent" style="font-family: var(--font-mono); font-weight: 800; font-size: 1.1rem; color: var(--accent-cyan-light);">
+                                33% Complete (2/6 Milestones)
+                            </span>
+                        </div>
+                        <div class="career-progress-bar-bg" style="height: 10px;">
+                            <div class="career-progress-fill fill-cyan" id="roadmap-progress-fill" style="width: 33%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sequenced Milestone Checklist -->
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+                    <!-- Step 1 -->
+                    <div class="roadmap-item completed">
+                        <div class="roadmap-check-wrap">
+                            <input type="checkbox" class="roadmap-task-check" checked>
+                        </div>
+                        <div class="roadmap-item-content">
+                            <div class="roadmap-item-header">
+                                <span class="roadmap-item-title">1. Arrays, Hashing &amp; Frequency Maps</span>
+                                <span class="badge badge-success">Completed</span>
+                            </div>
+                            <p class="roadmap-item-desc">
+                                Mastered hash map lookups, prefix sums, and array element indexing. Completed foundational LeetCode patterns (Two Sum, Group Anagrams, Longest Consecutive Sequence).
+                            </p>
+                            <div class="roadmap-item-meta">
+                                <span><i class="fa-solid fa-stopwatch"></i> 14 Hours Logged</span>
+                                <span><i class="fa-solid fa-code"></i> 25 LeetCode Problems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="roadmap-item completed">
+                        <div class="roadmap-check-wrap">
+                            <input type="checkbox" class="roadmap-task-check" checked>
+                        </div>
+                        <div class="roadmap-item-content">
+                            <div class="roadmap-item-header">
+                                <span class="roadmap-item-title">2. Two Pointers &amp; Sliding Window Invariants</span>
+                                <span class="badge badge-success">Completed</span>
+                            </div>
+                            <p class="roadmap-item-desc">
+                                Practiced sub-array length optimization, palindrome checking, and dynamic window expansion/contraction (3Sum, Container With Most Water, Minimum Window Substring).
+                            </p>
+                            <div class="roadmap-item-meta">
+                                <span><i class="fa-solid fa-stopwatch"></i> 12 Hours Logged</span>
+                                <span><i class="fa-solid fa-code"></i> 20 LeetCode Problems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-check-wrap">
+                            <input type="checkbox" class="roadmap-task-check">
+                        </div>
+                        <div class="roadmap-item-content">
+                            <div class="roadmap-item-header">
+                                <span class="roadmap-item-title">3. Linked Lists Reversal &amp; Fast-Slow Pointers</span>
+                                <span class="badge badge-cyan">In Progress</span>
+                            </div>
+                            <p class="roadmap-item-desc">
+                                Implement in-place list reversal, cycle detection (Floyd's algorithm), and merging sorted linked lists. Recommended practice: Reverse Nodes in k-Group, Reorder List.
+                            </p>
+                            <div class="roadmap-item-meta">
+                                <span><i class="fa-solid fa-stopwatch"></i> Est. 8 Hours</span>
+                                <span><i class="fa-solid fa-code"></i> 15 LeetCode Problems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-check-wrap">
+                            <input type="checkbox" class="roadmap-task-check">
+                        </div>
+                        <div class="roadmap-item-content">
+                            <div class="roadmap-item-header">
+                                <span class="roadmap-item-title">4. Stacks, Queues &amp; Monotonic Subsequences</span>
+                                <span class="badge badge-purple">Up Next</span>
+                            </div>
+                            <p class="roadmap-item-desc">
+                                Build next-greater-element evaluation, daily temperatures computation, and valid parenthesis stack verification with O(N) amortized complexity.
+                            </p>
+                            <div class="roadmap-item-meta">
+                                <span><i class="fa-solid fa-stopwatch"></i> Est. 10 Hours</span>
+                                <span><i class="fa-solid fa-code"></i> 18 LeetCode Problems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-check-wrap">
+                            <input type="checkbox" class="roadmap-task-check">
+                        </div>
+                        <div class="roadmap-item-content">
+                            <div class="roadmap-item-header">
+                                <span class="roadmap-item-title">5. Binary Trees, BST &amp; Graph Traversals (BFS / DFS)</span>
+                                <span class="badge badge-neutral">Queued</span>
+                            </div>
+                            <p class="roadmap-item-desc">
+                                Tree diameter, lowest common ancestor (LCA), level-order traversal, and topological sorting using Kahn's algorithm for prerequisite resolution.
+                            </p>
+                            <div class="roadmap-item-meta">
+                                <span><i class="fa-solid fa-stopwatch"></i> Est. 16 Hours</span>
+                                <span><i class="fa-solid fa-code"></i> 30 LeetCode Problems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-check-wrap">
+                            <input type="checkbox" class="roadmap-task-check">
+                        </div>
+                        <div class="roadmap-item-content">
+                            <div class="roadmap-item-header">
+                                <span class="roadmap-item-title">6. Dynamic Programming &amp; 0/1 Knapsack Subproblems</span>
+                                <span class="badge badge-neutral">Target Milestone</span>
+                            </div>
+                            <p class="roadmap-item-desc">
+                                Memoization and tabulation: Coin Change, Longest Increasing Subsequence (LIS), and Edit Distance for Tier-1 coding interview readiness.
+                            </p>
+                            <div class="roadmap-item-meta">
+                                <span><i class="fa-solid fa-stopwatch"></i> Est. 20 Hours</span>
+                                <span><i class="fa-solid fa-code"></i> 35 LeetCode Problems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
