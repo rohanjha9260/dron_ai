@@ -2,28 +2,20 @@
  * Dron-AI Career Recommendation Module
  *
  * Handles:
- *   - Triggering Cosine Similarity career matching
- *   - Rendering ranked career matches with percentage scores
- *   - Selecting career target for roadmap generation
+ *   - Fetching Cosine Similarity career match rankings
+ *   - Rendering interactive career recommendation cards
+ *   - Selecting target roles to drive skill gap analysis & roadmaps
  */
 
-// Track selected career in session
-let selectedCareer = localStorage.getItem("dron_target_career") || "Software Engineer";
+let selectedCareer = null;
+let _roadmapRequestId = 0;
 
 /**
  * Fetch and render career recommendations.
  */
 async function getCareerRecommendations() {
-    const careerList = document.getElementById("career-list");
-    const recommendBtn = document.getElementById("recommend-btn");
-
-    if (recommendBtn) {
-        recommendBtn.disabled = true;
-        recommendBtn.innerHTML = `
-            <span class="spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span>
-            <span>Calculating...</span>
-        `;
-    }
+    const container = document.getElementById("career-recommendation-list");
+    if (!container) return;
 
     try {
         const data = await apiRequest("/career/recommend", {
@@ -31,129 +23,124 @@ async function getCareerRecommendations() {
         });
 
         const recommendations = data.recommendations || [];
-        if (!careerList) return;
-
         if (recommendations.length === 0) {
-            careerList.innerHTML = `<p class="placeholder-text" style="text-align:center;padding:2rem;color:var(--color-text-muted);">No recommendations available</p>`;
+            container.innerHTML = `<p class="placeholder-text" style="padding: 1rem; color: var(--color-text-muted);">No career paths matched your profile yet.</p>`;
             return;
         }
 
-        careerList.innerHTML = "";
+        container.innerHTML = "";
 
         recommendations.forEach((rec, index) => {
-            const roleName = rec.career || rec.career_name || rec.role || "Software Engineer";
-            const matchPct = Number(rec.match_pct || 0).toFixed(1);
-            const isSelected = roleName === selectedCareer || (index === 0 && !selectedCareer);
-
-            if (isSelected) {
-                selectedCareer = roleName;
-                updateSelectedTargetUI(roleName);
+            const isSelected = rec.career === selectedCareer || (index === 0 && !selectedCareer);
+            if (isSelected && !selectedCareer) {
+                selectedCareer = rec.career;
             }
 
-            const item = document.createElement("div");
-            item.className = `career-match-card ${isSelected ? "active-target" : ""}`;
-            item.style.cursor = "pointer";
-            item.dataset.careerName = roleName;
+            const card = document.createElement("div");
+            card.className = `career-match-card ${isSelected ? "active-target" : ""}`;
+            card.setAttribute("data-career", rec.career);
 
-            item.innerHTML = `
+            const matchFormatted = `${Number(rec.match_pct || 0).toFixed(1)}%`;
+
+            card.innerHTML = `
                 <div class="career-info">
                     <div class="career-name-row">
-                        <span class="career-name">${index + 1}. ${roleName}</span>
-                        ${isSelected ? '<span class="badge badge-success btn-small" style="padding: 2px 8px; font-size: 10px;">Target Active</span>' : ''}
+                        <span class="career-name">${rec.career}</span>
+                        ${isSelected ? '<span class="badge badge-success btn-small" style="padding: 2px 8px; font-size: 10px;">Target Active</span>' : ""}
                     </div>
-                    <span class="career-desc">${rec.description || "Synthesized profile fit based on technical strengths & academic vectors."}</span>
+                    <span class="career-desc">${rec.description || "Specialized engineering pathway"}</span>
                 </div>
                 <div class="career-score-wrap">
-                    <span class="score-badge">${matchPct}%</span>
-                    <button class="btn ${isSelected ? "btn-primary" : "btn-outline"} btn-small" type="button">
-                        ${isSelected ? "Selected" : "Select"}
-                    </button>
+                    <span class="score-badge" style="${isSelected ? "" : "color: var(--color-primary-light);"}">${matchFormatted}</span>
+                    ${!isSelected ? '<button class="btn btn-outline btn-small select-career-btn" type="button">Select</button>' : ""}
                 </div>
             `;
 
-            item.addEventListener("click", () => selectCareer(roleName));
-            careerList.appendChild(item);
+            // Click listener on card or button to select career
+            card.addEventListener("click", () => {
+                selectCareer(rec.career);
+            });
+
+            container.appendChild(card);
         });
 
+        // Trigger roadmap for current selected career if not already loaded
+        if (typeof generateRoadmap === "function" && selectedCareer) {
+            const reqId = ++_roadmapRequestId;
+            generateRoadmap(selectedCareer, reqId);
+        }
+
     } catch (error) {
-        if (careerList) {
-            careerList.innerHTML = `<p class="error-message" style="color:var(--color-danger);padding:1rem;">${error.message}</p>`;
-        }
-    } finally {
-        if (recommendBtn) {
-            recommendBtn.disabled = false;
-            recommendBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                <span>Re-compute Matches</span>
-            `;
-        }
+        console.error("Failed to load career recommendations:", error);
+        container.innerHTML = `<p class="error-message" style="color: var(--color-danger); padding: 1rem;">Failed to load recommendations: ${error.message}</p>`;
     }
 }
 
 /**
- * Select a career for roadmap generation and persist to storage.
- * @param {string} careerName - The selected career path
+ * Select a career path as active target and update dashboard state.
+ * @param {string} careerName - The target career role
  */
 function selectCareer(careerName) {
     selectedCareer = careerName;
-    localStorage.setItem("dron_target_career", careerName);
 
-    updateSelectedTargetUI(careerName);
+    // Update Navbar indicator
+    const navTarget = document.getElementById("nav-target-role");
+    if (navTarget) {
+        navTarget.textContent = careerName;
+    }
 
-    // Re-render highlight classes on cards
+    // Update Roadmap subtitle
+    const roadmapTitle = document.getElementById("roadmap-target-title");
+    if (roadmapTitle) {
+        roadmapTitle.textContent = `Target: ${careerName} Role Requirements`;
+    }
+
+    // Update active class on cards
     const cards = document.querySelectorAll(".career-match-card");
-    cards.forEach((c) => {
-        if (c.dataset.careerName === careerName) {
-            c.classList.add("active-target");
-            const btn = c.querySelector("button");
-            if (btn) {
-                btn.className = "btn btn-primary btn-small";
-                btn.textContent = "Selected";
+    cards.forEach((card) => {
+        const cName = card.getAttribute("data-career");
+        const scoreWrap = card.querySelector(".career-score-wrap");
+        const nameRow = card.querySelector(".career-name-row");
+
+        if (cName === careerName) {
+            card.classList.add("active-target");
+            if (nameRow && !nameRow.querySelector(".badge-success")) {
+                const badge = document.createElement("span");
+                badge.className = "badge badge-success btn-small";
+                badge.style.cssText = "padding: 2px 8px; font-size: 10px;";
+                badge.textContent = "Target Active";
+                nameRow.appendChild(badge);
+            }
+            if (scoreWrap) {
+                const btn = scoreWrap.querySelector(".select-career-btn");
+                if (btn) btn.remove();
             }
         } else {
-            c.classList.remove("active-target");
-            const btn = c.querySelector("button");
-            if (btn) {
-                btn.className = "btn btn-outline btn-small";
-                btn.textContent = "Select";
+            card.classList.remove("active-target");
+            if (nameRow) {
+                const badge = nameRow.querySelector(".badge-success");
+                if (badge) badge.remove();
             }
-            const activeBadge = c.querySelector(".badge-success");
-            if (activeBadge) activeBadge.remove();
+            if (scoreWrap && !scoreWrap.querySelector(".select-career-btn")) {
+                const btn = document.createElement("button");
+                btn.className = "btn btn-outline btn-small select-career-btn";
+                btn.type = "button";
+                btn.textContent = "Select";
+                scoreWrap.appendChild(btn);
+            }
         }
     });
 
-    // Update top navbar target role
-    const navTarget = document.getElementById("nav-target-role");
-    if (navTarget) navTarget.textContent = careerName;
-}
-
-/**
- * Update the Selected Target card on the right column.
- */
-function updateSelectedTargetUI(careerName) {
-    const titleEl = document.getElementById("selected-career-title");
-    if (titleEl) titleEl.textContent = careerName;
-
-    const roadmapLink = document.getElementById("btn-view-roadmap");
-    if (roadmapLink) {
-        roadmapLink.href = `roadmap.html?target=${encodeURIComponent(careerName)}`;
+    // Trigger roadmap generation for the newly selected career
+    if (typeof generateRoadmap === "function") {
+        const reqId = ++_roadmapRequestId;
+        generateRoadmap(careerName, reqId);
     }
 }
 
 /**
- * Initialize career section on DOM ready.
+ * Initialize career section.
  */
 function initCareerSection() {
-    const recommendBtn = document.getElementById("recommend-btn");
-    if (recommendBtn) {
-        recommendBtn.addEventListener("click", getCareerRecommendations);
-    }
-
-    // Auto-run if on career page
-    const file = window.location.pathname.split("/").pop();
-    if (file === "career.html") {
-        getCareerRecommendations();
-    }
+    getCareerRecommendations();
 }
-
-document.addEventListener("DOMContentLoaded", initCareerSection);

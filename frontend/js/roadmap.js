@@ -2,40 +2,45 @@
  * Dron-AI Roadmap & Skill Gap Module
  *
  * Handles:
- *   - Triggering personalized roadmap generation
- *   - Rendering the phased action plan timeline
- *   - Displaying skill gaps table and deficit indicators
+ *   - Calling /api/roadmap/generate for the selected career target
+ *   - Rendering the Vector Subtraction skill gap table
+ *   - Rendering the Phased Remediation Roadmap timeline with milestones & tasks
  */
+
+const SKILL_DISPLAY_NAMES = {
+    dsa_score: "DSA Mastery",
+    python_prof: "Python Proficiency",
+    cpp_prof: "C++ Proficiency",
+    aiml_knowledge: "AI / ML Knowledge",
+    total_commits: "GitHub Commit Activity",
+    problems_solved: "LeetCode Practice",
+    contest_rating: "Contest Rating",
+    project_count: "Completed Projects",
+    communication_score: "Communication & Soft Skills",
+    internship_exp: "Internship Exposure",
+};
+
+let _activeRoadmapRequestId = 0;
 
 /**
- * Generate a personalized roadmap for the target career.
- * @param {string} targetCareer - The target career role
+ * Generate and render personalized roadmap & skill gaps.
+ * @param {string} targetCareer - The target career role (e.g. "Software Engineer")
+ * @param {number} [requestId] - Optional monotonic request ID to prevent stale responses
  */
-async function generateRoadmap(targetCareer) {
+async function generateRoadmap(targetCareer, requestId) {
+    const myRequestId = requestId ?? ++_activeRoadmapRequestId;
+    _activeRoadmapRequestId = Math.max(_activeRoadmapRequestId, myRequestId);
     const timeline = document.getElementById("roadmap-timeline");
-    const tbody = document.getElementById("gap-analysis-tbody");
-    const gapBadge = document.getElementById("gap-count-badge");
-    const targetSubtitle = document.getElementById("gap-target-subtitle");
-    const generateBtn = document.getElementById("generate-roadmap-btn");
-
-    if (!targetCareer) {
-        targetCareer = document.getElementById("roadmap-target-select")?.value || "Software Engineer";
-    }
-
-    if (targetSubtitle) {
-        targetSubtitle.textContent = `Target: ${targetCareer}`;
-    }
-
-    if (generateBtn) {
-        generateBtn.disabled = true;
-        generateBtn.innerHTML = `
-            <span class="spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span>
-            <span>Synthesizing...</span>
-        `;
-    }
+    const gapTbody = document.getElementById("gap-analysis-tbody");
+    const gapBadge = document.getElementById("roadmap-gap-badge");
 
     if (timeline) {
-        timeline.innerHTML = `<p class="placeholder-text" style="text-align:center;padding:2rem;color:var(--color-text-muted);">Generating milestone roadmap for ${targetCareer}...</p>`;
+        timeline.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: var(--color-text-secondary);">
+                <span class="spinner" style="display: inline-block; width: 24px; height: 24px; border: 2px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+                <p style="margin-top: 10px; font-size: var(--font-size-sm);">Calculating skill gaps & generating learning roadmap for ${targetCareer}...</p>
+            </div>
+        `;
     }
 
     try {
@@ -44,100 +49,114 @@ async function generateRoadmap(targetCareer) {
             body: { target_career: targetCareer },
         });
 
-        // 1. Render Skill Gaps Table
-        const gaps = data.skill_gaps || data.gaps || {};
-        const gapEntries = Array.isArray(gaps) ? gaps : Object.entries(gaps);
+        const skillGaps = data.skill_gaps || [];
+        const roadmap = data.roadmap || [];
 
-        if (tbody) {
-            tbody.innerHTML = "";
-            let gapCount = 0;
+        // Guard against stale responses
+        if (myRequestId !== _activeRoadmapRequestId) return;
 
-            if (gapEntries.length === 0) {
-                tbody.innerHTML = `
+        // 1. Update Gap Badge
+        if (gapBadge) {
+            if (skillGaps.length > 0) {
+                gapBadge.className = "badge badge-warning";
+                gapBadge.innerHTML = `<span class="badge-dot"></span> ${skillGaps.length} Weakness Gaps Identified`;
+            } else {
+                gapBadge.className = "badge badge-success";
+                gapBadge.innerHTML = `<span class="badge-dot"></span> Profile Meets All Baseline Targets`;
+            }
+        }
+
+        // 2. Render Skill Gap Analysis Table
+        if (gapTbody) {
+            gapTbody.innerHTML = "";
+
+            if (skillGaps.length === 0) {
+                gapTbody.innerHTML = `
                     <tr>
-                        <td colspan="3" style="text-align:center;padding:1.5rem;color:var(--color-success);">
-                            No significant skill gaps detected! Your profile aligns strongly with ${targetCareer}.
+                        <td colspan="3" style="text-align: center; color: var(--color-text-muted); padding: 1.5rem;">
+                            No significant skill gaps detected for this role! Your profile exceeds baseline thresholds.
                         </td>
                     </tr>
                 `;
             } else {
-                gapEntries.forEach((entry) => {
-                    const skillName = Array.isArray(entry) ? entry[0] : entry.skill;
-                    const gapVal = Array.isArray(entry) ? entry[1] : (entry.deficit || entry.gap || 0);
+                skillGaps.forEach((item) => {
+                    const skillKey = item.skill;
+                    const label = SKILL_DISPLAY_NAMES[skillKey] || skillKey;
+                    const currentVal = Number(item.current || 0);
+                    const requiredVal = Number(item.required || 0);
+                    const gapVal = Number(item.gap || 0);
 
-                    if (gapVal > 0) gapCount++;
+                    // Clamp percentages for visual bars
+                    const maxVal = Math.max(requiredVal, 100);
+                    const currentPct = Math.min(100, Math.max(0, (currentVal / maxVal) * 100));
+                    const requiredPct = Math.min(100, Math.max(0, (requiredVal / maxVal) * 100));
 
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td style="font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">
-                            ${skillName.replace(/_/g, " ").toUpperCase()}
-                        </td>
-                        <td style="color: var(--color-text-secondary);">
-                            <span>Deficit: ${Number(gapVal).toFixed(1)} pts</span>
-                        </td>
+                        <td><strong>${label}</strong></td>
                         <td>
-                            ${gapVal > 0 
-                                ? `<span class="badge badge-warning" style="font-size:0.7rem;padding:2px 8px;">-${Number(gapVal).toFixed(0)} Gap</span>`
-                                : `<span class="badge badge-success" style="font-size:0.7rem;padding:2px 8px;">Aligned</span>`
-                            }
+                            <div style="font-size: 11px; margin-bottom: 4px; color: var(--color-text-secondary);">
+                                ${currentVal.toFixed(0)} / ${requiredVal.toFixed(0)}
+                            </div>
+                            <div class="gap-bar-bg" style="position: relative; height: 6px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                                <div class="gap-bar-current" style="width: ${currentPct}%; height: 100%; background: ${currentPct >= requiredPct ? "var(--color-success)" : "var(--color-primary-light)"}; border-radius: 4px;"></div>
+                                <div class="gap-bar-required" style="position: absolute; left: ${requiredPct}%; top: 0; bottom: 0; width: 2px; background: #FFFFFF; opacity: 0.8;"></div>
+                            </div>
                         </td>
+                        <td><span class="badge badge-warning">-${gapVal.toFixed(0)} pts</span></td>
                     `;
-                    tbody.appendChild(tr);
+                    gapTbody.appendChild(tr);
                 });
-            }
-
-            if (gapBadge) {
-                gapBadge.innerHTML = `<span class="badge-dot"></span> ${gapCount} Weakness Gaps Identified`;
-                gapBadge.className = gapCount > 0 ? "badge badge-warning" : "badge badge-success";
             }
         }
 
-        // 2. Render Roadmap Timeline
-        const milestones = data.milestones || data.roadmap || [];
+        // 3. Render Phased Action Roadmap Timeline
         if (timeline) {
             timeline.innerHTML = "";
 
-            if (milestones.length === 0) {
+            if (roadmap.length === 0) {
                 timeline.innerHTML = `
-                    <div style="text-align:center;padding:2.5rem;background:rgba(212,175,55,0.04);border-radius:var(--radius-md);">
-                        <p style="color:var(--color-primary-light);font-size:var(--font-size-base);font-weight:var(--font-weight-semibold);margin-bottom:6px;">
-                            Optimal Placement Preparation Reached
-                        </p>
-                        <p style="color:var(--color-text-secondary);font-size:var(--font-size-xs);">
-                            Your current metrics exceed target role requirements for ${targetCareer}. Keep practicing mock interviews and system architecture design.
-                        </p>
+                    <div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">
+                        <p>No active remediation phases required. Focus on advanced elective projects and mock interviews!</p>
                     </div>
                 `;
                 return;
             }
 
-            milestones.forEach((m, idx) => {
+            roadmap.forEach((phase, idx) => {
                 const stepEl = document.createElement("div");
-                stepEl.className = "timeline-item";
-                stepEl.style.cssText = "display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative;";
+                stepEl.className = "timeline-step";
 
-                const tasks = m.tasks || (m.action_items ? m.action_items : []);
-                const tasksHtml = tasks.map(t => `<li style="margin-bottom:4px;color:var(--color-text-secondary);font-size:var(--font-size-xs);">${t}</li>`).join("");
+                const isFirst = idx === 0;
+                const priorityClass = phase.priority === "high" ? "badge-warning" : "badge-info";
+
+                const tasksListHtml = (phase.tasks || []).map((task, tIdx) => {
+                    const taskId = `phase-${phase.phase}-task-${tIdx}`;
+                    return `
+                        <li class="task-item">
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="${taskId}" class="task-checkbox" style="margin-top: 3px; accent-color: var(--color-primary);" onchange="toggleTaskCheckbox(this.closest('.task-item'))">
+                                <span class="task-text">${task}</span>
+                            </label>
+                        </li>
+                    `;
+                }).join("");
 
                 stepEl.innerHTML = `
-                    <div style="display:flex;flex-direction:column;align-items:center;">
-                        <div style="width:28px;height:28px;border-radius:50%;background:var(--color-primary);color:#000;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;">
-                            ${idx + 1}
-                        </div>
-                        <div style="flex:1;width:2px;background:rgba(212,175,55,0.2);margin-top:4px;"></div>
+                    <div class="timeline-node ${isFirst ? "" : ""}">
+                        ${phase.phase}
                     </div>
-                    <div style="flex:1;background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:1rem;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                            <h3 style="font-size:var(--font-size-sm);font-weight:var(--font-weight-semibold);color:var(--color-primary-light);">
-                                ${m.title || m.milestone || `Phase ${idx + 1}`}
-                            </h3>
-                            <span class="badge badge-info" style="font-size:0.65rem;">${m.duration || m.timeframe || "Weeks " + (idx * 3 + 1) + "-" + ((idx + 1) * 3)}</span>
+                    <div class="step-header">
+                        <div class="step-title-row">
+                            <span class="badge badge-primary">Phase ${phase.phase}</span>
+                            <span class="step-title">${phase.title}</span>
                         </div>
-                        <p style="font-size:var(--font-size-xs);color:var(--color-text-secondary);margin-bottom:8px;">
-                            ${m.description || "Focus area to close target capability deficiency."}
-                        </p>
-                        ${tasks.length > 0 ? `<ul style="padding-left:1.2rem;margin:0;">${tasksHtml}</ul>` : ""}
+                        <span class="badge ${priorityClass}">${phase.duration} • ${phase.priority ? phase.priority.toUpperCase() : "NORMAL"}</span>
                     </div>
+                    ${phase.milestone ? `<div style="font-size: 11px; color: var(--color-accent-light); margin-bottom: 8px; font-weight: 500;">🎯 Goal: ${phase.milestone}</div>` : ""}
+                    <ul class="step-tasks-list">
+                        ${tasksListHtml}
+                    </ul>
                 `;
 
                 timeline.appendChild(stepEl);
@@ -145,56 +164,30 @@ async function generateRoadmap(targetCareer) {
         }
 
     } catch (error) {
-        if (timeline) timeline.innerHTML = `<p class="error-message" style="color:var(--color-danger);padding:1rem;">${error.message}</p>`;
-    } finally {
-        if (generateBtn) {
-            generateBtn.disabled = false;
-            generateBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                <span>Generate Plan</span>
-            `;
+        console.error("Failed to generate roadmap:", error);
+        // Guard against stale error responses
+        if (myRequestId !== _activeRoadmapRequestId) return;
+        if (timeline) {
+            timeline.innerHTML = `<div style="padding: 1rem; color: var(--color-danger);">Failed to load roadmap: ${error.message}</div>`;
+        }
+        if (gapTbody) {
+            gapTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--color-danger); padding: 1.5rem;">Failed to load skill gap data.</td></tr>`;
+        }
+        if (gapBadge) {
+            gapBadge.className = "badge badge-danger";
+            gapBadge.innerHTML = `<span class="badge-dot"></span> Analysis Failed`;
         }
     }
 }
 
 /**
- * Initialize roadmap page handlers on DOM ready.
+ * Interactive helper for task checkboxes in roadmap.
  */
-function initRoadmapSection() {
-    const generateBtn = document.getElementById("generate-roadmap-btn");
-    const selectEl = document.getElementById("roadmap-target-select");
-
-    // Read target from URL query param if present (?target=...)
-    const params = new URLSearchParams(window.location.search);
-    const targetParam = params.get("target") || localStorage.getItem("dron_target_career") || "Software Engineer";
-
-    if (selectEl) {
-        // Set select option matching target if exists
-        for (let i = 0; i < selectEl.options.length; i++) {
-            if (selectEl.options[i].value.toLowerCase() === targetParam.toLowerCase()) {
-                selectEl.selectedIndex = i;
-                break;
-            }
-        }
-
-        selectEl.addEventListener("change", () => {
-            generateRoadmap(selectEl.value);
-        });
-    }
-
-    if (generateBtn) {
-        generateBtn.addEventListener("click", () => {
-            const chosen = selectEl ? selectEl.value : targetParam;
-            generateRoadmap(chosen);
-        });
-    }
-
-    // Auto-generate on roadmap page
-    const file = window.location.pathname.split("/").pop();
-    if (file === "roadmap.html") {
-        const chosen = selectEl ? selectEl.value : targetParam;
-        generateRoadmap(chosen);
+function toggleTaskCheckbox(itemEl) {
+    if (!itemEl) return;
+    itemEl.classList.toggle("checked");
+    const checkSpan = itemEl.querySelector(".custom-checkbox");
+    if (checkSpan) {
+        checkSpan.textContent = itemEl.classList.contains("checked") ? "✓" : "";
     }
 }
-
-document.addEventListener("DOMContentLoaded", initRoadmapSection);

@@ -2,28 +2,48 @@
  * Dron-AI Placement Readiness Module
  *
  * Handles:
- *   - Triggering XGBoost placement prediction
- *   - Rendering the readiness gauge visual score indicator
- *   - Displaying readiness tier and feature influences
+ *   - Triggering XGBoost placement readiness prediction
+ *   - Rendering the interactive SVG score gauge
+ *   - Displaying readiness tier and contextual descriptions
+ *   - Rendering SHAP / feature importance influence breakdown
  */
+
+const FEATURE_LABELS = {
+    cgpa: "Academic CGPA",
+    attendance_pct: "Academic Attendance",
+    active_backlogs: "Active Backlogs",
+    dsa_score: "Data Structures & Algorithms",
+    python_prof: "Python Proficiency",
+    cpp_prof: "C++ Proficiency",
+    aiml_knowledge: "AI/ML Knowledge",
+    total_commits: "GitHub Commit Activity",
+    problems_solved: "LeetCode Solved Problems",
+    contest_rating: "Contest Rating",
+    project_count: "Completed Projects",
+    communication_score: "Soft Skills & Communication",
+    internship_exp: "Internship Experience",
+};
 
 /**
  * Run placement readiness analysis.
  */
 async function analyzePlacement() {
-    const gaugeLabel = document.getElementById("gauge-label");
-    const tierLabel = document.getElementById("readiness-tier");
+    const gaugePercent = document.getElementById("gauge-percent");
     const gaugeArc = document.getElementById("gauge-fill-arc");
+    const tierBadge = document.getElementById("readiness-tier-badge");
+    const tierText = document.getElementById("readiness-tier-text");
+    const tierDesc = document.getElementById("readiness-tier-desc");
+    const navProb = document.getElementById("nav-placement-prob");
+    const influenceList = document.getElementById("feature-influence-list");
     const predictBtn = document.getElementById("predict-btn");
-    const summaryText = document.getElementById("prediction-summary-text");
-    const factorList = document.getElementById("feature-influence-list");
+    const bannerBtn = document.getElementById("re-run-inference-btn");
 
     if (predictBtn) {
         predictBtn.disabled = true;
-        predictBtn.innerHTML = `
-            <span class="spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span>
-            <span>Running Inference...</span>
-        `;
+        predictBtn.textContent = "Analyzing Vector...";
+    }
+    if (bannerBtn) {
+        bannerBtn.disabled = true;
     }
 
     try {
@@ -31,93 +51,114 @@ async function analyzePlacement() {
             method: "POST",
         });
 
-        const probability = data.placement_probability || 0;
-        const pct = Math.round(probability * 100);
-        const tier = data.readiness_tier || "Analysis Complete";
+        const probability = typeof data.placement_probability === "number" ? data.placement_probability : 0.0;
+        const tier = data.readiness_tier || "Assessment Pending";
+        const percentFormatted = `${(probability * 100).toFixed(1)}%`;
 
-        if (gaugeLabel) gaugeLabel.textContent = `${pct}%`;
-
-        // Update Gauge Arc (arc length is approx 440 in SVG viewBox)
+        // 1. Update Gauge Arc and Percent text
+        if (gaugePercent) {
+            gaugePercent.textContent = percentFormatted;
+        }
         if (gaugeArc) {
-            // stroke-dasharray is 440. 100% -> dashoffset 0, 0% -> dashoffset 440
-            const offset = Math.max(0, Math.min(440, 440 - (440 * (pct / 100))));
+            const circumference = 440; // 2 * PI * 70
+            const offset = Math.max(0, circumference - (circumference * probability));
+            gaugeArc.style.transition = "stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1)";
             gaugeArc.style.strokeDashoffset = offset;
-            if (pct >= 75) {
-                gaugeArc.style.stroke = "var(--color-success)";
-            } else if (pct >= 50) {
-                gaugeArc.style.stroke = "var(--color-primary)";
-            } else {
-                gaugeArc.style.stroke = "var(--color-danger)";
-            }
         }
 
-        // Update Tier Badge
-        if (tierLabel) {
-            tierLabel.innerHTML = `<span class="badge-dot"></span> Tier: ${tier}`;
-            if (pct >= 75) {
-                tierLabel.className = "badge badge-success";
-            } else if (pct >= 50) {
-                tierLabel.className = "badge badge-warning";
-            } else {
-                tierLabel.className = "badge badge-danger";
-            }
-        }
-
-        // Update Summary Text
-        if (summaryText) {
-            summaryText.textContent = `Model predicted placement readiness at ${pct}%. Student status is categorized as ${tier}.`;
-        }
-
-        // Update Navbar probability indicator
-        const navProb = document.getElementById("nav-placement-prob");
+        // 2. Update Navbar probability pill
         if (navProb) {
-            navProb.innerHTML = `<span class="badge-dot"></span> ${pct}% Ready`;
+            navProb.innerHTML = `<span class="badge-dot"></span> ${percentFormatted}`;
+            navProb.className = `badge ${probability >= 0.6 ? "badge-success" : probability >= 0.4 ? "badge-warning" : "badge-danger"}`;
         }
 
-        // Render dynamic top factors if available
-        if (factorList && data.top_factors && Array.isArray(data.top_factors) && data.top_factors.length > 0) {
-            factorList.innerHTML = data.top_factors.map((factor, idx) => {
-                const formattedName = factor.replace(/_/g, " ").toUpperCase();
-                return `
-                    <div class="influence-item">
-                        <span class="name">${formattedName}</span>
-                        <span class="impact-pos">Top Factor #${idx + 1}</span>
-                    </div>
-                `;
-            }).join("");
+        // 3. Update Readiness Tier badge & description
+        if (tierBadge && tierText) {
+            tierText.textContent = `Tier: ${tier}`;
+            if (probability >= 0.6) {
+                tierBadge.className = "badge badge-success";
+            } else if (probability >= 0.4) {
+                tierBadge.className = "badge badge-warning";
+            } else {
+                tierBadge.className = "badge badge-danger";
+            }
         }
+
+        if (tierDesc) {
+            if (probability >= 0.8) {
+                tierDesc.textContent = "Student profile demonstrates high placement fitness for top-tier software engineering roles.";
+            } else if (probability >= 0.6) {
+                tierDesc.textContent = "Solid placement profile with competitive foundation. Fine-tuning core strengths will unlock top offers.";
+            } else if (probability >= 0.4) {
+                tierDesc.textContent = "Moderate placement foundation. Targeted remediation in weak skill dimensions recommended.";
+            } else {
+                tierDesc.textContent = "High priority action needed: Focus on core DSA, academic backlogs, and hands-on projects.";
+            }
+        }
+
+        // 4. Render Feature Influence Breakdown
+        if (influenceList && data.feature_importance) {
+            influenceList.innerHTML = "";
+            const entries = Object.entries(data.feature_importance);
+            // Sort by importance descending
+            entries.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+
+            // Display top 4 influential factors
+            const topEntries = entries.slice(0, 4);
+            topEntries.forEach(([feat, weight]) => {
+                const item = document.createElement("div");
+                item.className = "influence-item";
+                const label = FEATURE_LABELS[feat] || feat;
+                const weightPct = Math.round(weight * 100);
+                const isPositive = weightPct > 0;
+                item.innerHTML = `
+                    <span class="name">${label}</span>
+                    <span class="${isPositive ? "impact-pos" : "impact-neg"}">${isPositive ? "+" : ""}${weightPct}% Factor</span>
+                `;
+                influenceList.appendChild(item);
+            });
+        }
+
     } catch (error) {
-        if (tierLabel) tierLabel.innerHTML = `<span class="badge-dot"></span> Error`;
-        if (gaugeLabel) gaugeLabel.textContent = "--";
-        if (gaugeArc) gaugeArc.style.strokeDashoffset = 440;
-        if (summaryText) summaryText.textContent = error.message;
-        const navProb = document.getElementById("nav-placement-prob");
-        if (navProb) navProb.innerHTML = `<span class="badge-dot"></span> --% Ready`;
-        if (factorList) factorList.innerHTML = "";
+        console.error("Failed to run placement prediction:", error);
+        if (gaugePercent) {
+            gaugePercent.textContent = "--%";
+        }
+        if (gaugeArc) {
+            gaugeArc.style.transition = "stroke-dashoffset 0.6s ease";
+            gaugeArc.style.strokeDashoffset = 440;
+        }
+        if (navProb) {
+            navProb.innerHTML = `<span class="badge-dot"></span> N/A`;
+            navProb.className = "badge badge-danger";
+        }
+        if (tierText) {
+            tierText.textContent = "Analysis Error";
+        }
+        if (tierDesc) {
+            tierDesc.textContent = error.message || "Could not complete prediction. Please verify profile data.";
+        }
     } finally {
         if (predictBtn) {
             predictBtn.disabled = false;
-            predictBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                <span>Run Placement Analysis</span>
-            `;
+            predictBtn.textContent = "Run Placement Prediction";
+        }
+        if (bannerBtn) {
+            bannerBtn.disabled = false;
         }
     }
 }
 
 /**
- * Initialize placement section event listeners and auto-load.
+ * Initialize placement section event listeners.
  */
 function initPlacementSection() {
     const predictBtn = document.getElementById("predict-btn");
     if (predictBtn) {
         predictBtn.addEventListener("click", analyzePlacement);
     }
-    // Auto-analyze on predictions page
-    const file = window.location.pathname.split("/").pop();
-    if (file === "predictions.html") {
-        analyzePlacement();
+    const bannerBtn = document.getElementById("re-run-inference-btn");
+    if (bannerBtn) {
+        bannerBtn.addEventListener("click", analyzePlacement);
     }
 }
-
-document.addEventListener("DOMContentLoaded", initPlacementSection);
