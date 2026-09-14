@@ -23,7 +23,7 @@ joblib==1.6.0
 limits==5.8.0
 MarkupSafe==3.0.3
 narwhals==2.25.0
-numpy==2.5.2
+numpy==2.4.6
 ordered-set==4.1.0
 packaging==26.3
 pandas==3.0.5
@@ -38,7 +38,7 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.2.3
 requests==2.34.2
 scikit-learn==1.9.0
-scipy==1.18.1
+scipy==1.17.1
 six==1.17.0
 SQLAlchemy==2.0.52
 threadpoolctl==3.6.0
@@ -48,5 +48,5 @@ tzdata==2026.3
 urllib3==2.7.0
 Werkzeug==3.1.8
 wrapt==2.4.0
-xgboost==3.4.1
+xgboost==3.2.0
 shap>=0.40.0
