@@ -184,6 +184,7 @@ class PlacementPredictor:
         self,
         features: np.ndarray,
         scaler: Optional[StandardScaler] = None,
+        include_shap: bool = False,
     ) -> Dict[str, Any]:
         """
         Run inference on a single student's feature vector.
@@ -191,6 +192,7 @@ class PlacementPredictor:
         Args:
             features: 1D numpy array of shape (13,) or 2D array of shape (1, 13) matching FEATURE_NAMES
             scaler: Optional StandardScaler instance to normalize features before prediction
+            include_shap: Whether to compute local SHAP explanations (adds slight latency)
 
         Returns:
             Dict containing:
@@ -234,27 +236,29 @@ class PlacementPredictor:
         if self._cached_feature_importance is None:
             self._update_cached_importances()
 
-        # SHAP Values (Explainable AI)
-        if self._explainer is None:
-            self._explainer = shap.TreeExplainer(self.model)
-        
-        shap_vals = self._explainer.shap_values(feat_arr)
-        if isinstance(shap_vals, list):
-            shap_array = shap_vals[1][0]
-        else:
-            shap_array = shap_vals[0] if shap_vals.ndim == 2 else shap_vals
-            
-        shap_dict = {
-            name: float(val) for name, val in zip(FEATURE_NAMES, shap_array)
-        }
-
-        return {
+        result = {
             "placement_probability": round(proba, 4),
             "is_placed": is_placed,
             "feature_importance": self._cached_feature_importance or {},
             "top_factors": self._cached_top_factors or [],
-            "shap_values": shap_dict,
         }
+
+        # Optional SHAP Values (Explainable AI)
+        if include_shap:
+            if self._explainer is None:
+                self._explainer = shap.TreeExplainer(self.model)
+            
+            shap_vals = self._explainer.shap_values(feat_arr)
+            if isinstance(shap_vals, list):
+                shap_array = shap_vals[1][0]
+            else:
+                shap_array = shap_vals[0] if shap_vals.ndim == 2 else shap_vals
+                
+            result["shap_values"] = {
+                name: float(val) for name, val in zip(FEATURE_NAMES, shap_array)
+            }
+
+        return result
 
     def _update_cached_importances(self):
         """Precompute and cache feature importances for instant access."""
