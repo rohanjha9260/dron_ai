@@ -172,3 +172,9 @@ function initPlacementSection() {
         bannerBtn.addEventListener("click", analyzePlacement);
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("predict-btn") || document.getElementById("gauge-percent")) {
+        initPlacementSection();
+    }
+});

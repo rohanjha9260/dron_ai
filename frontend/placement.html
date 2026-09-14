@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Placement Readiness & Classification Factor Analysis">
+    <title>Dron AI — Placement Readiness Insight</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item active">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Placement <span>Insight</span></h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-purple">
+                            <span class="badge-dot badge-pulse"></span> XGBoost Model v2.4
+                        </span>
+                        <span class="badge badge-cyan">
+                            Latency: 1.8ms
+                        </span>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="app-content">
+                <!-- Banner -->
+                <div class="page-intro-banner">
+                    <div class="page-intro-text">
+                        <h1>Placement Readiness &amp; Factor Breakdown</h1>
+                        <p>XGBoost machine learning classification analyzing student technical depth, competitive coding telemetry, and campus recruitment clearing thresholds.</p>
+                    </div>
+                    <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        <i class="fa-solid fa-shield-check"></i> Overall Score: 74%
+                    </span>
+                </div>
+
+                <!-- Classification Factors Bar Chart Card -->
+                <div class="dash-card" style="margin-bottom: 2rem;">
+                    <div class="dash-card-header">
+                        <div class="dash-card-title-group">
+                            <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </div>
+                            <h2>Feature Influence Breakdown (SHAP Weights)</h2>
+                        </div>
+                        <span class="badge badge-cyan">Top Influencing Predictors</span>
+                    </div>
+                    <div class="dash-card-body">
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="placementFactorsChart"></canvas>
+                        </div>
+                        <div class="chart-subtitle-note" style="margin-top: 1.5rem;">
+                            <strong>Model Diagnosis:</strong> Cumulative GPA (28%) and Algorithmic DSA (24%) serve as primary clearance filters. Increasing solved LeetCode Mediums from 240+ to 350+ is projected to increase placement probability into Tier-1 companies by <strong>+12.8%</strong>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2-Column Grid: Mock Interview Benchmarks + Company Tier Eligibility -->
+                <div class="dashboard-grid-2x2">
+                    <!-- Mock Interview Competency Benchmarks -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <h2>Mock Interview Benchmarks</h2>
+                            </div>
+                            <span class="badge badge-purple">4 Assessment Areas</span>
+                        </div>
+                        <div class="dash-card-body">
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+                                        <span style="font-weight: 600;">Data Structures &amp; Problem Solving</span>
+                                        <span style="font-family: var(--font-mono); color: var(--accent-cyan-light); font-weight: 700;">82% / 100</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill fill-cyan" style="width: 82%;"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+                                        <span style="font-weight: 600;">Core Python &amp; Object-Oriented Design</span>
+                                        <span style="font-family: var(--font-mono); color: var(--accent-purple-light); font-weight: 700;">88% / 100</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill fill-purple" style="width: 88%;"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+                                        <span style="font-weight: 600;">System Design &amp; Architecture</span>
+                                        <span style="font-family: var(--font-mono); color: var(--status-warning); font-weight: 700;">64% / 100</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill" style="width: 64%; background: var(--status-warning);"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+                                        <span style="font-weight: 600;">Behavioral &amp; Communication Skills</span>
+                                        <span style="font-family: var(--font-mono); color: var(--accent-cyan-light); font-weight: 700;">76% / 100</span>
+                                    </div>
+                                    <div class="career-progress-bar-bg">
+                                        <div class="career-progress-fill fill-cyan" style="width: 76%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Company Tier Eligibility Matrix -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                    <i class="fa-solid fa-building"></i>
+                                </div>
+                                <h2>Campus Tier Eligibility</h2>
+                            </div>
+                            <span class="badge badge-cyan">Recruitment Tiers</span>
+                        </div>
+                        <div class="dash-card-body">
+                            <div class="placement-factors-list">
+                                <div class="factor-item" style="padding: 0.75rem 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Tier 1: High-Growth Product &amp; Big Tech</div>
+                                        <div style="font-size: 0.72rem; color: var(--text-muted);">CTC: ₹18–45 LPA • Cutoff: 8.0 CGPA + High DSA</div>
+                                    </div>
+                                    <span class="badge badge-warning">74% (11% Gap)</span>
+                                </div>
+
+                                <div class="factor-item" style="padding: 0.75rem 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Tier 2: Mid-Size Software &amp; Tech Startups</div>
+                                        <div style="font-size: 0.72rem; color: var(--text-muted);">CTC: ₹8–18 LPA • Cutoff: 7.5 CGPA + Good Projects</div>
+                                    </div>
+                                    <span class="badge badge-success">91% Eligible</span>
+                                </div>
+
+                                <div class="factor-item" style="padding: 0.75rem 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Tier 3: Enterprise IT &amp; Engineering Consulting</div>
+                                        <div style="font-size: 0.72rem; color: var(--text-muted);">CTC: ₹4.5–8 LPA • Cutoff: 6.5 CGPA + 0 Backlogs</div>
+                                    </div>
+                                    <span class="badge badge-success">99% Qualified</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

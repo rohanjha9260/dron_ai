@@ -196,3 +196,26 @@ function toggleTaskCheckbox(itemEl) {
         checkSpan.textContent = itemEl.classList.contains("checked") ? "✓" : "";
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const select = document.getElementById("roadmap-target-select");
+    const btn = document.getElementById("generate-roadmap-btn");
+
+    if (btn) {
+        btn.addEventListener("click", () => {
+            const target = select ? select.value : "Software Engineer";
+            generateRoadmap(target);
+        });
+    }
+
+    if (select) {
+        select.addEventListener("change", () => {
+            generateRoadmap(select.value);
+        });
+    }
+
+    if (document.getElementById("roadmap-timeline")) {
+        const initialTarget = select ? select.value : "Software Engineer";
+        generateRoadmap(initialTarget);
+    }
+});

@@ -210,18 +210,66 @@ function initNavigation() {
 async function loadSidebarUserInfo() {
     const isGuestSession = localStorage.getItem("dron_is_guest") === "true";
 
+    const nameEl = document.getElementById("sidebar-username");
+    const avatarEl = document.getElementById("sidebar-avatar");
+    const roleEl = document.getElementById("sidebar-user-role");
+    const logoutBtn = document.getElementById("logout-btn");
+    const guestBadge = document.getElementById("nav-guest-badge");
+    const topNameEl = document.getElementById("top-nav-username");
+    const topAvatarEl = document.getElementById("top-nav-avatar");
+    const topRoleEl = document.getElementById("top-nav-user-role");
+
+    if (isGuestSession) {
+        if (nameEl) nameEl.textContent = "Guest Student";
+        if (topNameEl) topNameEl.textContent = "Guest Student";
+        if (avatarEl) {
+            avatarEl.textContent = "GS";
+            avatarEl.style.borderColor = "var(--color-primary)";
+            avatarEl.style.color = "var(--color-primary-light)";
+        }
+        if (topAvatarEl) {
+            topAvatarEl.textContent = "GS";
+            topAvatarEl.style.borderColor = "var(--color-primary)";
+            topAvatarEl.style.color = "var(--color-primary-light)";
+        }
+        if (roleEl) {
+            roleEl.innerHTML = `<span class="badge badge-warning" style="font-size:0.65rem;padding:2px 6px;text-transform:uppercase;letter-spacing:0.04em;">Guest Mode</span>`;
+        }
+        if (topRoleEl) {
+            topRoleEl.textContent = "Guest Mode";
+        }
+        if (guestBadge) {
+            guestBadge.style.display = "inline-flex";
+        }
+        if (logoutBtn) {
+            logoutBtn.innerHTML = `
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Exit Guest Mode
+            `;
+        }
+
+        const sidebarFooter = document.querySelector(".sidebar-footer");
+        if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
+            const prompt = document.createElement("a");
+            prompt.id = "guest-register-prompt";
+            prompt.href = "register.html";
+            prompt.className = "btn btn-primary btn-small";
+            prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
+            prompt.innerHTML = `
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                Create Account
+            `;
+            sidebarFooter.insertBefore(prompt, logoutBtn);
+        }
+        return; // Skip fetching profile data for guest sessions
+    }
+
     try {
         if (typeof apiRequest !== "function") return;
 
         const data = await apiRequest("/users/profile", { method: "GET" });
         const user = data.user || {};
-        const isGuest = isGuestSession || user.email === "guest@dron.ai";
-
-        const nameEl = document.getElementById("sidebar-username");
-        const avatarEl = document.getElementById("sidebar-avatar");
-        const roleEl = document.getElementById("sidebar-user-role");
-        const logoutBtn = document.getElementById("logout-btn");
-        const guestBadge = document.getElementById("nav-guest-badge");
+        const isGuest = user.email === "guest@dron.ai";
 
         if (nameEl) {
             nameEl.textContent = isGuest ? "Guest Student" : (user.full_name || "Student");
@@ -247,10 +295,6 @@ async function loadSidebarUserInfo() {
         }
 
         // Hydrate top-right navbar profile section
-        const topNameEl = document.getElementById("top-nav-username");
-        const topAvatarEl = document.getElementById("top-nav-avatar");
-        const topRoleEl = document.getElementById("top-nav-user-role");
-
         if (topNameEl) {
             topNameEl.textContent = isGuest ? "Guest Student" : (user.full_name || "Student");
         }
@@ -268,7 +312,30 @@ async function loadSidebarUserInfo() {
             if (isGuest) {
                 topRoleEl.textContent = "Guest Mode";
             } else {
-                const branchAbbr = (user.academic_branch || "Eng").split(" ")[0];
+                const branchMap = {
+                    "Computer Science & Engineering": "CSE",
+                    "Computer Science and Engineering": "CSE",
+                    "Computer Science": "CSE",
+                    "CSE": "CSE",
+                    "Information Technology": "IT",
+                    "IT": "IT",
+                    "Artificial Intelligence & Data Science": "AIDS",
+                    "Artificial Intelligence and Data Science": "AIDS",
+                    "AI & Data Science": "AIDS",
+                    "AIDS": "AIDS",
+                    "Electronics & Communication": "ECE",
+                    "Electronics and Communication": "ECE",
+                    "Electronics & Communication Engineering": "ECE",
+                    "ECE": "ECE",
+                    "Mechanical Engineering": "ME",
+                    "ME": "ME",
+                    "Civil Engineering": "CE",
+                    "CE": "CE",
+                    "Electrical Engineering": "EE",
+                    "EE": "EE",
+                };
+                const rawBranch = (user.academic_branch || "").trim();
+                const branchAbbr = branchMap[rawBranch] || (rawBranch ? rawBranch.split(" ")[0] : "Eng") || "Eng";
                 const cohort = user.cohort_year ? ` '${String(user.cohort_year).slice(-2)}` : "";
                 topRoleEl.textContent = `${branchAbbr}${cohort}`;
             }
@@ -285,7 +352,6 @@ async function loadSidebarUserInfo() {
                 `;
             }
 
-            // Provide "Create Account" prompt in sidebar footer for guests
             const sidebarFooter = document.querySelector(".sidebar-footer");
             if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
                 const prompt = document.createElement("a");

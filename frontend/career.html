@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Career Path Vector Matching & Cosine Similarity Analysis">
+    <title>Dron AI — Career Direction Guidance</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item active">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Career <span>Direction</span></h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-cyan">
+                            <i class="fa-solid fa-circle-nodes"></i> Cosine Similarity
+                        </span>
+                        <span class="badge badge-purple">
+                            #1 Match: Data Engineer (88%)
+                        </span>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="app-content">
+                <!-- Banner -->
+                <div class="page-intro-banner">
+                    <div class="page-intro-text">
+                        <h1>Career Alignment &amp; Vector Proximity Analysis</h1>
+                        <p>Evaluates multi-dimensional Euclidean angles between your skill profile vector and target industrial software roles to identify highest-probability career matches.</p>
+                    </div>
+                    <span class="badge badge-cyan" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        <i class="fa-solid fa-compass"></i> 10 Target Benchmarks
+                    </span>
+                </div>
+
+                <!-- 2-Column Grid: Radar Comparison Chart + Cosine Matrix -->
+                <div class="dashboard-grid-2x2" style="margin-bottom: 2rem;">
+                    <!-- Radar Skill Chart -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <h2>Student Skill Radar vs Target Role</h2>
+                            </div>
+                            <span class="badge badge-cyan">Target: Data/ML Engineer</span>
+                        </div>
+                        <div class="dash-card-body">
+                            <div style="height: 310px; position: relative;">
+                                <canvas id="careerRadarChart"></canvas>
+                            </div>
+                            <div class="chart-subtitle-note">
+                                <strong>Competency Gap:</strong> Current strengths in <em>Python &amp; DSA</em> provide solid alignment. Bridging <em>System Architecture (+15%)</em> and <em>SQL Pipelines (+10%)</em> yields &gt;92% role alignment.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cosine Similarity Matrix Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title-group">
+                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                    <i class="fa-solid fa-network-wired"></i>
+                                </div>
+                                <h2>Ranked Career Vectors</h2>
+                            </div>
+                            <span class="badge badge-purple">Cosine Similarity</span>
+                        </div>
+                        <div class="dash-card-body" style="padding: 0;">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <th>Role Profile</th>
+                                            <th>Match Alignment</th>
+                                            <th>Recommended Focus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="career-rank-pill rank-1">#1</span></td>
+                                            <td><strong>Data Engineer</strong></td>
+                                            <td><span style="font-family: var(--font-mono); color: var(--accent-cyan-light); font-weight: 700;">88% Match</span></td>
+                                            <td><span class="badge badge-cyan">Spark &amp; ETL</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="career-rank-pill rank-2">#2</span></td>
+                                            <td><strong>Machine Learning Engineer</strong></td>
+                                            <td><span style="font-family: var(--font-mono); color: var(--accent-purple-light); font-weight: 700;">82% Match</span></td>
+                                            <td><span class="badge badge-purple">Model Serving</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="career-rank-pill rank-3">#3</span></td>
+                                            <td><strong>Backend Developer</strong></td>
+                                            <td><span style="font-family: var(--font-mono); color: var(--text-secondary); font-weight: 700;">75% Match</span></td>
+                                            <td><span class="badge badge-neutral">Microservices</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="career-rank-pill rank-3">#4</span></td>
+                                            <td><strong>Full Stack Developer</strong></td>
+                                            <td><span style="font-family: var(--font-mono); color: var(--text-secondary); font-weight: 700;">70% Match</span></td>
+                                            <td><span class="badge badge-neutral">React &amp; Node</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="career-rank-pill rank-3">#5</span></td>
+                                            <td><strong>DevOps / Cloud Engineer</strong></td>
+                                            <td><span style="font-family: var(--font-mono); color: var(--text-secondary); font-weight: 700;">68% Match</span></td>
+                                            <td><span class="badge badge-neutral">Docker / K8s</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pathway Action Plan -->
+                <div class="dash-card">
+                    <div class="dash-card-header">
+                        <div class="dash-card-title-group">
+                            <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <h2>AI Recommended Career Transition Strategy</h2>
+                        </div>
+                    </div>
+                    <div class="dash-card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+                            <div style="background: rgba(18, 25, 39, 0.6); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <div style="font-weight: 700; color: var(--accent-cyan-light); margin-bottom: 0.4rem;">
+                                    <i class="fa-solid fa-database"></i> 1. Deepen Data Pipelines
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                    Since you already command 88% proficiency in Python and SQL, build an end-to-end data pipeline project integrating Apache Airflow and PostgreSQL to solidify Data Engineering offers.
+                                </p>
+                            </div>
+
+                            <div style="background: rgba(18, 25, 39, 0.6); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <div style="font-weight: 700; color: var(--accent-purple-light); margin-bottom: 0.4rem;">
+                                    <i class="fa-solid fa-brain"></i> 2. Complete Capstone ML Project
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                    Package your final year engineering capstone as a deployable ML microservice with FastAPI and Docker. This boosts your ML Engineer match from 82% to 91%.
+                                </p>
+                            </div>
+
+                            <div style="background: rgba(18, 25, 39, 0.6); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem;">
+                                    <i class="fa-solid fa-route"></i> 3. Follow Sequenced Remediation
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                    Work through the interactive remediation roadmap to systematically close remaining DSA deficits in dynamic programming and tree traversals.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
