@@ -124,6 +124,13 @@ function buildTopNavbar() {
                     <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                 </svg>
             </button>
+            <a href="profile.html" class="top-nav-user-profile" id="top-nav-user-profile" title="View Profile">
+                <div class="top-nav-avatar" id="top-nav-avatar">ST</div>
+                <div class="top-nav-user-details">
+                    <span class="top-nav-user-name" id="top-nav-username">Student</span>
+                    <span class="top-nav-user-role" id="top-nav-user-role">CSE '26</span>
+                </div>
+            </a>
         </div>
     </header>`;
 }
@@ -236,6 +243,34 @@ async function loadSidebarUserInfo() {
                 const branch = user.academic_branch || "Engineering";
                 const cohort = user.cohort_year ? ` \u2022 ${user.cohort_year}` : "";
                 roleEl.textContent = `${branch}${cohort}`;
+            }
+        }
+
+        // Hydrate top-right navbar profile section
+        const topNameEl = document.getElementById("top-nav-username");
+        const topAvatarEl = document.getElementById("top-nav-avatar");
+        const topRoleEl = document.getElementById("top-nav-user-role");
+
+        if (topNameEl) {
+            topNameEl.textContent = isGuest ? "Guest Student" : (user.full_name || "Student");
+        }
+        if (topAvatarEl) {
+            if (isGuest) {
+                topAvatarEl.textContent = "GS";
+                topAvatarEl.style.borderColor = "var(--color-primary)";
+                topAvatarEl.style.color = "var(--color-primary-light)";
+            } else if (user.full_name) {
+                topAvatarEl.textContent = user.full_name
+                    .trim().split(/\s+/).map((n) => n[0]).join("").substring(0, 2).toUpperCase();
+            }
+        }
+        if (topRoleEl) {
+            if (isGuest) {
+                topRoleEl.textContent = "Guest Mode";
+            } else {
+                const branchAbbr = (user.academic_branch || "Eng").split(" ")[0];
+                const cohort = user.cohort_year ? ` '${String(user.cohort_year).slice(-2)}` : "";
+                topRoleEl.textContent = `${branchAbbr}${cohort}`;
             }
         }
 

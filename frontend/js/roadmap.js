@@ -55,7 +55,7 @@ async function generateRoadmap(targetCareer, requestId) {
         // Guard against stale responses
         if (myRequestId !== _activeRoadmapRequestId) return;
 
-        // 1. Update Gap Badge
+        // 1. Update Gap Badge & Hub Snapshot
         if (gapBadge) {
             if (skillGaps.length > 0) {
                 gapBadge.className = "badge badge-warning";
@@ -64,6 +64,11 @@ async function generateRoadmap(targetCareer, requestId) {
                 gapBadge.className = "badge badge-success";
                 gapBadge.innerHTML = `<span class="badge-dot"></span> Profile Meets All Baseline Targets`;
             }
+        }
+
+        const hubGaps = document.getElementById("hub-stat-gaps");
+        if (hubGaps) {
+            hubGaps.textContent = skillGaps.length > 0 ? `${skillGaps.length} Deficits` : "0 Gaps";
         }
 
         // 2. Render Skill Gap Analysis Table

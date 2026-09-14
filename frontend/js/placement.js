@@ -66,10 +66,20 @@ async function analyzePlacement() {
             gaugeArc.style.strokeDashoffset = offset;
         }
 
-        // 2. Update Navbar probability pill
+        // 2. Update Navbar probability pill & Hub Snapshot
         if (navProb) {
             navProb.innerHTML = `<span class="badge-dot"></span> ${percentFormatted}`;
             navProb.className = `badge ${probability >= 0.6 ? "badge-success" : probability >= 0.4 ? "badge-warning" : "badge-danger"}`;
+        }
+
+        const hubProb = document.getElementById("hub-stat-prob");
+        const hubTier = document.getElementById("hub-stat-tier");
+        if (hubProb) {
+            hubProb.textContent = percentFormatted;
+        }
+        if (hubTier) {
+            hubTier.innerHTML = `<span class="badge-dot"></span> ${tier}`;
+            hubTier.className = `badge ${probability >= 0.6 ? "badge-success" : probability >= 0.4 ? "badge-warning" : "badge-danger"}`;
         }
 
         // 3. Update Readiness Tier badge & description
