@@ -36,7 +36,7 @@ async function getUserHandles() {
         return cachedHandles;
     } catch (error) {
         console.warn("Could not fetch profile handles for metrics:", error.message);
-        return cachedHandles;
+        throw error;
     }
 }
 
@@ -92,13 +92,15 @@ async function fetchMetrics() {
                 renderSkeleton(githubContainer, "GitHub");
             }
         } else {
-            if (!ghBadge) {
-                renderEmptyState(
-                    githubContainer,
-                    "GitHub",
-                    "Connect your GitHub username in Edit Profile to sync repositories, commits, and language stats."
-                );
+            if (ghBadge) {
+                ghBadge.className = "badge badge-neutral";
+                ghBadge.innerHTML = `<span class="badge-dot"></span> Unlinked`;
             }
+            renderEmptyState(
+                githubContainer,
+                "GitHub",
+                "Connect your GitHub username in Edit Profile to sync repositories, commits, and language stats."
+            );
         }
 
         if (lcHandle) {
@@ -109,13 +111,15 @@ async function fetchMetrics() {
                 renderSkeleton(leetcodeContainer, "LeetCode");
             }
         } else {
-            if (!lcBadge) {
-                renderEmptyState(
-                    leetcodeContainer,
-                    "LeetCode",
-                    "Connect your LeetCode username in Edit Profile to sync solved problems, contest rating, and ranks."
-                );
+            if (lcBadge) {
+                lcBadge.className = "badge badge-neutral";
+                lcBadge.innerHTML = `<span class="badge-dot"></span> Unlinked`;
             }
+            renderEmptyState(
+                leetcodeContainer,
+                "LeetCode",
+                "Connect your LeetCode username in Edit Profile to sync solved problems, contest rating, and ranks."
+            );
         }
 
         // 4. Trigger backend metrics sync endpoint
@@ -217,6 +221,26 @@ async function fetchMetrics() {
         }
     } catch (error) {
         console.error("Unexpected error in fetchMetrics:", error);
+        const ghBadge = document.getElementById("github-sync-badge");
+        const lcBadge = document.getElementById("leetcode-sync-badge");
+        if (ghBadge) {
+            ghBadge.className = "badge badge-danger";
+            ghBadge.innerHTML = '<span class="badge-dot"></span> Unavailable';
+        }
+        if (lcBadge) {
+            lcBadge.className = "badge badge-danger";
+            lcBadge.innerHTML = '<span class="badge-dot"></span> Unavailable';
+        }
+        renderPartialError(
+            githubContainer,
+            "GitHub",
+            "Profile data temporarily unavailable. Please try refreshing again."
+        );
+        renderPartialError(
+            leetcodeContainer,
+            "LeetCode",
+            "Profile data temporarily unavailable. Please try refreshing again."
+        );
     } finally {
         if (fetchBtn) {
             fetchBtn.disabled = false;

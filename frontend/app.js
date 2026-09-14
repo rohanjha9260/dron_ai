@@ -177,6 +177,8 @@ function calculateCareerMatches(profile) {
 // Common UI Hydration (Header, Sidebar, User Initials)
 // ═══════════════════════════════════════════════════════════════
 function hydrateCommonUI(profile) {
+    if (!profile) return;
+
     // 1. Header Greeting & User Avatar
     const greetingEl = document.getElementById("header-greeting-name");
     if (greetingEl) {
@@ -191,6 +193,11 @@ function hydrateCommonUI(profile) {
     const sidebarMetaEl = document.getElementById("sidebar-user-meta");
     if (sidebarMetaEl) {
         sidebarMetaEl.textContent = `${profile.currentSem} • ${profile.cohortYear || "2026"}`;
+    }
+
+    const roleEl = document.getElementById("sidebar-user-role");
+    if (roleEl && profile.branch) {
+        roleEl.textContent = `${profile.branch} '${(profile.cohortYear || "2026").slice(-2)}`;
     }
 
     const avatarEl = document.getElementById("sidebar-user-avatar");
@@ -261,14 +268,13 @@ function initInputPage() {
     const chipElements = document.querySelectorAll(".skill-chip");
     chipElements.forEach((chip) => {
         const skill = chip.getAttribute("data-skill");
-        if (selectedSkills.has(skill)) {
-            chip.classList.add("active");
-        } else {
-            chip.classList.remove("active");
-        }
+        const isActive = selectedSkills.has(skill);
+        chip.classList.toggle("active", isActive);
+        chip.setAttribute("aria-pressed", isActive ? "true" : "false");
 
         chip.addEventListener("click", () => {
-            chip.classList.toggle("active");
+            const active = chip.classList.toggle("active");
+            chip.setAttribute("aria-pressed", active ? "true" : "false");
         });
     });
 
@@ -735,20 +741,6 @@ function initRoadmapPage() {
     updateRoadmapProgress();
 }
 
-/**
- * Hydrate shared sidebar and header student profile indicators safely if elements exist.
- */
-function hydrateCommonUI(profile) {
-    if (!profile) return;
-    const nameEl = document.getElementById("sidebar-user-name");
-    const roleEl = document.getElementById("sidebar-user-role");
-    const avatarEl = document.getElementById("sidebar-user-avatar");
-    if (nameEl && profile.fullName) nameEl.textContent = profile.fullName;
-    if (roleEl && profile.branch) roleEl.textContent = `${profile.branch} '${(profile.cohortYear || "2026").slice(-2)}`;
-    if (avatarEl && profile.fullName) {
-        avatarEl.textContent = profile.fullName.trim().split(/\s+/).map((n) => n[0]).join("").substring(0, 2).toUpperCase();
-    }
-}
 
 // ═══════════════════════════════════════════════════════════════
 // Main Landing Dashboard Controller (Black & Gold Theme)

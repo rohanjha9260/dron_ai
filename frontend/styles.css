@@ -1156,6 +1156,11 @@ button, input, select, textarea {
     background: rgba(0, 210, 255, 0.08);
 }
 
+.skill-chip:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+}
+
 .skill-chip.active {
     background: linear-gradient(135deg, rgba(0, 210, 255, 0.22) 0%, rgba(168, 85, 247, 0.22) 100%);
     border-color: var(--accent-cyan);
