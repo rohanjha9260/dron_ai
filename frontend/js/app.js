@@ -148,6 +148,18 @@ function populateDashboardFields(data) {
     if (gCommits && skills.total_commits !== undefined) gCommits.textContent = skills.total_commits;
     if (lSolved && skills.problems_solved !== undefined) lSolved.textContent = skills.problems_solved;
     if (lRating && skills.contest_rating !== undefined) lRating.textContent = Math.round(skills.contest_rating);
+
+    // 6. Hub Snapshot Stats
+    const hubCgpa = document.getElementById("hub-stat-cgpa");
+    const hubAttendance = document.getElementById("hub-stat-attendance");
+    if (hubCgpa && latestSem.cgpa !== undefined) {
+        hubCgpa.textContent = Number(latestSem.cgpa).toFixed(2);
+    }
+    if (hubAttendance) {
+        const att = latestSem.attendance_pct !== undefined ? latestSem.attendance_pct : 88;
+        const bkl = latestSem.active_backlogs !== undefined ? latestSem.active_backlogs : 0;
+        hubAttendance.textContent = `Attendance: ${att}% • ${bkl} Backlogs`;
+    }
 }
 
 /**

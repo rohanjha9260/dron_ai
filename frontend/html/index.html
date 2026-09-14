@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI — AI/ML Powered Student Career Guidance and Placement Readiness Intelligence">
+    <title>Dron-AI — Student Career Intelligence Dashboard</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+    <!-- ── Hero Banner Section ── -->
+    <section class="hub-hero">
+        <div class="hub-badge">
+            <span>✨</span>
+            <span>AI-Powered Placement &amp; Career Intelligence</span>
+        </div>
+        <h1 class="hub-title">Predict Student Success Before It Happens</h1>
+        <p class="hub-subtitle">
+            A multi-dimensional machine learning platform synthesizing academic records, GitHub commit patterns, and LeetCode algorithmic metrics to forecast placement readiness and guide career transitions.
+        </p>
+        <div class="hub-cta-group">
+            <a href="predictions.html" class="hub-btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                <span>Placement Predictor</span>
+            </a>
+            <a href="career.html" class="hub-btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                <span>Career Guidance</span>
+            </a>
+            <a href="roadmap.html" class="hub-btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                <span>Action Roadmap</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ── Live Student Snapshot Bar ── -->
+    <div class="hub-snapshot-grid">
+        <div class="hub-snapshot-card">
+            <div class="hub-snapshot-label">
+                <span>Academic Status</span>
+                <span class="badge badge-primary" style="font-size: 10px; padding: 1px 6px;">Current</span>
+            </div>
+            <div class="hub-snapshot-val" id="hub-stat-cgpa">--</div>
+            <div class="hub-snapshot-desc" id="hub-stat-attendance">Attendance: --% • 0 Backlogs</div>
+        </div>
+
+        <div class="hub-snapshot-card">
+            <div class="hub-snapshot-label">
+                <span>Placement Readiness</span>
+                <span class="badge badge-success" id="hub-stat-tier" style="font-size: 10px; padding: 1px 6px;"><span class="badge-dot"></span> Analyzing</span>
+            </div>
+            <div class="hub-snapshot-val" id="hub-stat-prob" style="color: var(--color-primary-light);">--%</div>
+            <div class="hub-snapshot-desc">XGBoost ML Confidence Score</div>
+        </div>
+
+        <div class="hub-snapshot-card">
+            <div class="hub-snapshot-label">
+                <span>Active Target Role</span>
+                <span class="badge badge-info" style="font-size: 10px; padding: 1px 6px;">Cosine Match</span>
+            </div>
+            <div class="hub-snapshot-val" id="hub-stat-role" style="font-size: 1.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">--</div>
+            <div class="hub-snapshot-desc" id="hub-stat-match">Geometric Alignment: --%</div>
+        </div>
+
+        <div class="hub-snapshot-card">
+            <div class="hub-snapshot-label">
+                <span>Identified Skill Gaps</span>
+                <span class="badge badge-warning" style="font-size: 10px; padding: 1px 6px;">Deficits</span>
+            </div>
+            <div class="hub-snapshot-val" id="hub-stat-gaps" style="color: var(--color-warning);">--</div>
+            <div class="hub-snapshot-desc">Weakness points to remediate</div>
+        </div>
+    </div>
+
+    <!-- ── Core Features Section ── -->
+    <div class="hub-section-header">
+        <h2 class="hub-section-title">Quantitative Career Engines</h2>
+        <p class="hub-section-desc">Four specialized AI/ML modules engineered to maximize engineering placement success.</p>
+    </div>
+
+    <div class="hub-features-grid">
+        <!-- Feature 1: Placement Predictor -->
+        <div class="hub-feature-card">
+            <div>
+                <div class="hub-feature-top">
+                    <div class="hub-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <span class="badge badge-success">Supervised XGBoost</span>
+                </div>
+                <h3 class="hub-feature-title">Placement Readiness Predictor</h3>
+                <p class="hub-feature-desc">
+                    High-precision gradient boosting model trained on 13 canonical features to forecast placement likelihood with sub-2ms inference SLA and explainable feature weights.
+                </p>
+            </div>
+            <div class="hub-feature-footer">
+                <span class="hub-feature-stat">&lt; 2ms SLA • SHAP Factors</span>
+                <a href="predictions.html" class="hub-feature-link">
+                    <span>Launch Predictor</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Feature 2: Career Recommendations -->
+        <div class="hub-feature-card">
+            <div>
+                <div class="hub-feature-top">
+                    <div class="hub-feature-icon" style="background: rgba(99, 102, 241, 0.12); color: #818CF8;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                    </div>
+                    <span class="badge badge-primary">Geometric Cosine</span>
+                </div>
+                <h3 class="hub-feature-title">Career Path Matching</h3>
+                <p class="hub-feature-desc">
+                    Evaluate cosine alignment of your 10D skill vector against 10 industry benchmark profiles including Software Engineer, ML Engineer, Data Scientist, and DevOps.
+                </p>
+            </div>
+            <div class="hub-feature-footer">
+                <span class="hub-feature-stat">10 Benchmark Profiles</span>
+                <a href="career.html" class="hub-feature-link">
+                    <span>Explore Careers</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Feature 3: Skill Gap & Roadmap -->
+        <div class="hub-feature-card">
+            <div>
+                <div class="hub-feature-top">
+                    <div class="hub-feature-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--color-warning);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <span class="badge badge-warning">Vector Subtraction</span>
+                </div>
+                <h3 class="hub-feature-title">Skill Gap &amp; Learning Roadmap</h3>
+                <p class="hub-feature-desc">
+                    Identify precise competency deficits between your current attributes and target role requirements, accompanied by a phased milestone roadmap with task checklists.
+                </p>
+            </div>
+            <div class="hub-feature-footer">
+                <span class="hub-feature-stat">Phased Milestones &amp; Tasks</span>
+                <a href="roadmap.html" class="hub-feature-link">
+                    <span>View Action Plan</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Feature 4: Profile & Platform Sync -->
+        <div class="hub-feature-card">
+            <div>
+                <div class="hub-feature-top">
+                    <div class="hub-feature-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--color-success);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <span class="badge badge-info">13D Canonical Vector</span>
+                </div>
+                <h3 class="hub-feature-title">Profile &amp; Platform Sync</h3>
+                <p class="hub-feature-desc">
+                    Manage academic transcripts and configure live API sync with GitHub commits/repos and LeetCode contest rating to keep your vector perpetually up to date.
+                </p>
+            </div>
+            <div class="hub-feature-footer">
+                <span class="hub-feature-stat">GitHub &amp; LeetCode Sync</span>
+                <a href="profile.html" class="hub-feature-link">
+                    <span>Manage Profile</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── "How It Works" 3-Step Pipeline Section ── -->
+    <div class="hub-section-header">
+        <h2 class="hub-section-title">How It Works</h2>
+        <p class="hub-section-desc">Three structured steps from raw academic &amp; coding data to high-confidence placement.</p>
+    </div>
+
+    <div class="hub-steps-grid">
+        <div class="hub-step-card">
+            <div class="hub-step-number">1</div>
+            <h4 class="hub-step-title">Multi-Source Vector Aggregation</h4>
+            <p class="hub-step-desc">
+                We ingest semester CGPA, academic attendance, active backlogs, GitHub commit velocity, and LeetCode contest ratings into a normalized 13-dimensional vector.
+            </p>
+        </div>
+
+        <div class="hub-step-card">
+            <div class="hub-step-number">2</div>
+            <h4 class="hub-step-title">Dual-Engine ML Processing</h4>
+            <p class="hub-step-desc">
+                Our pre-trained XGBoost model evaluates single-row placement likelihood in &lt;2ms, while the Cosine Recommender matches your skill vector against 10 target roles.
+            </p>
+        </div>
+
+        <div class="hub-step-card">
+            <div class="hub-step-number">3</div>
+            <h4 class="hub-step-title">Targeted Skill Remediation</h4>
+            <p class="hub-step-desc">
+                Vector subtraction quantifies deficit gaps against your active target, outputting a prioritized timeline of phased milestones with actionable technical checklists.
+            </p>
+        </div>
+    </div>
+
+    <!-- Dron-AI Client Application Modules -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/placement.js"></script>
+    <script src="../js/career.js"></script>
+    <script src="../js/roadmap.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

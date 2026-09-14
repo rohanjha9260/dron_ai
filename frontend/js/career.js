@@ -14,8 +14,10 @@ let _roadmapRequestId = 0;
  * Fetch and render career recommendations.
  */
 async function getCareerRecommendations() {
-    const container = document.getElementById("career-recommendation-list");
-    if (!container) return;
+    const container = document.getElementById("career-recommendation-list") || document.getElementById("career-list");
+    const hubRole = document.getElementById("hub-stat-role");
+    const hubMatch = document.getElementById("hub-stat-match");
+    if (!container && !hubRole) return;
 
     try {
         const data = await apiRequest("/career/recommend", {
@@ -23,6 +25,25 @@ async function getCareerRecommendations() {
         });
 
         const recommendations = data.recommendations || [];
+        if (recommendations.length > 0) {
+            if (!selectedCareer) {
+                selectedCareer = recommendations[0].career;
+            }
+            if (hubRole) {
+                hubRole.textContent = selectedCareer;
+            }
+            if (hubMatch) {
+                const topMatch = recommendations.find((r) => r.career === selectedCareer) || recommendations[0];
+                hubMatch.textContent = `Alignment: ${Number(topMatch.match_pct || 0).toFixed(1)}%`;
+            }
+            const navTarget = document.getElementById("nav-target-role");
+            if (navTarget) {
+                navTarget.textContent = selectedCareer;
+            }
+        }
+
+        if (!container) return;
+
         if (recommendations.length === 0) {
             container.innerHTML = `<p class="placeholder-text" style="padding: 1rem; color: var(--color-text-muted);">No career paths matched your profile yet.</p>`;
             return;
@@ -83,10 +104,14 @@ async function getCareerRecommendations() {
 function selectCareer(careerName) {
     selectedCareer = careerName;
 
-    // Update Navbar indicator
+    // Update Navbar indicator & Hub
     const navTarget = document.getElementById("nav-target-role");
     if (navTarget) {
         navTarget.textContent = careerName;
+    }
+    const hubRole = document.getElementById("hub-stat-role");
+    if (hubRole) {
+        hubRole.textContent = careerName;
     }
 
     // Update Roadmap subtitle
