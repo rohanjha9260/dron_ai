@@ -198,7 +198,7 @@ def seed(reset=False):
             print("\nNewly Created Demo Accounts:")
             for s in SAMPLE_STUDENTS:
                 if s["email"] in seeded_emails:
-                    print(f"  - {s['full_name']}: {s['email']} (password: {s['password']})")
+                    print(f"  - {s['full_name']}: {s['email']} (password: [hidden])")
 
 
 if __name__ == "__main__":
