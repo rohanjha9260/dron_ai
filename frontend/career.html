@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron-AI Career Matching — Cosine Similarity recommendations against target industry roles">
+    <title>Dron-AI — Career Matching</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-primary">Cosine Vector Alignment</span>
+                <span class="badge badge-success"><span class="badge-dot"></span> 10 Canonical Roles</span>
+            </div>
+            <h1>Career Path Recommendations</h1>
+            <p>Matching your 10-dimensional skill vector against ideal industry benchmark profiles using Cosine Similarity.</p>
+        </div>
+        <button class="btn btn-primary" id="recommend-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            <span>Re-compute Matches</span>
+        </button>
+    </section>
+
+    <!-- Career Matching Grid -->
+    <div class="dashboard-grid">
+
+        <!-- Left Column: Career Recommendations List -->
+        <div class="col-7">
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon" style="background: rgba(99, 102, 241, 0.12); color: #818CF8;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                        </div>
+                        <h2>Ranked Career Matches</h2>
+                    </div>
+                    <span class="badge badge-info">Geometric Cosine Match</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="career-recommendation-list" id="career-list">
+                        <p class="placeholder-text" style="text-align: center; padding: 2rem; color: var(--color-text-muted);">
+                            Computing career alignment vectors...
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column: Target Career Details & Next Actions -->
+        <div class="col-5" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon" style="background: rgba(212, 175, 55, 0.12); color: var(--color-primary);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h2>Selected Target</h2>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div style="margin-bottom: var(--space-md);">
+                        <span class="val-tag" style="font-size: 0.75rem;">CURRENT FOCUS</span>
+                        <h3 id="selected-career-title" style="font-size: var(--font-size-xl); margin-top: 4px; color: var(--color-primary-light);">Software Engineer</h3>
+                        <p id="selected-career-desc" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); margin-top: 6px; line-height: 1.5;">
+                            Click any recommendation card to select it as your target career for skill gap remediation and roadmap sequencing.
+                        </p>
+                    </div>
+
+                    <a href="roadmap.html" class="btn btn-primary" id="btn-view-roadmap" style="width: 100%; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                        <span>View Skill Gap &amp; Roadmap</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h2>Matching Methodology</h2>
+                    </div>
+                </div>
+                <div class="card-body" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); line-height: 1.6;">
+                    <p style="margin-bottom: 8px;">
+                        The recommender compares your normalized 10D skill vector with ideal benchmarks using:
+                    </p>
+                    <code style="display: block; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; color: var(--color-primary); margin-bottom: 8px;">
+                        Similarity(S, C) = (S · C) / (||S|| × ||C||)
+                    </code>
+                    <p>
+                        Scores are clipped strictly to 0–100% with tie-breaking based on technical depth in DSA, AI/ML, and system development.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/career.js"></script>
+</body>
+</html>

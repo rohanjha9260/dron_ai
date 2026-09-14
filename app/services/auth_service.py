@@ -71,6 +71,8 @@ def register_student(data: dict) -> dict:
         raise ValueError("missing_fields")
 
     email = data["email"].strip().lower()
+    if email == "guest@dron.ai":
+        raise ValueError("email_taken")
     password = data["password"]
     full_name = data["full_name"].strip()
 
@@ -143,4 +145,120 @@ def authenticate_student(email: str, password: str) -> dict:
     return {
         "access_token": access_token,
         "student_id": user.student_id,
+    }
+
+
+def get_or_create_guest_student() -> dict:
+    """
+    Get or create a dedicated guest student account and issue a JWT token.
+    Allows prospective students to explore all platform features without registering.
+    """
+    from app.models.academic import AcademicHistory
+    from sqlalchemy.exc import IntegrityError
+
+    guest_email = "guest@dron.ai"
+    user = User.query.filter_by(email=guest_email).first()
+    needs_verification = False
+
+    if user:
+        if user.full_name != "Guest Student":
+            raise ValueError("Reserved guest email in use by non-guest account")
+        needs_verification = True
+    else:
+        try:
+            # Create guest user
+            user = User(
+                full_name="Guest Student",
+                email=guest_email,
+                password_hash=hash_password("guest_demo_password_123"),
+                cohort_year=2026,
+                academic_branch="Computer Science & Engineering",
+            )
+            db.session.add(user)
+            db.session.flush()
+
+            # Create academic history record
+            academic = AcademicHistory(
+                student_id=user.student_id,
+                semester=6,
+                cgpa=8.2,
+                attendance_pct=85.0,
+                active_backlogs=0,
+            )
+            db.session.add(academic)
+
+            # Create platform links with demo handles
+            platform_link = PlatformLink(
+                student_id=user.student_id,
+                github_username="demo-student",
+                leetcode_username="demo-coder",
+            )
+            db.session.add(platform_link)
+
+            # Create skill vector with realistic demo data
+            skill_vector = SkillVector(
+                student_id=user.student_id,
+                dsa_score=72.0,
+                python_prof=78.0,
+                cpp_prof=65.0,
+                aiml_knowledge=70.0,
+                total_commits=180,
+                problems_solved=240,
+                contest_rating=1550.0,
+                project_count=4,
+                communication_score=75.0,
+                internship_exp=3,
+            )
+            db.session.add(skill_vector)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            user = User.query.filter_by(email=guest_email).first()
+            if not user:
+                raise ValueError("Failed to provision guest user after IntegrityError")
+            needs_verification = True
+
+    if needs_verification:
+        # Ensure child records exist if user was already created
+        if not user.academic_records:
+            academic = AcademicHistory(
+                student_id=user.student_id,
+                semester=6,
+                cgpa=8.2,
+                attendance_pct=85.0,
+                active_backlogs=0,
+            )
+            db.session.add(academic)
+        if not user.platform_link:
+            platform_link = PlatformLink(
+                student_id=user.student_id,
+                github_username="demo-student",
+                leetcode_username="demo-coder",
+            )
+            db.session.add(platform_link)
+        if not user.skill_vector:
+            skill_vector = SkillVector(
+                student_id=user.student_id,
+                dsa_score=72.0,
+                python_prof=78.0,
+                cpp_prof=65.0,
+                aiml_knowledge=70.0,
+                total_commits=180,
+                problems_solved=240,
+                contest_rating=1550.0,
+                project_count=4,
+                communication_score=75.0,
+                internship_exp=3,
+            )
+            db.session.add(skill_vector)
+        db.session.commit()
+
+    access_token = create_access_token(identity=str(user.student_id))
+
+    return {
+        "access_token": access_token,
+        "student_id": user.student_id,
+        "full_name": user.full_name,
+        "is_guest": True,
+        "message": "Welcome, Guest Student! Exploring in Guest Mode.",
     }

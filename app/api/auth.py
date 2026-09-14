@@ -108,3 +108,18 @@ def get_current_user():
         return jsonify({"error": "User not found"}), 404
 
     return jsonify(user.to_dict()), 200
+
+
+@auth_bp.route("/guest", methods=["POST"])
+def guest_login():
+    """
+    Log in as a guest student without requiring credentials.
+    Issues a valid JWT access token for exploring the platform.
+    """
+    try:
+        result = auth_service.get_or_create_guest_student()
+        return jsonify(result), 200
+    except Exception as exc:
+        from flask import current_app
+        current_app.logger.error(f"Failed to initialize guest session: {str(exc)}")
+        return jsonify({"error": "Failed to initialize guest session"}), 500
