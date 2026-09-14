@@ -18,7 +18,7 @@ class BaseConfig:
 
     # Database (SQLite)
     DEFAULT_DB_PATH = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "instance", "dron_ai.db"
+        os.path.dirname(os.path.abspath(__file__)), "app", "instance", "dron_ai.db"
     )
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH}"

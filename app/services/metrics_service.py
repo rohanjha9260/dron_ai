@@ -12,8 +12,8 @@ from typing import Optional, Dict, Any
 
 from app.extensions import db
 from app.models import User, PlatformLink, SkillVector
-from integrations.github_fetcher import fetch_github_stats
-from integrations.leetcode_fetcher import fetch_leetcode_stats
+from app.integrations.github_fetcher import fetch_github_stats
+from app.integrations.leetcode_fetcher import fetch_leetcode_stats
 
 
 def fetch_and_update_metrics(

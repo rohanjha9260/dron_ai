@@ -8,12 +8,12 @@
 
 | Area / Component | Owner | Scope & Responsibility | AI Agent Rule |
 |:---|:---|:---|:---|
-| **AI / ML & Integrations** | **Our Role (AI/ML Engineer)** | `ml_engine/`, `integrations/`, `scripts/train_model.py`, `tests/test_ml.py` | **Primary focus**. Implement, optimize, test, and maintain ML algorithms, feature pipelines, and live data fetchers. |
+| **AI / ML & Integrations** | **Our Role (AI/ML Engineer)** | `ml_engine/`, `app/integrations/`, `ml_engine/scripts/train_model.py`, `ml_engine/tests/test_ml.py` | **Primary focus**. Implement, optimize, test, and maintain ML algorithms, feature pipelines, and live data fetchers. |
 | **Backend API** | **Teammate (Backend Dev)** | `app/` (API blueprints, models, services, auth), `config.py`, `run.py` | **Do not modify** without explicit instructions. Teammates handle Flask routes, DB schemas, and auth. |
 | **Frontend UI** | **Teammate (Frontend Dev)** | `frontend/` (HTML, CSS, JS dashboard) | **Do not modify** without explicit instructions. Teammates handle dashboard layout, styles, and client scripts. |
-| **Database Seeding** | **Teammate (Frontend/Backend)**| `scripts/seed_db.py`, `migrations/` | **Do not overwrite** mock DB seed data. |
+| **Database Seeding** | **Teammate (Frontend/Backend)**| `app/scripts/seed_db.py`, `app/migrations/` | **Do not overwrite** mock DB seed data. |
 
-> **Critical Guideline for AI Agents**: Keep all changes strictly isolated to `ml_engine/`, `integrations/`, `scripts/train_model.py`, and `tests/test_ml.py`. Avoid touching or refactoring `app/` or `frontend/` to prevent merge conflicts with other teammates' active work.
+> **Critical Guideline for AI Agents**: Keep all changes strictly isolated to `ml_engine/`, `app/integrations/`, `ml_engine/scripts/train_model.py`, and `ml_engine/tests/test_ml.py`. Avoid touching or refactoring `app/` or `frontend/` to prevent merge conflicts with other teammates' active work.
 
 ---
 
@@ -25,10 +25,17 @@ dron-ai/
 │   ├── api/              # Blueprints: auth, users, metrics, predictions, career, roadmap
 │   ├── models/           # SQLAlchemy Models: User, AcademicProfile, SkillVector, MLPrediction, Roadmap
 │   ├── services/         # Business logic services wrapping ML engine & integrations
-│   └── extensions.py     # SQLAlchemy, JWT, Limiter, CORS extensions
-├── integrations/         # Live external data fetchers with memoization and fallbacks
-│   ├── github_fetcher.py # GitHub REST API: repos, languages, commit activity
-│   └── leetcode_fetcher.py# LeetCode GraphQL API: solved problems, contest rating, ranking
+│   ├── extensions.py     # SQLAlchemy, JWT, Limiter, CORS extensions
+│   ├── integrations/     # Live external data fetchers with memoization and fallbacks
+│   │   ├── github_fetcher.py  # GitHub REST API: repos, languages, commit activity
+│   │   └── leetcode_fetcher.py# LeetCode GraphQL API: solved problems, contest rating, ranking
+│   ├── migrations/       # Flask-Migrate DB schema migrations
+│   ├── instance/         # SQLite database runtime file (dron_ai.db)
+│   ├── scripts/          # Backend CLI utilities
+│   │   └── seed_db.py    # Populates mock users, academic data, and skill vectors
+│   └── tests/            # Flask API & integration tests
+│       ├── test_api.py
+│       └── test_integrations.py
 ├── ml_engine/            # Machine Learning & Recommendation Core
 │   ├── preprocessing.py  # 13D feature engineering, bounds clamping, StandardScaler
 │   ├── xgboost_model.py  # XGBoost placement readiness predictor (<2ms target, <5ms SLA)
@@ -37,13 +44,18 @@ dron-ai/
 │   ├── roadmap_generator.py # Sequenced milestone and learning plan generation
 │   ├── model_loader.py   # Singleton model cache initialized on Flask startup
 │   ├── data/             # career_vectors.json, student_career_success_dataset.csv
-│   └── saved_models/     # xgboost_placement.pkl, scaler.pkl (+ .sha256 sidecars)
+│   ├── saved_models/     # xgboost_placement.pkl, scaler.pkl (+ .sha256 sidecars)
+│   ├── scripts/          # ML CLI utilities
+│   │   └── train_model.py# Retrains XGBoost model and generates SHA-256 sidecars
+│   └── tests/            # ML engine, preprocessing, and recommender test suite
+│       └── test_ml.py
 ├── frontend/             # Vanilla HTML5, CSS3, JavaScript ES6+ (No React/Tailwind)
-├── scripts/              # CLI utilities
-│   ├── train_model.py    # Retrains XGBoost model and generates SHA-256 sidecars
-│   └── seed_db.py        # Populates mock users, academic data, and skill vectors
-└── tests/                # Pytest unit & regression tests
-    └── test_ml.py        # ML engine, preprocessing, and recommender test suite
+├── scripts/              # Devops utilities (spans both servers)
+│   └── start_servers.py  # Starts backend + frontend servers concurrently
+├── config.py             # Flask configuration (development/testing/production)
+├── run.py                # Flask application entry point
+├── conftest.py           # Root pytest configuration for test discovery
+└── requirements.txt      # Python dependencies
 ```
 
 ---
@@ -104,7 +116,7 @@ Defined in `ml_engine/preprocessing.py:FEATURE_NAMES`:
    - External fetchers (`github_fetcher.py`, `leetcode_fetcher.py`) use `@functools.lru_cache` and must return baseline zero-dictionaries on 404s, timeouts, or rate limits without crashing the backend.
    - Non-finite numbers (`NaN`, `Inf`, `-Inf`) must be sanitized to `0.0`.
 5. **Team Scope Isolation**:
-   - Only edit files in `ml_engine/`, `integrations/`, `scripts/train_model.py`, and `tests/test_ml.py`.
+   - Only edit files in `ml_engine/`, `app/integrations/`, `ml_engine/scripts/train_model.py`, and `ml_engine/tests/test_ml.py`.
    - Never modify `app/` (backend API) or `frontend/` (UI dashboard) unless explicitly requested by the user.
 
 ---
@@ -112,12 +124,24 @@ Defined in `ml_engine/preprocessing.py:FEATURE_NAMES`:
 ## 5. Common Commands
 
 ```powershell
-# Run the test suite
-python -m pytest tests/test_ml.py -v
+# Run all tests (ML + API)
+python -m pytest -v
+
+# Run only ML tests
+python -m pytest ml_engine/tests/test_ml.py -v
+
+# Run only API tests
+python -m pytest app/tests/ -v
 
 # Train / serialize ML models with SHA-256 checksums
-python scripts/train_model.py
+python ml_engine/scripts/train_model.py
+
+# Seed the database
+python app/scripts/seed_db.py
 
 # Run the Flask backend
 python run.py
+
+# Start both servers at once
+python scripts/start_servers.py
 ```
