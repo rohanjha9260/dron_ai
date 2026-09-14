@@ -735,6 +735,84 @@ function initRoadmapPage() {
     updateRoadmapProgress();
 }
 
+/**
+ * Hydrate shared sidebar and header student profile indicators safely if elements exist.
+ */
+function hydrateCommonUI(profile) {
+    if (!profile) return;
+    const nameEl = document.getElementById("sidebar-user-name");
+    const roleEl = document.getElementById("sidebar-user-role");
+    const avatarEl = document.getElementById("sidebar-user-avatar");
+    if (nameEl && profile.fullName) nameEl.textContent = profile.fullName;
+    if (roleEl && profile.branch) roleEl.textContent = `${profile.branch} '${(profile.cohortYear || "2026").slice(-2)}`;
+    if (avatarEl && profile.fullName) {
+        avatarEl.textContent = profile.fullName.trim().split(/\s+/).map((n) => n[0]).join("").substring(0, 2).toUpperCase();
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Main Landing Dashboard Controller (Black & Gold Theme)
+// ═══════════════════════════════════════════════════════════════
+function initLandingDashboard() {
+    // 1. Dynamic Rotating & Fading Subtitles
+    const dynamicTarget = document.getElementById("dynamic-subtitle-target");
+    if (dynamicTarget) {
+        const phrases = [
+            "actionable intelligence.",
+            "predictive career trajectories.",
+            "quantitative placement probabilities.",
+            "sequenced milestone roadmaps.",
+            "deep academic forecasts."
+        ];
+        let phraseIdx = 0;
+        setInterval(() => {
+            dynamicTarget.style.opacity = "0";
+            dynamicTarget.style.transform = "translateY(8px)";
+            setTimeout(() => {
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                dynamicTarget.textContent = phrases[phraseIdx];
+                dynamicTarget.style.opacity = "1";
+                dynamicTarget.style.transform = "translateY(0)";
+            }, 450);
+        }, 3600);
+    }
+
+    // 2. Interactive Spotlight & Glow Physics on the 4 Engine Navigation Cards
+    const cards = document.querySelectorAll(".engine-card");
+    cards.forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const glowLayer = card.querySelector(".card-glow-layer");
+            if (glowLayer) {
+                glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(255, 215, 0, 0.22) 0%, rgba(212, 175, 55, 0.06) 50%, transparent 80%)`;
+                glowLayer.style.opacity = "1";
+            }
+        });
+
+        card.addEventListener("mouseleave", () => {
+            const glowLayer = card.querySelector(".card-glow-layer");
+            if (glowLayer) {
+                glowLayer.style.background = "";
+                glowLayer.style.opacity = "";
+            }
+        });
+    });
+
+    // 3. Header Scrolled Glass Effect
+    const header = document.getElementById("landing-header");
+    if (header) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 30) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        }, { passive: true });
+    }
+}
+
 // ═══════════════════════════════════════════════════════════════
 // Master DOMContentLoaded Dispatcher
 // ═══════════════════════════════════════════════════════════════
@@ -743,6 +821,10 @@ document.addEventListener("DOMContentLoaded", () => {
     hydrateCommonUI(profile);
 
     // Identify active view based on elements or pathname
+    if (document.querySelector(".landing-hero-section") || document.querySelector(".hero-quote-text")) {
+        initLandingDashboard();
+    }
+
     if (document.getElementById("student-input-form")) {
         initInputPage();
     } else if (document.getElementById("academicTrajectoryChart")) {
