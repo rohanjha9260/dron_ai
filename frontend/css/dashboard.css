@@ -104,6 +104,10 @@
 
 /* ── Placement Gauge ── */
 .placement-gauge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     padding: var(--space-lg);
 }
@@ -111,39 +115,128 @@
 .gauge-container {
     width: 200px;
     height: 200px;
-    border-radius: var(--radius-full);
-    background: conic-gradient(
-        var(--color-text-muted) 0deg,
-        var(--color-text-muted) 360deg
-    );
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto var(--space-lg);
-    position: relative;
+    margin: 0 auto var(--space-md);
 }
 
-.gauge-container::after {
-    content: '';
-    width: 160px;
-    height: 160px;
-    border-radius: var(--radius-full);
-    background: var(--color-bg-card);
+.gauge-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+}
+
+.gauge-track,
+.gauge-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 12;
+}
+
+.gauge-progress {
+    fill: none;
+    stroke: url(#gauge-gradient);
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 502.65;
+    stroke-dashoffset: 502.65;
+    transition: stroke-dashoffset 1s ease-out;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.45));
+}
+
+.gauge-center-info {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
 }
 
 .gauge-label {
-    position: relative;
-    z-index: 1;
     font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-extrabold);
     color: var(--color-text-primary);
+    line-height: 1;
+    font-family: var(--font-family-display);
+    letter-spacing: -0.02em;
 }
 
-.readiness-tier {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-secondary);
-    font-weight: var(--font-weight-medium);
+.gauge-sublabel {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--space-2xs);
+}
+
+/* ── Tier Badge ── */
+.tier-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--space-xs);
+}
+
+.tier-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 1.25rem;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.02em;
+    background: var(--color-bg-input);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+}
+
+/* High Readiness (> 80%): Metallic Gold / Emerald Accent */
+.tier-badge.tier-high,
+.tier-badge.tier-gold,
+.tier-badge.tier-emerald,
+.tier-badge.high {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+}
+
+/* Moderate Readiness (50% - 79%): Amber */
+.tier-badge.tier-moderate,
+.tier-badge.tier-amber,
+.tier-badge.moderate {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+    border-color: var(--color-warning);
+    box-shadow: 0 0 20px rgba(229, 169, 60, 0.35);
+}
+
+/* Needs Improvement (< 50%): Crimson / Red */
+.tier-badge.tier-low,
+.tier-badge.tier-red,
+.tier-badge.tier-crimson,
+.tier-badge.needs-improvement {
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
+}
+
+.tier-badge.tier-error {
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    border-color: var(--color-danger);
 }
 
 /* ── Career List ── */

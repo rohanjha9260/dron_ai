@@ -71,16 +71,33 @@
         <section class="dashboard-card" id="placement-section">
             <div class="card-header">
                 <h2>Placement Readiness</h2>
-                <button id="predict-btn" class="btn btn-small btn-accent">Analyze</button>
+                <button id="predict-btn" class="btn btn-small btn-accent">Analyze Readiness</button>
             </div>
             <div class="card-body" id="placement-content">
                 <!-- XGBoost prediction result + gauge rendered by placement.js -->
                 <div class="placement-gauge" id="placement-gauge">
                     <div class="gauge-container">
-                        <div class="gauge-fill" id="gauge-fill"></div>
-                        <div class="gauge-label" id="gauge-label">--</div>
+                        <svg class="gauge-svg" viewBox="0 0 200 200" width="200" height="200" aria-label="Placement readiness score gauge">
+                            <defs>
+                                <linearGradient id="gauge-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#AA7C11" />
+                                    <stop offset="50%" stop-color="#D4AF37" />
+                                    <stop offset="100%" stop-color="#F3E5AB" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="gauge-track" cx="100" cy="100" r="80" />
+                            <circle class="gauge-progress" id="gauge-progress" cx="100" cy="100" r="80" stroke="url(#gauge-gradient)" />
+                        </svg>
+                        <div class="gauge-center-info">
+                            <div class="gauge-label" id="gauge-label">0%</div>
+                            <span class="gauge-sublabel">Readiness</span>
+                        </div>
                     </div>
-                    <p class="readiness-tier" id="readiness-tier">Run analysis to see your score</p>
+                    <div class="tier-wrapper">
+                        <span class="tier-badge" id="readiness-tier">Run analysis to see your score</span>
+                    </div>
+                    <!-- Legacy element for backwards compatibility -->
+                    <div class="gauge-fill" id="gauge-fill" style="display: none;" aria-hidden="true"></div>
                 </div>
             </div>
         </section>

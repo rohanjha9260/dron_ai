@@ -44,7 +44,18 @@ function clearToken() {
  * @throws {Error} If the request fails or returns a non-OK status
  */
 async function apiRequest(endpoint, options = {}) {
-    const url = `${API_BASE_URL}${endpoint}`;
+    // Normalize endpoint to prevent double prefixes (e.g. /api/v1/... or /api/...)
+    let cleanEndpoint = endpoint;
+    if (cleanEndpoint.startsWith("/api/v1")) {
+        cleanEndpoint = cleanEndpoint.substring(7);
+    } else if (cleanEndpoint.startsWith("/api")) {
+        cleanEndpoint = cleanEndpoint.substring(4);
+    }
+    if (!cleanEndpoint.startsWith("/")) {
+        cleanEndpoint = "/" + cleanEndpoint;
+    }
+
+    const url = `${API_BASE_URL}${cleanEndpoint}`;
 
     const headers = {
         "Content-Type": "application/json",
