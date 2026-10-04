@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Curated Campus Interview Questions, Real Senior Placement Diaries & Technical Preparation Hub">
+    <title>Dron AI — Interview Preparation & Question Hub</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+                <a href="interview.html" class="nav-item active">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Interview & Q&A Prep</span>
+                </a>
+                <a href="softskills.html" class="nav-item">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Soft Skills & Pitch</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Top Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Interview Prep &amp; <span>Question Hub</span> 🎯</h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-purple" id="header-sem-badge">
+                            <span class="badge-dot badge-pulse"></span> Semester 6
+                        </span>
+                        <span class="badge badge-cyan">
+                            <i class="fa-solid fa-briefcase"></i> Campus Drive 2026
+                        </span>
+                    </div>
+
+                    <a href="mock_interview.html" class="btn btn-primary btn-small">
+                        <i class="fa-solid fa-microphone"></i>
+                        <span>Launch AI Mock Simulator</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Workspace Body -->
+            <div class="app-content">
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     1. Top Interview KPI Ribbon & Live Study Progress
+                     ═══════════════════════════════════════════════════════════ -->
+                <section class="kpi-ribbon-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-cyan">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Curated Questions</span>
+                            <span class="kpi-value" id="kpi-total-questions">140+</span>
+                            <span class="kpi-subtext" style="color: var(--accent-cyan-light);">
+                                <i class="fa-solid fa-check"></i> Amazon, TCS, Infosys &amp; Startups
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-success">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Mastered by You</span>
+                            <span class="kpi-value" id="kpi-mastered-count">0</span>
+                            <span class="kpi-subtext" id="kpi-mastered-pct" style="color: var(--status-success);">
+                                0% of Question Bank
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-purple">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Recruiter Tracks</span>
+                            <span class="kpi-value">3 Tracks</span>
+                            <span class="kpi-subtext">Product • Mass • Fintech</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-cyan">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Interactive Practice</span>
+                            <span class="kpi-value">STAR + Code</span>
+                            <span class="kpi-subtext">Live keyword scoring</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     2. Live AI Mock Interview Hero Banner
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="interview-mock-banner">
+                    <div class="mock-banner-content">
+                        <div class="mock-badge">
+                            <i class="fa-solid fa-robot"></i>
+                            <span>LIVE SIMULATION AVAILABLE</span>
+                        </div>
+                        <h2 class="mock-title">Want a real-time voice &amp; coding mock drill?</h2>
+                        <p class="mock-desc">
+                            Step into the <strong>NeuroMock Simulator</strong>. Get grilled with adaptive technical questions, system architecture challenges, and instant real-time feedback with sub-50ms latency scoring.
+                        </p>
+                    </div>
+                    <div class="mock-banner-cta">
+                        <a href="mock_interview.html" class="btn btn-primary" style="padding: 0.9rem 1.6rem; font-size: 0.95rem;">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>Start NeuroMock Drill</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     3. Filter Controls & Instant Search Bar
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="interview-filter-card">
+                    <div class="search-input-wrap">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="questionSearchInput" class="interview-search-input" placeholder="Search questions by keyword, topic, company (e.g. 'B+ Tree', 'Amazon', 'STAR', 'Knapsack')...">
+                        <button id="clearSearchBtn" class="clear-search-btn" style="display: none;">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <!-- Domain Filters -->
+                    <div class="filter-group-wrap">
+                        <span class="filter-label"><i class="fa-solid fa-layer-group"></i> Domain:</span>
+                        <div class="filter-pills" id="domainFilterGroup">
+                            <button class="filter-pill active" data-filter="all">All Topics</button>
+                            <button class="filter-pill" data-filter="dsa">💻 DSA &amp; Algorithmic</button>
+                            <button class="filter-pill" data-filter="core-cs">⚙️ Core CS (DBMS/OS/CN)</button>
+                            <button class="filter-pill" data-filter="web">🌐 Web &amp; Fullstack</button>
+                            <button class="filter-pill" data-filter="aiml">🤖 AI / ML &amp; Data</button>
+                            <button class="filter-pill" data-filter="sysdesign">🏛️ System Design</button>
+                            <button class="filter-pill" data-filter="hr">🤝 HR &amp; Behavioral (STAR)</button>
+                        </div>
+                    </div>
+
+                    <!-- Company & Difficulty Filters -->
+                    <div class="filter-sub-row">
+                        <div class="filter-sub-group">
+                            <span class="filter-label"><i class="fa-solid fa-briefcase"></i> Company Type:</span>
+                            <select id="companyTypeSelect" class="filter-select">
+                                <option value="all">All Companies</option>
+                                <option value="product">Top Product / FAANG (Amazon, Microsoft, Google)</option>
+                                <option value="mass">Mass / Service Giants (TCS Digital, Infosys, Wipro)</option>
+                                <option value="startup">High-Growth Startups &amp; Fintech (Razorpay, Swiggy, Zerodha)</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-sub-group">
+                            <span class="filter-label"><i class="fa-solid fa-gauge-high"></i> Difficulty:</span>
+                            <select id="difficultySelect" class="filter-select">
+                                <option value="all">All Levels</option>
+                                <option value="fresher">Campus / Fresher (Easy-Medium)</option>
+                                <option value="intermediate">Tech Round 2 (Medium)</option>
+                                <option value="advanced">Advanced / System Level</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-sub-status">
+                            <span id="filteredCountText" class="filtered-count-badge">Showing 15 Questions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     4. Questions Bank Grid / Accordion List
+                     ═══════════════════════════════════════════════════════════ -->
+                <section class="interview-questions-container" id="questionsContainer">
+                    <!-- Populated dynamically via JS with comprehensive human answers -->
+                </section>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     5. HUMAN-MADE & GENUINE SECTION: Senior Placement Diaries
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="human-insights-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>HONEST SENIOR EXPERIENCES</span>
+                        </div>
+                        <h2 class="section-heading">Campus Placement Diaries: What Actually Works</h2>
+                        <p class="section-subheading">
+                            Unfiltered truths and practical advice from seniors placed in Tier-1, mass recruitment, and high-growth startup drives.
+                        </p>
+                    </div>
+
+                    <div class="senior-diaries-grid">
+                        <!-- Senior 1 -->
+                        <div class="senior-diary-card">
+                            <div class="diary-header">
+                                <div class="diary-avatar" style="background: linear-gradient(135deg, #ff7a00, #ea580c);">AJ</div>
+                                <div class="diary-meta">
+                                    <h3 class="diary-name">Aniket Joshi</h3>
+                                    <span class="diary-role">SDE-1 @ Amazon (32 LPA) &bull; Batch 2024</span>
+                                </div>
+                            </div>
+                            <p class="diary-quote">
+                                "In campus drives, solve 150 LeetCode problems with pattern mastery (Two Pointer, Sliding Window, BFS/DFS, Top-K) instead of blindly grinding 600 questions. In my 2nd technical round, the interviewer didn't care if I wrote perfect syntax in 5 minutes; he cared that I communicated edge cases and dry-ran my code on paper before typing."
+                            </p>
+                            <div class="diary-chips">
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> 150 Pattern Depth</span>
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> Verbal Dry-Run</span>
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> Edge Case Analysis</span>
+                            </div>
+                        </div>
+
+                        <!-- Senior 2 -->
+                        <div class="senior-diary-card">
+                            <div class="diary-header">
+                                <div class="diary-avatar" style="background: linear-gradient(135deg, #ff9838, #d97706);">PM</div>
+                                <div class="diary-meta">
+                                    <h3 class="diary-name">Pooja Mehra</h3>
+                                    <span class="diary-role">TCS Digital &rarr; Swiggy SDE (16 LPA) &bull; Batch 2023</span>
+                                </div>
+                            </div>
+                            <p class="diary-quote">
+                                "Don't ignore core CS! Many students do only LeetCode and get rejected in TCS Digital or Infosys DSE because they cannot explain B+ Trees, Database Normalization, or how OS processes prevent Deadlock. Strong fundamentals in DBMS, SQL joins, and Operating Systems saved my interview when the graph problem was tricky."
+                            </p>
+                            <div class="diary-chips">
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> DBMS &amp; SQL Mastery</span>
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> OS Deadlock &amp; Paging</span>
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> Service &rarr; Product Jump</span>
+                            </div>
+                        </div>
+
+                        <!-- Senior 3 -->
+                        <div class="senior-diary-card">
+                            <div class="diary-header">
+                                <div class="diary-avatar" style="background: linear-gradient(135deg, #10b981, #047857);">VR</div>
+                                <div class="diary-meta">
+                                    <h3 class="diary-name">Vikram Roy</h3>
+                                    <span class="diary-role">Fullstack Engineer @ Razorpay (22 LPA) &bull; Batch 2024</span>
+                                </div>
+                            </div>
+                            <p class="diary-quote">
+                                "Stop copying YouTube clone projects (like generic Netflix or Weather apps). Build just ONE full-stack project, but deploy it live on Render/Vercel with authentication, Redis caching, and rate limiting. In every startup interview, 70% of the conversation revolved around trade-offs in my personal project."
+                            </p>
+                            <div class="diary-chips">
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> 1 Deployed Live Project</span>
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> System Trade-Offs</span>
+                                <span class="diary-chip"><i class="fa-solid fa-check"></i> Auth &amp; Caching Focus</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     6. GENUINE FEATURE: Interactive CTC vs In-Hand Salary Calculator
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="ctc-reality-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-calculator"></i>
+                            <span>CAMPUS REALITY CHECK</span>
+                        </div>
+                        <h2 class="section-heading">CTC vs In-Hand Salary Reality Calculator</h2>
+                        <p class="section-subheading">
+                            Most engineering students are shocked when a "12 LPA CTC" offer results in ₹68,000/month in hand. Calculate your actual take-home pay with deductions, PF, and variable compensation broken down transparently.
+                        </p>
+                    </div>
+
+                    <div class="ctc-calculator-card">
+                        <div class="ctc-inputs-col">
+                            <div class="input-field-group">
+                                <label for="ctcInput" class="ctc-label">Offered Annual CTC (in Lakhs INR):</label>
+                                <div class="ctc-input-wrapper">
+                                    <span class="ctc-currency">₹</span>
+                                    <input type="number" id="ctcInput" class="ctc-number-input" value="12" min="3" max="60" step="0.5">
+                                    <span class="ctc-unit">LPA</span>
+                                </div>
+                            </div>
+
+                            <div class="ctc-slider-wrap">
+                                <input type="range" id="ctcRange" min="3" max="50" step="0.5" value="12" class="range-slider">
+                                <div class="slider-ticks">
+                                    <span>₹3L (Mass)</span>
+                                    <span>₹12L (Product)</span>
+                                    <span>₹25L+ (Tier-1)</span>
+                                    <span>₹50L (FAANG)</span>
+                                </div>
+                            </div>
+
+                            <div class="ctc-options-grid">
+                                <label class="ctc-checkbox-label">
+                                    <input type="checkbox" id="hasEsops" class="ctc-checkbox">
+                                    <span>Includes ESOPs / RSUs (Vested over 4 yrs)</span>
+                                </label>
+                                <label class="ctc-checkbox-label">
+                                    <input type="checkbox" id="hasJoiningBonus" class="ctc-checkbox">
+                                    <span>Includes Joining / Retention Bonus</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="ctc-results-col">
+                            <div class="take-home-highlight">
+                                <span class="take-home-label">Estimated Monthly In-Hand Cash</span>
+                                <span class="take-home-value" id="monthlyInHandDisplay">₹ 72,400</span>
+                                <span class="take-home-sub">Direct bank credit after PF, Professional Tax &amp; TDS</span>
+                            </div>
+
+                            <div class="ctc-breakdown-table">
+                                <div class="breakdown-row">
+                                    <span>Gross Fixed Base (Annual):</span>
+                                    <strong id="fixedBaseDisplay">₹ 9,60,000</strong>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>Provident Fund (Employer + Employee PF):</span>
+                                    <span class="text-danger" id="pfDeductionDisplay">- ₹ 86,400</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>Estimated Income Tax (New Regime TDS):</span>
+                                    <span class="text-danger" id="taxDeductionDisplay">- ₹ 62,400</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>Performance Bonus / Variable (Annual payout):</span>
+                                    <span class="text-info" id="bonusDisplay">₹ 1,20,000</span>
+                                </div>
+                                <div class="breakdown-row total-row">
+                                    <span>Net Annual Take-Home Cash:</span>
+                                    <strong class="text-success" id="annualInHandDisplay">₹ 8,68,800</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     7. INTERACTIVE FEATURE: STAR Behavioral Answer Builder
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="star-builder-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>HR ROUND ACCELERATOR</span>
+                        </div>
+                        <h2 class="section-heading">Interactive STAR Behavioral Answer Builder</h2>
+                        <p class="section-subheading">
+                            Never freeze or ramble in HR or Managerial rounds. Structure any behavioral question into the recruiter-preferred <strong>Situation &bull; Task &bull; Action &bull; Result</strong> formula.
+                        </p>
+                    </div>
+
+                    <div class="star-builder-card">
+                        <div class="star-presets-row">
+                            <span class="star-preset-label">Quick Question Presets:</span>
+                            <button class="star-preset-btn active" data-preset="conflict">Team / Project Conflict</button>
+                            <button class="star-preset-btn" data-preset="failure">Handling a Production / Bug Failure</button>
+                            <button class="star-preset-btn" data-preset="deadline">Tight Deadline &amp; Prioritization</button>
+                        </div>
+
+                        <div class="star-grid">
+                            <div class="star-field">
+                                <label class="star-label">
+                                    <span class="star-letter">S</span>
+                                    <span>Situation (Context &amp; Background)</span>
+                                </label>
+                                <textarea id="starSituation" class="star-textarea" rows="3" placeholder="Set the scene: What was the project, the team size, and the challenge? (e.g. During our final year capstone project with 4 members, our backend API was timing out...)"></textarea>
+                            </div>
+
+                            <div class="star-field">
+                                <label class="star-label">
+                                    <span class="star-letter">T</span>
+                                    <span>Task (Your Specific Responsibility)</span>
+                                </label>
+                                <textarea id="starTask" class="star-textarea" rows="3" placeholder="What were YOU specifically responsible for solving? (e.g. As the backend lead, I had to optimize the database query latency and reconcile merge conflicts...)"></textarea>
+                            </div>
+
+                            <div class="star-field">
+                                <label class="star-label">
+                                    <span class="star-letter">A</span>
+                                    <span>Action (What steps did YOU take?)</span>
+                                </label>
+                                <textarea id="starAction" class="star-textarea" rows="3" placeholder="Detail your exact actions, technical choices, and how you communicated with team members or mentors..."></textarea>
+                            </div>
+
+                            <div class="star-field">
+                                <label class="star-label">
+                                    <span class="star-letter">R</span>
+                                    <span>Result (Quantifiable Outcome &amp; Learning)</span>
+                                </label>
+                                <textarea id="starResult" class="star-textarea" rows="3" placeholder="What was the measurable impact? (e.g. Query latency dropped by 64%, API response was <120ms, and we achieved an 'A' grade...)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="star-actions-row">
+                            <button id="compileStarBtn" class="btn btn-primary">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Compile Verbal Pitch</span>
+                            </button>
+                            <button id="copyStarBtn" class="btn btn-outline" style="display: none;">
+                                <i class="fa-solid fa-copy"></i>
+                                <span>Copy Answer</span>
+                            </button>
+                        </div>
+
+                        <div id="starCompiledOutput" class="star-compiled-box" style="display: none;">
+                            <div class="compiled-header">
+                                <i class="fa-solid fa-quote-left text-cyan"></i>
+                                <span>Your Polished Behavioral Response</span>
+                            </div>
+                            <p id="starCompiledText" class="compiled-body"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     8. Recruiter's Honest 5 Red Flags & Campus FAQ
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="red-flags-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag" style="background: rgba(244, 63, 94, 0.12); color: var(--status-danger); border-color: rgba(244, 63, 94, 0.3);">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>REJECTION ROOT CAUSES</span>
+                        </div>
+                        <h2 class="section-heading">Recruiter's 5 Red Flags: What Gets Freshers Rejected</h2>
+                        <p class="section-subheading">
+                            Feedback collected from 40+ campus technical interviewers on why promising candidates get disqualified.
+                        </p>
+                    </div>
+
+                    <div class="red-flags-grid">
+                        <div class="red-flag-card">
+                            <div class="flag-num">01</div>
+                            <h3 class="flag-title">Listing Technologies You Barely Know</h3>
+                            <p class="flag-desc">
+                                Putting "Docker, Kubernetes, AWS, PyTorch" on your resume after watching a 1-hour overview video. If an interviewer asks a basic deployment question and you blank out, your credibility for everything else is destroyed.
+                            </p>
+                        </div>
+
+                        <div class="red-flag-card">
+                            <div class="flag-num">02</div>
+                            <h3 class="flag-title">Jumping Into Code Without Clarification</h3>
+                            <p class="flag-desc">
+                                In technical rounds, immediately typing code before clarifying constraints (e.g. "Can inputs be negative?", "What is max array size?", "Is memory constrained?") signals poor engineering maturity.
+                            </p>
+                        </div>
+
+                        <div class="red-flag-card">
+                            <div class="flag-num">03</div>
+                            <h3 class="flag-title">Silent Thinking (The Black Box Candidate)</h3>
+                            <p class="flag-desc">
+                                Going completely silent for 8 minutes while scribbling on paper. Interviewers evaluate your <em>thought process</em>, not just the final output. Always vocalize your initial brute-force approach first.
+                            </p>
+                        </div>
+
+                        <div class="red-flag-card">
+                            <div class="flag-num">04</div>
+                            <h3 class="flag-title">Saying "I Don't Have Any Questions"</h3>
+                            <p class="flag-desc">
+                                When the interviewer asks "Do you have any questions for me?" at the end, saying "No, all good" conveys a lack of genuine curiosity. Ask about team deployment cycles or engineering challenges.
+                            </p>
+                        </div>
+
+                        <div class="red-flag-card">
+                            <div class="flag-num">05</div>
+                            <h3 class="flag-title">Defensive Attitude on Code Critiques</h3>
+                            <p class="flag-desc">
+                                If the interviewer points out a bug or suggests an optimization, arguing defensively instead of listening and testing their edge case is an immediate culture fit red flag.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="js/interview.js"></script>
+</body>
+</html>
