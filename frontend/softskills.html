@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Soft Skills, Communication & Campus Placement Group Discussion Mastery Hub">
+    <title>Dron AI — Soft Skills &amp; Communication Mastery Hub</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+                <a href="interview.html" class="nav-item">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Interview &amp; Q&amp;A Prep</span>
+                </a>
+                <a href="softskills.html" class="nav-item active">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Soft Skills &amp; Pitch</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Top Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Soft Skills &amp; <span>Communication Hub</span> 🗣️</h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-purple" id="header-sem-badge">
+                            <span class="badge-dot badge-pulse"></span> Semester 6
+                        </span>
+                        <span class="badge badge-success">
+                            <i class="fa-solid fa-award"></i> HR Clearance Pillar
+                        </span>
+                    </div>
+
+                    <a href="interview.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Technical Q&amp;A Hub</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Workspace Body -->
+            <div class="app-content">
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     1. Top Soft Skills KPI Ribbon
+                     ═══════════════════════════════════════════════════════════ -->
+                <section class="kpi-ribbon-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-purple">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Communication Score</span>
+                            <span class="kpi-value" id="kpi-comm-score">76/100</span>
+                            <span class="kpi-subtext" style="color: var(--accent-purple-light);">
+                                <i class="fa-solid fa-arrow-trend-up"></i> 15% Placement Pillar
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-cyan">
+                            <i class="fa-solid fa-gauge-simple-high"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Optimal Pitch Pacing</span>
+                            <span class="kpi-value">130–150</span>
+                            <span class="kpi-subtext">Words per minute target</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-success">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">GD Clearance Rate</span>
+                            <span class="kpi-value">4 Roles</span>
+                            <span class="kpi-subtext" style="color: var(--status-success);">
+                                Initiator &bull; Data Driver &bull; Closer
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap kpi-icon-purple">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-label">Cold Outreach Generator</span>
+                            <span class="kpi-value">4 Templates</span>
+                            <span class="kpi-subtext">Alumni &bull; Referral &bull; Offer</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     2. Humanized Campus Insight: Why Soft Skills Determine Offers
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="interview-mock-banner" style="background: linear-gradient(135deg, rgba(16, 23, 38, 0.95) 0%, rgba(20, 26, 50, 0.9) 100%); border-color: rgba(168, 85, 247, 0.35);">
+                    <div class="mock-banner-content">
+                        <div class="mock-badge" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple-light); border-color: rgba(168, 85, 247, 0.3);">
+                            <i class="fa-solid fa-lightbulb"></i>
+                            <span>CAMPUS RECRUITMENT REALITY CHECK</span>
+                        </div>
+                        <h2 class="mock-title">Technical Skills get you the interview. Soft Skills get you the offer.</h2>
+                        <p class="mock-desc">
+                            In campus placement drives, <strong>over 70% of candidates who fail Round 2 or Managerial rounds</strong> are rejected not because of bad code, but because of poor articulation, defensiveness when questioned, silent thinking, or inability to explain trade-offs clearly. Master your communication here.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     3. Interactive Elevator Pitch & Filler Word Speech Sandbox
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="soft-sandbox-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-microphone-lines"></i>
+                            <span>LIVE SPEECH &amp; PITCH LAB</span>
+                        </div>
+                        <h2 class="section-heading">60-Second Elevator Pitch &amp; Filler Word Analyzer</h2>
+                        <p class="section-subheading">
+                            Speak or type your introductory pitch ("Tell me about yourself" or your project overview). Our real-time NLP engine detects pacing (WPM), counts filler words (<em>basically, like, you know</em>), and identifies high-impact engineering power verbs.
+                        </p>
+                    </div>
+
+                    <div class="sandbox-container-card">
+                        <div class="sandbox-left-col">
+                            <div class="sandbox-prompt-bar">
+                                <span class="prompt-tag">Practice Question:</span>
+                                <span class="prompt-text">"Tell me about yourself and your proudest engineering project in 60 seconds."</span>
+                            </div>
+
+                            <div class="textarea-wrap">
+                                <textarea id="pitchInputText" class="pitch-textarea" rows="7" placeholder="Type your verbal pitch here or click 'Start Voice Dictation' to speak naturally through your microphone... (e.g. 'Hello, I'm Rohan, a final year computer science engineer specializing in backend architecture and machine learning. Recently, I spearheaded the development of...')"></textarea>
+                            </div>
+
+                            <div class="sandbox-controls">
+                                <div class="controls-left">
+                                    <button id="voiceDictateBtn" class="btn btn-outline btn-small">
+                                        <i class="fa-solid fa-microphone" id="micIcon"></i>
+                                        <span id="dictateBtnLabel">Start Speech Input (Mic)</span>
+                                    </button>
+                                    <button id="loadSamplePitchBtn" class="btn btn-ghost btn-small">
+                                        <i class="fa-solid fa-file-lines"></i> Load High-Impact Sample
+                                    </button>
+                                </div>
+                                <button id="analyzePitchBtn" class="btn btn-primary btn-small">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <span>Analyze Pitch Dynamics</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="sandbox-right-col">
+                            <h3 class="analysis-col-title"><i class="fa-solid fa-chart-pie text-cyan"></i> Real-Time Speech Analytics</h3>
+
+                            <div class="pitch-stats-grid">
+                                <div class="stat-mini-card">
+                                    <span class="stat-mini-label">Total Words</span>
+                                    <span class="stat-mini-val" id="statWordCount">0</span>
+                                    <span class="stat-mini-sub">Target: 120–160</span>
+                                </div>
+
+                                <div class="stat-mini-card">
+                                    <span class="stat-mini-label">Estimated Pacing</span>
+                                    <span class="stat-mini-val" id="statPacingWpm">0 WPM</span>
+                                    <span class="stat-mini-sub" id="statPacingVerdict">Awaiting input</span>
+                                </div>
+
+                                <div class="stat-mini-card">
+                                    <span class="stat-mini-label">Filler Words</span>
+                                    <span class="stat-mini-val text-amber" id="statFillerCount">0</span>
+                                    <span class="stat-mini-sub" id="statFillerVerdict">Target: &lt; 2</span>
+                                </div>
+
+                                <div class="stat-mini-card">
+                                    <span class="stat-mini-label">Power Action Verbs</span>
+                                    <span class="stat-mini-val text-success" id="statPowerCount">0</span>
+                                    <span class="stat-mini-sub" id="statPowerVerdict">Target: 4+</span>
+                                </div>
+                            </div>
+
+                            <!-- Feedback Alert -->
+                            <div class="pitch-feedback-box" id="pitchFeedbackBox">
+                                <div class="feedback-header">
+                                    <i class="fa-solid fa-compass-drafting text-cyan"></i>
+                                    <span id="feedbackTitle">Speech Assessment Ready</span>
+                                </div>
+                                <p class="feedback-text" id="feedbackBody">
+                                    Enter your response on the left and click "Analyze Pitch Dynamics" to see your delivery velocity and filler word density.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     4. 5-Dimensional Soft Skills Diagnostic & Interactive Radar
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="soft-diagnostic-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>COMPETENCY RADAR</span>
+                        </div>
+                        <h2 class="section-heading">5D Soft Skills Diagnostic &amp; Placement Profiler</h2>
+                        <p class="section-subheading">
+                            Evaluate your core interpersonal abilities across 5 placement dimensions. Updating your self-assessment recalculates your communication pillar and syncs with your Dron AI Placement Readiness Gauge.
+                        </p>
+                    </div>
+
+                    <div class="diagnostic-grid-layout">
+                        <!-- Left: Questions Assessment -->
+                        <div class="diagnostic-questions-card">
+                            <h3 class="diag-card-title"><i class="fa-solid fa-list-ol text-cyan"></i> Rate Your Workplace Reactions (1 to 100)</h3>
+
+                            <!-- Dimension 1 -->
+                            <div class="diag-slider-item">
+                                <div class="slider-header-row">
+                                    <label for="sliderVerbal" class="slider-title">1. Verbal Articulation &amp; Conciseness</label>
+                                    <span class="slider-readout" id="valVerbal">78%</span>
+                                </div>
+                                <p class="slider-subtext">Ability to explain complex tech stacks without rambling, jargon overuse, or losing the interviewer's attention.</p>
+                                <input type="range" id="sliderVerbal" min="30" max="100" value="78" class="range-slider">
+                            </div>
+
+                            <!-- Dimension 2 -->
+                            <div class="diag-slider-item">
+                                <div class="slider-header-row">
+                                    <label for="sliderListening" class="slider-title">2. Active Listening &amp; Requirement Clarification</label>
+                                    <span class="slider-readout" id="valListening">82%</span>
+                                </div>
+                                <p class="slider-subtext">Asking clarifying boundary conditions and edge cases before rushing into writing code.</p>
+                                <input type="range" id="sliderListening" min="30" max="100" value="82" class="range-slider">
+                            </div>
+
+                            <!-- Dimension 3 -->
+                            <div class="diag-slider-item">
+                                <div class="slider-header-row">
+                                    <label for="sliderResilience" class="slider-title">3. Stress Resilience &amp; Handling Code Critiques</label>
+                                    <span class="slider-readout" id="valResilience">70%</span>
+                                </div>
+                                <p class="slider-subtext">Staying calm, receptive, and collaborative when an interviewer finds an unexpected bug in your logic.</p>
+                                <input type="range" id="sliderResilience" min="30" max="100" value="70" class="range-slider">
+                            </div>
+
+                            <!-- Dimension 4 -->
+                            <div class="diag-slider-item">
+                                <div class="slider-header-row">
+                                    <label for="sliderTeam" class="slider-title">4. Team Collaboration &amp; Conflict Resolution</label>
+                                    <span class="slider-readout" id="valTeam">75%</span>
+                                </div>
+                                <p class="slider-subtext">Demonstrating cross-functional empathy, sharing credit, and resolving peer disagreements via objective data.</p>
+                                <input type="range" id="sliderTeam" min="30" max="100" value="75" class="range-slider">
+                            </div>
+
+                            <!-- Dimension 5 -->
+                            <div class="diag-slider-item">
+                                <div class="slider-header-row">
+                                    <label for="sliderPresence" class="slider-title">5. Professional Etiquette &amp; Executive Presence</label>
+                                    <span class="slider-readout" id="valPresence">80%</span>
+                                </div>
+                                <p class="slider-subtext">Professional body language, eye contact on camera, proper virtual meeting setup, and follow-up communication.</p>
+                                <input type="range" id="sliderPresence" min="30" max="100" value="80" class="range-slider">
+                            </div>
+
+                            <div class="diag-save-bar">
+                                <button id="saveSoftSkillsBtn" class="btn btn-primary">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span>Sync &amp; Save Soft Skills to Profile</span>
+                                </button>
+                                <span id="saveStatusText" class="save-status-msg"></span>
+                            </div>
+                        </div>
+
+                        <!-- Right: Interactive Radar Chart -->
+                        <div class="diagnostic-chart-card">
+                            <h3 class="diag-card-title"><i class="fa-solid fa-radar text-purple"></i> Soft Skills Balance Map</h3>
+                            <div class="radar-chart-box">
+                                <canvas id="softSkillsRadarChart"></canvas>
+                            </div>
+                            <div class="radar-insight-footer">
+                                <strong>Recruiter Benchmark:</strong> Aim for a balanced polygon with no dimension below 70%. Currently, your <em>Stress Resilience &amp; Code Critiques</em> has the highest growth opportunity.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     5. Campus Group Discussion (GD) Master Playbook
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="gd-playbook-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-users"></i>
+                            <span>MASS &amp; DAY-1 DRIVE ELIMINATOR</span>
+                        </div>
+                        <h2 class="section-heading">Campus Group Discussion (GD) Playbook &amp; Strategy</h2>
+                        <p class="section-subheading">
+                            Companies like Deloitte, TCS, Mu Sigma, Wipro, and banks eliminate up to 60% of applicants in the GD round. Learn how to speak with high impact without shouting or dominating.
+                        </p>
+                    </div>
+
+                    <div class="gd-roles-grid">
+                        <div class="gd-role-card">
+                            <div class="role-icon-wrap" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <i class="fa-solid fa-flag"></i>
+                            </div>
+                            <h3 class="role-title">1. The Structured Initiator</h3>
+                            <span class="role-badge">Highest Risk &bull; Highest Reward</span>
+                            <p class="role-desc">
+                                Opening the discussion sets the frame. Never start with an aggressive opinion. Instead, define the topic scope, introduce 2–3 structured angles (e.g. Economic, Ethical, Technological), and invite the group.
+                            </p>
+                            <div class="role-phrase-box">
+                                <span class="phrase-lbl">Winning Opener Phrase:</span>
+                                <code>"Good morning everyone. The topic before us is 'AI Automation in Banking'. To structure our discussion, I propose we look at it through three lenses: operational efficiency, customer trust, and job transition."</code>
+                            </div>
+                        </div>
+
+                        <div class="gd-role-card">
+                            <div class="role-icon-wrap" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h3 class="role-title">2. The Data &amp; Metric Driver</h3>
+                            <span class="role-badge">Safest High-Scoring Role</span>
+                            <p class="role-desc">
+                                When others argue emotion, you anchor the discussion with facts, case studies, or quantitative benchmarks. Recruiters love candidates who bring signal over noise.
+                            </p>
+                            <div class="role-phrase-box">
+                                <span class="phrase-lbl">Winning Data Phrase:</span>
+                                <code>"Building on what Aniket mentioned regarding costs, according to the recent RBI report, digital payment transactions grew by 44% year-over-year, which validates that customer readiness is already established."</code>
+                            </div>
+                        </div>
+
+                        <div class="gd-role-card">
+                            <div class="role-icon-wrap" style="background: rgba(16, 185, 129, 0.12); color: var(--status-success);">
+                                <i class="fa-solid fa-handshake"></i>
+                            </div>
+                            <h3 class="role-title">3. The Harmonizer &amp; Moderator</h3>
+                            <span class="role-badge">Leadership Score Booster</span>
+                            <p class="role-desc">
+                                When two candidates enter a shouting match, calmly interject to summarize both points and pass the floor to quieter members. Shows emotional intelligence and leadership.
+                            </p>
+                            <div class="role-phrase-box">
+                                <span class="phrase-lbl">Winning Moderator Phrase:</span>
+                                <code>"Both points are valid: Rahul is emphasizing data privacy while Priya is highlighting speed. I also notice Sneha has been trying to share her thoughts; let's hear her perspective on this."</code>
+                            </div>
+                        </div>
+
+                        <div class="gd-role-card">
+                            <div class="role-icon-wrap" style="background: rgba(245, 158, 11, 0.12); color: var(--status-warning);">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <h3 class="role-title">4. The Objective Summarizer</h3>
+                            <span class="role-badge">Closes the Deal</span>
+                            <p class="role-desc">
+                                In the final 60 seconds, deliver a balanced summary representing the entire group's consensus, acknowledging both pros and cons without introducing your own personal new ideas.
+                            </p>
+                            <div class="role-phrase-box">
+                                <span class="phrase-lbl">Winning Closer Phrase:</span>
+                                <code>"To summarize the collective viewpoints of our group today, we agreed on two core benefits, identified one critical implementation hurdle, and concluded that gradual phasing is the optimal solution."</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     6. Cold Outreach & Professional Email Generator
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="outreach-generator-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>CAREER ACCELERATOR</span>
+                        </div>
+                        <h2 class="section-heading">Professional Outreach &amp; Referral Message Generator</h2>
+                        <p class="section-subheading">
+                            Generate tailored, high-converting messages for LinkedIn alumni outreach, cold emails to tech leads, and post-interview thank you notes.
+                        </p>
+                    </div>
+
+                    <div class="outreach-card">
+                        <div class="outreach-tabs-row">
+                            <button class="outreach-tab-btn active" data-tab="linkedin">
+                                <i class="fa-brands fa-linkedin"></i>
+                                <span>Alumni Referral (LinkedIn)</span>
+                            </button>
+                            <button class="outreach-tab-btn" data-tab="coldemail">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>Cold Email to Tech Lead</span>
+                            </button>
+                            <button class="outreach-tab-btn" data-tab="thankyou">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>Post-Interview Thank You</span>
+                            </button>
+                            <button class="outreach-tab-btn" data-tab="negotiate">
+                                <i class="fa-solid fa-hand-holding-dollar"></i>
+                                <span>Offer Clarification &amp; Discussion</span>
+                            </button>
+                        </div>
+
+                        <div class="outreach-form-grid">
+                            <div class="outreach-field">
+                                <label class="outreach-label">Target Company:</label>
+                                <input type="text" id="targetCompany" class="outreach-input" value="Amazon">
+                            </div>
+                            <div class="outreach-field">
+                                <label class="outreach-label">Recipient's Name:</label>
+                                <input type="text" id="recipientName" class="outreach-input" value="Siddharth">
+                            </div>
+                            <div class="outreach-field">
+                                <label class="outreach-label">Target Role:</label>
+                                <input type="text" id="targetRole" class="outreach-input" value="Software Development Engineer (SDE-1)">
+                            </div>
+                            <div class="outreach-field">
+                                <label class="outreach-label">Job Requisition / ID:</label>
+                                <input type="text" id="jobId" class="outreach-input" value="REQ-2026-SDE1">
+                            </div>
+                        </div>
+
+                        <div class="outreach-output-box">
+                            <div class="outreach-output-header">
+                                <span class="output-tag"><i class="fa-solid fa-sparkles text-cyan"></i> Ready-to-Copy Template</span>
+                                <button id="copyOutreachBtn" class="btn btn-outline btn-small">
+                                    <i class="fa-solid fa-copy"></i>
+                                    <span>Copy Message</span>
+                                </button>
+                            </div>
+                            <textarea id="outreachGeneratedText" class="outreach-result-textarea" rows="6" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     7. Situational Judgment Scenarios (Managerial Dilemmas)
+                     ═══════════════════════════════════════════════════════════ -->
+                <div class="scenarios-section">
+                    <div class="section-title-wrap">
+                        <div class="title-accent-tag">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            <span>MANAGERIAL ROUND DILEMMAS</span>
+                        </div>
+                        <h2 class="section-heading">Workplace Situational Judgment Scenarios</h2>
+                        <p class="section-subheading">
+                            Test your judgment on real-world engineering dilemmas. Choose the option you would pick, and review the recruiter's feedback on why certain choices indicate leadership maturity.
+                        </p>
+                    </div>
+
+                    <div class="scenarios-list" id="scenariosContainer">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="js/softskills.js"></script>
+</body>
+</html>

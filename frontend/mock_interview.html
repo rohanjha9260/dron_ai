@@ -20,10 +20,10 @@
                 extend: {
                     colors: {
                         cyberDark: '#0a0f1d',
-                        cyberCard: 'rgba(15, 23, 42, 0.75)',
-                        cyberBorder: 'rgba(99, 102, 241, 0.22)',
-                        neonCyan: '#06b6d4',
-                        neonViolet: '#8b5cf6',
+                        cyberCard: 'rgba(15, 23, 42, 0.85)',
+                        cyberBorder: 'rgba(255, 122, 0, 0.28)',
+                        neonCyan: '#ff7a00',
+                        neonViolet: '#ff9838',
                         neonEmerald: '#10b981',
                         neonAmber: '#f59e0b',
                     },
@@ -32,9 +32,9 @@
                         mono: ['"JetBrains Mono"', 'monospace'],
                     },
                     boxShadow: {
-                        'neon-cyan': '0 0 20px -3px rgba(6, 182, 212, 0.35)',
-                        'neon-violet': '0 0 25px -4px rgba(139, 92, 246, 0.35)',
-                        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.45)',
+                        'neon-cyan': '0 0 20px -3px rgba(255, 122, 0, 0.45)',
+                        'neon-violet': '0 0 25px -4px rgba(255, 152, 56, 0.40)',
+                        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.55)',
                     }
                 }
             }
@@ -46,13 +46,13 @@
 
     <style>
         body {
-            background-color: #0a0f1d;
+            background-color: #080c14;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.10) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(255, 122, 0, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(255, 152, 56, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(255, 122, 0, 0.06) 0px, transparent 50%);
             background-attachment: fixed;
-            color: #f1f5f9;
+            color: #ffffff;
         }
 
         /* Glassmorphism Classes */
@@ -162,6 +162,17 @@
                     <i data-lucide="history" class="w-3.5 h-3.5 text-neonCyan"></i>
                     <span>Past Sessions</span>
                 </button>
+
+                <!-- Return to Interview Hub -->
+                <a href="interview.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/70 border border-cyan-500/40 text-xs font-medium text-cyan-300 hover:text-white transition-all shadow-sm">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-neonCyan"></i>
+                    <span>Q&amp;A Hub</span>
+                </a>
+
+                <a href="dashboard.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm">
+                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span>Dashboard</span>
+                </a>
             </div>
         </div>
     </header>
