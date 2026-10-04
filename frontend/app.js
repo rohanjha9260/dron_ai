@@ -777,19 +777,26 @@ function initLandingDashboard() {
         }, 3600);
     }
 
-    // 2. Interactive Spotlight & Glow Physics on the 4 Engine Navigation Cards
+    // 2. Interactive Spotlight & Glow Physics on the 4 Engine Navigation Cards (GPU Throttled)
     const cards = document.querySelectorAll(".engine-card");
     cards.forEach((card) => {
+        let isTicking = false;
         card.addEventListener("mousemove", (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const glowLayer = card.querySelector(".card-glow-layer");
-            if (glowLayer) {
-                glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(255, 215, 0, 0.22) 0%, rgba(212, 175, 55, 0.06) 50%, transparent 80%)`;
-                glowLayer.style.opacity = "1";
+            if (!isTicking) {
+                requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const glowLayer = card.querySelector(".card-glow-layer");
+                    if (glowLayer) {
+                        glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(255, 122, 0, 0.22) 0%, rgba(255, 152, 56, 0.06) 50%, transparent 80%)`;
+                        glowLayer.style.opacity = "1";
+                    }
+                    isTicking = false;
+                });
+                isTicking = true;
             }
-        });
+        }, { passive: true });
 
         card.addEventListener("mouseleave", () => {
             const glowLayer = card.querySelector(".card-glow-layer");
@@ -797,7 +804,7 @@ function initLandingDashboard() {
                 glowLayer.style.background = "";
                 glowLayer.style.opacity = "";
             }
-        });
+        }, { passive: true });
     });
 
     // 3. Header Scrolled Glass Effect
