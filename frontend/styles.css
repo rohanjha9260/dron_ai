@@ -1334,6 +1334,17 @@ b {
     border-color: var(--accent-orange-light);
     color: #ffffff;
     background: rgba(255, 122, 0, 0.10);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+}
+
+.skill-chip:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+=======
+>>>>>>> b515501b6893b9a9249ae3617c938b039666ab38
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
 }
 
 .skill-chip.active {
