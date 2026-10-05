@@ -560,6 +560,12 @@ function initProfileSection() {
     });
 
     // 6. Modal Form Submit handler
+    const form = document.getElementById("edit-profile-form");
+    if (form) {
+        form.addEventListener("submit", handleProfileFormSubmit);
+    }
+}
+
 /**
  * Initialize standalone profile page form (e.g. in profile.html).
  */
