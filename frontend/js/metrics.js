@@ -81,24 +81,41 @@ async function fetchMetrics() {
         }
 
         // 3. Render loading skeletons for active platforms, or empty state for missing ones
+        const ghBadge = document.getElementById("github-sync-badge");
+        const lcBadge = document.getElementById("leetcode-sync-badge");
+
         if (ghHandle) {
-            renderSkeleton(githubContainer, "GitHub");
+            if (ghBadge) {
+                ghBadge.className = "badge badge-neutral";
+                ghBadge.innerHTML = `<span class="badge-dot"></span> Syncing...`;
+            } else {
+                renderSkeleton(githubContainer, "GitHub");
+            }
         } else {
-            renderEmptyState(
-                githubContainer,
-                "GitHub",
-                "Connect your GitHub username in Edit Profile to sync repositories, commits, and language stats."
-            );
+            if (!ghBadge) {
+                renderEmptyState(
+                    githubContainer,
+                    "GitHub",
+                    "Connect your GitHub username in Edit Profile to sync repositories, commits, and language stats."
+                );
+            }
         }
 
         if (lcHandle) {
-            renderSkeleton(leetcodeContainer, "LeetCode");
+            if (lcBadge) {
+                lcBadge.className = "badge badge-neutral";
+                lcBadge.innerHTML = `<span class="badge-dot"></span> Syncing...`;
+            } else {
+                renderSkeleton(leetcodeContainer, "LeetCode");
+            }
         } else {
-            renderEmptyState(
-                leetcodeContainer,
-                "LeetCode",
-                "Connect your LeetCode username in Edit Profile to sync solved problems, contest rating, and ranks."
-            );
+            if (!lcBadge) {
+                renderEmptyState(
+                    leetcodeContainer,
+                    "LeetCode",
+                    "Connect your LeetCode username in Edit Profile to sync solved problems, contest rating, and ranks."
+                );
+            }
         }
 
         // 4. Trigger backend metrics sync endpoint
@@ -115,18 +132,28 @@ async function fetchMetrics() {
             console.error("Backend metrics sync failed:", apiErr.message);
             // Handle complete fetch failure with isolated per-platform fallbacks
             if (ghHandle) {
-                renderPartialError(
-                    githubContainer,
-                    "GitHub",
-                    "GitHub data temporarily unavailable. Rate limit or connection issue."
-                );
+                if (ghBadge) {
+                    ghBadge.className = "badge badge-danger";
+                    ghBadge.innerHTML = '<span class="badge-dot"></span> Sync Failed';
+                } else {
+                    renderPartialError(
+                        githubContainer,
+                        "GitHub",
+                        "GitHub data temporarily unavailable. Rate limit or connection issue."
+                    );
+                }
             }
             if (lcHandle) {
-                renderPartialError(
-                    leetcodeContainer,
-                    "LeetCode",
-                    "LeetCode data temporarily unavailable. Rate limit or connection issue."
-                );
+                if (lcBadge) {
+                    lcBadge.className = "badge badge-danger";
+                    lcBadge.innerHTML = '<span class="badge-dot"></span> Sync Failed';
+                } else {
+                    renderPartialError(
+                        leetcodeContainer,
+                        "LeetCode",
+                        "LeetCode data temporarily unavailable. Rate limit or connection issue."
+                    );
+                }
             }
             return;
         }
@@ -134,26 +161,58 @@ async function fetchMetrics() {
         // 5. Render GitHub stats or partial fallback
         if (ghHandle) {
             if (responseData && responseData.github) {
-                renderGithubStats(responseData.github, ghHandle);
+                const ghBadgeEl = document.getElementById("github-sync-badge");
+                const ghCommits = document.getElementById("metric-github-commits");
+                const ghRepos = document.getElementById("metric-github-repos");
+                if (ghCommits && ghBadgeEl) {
+                    ghCommits.textContent = (responseData.github.total_commits || 0).toLocaleString();
+                    if (ghRepos) ghRepos.textContent = (responseData.github.repos || 0).toLocaleString();
+                    ghBadgeEl.className = "badge badge-success";
+                    ghBadgeEl.innerHTML = '<span class="badge-dot"></span> Synced';
+                } else {
+                    renderGithubStats(responseData.github, ghHandle);
+                }
             } else {
-                renderPartialError(
-                    githubContainer,
-                    "GitHub",
-                    "GitHub data unavailable. Verify handle or try refreshing again."
-                );
+                const ghBadgeEl = document.getElementById("github-sync-badge");
+                if (ghBadgeEl) {
+                    ghBadgeEl.className = "badge badge-danger";
+                    ghBadgeEl.innerHTML = '<span class="badge-dot"></span> Sync Failed';
+                } else {
+                    renderPartialError(
+                        githubContainer,
+                        "GitHub",
+                        "GitHub data unavailable. Verify handle or try refreshing again."
+                    );
+                }
             }
         }
 
         // 6. Render LeetCode stats or partial fallback
         if (lcHandle) {
             if (responseData && responseData.leetcode) {
-                renderLeetcodeStats(responseData.leetcode, lcHandle);
+                const lcBadgeEl = document.getElementById("leetcode-sync-badge");
+                const lcSolved = document.getElementById("metric-leetcode-solved");
+                const lcRating = document.getElementById("metric-leetcode-rating");
+                if (lcSolved && lcBadgeEl) {
+                    lcSolved.textContent = (responseData.leetcode.problems_solved || 0).toLocaleString();
+                    if (lcRating) lcRating.textContent = Math.round(responseData.leetcode.rating || 0);
+                    lcBadgeEl.className = "badge badge-success";
+                    lcBadgeEl.innerHTML = '<span class="badge-dot"></span> Synced';
+                } else {
+                    renderLeetcodeStats(responseData.leetcode, lcHandle);
+                }
             } else {
-                renderPartialError(
-                    leetcodeContainer,
-                    "LeetCode",
-                    "LeetCode data unavailable. Verify username or try refreshing again."
-                );
+                const lcBadgeEl = document.getElementById("leetcode-sync-badge");
+                if (lcBadgeEl) {
+                    lcBadgeEl.className = "badge badge-danger";
+                    lcBadgeEl.innerHTML = '<span class="badge-dot"></span> Sync Failed';
+                } else {
+                    renderPartialError(
+                        leetcodeContainer,
+                        "LeetCode",
+                        "LeetCode data unavailable. Verify username or try refreshing again."
+                    );
+                }
             }
         }
     } catch (error) {

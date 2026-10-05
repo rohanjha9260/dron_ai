@@ -187,6 +187,8 @@ a:hover {
 .badge-info { background: var(--color-info-bg); color: var(--color-info); border: 1px solid var(--color-info-border); }
 .badge-info .badge-dot { background: var(--color-info); }
 .badge-primary { background: rgba(212, 175, 55, 0.1); color: var(--color-primary-light); border: 1px solid rgba(212, 175, 55, 0.3); }
+.badge-neutral { background: var(--color-bg-input); color: var(--color-text-muted); border: 1px solid var(--color-border); }
+.badge-neutral .badge-dot { background: var(--color-text-muted); }
 
 /* ── Form Controls ── */
 .form-group {

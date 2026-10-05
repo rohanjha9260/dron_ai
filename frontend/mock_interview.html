@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Interactive AI Mock Interview & Real-Time Performance Analytics Dashboard">
+    <title>Dron AI — NeuroMock Interview & Analytics Dashboard</title>
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyberDark: '#0a0f1d',
+                        cyberCard: 'rgba(15, 23, 42, 0.85)',
+                        cyberBorder: 'rgba(255, 122, 0, 0.28)',
+                        neonCyan: '#ff7a00',
+                        neonViolet: '#ff9838',
+                        neonEmerald: '#10b981',
+                        neonAmber: '#f59e0b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px -3px rgba(255, 122, 0, 0.45)',
+                        'neon-violet': '0 0 25px -4px rgba(255, 152, 56, 0.40)',
+                        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.55)',
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #080c14;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 122, 0, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(255, 152, 56, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(255, 122, 0, 0.06) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(99, 102, 241, 0.20);
+        }
+
+        .glass-panel-subtle {
+            background: rgba(10, 15, 29, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0f1d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Pulse glow animation */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.8); }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+
+        /* Circular gauge transition */
+        .gauge-circle {
+            transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-black">
+
+    <!-- ===================================================================== -->
+    <!-- 1. HEADER & ROLE SELECTOR NAVIGATION -->
+    <!-- ===================================================================== -->
+    <header class="w-full glass-panel border-b border-cyberBorder px-6 py-4 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <!-- Brand & Progress Tracker -->
+            <div class="flex items-center gap-4">
+                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-violet-500/30 border border-cyan-500/30 shadow-neon-cyan">
+                    <i data-lucide="cpu" class="w-6 h-6 text-neonCyan"></i>
+                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                    </span>
+                </div>
+
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                            Dron AI <span class="text-[11px] px-2 py-0.5 rounded-full bg-violet-500/20 border border-violet-500/40 text-violet-300 font-mono">NeuroMock v2.4</span>
+                        </h1>
+                    </div>
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <span id="roundTrackerText" class="text-xs font-mono text-neonCyan font-semibold tracking-wide">
+                            Round 2 of 4
+                        </span>
+                        <span class="text-slate-600">•</span>
+                        <span id="roundSubcategoryText" class="text-xs text-slate-400 truncate max-w-xs">
+                            System Design & Distributed Scalability
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Controls: Role Selector, Difficulty Toggle, Analytics Drawer Trigger -->
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Target Role Dropdown -->
+                <div class="relative">
+                    <label for="roleSelector" class="sr-only">Target Role</label>
+                    <select id="roleSelector" class="bg-slate-900/90 text-slate-200 border border-indigo-500/30 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all cursor-pointer shadow-inner">
+                        <option value="Fullstack Engineer">Fullstack Engineer</option>
+                        <option value="AI/ML Engineer">AI/ML Engineer</option>
+                        <option value="Product Manager">Product Manager</option>
+                        <option value="DevOps/SRE">DevOps / SRE</option>
+                        <option value="Distributed Systems Architect">Distributed Systems Architect</option>
+                    </select>
+                </div>
+
+                <!-- Difficulty Segmented Toggle -->
+                <div id="difficultyContainer" class="flex items-center bg-slate-900/90 border border-indigo-500/30 rounded-lg p-0.5">
+                    <button data-diff="Junior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Junior</button>
+                    <button data-diff="Mid-Level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Mid-Level</button>
+                    <button data-diff="Senior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all">Senior</button>
+                    <button data-diff="FAANG-level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">FAANG-level</button>
+                </div>
+
+                <!-- Performance Analytics & History Button -->
+                <button id="openHistoryBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/70 border border-indigo-500/30 text-xs font-medium text-slate-200 hover:text-cyan-300 transition-all shadow-sm">
+                    <i data-lucide="history" class="w-3.5 h-3.5 text-neonCyan"></i>
+                    <span>Past Sessions</span>
+                </button>
+
+                <!-- Return to Interview Hub -->
+                <a href="interview.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/70 border border-cyan-500/40 text-xs font-medium text-cyan-300 hover:text-white transition-all shadow-sm">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-neonCyan"></i>
+                    <span>Q&amp;A Hub</span>
+                </a>
+
+                <a href="dashboard.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm">
+                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- MAIN SIMULATOR WORKSPACE -->
+    <!-- ===================================================================== -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+        <!-- ================================================================= -->
+        <!-- 2. LIVE INTERVIEW SIMULATOR CARD -->
+        <!-- ================================================================= -->
+        <section class="space-y-6">
+
+            <!-- A. Question Display Banner -->
+            <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card relative overflow-hidden">
+                <!-- Glowing accent spheres -->
+                <div class="absolute -right-24 -top-24 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Banner Header: Category Pill & Audio TTS Playback -->
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span id="questionCategoryPill" class="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-neon-cyan">
+                            System Design
+                        </span>
+                        <span id="questionDifficultyPill" class="text-xs font-mono text-slate-400 px-2.5 py-0.5 rounded bg-slate-800/80 border border-slate-700/60">
+                            Senior Level
+                        </span>
+                        <span id="questionRolePill" class="text-xs font-mono text-violet-300 px-2.5 py-0.5 rounded bg-violet-500/10 border border-violet-500/20">
+                            Fullstack Engineer
+                        </span>
+                    </div>
+
+                    <!-- Read Question Audio Button -->
+                    <button id="readQuestionBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all">
+                        <i data-lucide="volume-2" class="w-4 h-4 text-neonCyan"></i>
+                        <span id="readQuestionLabel">Read Question (TTS)</span>
+                    </button>
+                </div>
+
+                <!-- Primary Question Title -->
+                <h2 id="questionTitle" class="text-xl md:text-2xl font-extrabold text-white tracking-tight mb-3">
+                    Design a Real-Time Collaborative Document Editing Service
+                </h2>
+
+                <!-- Scenario Details -->
+                <p id="questionScenario" class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+                    Architect a Google Docs-like collaborative editor serving 500,000 peak concurrent active documents. Multiple users can edit the same document simultaneously with sub-50ms latency. Explain conflict resolution (CRDT vs OT), live transport protocols, persistence tiers, and offline resynchronization.
+                </p>
+
+                <!-- Expandable Accordions: Interviewer Persona & Architectural Hints -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4 border-t border-slate-800">
+                    <!-- Persona Accordion -->
+                    <div class="glass-panel-subtle rounded-xl p-3.5 transition-all">
+                        <button id="togglePersonaBtn" class="w-full flex items-center justify-between text-left text-xs font-semibold text-violet-300 hover:text-violet-200">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="user-check" class="w-4 h-4 text-neonViolet"></i>
+                                <span id="personaNameLabel">Interviewer Persona: Dr. Aris Thorne</span>
+                            </div>
+                            <span id="personaArrow" class="text-slate-400 text-xs font-mono">View ▾</span>
+                        </button>
+
+                        <div id="personaContent" class="hidden mt-3 text-xs text-slate-300 space-y-2">
+                            <p id="personaTitle" class="text-slate-400 italic">Principal Distributed Systems Architect @ HyperScale</p>
+                            <p id="personaExpectations" class="leading-relaxed">Looking for end-to-end depth: client state representation, transport framing, memory bounds on document state vectors, and graceful fallback when clients disconnect unexpectedly.</p>
+                            <div id="personaFocusTags" class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">CRDT vs OT</span>
+                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">WebSocket Fanout</span>
+                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">Vector Clocks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hints Accordion -->
+                    <div class="glass-panel-subtle rounded-xl p-3.5 transition-all">
+                        <button id="toggleHintsBtn" class="w-full flex items-center justify-between text-left text-xs font-semibold text-cyan-300 hover:text-cyan-200">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-4 h-4 text-neonCyan"></i>
+                                <span>Architectural Hints (<span id="hintsCount">3</span>)</span>
+                            </div>
+                            <span id="hintsArrow" class="text-slate-400 text-xs font-mono">Reveal ▾</span>
+                        </button>
+
+                        <ul id="hintsList" class="hidden mt-3 space-y-1.5 text-xs text-slate-300 list-disc list-inside">
+                            <li>Contrast Operational Transformation (central server authority) with Conflict-free Replicated Data Types (peer-to-peer convergence).</li>
+                            <li>How will you partition the active connection servers so that collaborators on Document #482 hit the same cluster or pub/sub channel?</li>
+                            <li>Consider snapshot frequency in an Append-Only Event Store versus compaction in PostgreSQL or DynamoDB.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B. Candidate Response Studio -->
+            <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card">
+                <!-- Studio Header Bar -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                    <!-- Tabbed Input Toggle -->
+                    <div class="flex items-center gap-2 bg-slate-900/80 p-1 rounded-xl border border-indigo-500/20">
+                        <button id="tabVoiceBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan transition-all">
+                            <span>🎙️ Voice Mode</span>
+                            <span id="voiceActivePing" class="hidden w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        </button>
+                        <button id="tabWrittenBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all">
+                            <span>⌨️ Written Response</span>
+                        </button>
+                    </div>
+
+                    <!-- Timer Countdown Badge -->
+                    <div class="flex items-center gap-3">
+                        <div id="timerBadge" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-700 bg-slate-900/80 font-mono text-sm font-bold text-cyan-300 transition-all">
+                            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i>
+                            <span id="timerCountdown">03:00</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono hidden md:inline">3:00 Target SLA</span>
+                    </div>
+                </div>
+
+                <!-- Main Studio Body: Response Input & Video PIP Telemetry -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-6">
+                    <!-- Left / Primary Input Area (8 cols) -->
+                    <div class="lg:col-span-8 flex flex-col justify-between">
+                        <!-- Voice Mode Container -->
+                        <div id="voiceModeContainer" class="flex flex-col items-center justify-center p-8 glass-panel-subtle rounded-xl min-h-[220px]">
+                            <!-- Animated Canvas Waveform -->
+                            <canvas id="waveformCanvas" width="500" height="70" class="w-full max-w-md h-[70px] mb-6 rounded-lg"></canvas>
+
+                            <div class="flex flex-col items-center gap-3">
+                                <button id="recordToggleBtn" class="flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-neon-cyan transition-all">
+                                    <i data-lucide="mic" id="recordIcon" class="w-5 h-5"></i>
+                                    <span id="recordBtnLabel">Click to Speak (Record)</span>
+                                </button>
+                                <p id="recordingStatusText" class="text-xs text-slate-400 font-mono text-center">
+                                    Web Speech API active. Voice transcription auto-indexes below in real-time.
+                                </p>
+                            </div>
+
+                            <!-- Real-time Transcription Stream Preview -->
+                            <div id="liveTranscriptionCard" class="w-full mt-4 p-3 rounded-lg bg-slate-900/80 border border-slate-800 text-xs text-slate-300 font-mono hidden">
+                                <span class="text-cyan-400 font-bold">Transcription Preview:</span>
+                                <span id="liveTranscriptionText" class="ml-1 text-slate-200"></span>
+                            </div>
+                        </div>
+
+                        <!-- Written Mode Container -->
+                        <div id="writtenModeContainer" class="hidden flex flex-col h-full min-h-[220px]">
+                            <textarea id="writtenResponseInput" placeholder="Structure your answer systematically:
+1. Requirements & Back-of-the-envelope Scale Calculation
+2. Core Component Design (Ingress, Messaging, Data Store)
+3. Failure Boundaries, Race Conditions, and Resiliency Protocols..." class="w-full h-56 bg-slate-900/80 text-slate-200 border border-indigo-500/25 rounded-xl p-4 text-sm leading-relaxed focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 resize-none font-sans placeholder-slate-600 transition-all shadow-inner"></textarea>
+                            <div class="flex justify-between items-center text-xs font-mono text-slate-400 mt-2 px-1">
+                                <span id="wordCountLabel">0 words</span>
+                                <span id="charCountLabel">0 characters</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Simulated Video PIP & AI Telemetry Badges (4 cols) -->
+                    <div class="lg:col-span-4 flex flex-col justify-between glass-panel-subtle rounded-xl p-4 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Vision Telemetry
+                            </span>
+                            <button id="cameraToggleBtn" class="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 underline">
+                                Toggle Live Camera
+                            </button>
+                        </div>
+
+                        <!-- Video PIP or Cyber Avatar Feed -->
+                        <div class="w-full h-36 bg-slate-950 rounded-lg border border-indigo-500/30 overflow-hidden relative flex items-center justify-center">
+                            <!-- Live webcam video stream element -->
+                            <video id="liveWebcamVideo" autoplay playsinline muted class="w-full h-full object-cover transform -scale-x-100 hidden"></video>
+
+                            <!-- Cyber Avatar Fallback -->
+                            <div id="cyberAvatarFallback" class="flex flex-col items-center justify-center p-2 text-center">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500/30 via-violet-500/30 to-indigo-600/30 border border-cyan-400/40 flex items-center justify-center mb-1">
+                                    <i data-lucide="user" class="w-7 h-7 text-cyan-300"></i>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">Neural PIP Avatar</span>
+                            </div>
+
+                            <!-- Neural Face Mesh Indicator Overlay -->
+                            <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-cyan-300 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                Face Mesh: Locked
+                            </div>
+                        </div>
+
+                        <!-- Real-time AI Behavioral Telemetry Gauges -->
+                        <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-800">
+                            <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-mono">Eye Contact</div>
+                                <div id="telemetryEyeContact" class="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                                    <span>94%</span>
+                                    <span class="text-[9px] text-slate-400 font-normal">Optimal</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-mono">Lighting & Audio</div>
+                                <div id="telemetryLighting" class="text-xs font-bold text-cyan-400">Optimal (48kHz)</div>
+                            </div>
+
+                            <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-mono">Speech Pacing</div>
+                                <div id="telemetryPacing" class="text-xs font-bold text-violet-300">135 WPM</div>
+                            </div>
+
+                            <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-mono">Filler Ratio</div>
+                                <div id="telemetryFiller" class="text-xs font-bold text-emerald-400">1.2% (Low)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons Footer -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <button id="startTimerBtn" class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition-all shadow-neon-cyan">
+                            Start Answering
+                        </button>
+                        <button id="redoBtn" class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
+                            Redo
+                        </button>
+                        <button id="skipBtn" class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
+                            Skip Question ➔
+                        </button>
+                    </div>
+
+                    <!-- Submit Button with Neural Loading State -->
+                    <button id="submitEvaluationBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white shadow-neon-violet transition-all">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span id="submitBtnLabel">Submit for AI Evaluation</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- 3. REAL-TIME AI FEEDBACK & EVALUATION PANEL (POST-SUBMISSION) -->
+        <!-- ================================================================= -->
+        <section id="evaluationPanel" class="space-y-6">
+            <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card space-y-6">
+                <!-- Top Banner: Summary Feedback & Overall Readiness Gauge -->
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+                    <div class="space-y-2 max-w-2xl">
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 rounded-md text-xs font-mono font-bold bg-violet-500/20 text-violet-300 border border-violet-500/40">
+                                AI Evaluation Report
+                            </span>
+                            <span id="evalTimestamp" class="text-xs text-slate-400 font-mono">Just Now</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white">
+                            Performance Breakdown & Readiness Verdict
+                        </h3>
+                        <p id="evalSummaryText" class="text-sm text-slate-300 leading-relaxed">
+                            Exceptional command of distributed systems nuances. The distinction between Token Bucket and Sliding Window Log with Lua atomicity demonstrated Staff-level maturity under high concurrency.
+                        </p>
+                    </div>
+
+                    <!-- Circular Score Gauge -->
+                    <div class="shrink-0 w-full lg:w-auto flex justify-center">
+                        <div class="flex flex-col items-center justify-center p-6 glass-panel-subtle rounded-2xl border border-indigo-500/20 shadow-inner">
+                            <div class="relative w-36 h-36 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
+                                    <!-- Background Track -->
+                                    <circle cx="64" cy="64" r="54" stroke="#1e293b" stroke-width="10" fill="transparent"></circle>
+                                    <!-- Animated Progress Ring (Circumference ~ 339.29) -->
+                                    <circle id="gaugeProgressCircle" class="gauge-circle" cx="64" cy="64" r="54" stroke="#10b981" stroke-width="10" stroke-dasharray="339.29" stroke-dashoffset="30.5" stroke-linecap="round" fill="transparent"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span id="gaugeScoreNumber" class="text-3xl font-black tracking-tight text-white font-mono">
+                                        91<span class="text-xs text-slate-400 font-sans">%</span>
+                                    </span>
+                                    <span class="text-[10px] uppercase font-mono tracking-widest text-slate-400 mt-0.5">Readiness</span>
+                                </div>
+                            </div>
+                            <div id="gaugeGradeBadge" class="mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border border-emerald-500/30 text-emerald-400 shadow-neon-cyan">
+                                Strong Hire
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimensional Metric Bars (Out of 10) -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4 text-neonCyan"></i>
+                        Dimensional Metric Bars (Out of 10)
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Metric 1 -->
+                        <div class="glass-panel-subtle rounded-xl p-4">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-xs font-semibold text-slate-200">1. Technical Accuracy & Depth</span>
+                                <span class="text-xs font-mono font-bold text-cyan-300">
+                                    <span id="mScore1">9.4</span> <span class="text-slate-500">/ 10</span>
+                                </span>
+                            </div>
+                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar1" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 94%;"></div>
+                            </div>
+                            <p id="mDesc1" class="text-[11px] text-slate-400 leading-snug">Flawless distributed concurrency modeling with Redis Lua scripts and local proxy caches.</p>
+                        </div>
+
+                        <!-- Metric 2 -->
+                        <div class="glass-panel-subtle rounded-xl p-4">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-xs font-semibold text-slate-200">2. STAR Framework Adherence</span>
+                                <span class="text-xs font-mono font-bold text-cyan-300">
+                                    <span id="mScore2">8.8</span> <span class="text-slate-500">/ 10</span>
+                                </span>
+                            </div>
+                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar2" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 88%;"></div>
+                            </div>
+                            <p id="mDesc2" class="text-[11px] text-slate-400 leading-snug">Clear architectural progression from single instance to clustered Envoy proxies.</p>
+                        </div>
+
+                        <!-- Metric 3 -->
+                        <div class="glass-panel-subtle rounded-xl p-4">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-xs font-semibold text-slate-200">3. Delivery & Communication Poise</span>
+                                <span class="text-xs font-mono font-bold text-cyan-300">
+                                    <span id="mScore3">9.2</span> <span class="text-slate-500">/ 10</span>
+                                </span>
+                            </div>
+                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar3" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 92%;"></div>
+                            </div>
+                            <p id="mDesc3" class="text-[11px] text-slate-400 leading-snug">Steady pacing (138 WPM), sustained eye contact, and negligible filler words.</p>
+                        </div>
+
+                        <!-- Metric 4 -->
+                        <div class="glass-panel-subtle rounded-xl p-4">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-xs font-semibold text-slate-200">4. Conciseness & Time Management</span>
+                                <span class="text-xs font-mono font-bold text-cyan-300">
+                                    <span id="mScore4">9.0</span> <span class="text-slate-500">/ 10</span>
+                                </span>
+                            </div>
+                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar4" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 90%;"></div>
+                            </div>
+                            <p id="mDesc4" class="text-[11px] text-slate-400 leading-snug">Concluded cleanly in 2m 44s, leaving sufficient margin for follow-up cross-examination.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Two-Column Grid: Strengths vs Critical Gaps -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    <!-- Key Strengths (Green Pills) -->
+                    <div class="glass-panel-subtle rounded-xl p-4 border border-emerald-500/20">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-neonEmerald"></i>
+                            <h5 class="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                                Key Strengths Observed
+                            </h5>
+                        </div>
+                        <ul id="keyStrengthsList" class="space-y-2">
+                            <li class="flex items-start gap-2.5 text-xs text-slate-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span>Atomic execution via Redis Lua scripts effectively prevented distributed race conditions.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5 text-xs text-slate-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span>Proactively factored in local proxy caching to safeguard the central Redis cluster against hot-key bottlenecks.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5 text-xs text-slate-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span>Clearly distinguished between client-side throttling (HTTP 429 Retry-After) and server-side traffic shedding.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Critical Gaps & Red Flags (Amber Alerts) -->
+                    <div class="glass-panel-subtle rounded-xl p-4 border border-amber-500/25">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-neonAmber"></i>
+                            <h5 class="text-xs font-bold uppercase tracking-wider text-amber-300">
+                                Critical Gaps & Red Flags
+                            </h5>
+                        </div>
+                        <ul id="criticalGapsList" class="space-y-2">
+                            <li class="flex items-start gap-2.5 text-xs text-slate-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"></span>
+                                <span>Did not explicitly address NTP clock drift issues across distributed nodes when calculating sliding timestamps.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5 text-xs text-slate-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"></span>
+                                <span>Could further clarify fail-open versus fail-closed policy if the Redis caching tier undergoes split-brain partitioning.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- How to Answer Better (Gold Standard Answer Expandable Accordion) -->
+                <div class="glass-panel-subtle rounded-xl p-4 transition-all">
+                    <button id="toggleSampleAnswerBtn" class="w-full flex items-center justify-between text-left">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+                                <span class="text-xs">🏆</span>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-white flex items-center gap-2">
+                                    "How to Answer Better" — Gold Standard Model Answer
+                                </h5>
+                                <p class="text-[11px] text-slate-400">Curated Staff-level benchmark with phase breakdown</p>
+                            </div>
+                        </div>
+                        <span id="sampleAnswerAction" class="text-xs font-mono text-cyan-400 hover:underline">Expand Answer ▾</span>
+                    </button>
+
+                    <div id="sampleAnswerBody" class="hidden mt-4 pt-4 border-t border-slate-800 space-y-4">
+                        <p id="goldAnswerSummary" class="text-xs text-slate-300 italic">
+                            A Staff-level answer combines high-level API contracts with deep atomic database guarantees and edge CDN tiering.
+                        </p>
+
+                        <!-- Breakdown Phases -->
+                        <div id="goldAnswerBreakdown" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
+                                <div class="text-xs font-semibold text-violet-300 mb-1.5">1. Requirements & Scoping</div>
+                                <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>100k peak QPS, 5ms SLA budget</li>
+                                    <li>Sliding window precision guarantees</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
+                                <div class="text-xs font-semibold text-violet-300 mb-1.5">2. Algorithmic Choice</div>
+                                <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>Sliding Window Counter in Redis Sorted Sets</li>
+                                    <li>Atomic Lua execution to prevent race conditions</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
+                                <div class="text-xs font-semibold text-violet-300 mb-1.5">3. Reliability & Faults</div>
+                                <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>Local Envoy in-memory token bucket</li>
+                                    <li>Fail-open policy under network partitions</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Verbatim Script Excerpt -->
+                        <div class="p-3.5 bg-slate-950/80 rounded-lg border border-slate-800 text-xs text-slate-300 font-mono leading-relaxed">
+                            <span class="text-amber-400 font-bold block mb-1">Verbatim Model Response Excerpt:</span>
+                            <span id="goldAnswerVerbatim">"To design a globally scalable rate limiter, I decompose the problem into three tiers: the edge gateway layer (Envoy), the central state tier (Redis Cluster), and the fallback circuit breaker. For 100k QPS, direct queries to Redis would saturate network IO; therefore, each local Envoy proxy maintains an in-memory token bucket replenished asynchronously from the Redis cluster via atomic Lua scripts..."</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- 4. PERFORMANCE ANALYTICS & HISTORY DRAWER (SLIDE-OVER) -->
+    <!-- ===================================================================== -->
+    <div id="historyDrawer" class="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-sm hidden">
+        <div class="w-full max-w-xl bg-cyberDark border-l border-indigo-500/25 h-full overflow-y-auto p-6 flex flex-col justify-between shadow-2xl">
+            <div class="space-y-6">
+                <!-- Drawer Header -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            Performance Analytics & History
+                        </h3>
+                        <p class="text-xs text-slate-400">Track candidate interview readiness and historical sessions</p>
+                    </div>
+                    <button id="closeHistoryBtn" class="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- SVG Radar Chart Widget -->
+                <div class="glass-panel rounded-2xl p-4 border border-indigo-500/20 flex flex-col items-center">
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-2">
+                        Readiness Skill Breakdown Radar
+                    </h4>
+                    <div class="relative w-[240px] h-[240px]">
+                        <svg class="w-full h-full" viewBox="0 0 240 240">
+                            <!-- Background Web Rings -->
+                            <circle cx="120" cy="120" r="20" fill="none" stroke="#1e293b" stroke-dasharray="2,2"></circle>
+                            <circle cx="120" cy="120" r="40" fill="none" stroke="#1e293b" stroke-dasharray="2,2"></circle>
+                            <circle cx="120" cy="120" r="60" fill="none" stroke="#1e293b" stroke-dasharray="2,2"></circle>
+                            <circle cx="120" cy="120" r="80" fill="none" stroke="#334155" stroke-width="1.5"></circle>
+
+                            <!-- Spoke Lines (6 axes) -->
+                            <line x1="120" y1="120" x2="120" y2="40" stroke="#1e293b"></line>
+                            <line x1="120" y1="120" x2="189" y2="80" stroke="#1e293b"></line>
+                            <line x1="120" y1="120" x2="189" y2="160" stroke="#1e293b"></line>
+                            <line x1="120" y1="120" x2="120" y2="200" stroke="#1e293b"></line>
+                            <line x1="120" y1="120" x2="51" y2="160" stroke="#1e293b"></line>
+                            <line x1="120" y1="120" x2="51" y2="80" stroke="#1e293b"></line>
+
+                            <!-- Candidate Radar Area Polygon -->
+                            <polygon id="radarPolygon" points="120,45 185,82 178,155 120,192 56,155 58,84" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="2"></polygon>
+
+                            <!-- Point markers -->
+                            <circle cx="120" cy="45" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
+                            <circle cx="185" cy="82" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
+                            <circle cx="178" cy="155" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
+                            <circle cx="120" cy="192" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
+                            <circle cx="56" cy="155" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
+                            <circle cx="58" cy="84" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
+                        </svg>
+                    </div>
+
+                    <!-- Labels under radar -->
+                    <div class="flex flex-wrap justify-center gap-1.5 mt-2">
+                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">DSA: 92%</span>
+                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Arch: 95%</span>
+                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Comm: 88%</span>
+                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">STAR: 90%</span>
+                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Scale: 96%</span>
+                    </div>
+                </div>
+
+                <!-- Past Sessions Table -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-3">
+                        Past Session Logs
+                    </h4>
+                    <div id="sessionHistoryList" class="space-y-3">
+                        <!-- Dynamic Sessions Injected Here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drawer Footer -->
+            <div class="pt-6 border-t border-slate-800 mt-6 flex justify-end">
+                <button id="closeHistoryBtn2" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-xl font-medium">
+                    Close Drawer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- INTERACTIVE APP JAVASCRIPT LOGIC -->
+    <!-- ===================================================================== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ---------------------------------------------------------------------
+        // Mock Questions Repository
+        // ---------------------------------------------------------------------
+        const MOCK_QUESTIONS = [
+            {
+                id: 'fullstack-senior-001',
+                role: 'Fullstack Engineer',
+                difficulty: 'Senior',
+                category: 'System Design',
+                roundTitle: 'Round 2 of 4: Scalable Feed & Caching Architecture',
+                roundIndex: 2,
+                totalRounds: 4,
+                title: 'Design a Real-Time Collaborative Document Editing Service',
+                scenario: 'Architect a Google Docs-like collaborative editor serving 500,000 peak concurrent active documents. Multiple users can edit the same document simultaneously with sub-50ms latency. Explain conflict resolution (CRDT vs OT), live transport protocols, persistence tiers, and offline resynchronization.',
+                interviewerPersona: {
+                    name: 'Dr. Aris Thorne',
+                    title: 'Principal Distributed Systems Architect @ HyperScale',
+                    focusAreas: ['CRDT vs OT', 'WebSocket Fanout', 'Redis Pub/Sub vs Kafka', 'Vector Clocks'],
+                    expectations: 'Looking for end-to-end depth: client state representation, transport framing, memory bounds on document state vectors, and graceful fallback when clients disconnect unexpectedly.'
+                },
+                hints: [
+                    'Contrast Operational Transformation (central server authority) with Conflict-free Replicated Data Types (peer-to-peer convergence).',
+                    'How will you partition the active connection servers so that collaborators on Document #482 hit the same cluster or pub/sub channel?',
+                    'Consider snapshot frequency in an Append-Only Event Store versus compaction in PostgreSQL or DynamoDB.'
+                ],
+                expectedKeywords: ['CRDT', 'Operational Transformation', 'WebSocket', 'Redis PubSub', 'Vector Clock', 'Snapshotting'],
+                timeLimitSeconds: 180
+            },
+            {
+                id: 'aiml-faang-002',
+                role: 'AI/ML Engineer',
+                difficulty: 'FAANG-level',
+                category: 'ML Architecture',
+                roundTitle: 'Round 3 of 4: Low-Latency LLM Serving & Retrieval',
+                roundIndex: 3,
+                totalRounds: 4,
+                title: 'Design an Enterprise RAG Engine with Sub-200ms TTFT under 10k QPS',
+                scenario: 'Design a production Retrieval-Augmented Generation (RAG) platform searching over 100M internal enterprise documents. Ensure Time-to-First-Token (TTFT) is below 200ms at 10,000 requests per second. Detail embedding pipelines, vector indexing (HNSW/IVF-PQ), semantic re-ranking, and KV-cache optimization.',
+                interviewerPersona: {
+                    name: 'Kenji Sato',
+                    title: 'Distinguished ML Infrastructure Engineer @ DeepFrontier',
+                    focusAreas: ['HNSW Indexing', 'Continuous Batching (vLLM)', 'Cross-Encoder Re-ranking', 'KV-Cache'],
+                    expectations: 'Expect rigorous back-of-the-envelope calculations: GPU VRAM sizing, network throughput for vector search clusters, and speculative decoding tradeoffs.'
+                },
+                hints: [
+                    'Break down the 200ms budget: Query embedding (25ms), ANN search (30ms), Re-ranking (40ms), LLM prefill (90ms).',
+                    'Discuss PagedAttention to eliminate memory fragmentation during high-concurrency token generation.'
+                ],
+                expectedKeywords: ['PagedAttention', 'vLLM', 'HNSW', 'Quantization', 'Cross-Encoder', 'Speculative Decoding'],
+                timeLimitSeconds: 180
+            },
+            {
+                id: 'devops-senior-003',
+                role: 'DevOps/SRE',
+                difficulty: 'Senior',
+                category: 'Cloud Infrastructure',
+                roundTitle: 'Round 2 of 4: Multi-Region High Availability & Chaos Resilience',
+                roundIndex: 2,
+                totalRounds: 4,
+                title: 'Architecting an Active-Active Multi-Region Zero-Downtime Migration',
+                scenario: 'Your organization must transition an e-commerce checkout engine from single-region AWS us-east-1 to an Active-Active setup across us-east-1 and eu-central-1. Walk through global traffic steering, distributed database consistency, asynchronous replication lag, and conflict resolution.',
+                interviewerPersona: {
+                    name: 'Marcus Sterling',
+                    title: 'Head of Reliability Engineering @ GlobalCommerce',
+                    focusAreas: ['Split-Brain Prevention', 'Anycast vs Route53', 'RPO / RTO targets', 'Idempotency Keys'],
+                    expectations: 'Show deep mastery of distributed failures: CAP theorem compromises, write conflicts on inventory locks, and automated blast-radius containment.'
+                },
+                hints: [
+                    'Address the trans-Atlantic latency barrier (~70-80ms RTT). Synchronous 2PC will crush checkout throughput.',
+                    'Suggest localized inventory reservations with asynchronous settlement or optimistic reservation with reconciliation.'
+                ],
+                expectedKeywords: ['Active-Active', 'DynamoDB Global Tables', 'Anycast DNS', 'Idempotency', 'RPO/RTO'],
+                timeLimitSeconds: 180
+            },
+            {
+                id: 'pm-mid-004',
+                role: 'Product Manager',
+                difficulty: 'Mid-Level',
+                category: 'Behavioral (STAR)',
+                roundTitle: 'Round 2 of 3: Product Strategy & Ruthless Prioritization',
+                roundIndex: 2,
+                totalRounds: 3,
+                title: 'Launching a GenAI Feature in a Heavily Regulated Industry',
+                scenario: 'You are the lead PM for an automated healthcare diagnostics assistant. Clinicians want rapid automated summarization, but compliance requires zero hallucination and strict HIPAA/GDPR guardrails. How do you define the MVP, align medical stakeholders, and establish go/no-go quality metrics?',
+                interviewerPersona: {
+                    name: 'Dr. Sarah Jenkins',
+                    title: 'Director of Healthcare Product @ HealthAI',
+                    focusAreas: ['User Trust & Safety', 'Regulatory Compliance', 'Human-in-the-Loop', 'North Star Metrics'],
+                    expectations: 'Focus on phased experimentation, confidence score thresholds with clinician escalation paths, and measurable clinical time-saved metrics.'
+                },
+                hints: [
+                    'Establish human-in-the-loop (HITL) as a core feature rather than a fallback.',
+                    'Define clear counter-metrics: speed of summary versus clinician error catch rate.'
+                ],
+                expectedKeywords: ['Human-in-the-Loop', 'HIPAA Compliance', 'Guardrail validation', 'North Star Metric'],
+                timeLimitSeconds: 180
+            }
+        ];
+
+        // ---------------------------------------------------------------------
+        // Historical Sessions Data
+        // ---------------------------------------------------------------------
+        let sessionHistory = [
+            {
+                id: 'hist-1',
+                date: 'Sep 14, 2026',
+                role: 'Fullstack Engineer',
+                difficulty: 'Senior',
+                category: 'System Design',
+                title: 'Design a Distributed Rate Limiter & Token Bucket Cluster',
+                score: 91,
+                grade: 'Strong Hire',
+                duration: 164,
+                summary: 'Outstanding clarity on distributed concurrency and Redis Lua scripting.'
+            },
+            {
+                id: 'hist-2',
+                date: 'Sep 11, 2026',
+                role: 'AI/ML Engineer',
+                difficulty: 'Senior',
+                category: 'ML Architecture',
+                title: 'Transformer Attention Memory Optimization (FlashAttention)',
+                score: 84,
+                grade: 'Hire',
+                duration: 172,
+                summary: 'Solid grasp of IO-aware tiling and online softmax on GPU SRAM.'
+            },
+            {
+                id: 'hist-3',
+                date: 'Sep 08, 2026',
+                role: 'Fullstack Engineer',
+                difficulty: 'Mid-Level',
+                category: 'Behavioral (STAR)',
+                title: 'Managing Technical Debt Under Aggressive Product Deadlines',
+                score: 79,
+                grade: 'Hire',
+                duration: 155,
+                summary: 'Good STAR adherence, though quantifiable business metrics could be sharper.'
+            }
+        ];
+
+        // ---------------------------------------------------------------------
+        // Application State
+        // ---------------------------------------------------------------------
+        let currentQuestionIndex = 0;
+        let activeQuestion = MOCK_QUESTIONS[0];
+        let inputMode = 'voice'; // 'voice' or 'written'
+        let isRecording = false;
+        let timerSeconds = 180;
+        let timerActive = false;
+        let timerInterval = null;
+        let ttsActive = false;
+        let cameraActive = false;
+        let cameraStream = null;
+        let animationFrameId = null;
+
+        // ---------------------------------------------------------------------
+        // DOM Elements
+        // ---------------------------------------------------------------------
+        const roleSelector = document.getElementById('roleSelector');
+        const difficultyContainer = document.getElementById('difficultyContainer');
+        const roundTrackerText = document.getElementById('roundTrackerText');
+        const roundSubcategoryText = document.getElementById('roundSubcategoryText');
+        const questionCategoryPill = document.getElementById('questionCategoryPill');
+        const questionDifficultyPill = document.getElementById('questionDifficultyPill');
+        const questionRolePill = document.getElementById('questionRolePill');
+        const questionTitle = document.getElementById('questionTitle');
+        const questionScenario = document.getElementById('questionScenario');
+        const readQuestionBtn = document.getElementById('readQuestionBtn');
+        const readQuestionLabel = document.getElementById('readQuestionLabel');
+        const togglePersonaBtn = document.getElementById('togglePersonaBtn');
+        const personaNameLabel = document.getElementById('personaNameLabel');
+        const personaArrow = document.getElementById('personaArrow');
+        const personaContent = document.getElementById('personaContent');
+        const personaTitle = document.getElementById('personaTitle');
+        const personaExpectations = document.getElementById('personaExpectations');
+        const personaFocusTags = document.getElementById('personaFocusTags');
+        const toggleHintsBtn = document.getElementById('toggleHintsBtn');
+        const hintsArrow = document.getElementById('hintsArrow');
+        const hintsList = document.getElementById('hintsList');
+        const hintsCount = document.getElementById('hintsCount');
+
+        const tabVoiceBtn = document.getElementById('tabVoiceBtn');
+        const tabWrittenBtn = document.getElementById('tabWrittenBtn');
+        const voiceModeContainer = document.getElementById('voiceModeContainer');
+        const writtenModeContainer = document.getElementById('writtenModeContainer');
+        const voiceActivePing = document.getElementById('voiceActivePing');
+        const recordToggleBtn = document.getElementById('recordToggleBtn');
+        const recordBtnLabel = document.getElementById('recordBtnLabel');
+        const recordingStatusText = document.getElementById('recordingStatusText');
+        const liveTranscriptionCard = document.getElementById('liveTranscriptionCard');
+        const liveTranscriptionText = document.getElementById('liveTranscriptionText');
+        const writtenResponseInput = document.getElementById('writtenResponseInput');
+        const wordCountLabel = document.getElementById('wordCountLabel');
+        const charCountLabel = document.getElementById('charCountLabel');
+        const timerCountdown = document.getElementById('timerCountdown');
+        const timerBadge = document.getElementById('timerBadge');
+
+        const cameraToggleBtn = document.getElementById('cameraToggleBtn');
+        const liveWebcamVideo = document.getElementById('liveWebcamVideo');
+        const cyberAvatarFallback = document.getElementById('cyberAvatarFallback');
+
+        const startTimerBtn = document.getElementById('startTimerBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const submitEvaluationBtn = document.getElementById('submitEvaluationBtn');
+        const submitBtnLabel = document.getElementById('submitBtnLabel');
+
+        const openHistoryBtn = document.getElementById('openHistoryBtn');
+        const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+        const closeHistoryBtn2 = document.getElementById('closeHistoryBtn2');
+        const historyDrawer = document.getElementById('historyDrawer');
+        const sessionHistoryList = document.getElementById('sessionHistoryList');
+
+        const toggleSampleAnswerBtn = document.getElementById('toggleSampleAnswerBtn');
+        const sampleAnswerAction = document.getElementById('sampleAnswerAction');
+        const sampleAnswerBody = document.getElementById('sampleAnswerBody');
+
+        // ---------------------------------------------------------------------
+        // Audio Waveform Canvas Visualizer
+        // ---------------------------------------------------------------------
+        const canvas = document.getElementById('waveformCanvas');
+        const ctx = canvas.getContext('2d');
+        let wavePhase = 0;
+
+        function renderAudioWave() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const w = canvas.width;
+            const h = canvas.height;
+
+            if (!isRecording) {
+                // Static subtle grid line
+                ctx.beginPath();
+                ctx.moveTo(0, h / 2);
+                ctx.lineTo(w, h / 2);
+                ctx.strokeStyle = '#334155';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            } else {
+                // Dynamic animated frequency wave
+                ctx.beginPath();
+                ctx.lineWidth = 2.5;
+                const gradient = ctx.createLinearGradient(0, 0, w, 0);
+                gradient.addColorStop(0, '#06b6d4');
+                gradient.addColorStop(0.5, '#8b5cf6');
+                gradient.addColorStop(1, '#10b981');
+                ctx.strokeStyle = gradient;
+
+                for (let x = 0; x < w; x++) {
+                    const freq1 = Math.sin(x * 0.04 + wavePhase) * 16;
+                    const freq2 = Math.sin(x * 0.08 - wavePhase * 1.5) * 9;
+                    const freq3 = Math.cos(x * 0.02 + wavePhase * 0.7) * 7;
+                    const y = h / 2 + (freq1 + freq2 + freq3) * (0.4 + Math.random() * 0.25);
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                wavePhase += 0.09;
+            }
+            animationFrameId = requestAnimationFrame(renderAudioWave);
+        }
+        renderAudioWave();
+
+        // ---------------------------------------------------------------------
+        // Render Active Question
+        // ---------------------------------------------------------------------
+        function loadQuestion(q) {
+            activeQuestion = q;
+            roundTrackerText.innerText = `Round ${q.roundIndex} of ${q.totalRounds}`;
+            roundSubcategoryText.innerText = q.roundTitle;
+            questionCategoryPill.innerText = q.category;
+            questionDifficultyPill.innerText = q.difficulty;
+            questionRolePill.innerText = q.role;
+            questionTitle.innerText = q.title;
+            questionScenario.innerText = q.scenario;
+
+            // Persona
+            personaNameLabel.innerText = `Interviewer Persona: ${q.interviewerPersona.name}`;
+            personaTitle.innerText = q.interviewerPersona.title;
+            personaExpectations.innerText = q.interviewerPersona.expectations;
+            personaFocusTags.innerHTML = q.interviewerPersona.focusAreas
+                .map(a => `<span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">${a}</span>`)
+                .join('');
+
+            // Hints
+            hintsCount.innerText = q.hints.length;
+            hintsList.innerHTML = q.hints.map(h => `<li>${h}</li>`).join('');
+
+            // Reset Editor
+            resetStudio();
+        }
+
+        // ---------------------------------------------------------------------
+        // Timer Logic
+        // ---------------------------------------------------------------------
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimerDisplay() {
+            timerCountdown.innerText = formatTime(timerSeconds);
+            if (timerSeconds <= 30 && timerSeconds > 0) {
+                timerBadge.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-amber-500 bg-amber-500/20 font-mono text-sm font-bold text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.5)] animate-pulse';
+            } else if (timerSeconds === 0) {
+                timerBadge.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-rose-500 bg-rose-500/20 font-mono text-sm font-bold text-rose-300';
+            } else {
+                timerBadge.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-700 bg-slate-900/80 font-mono text-sm font-bold text-cyan-300';
+            }
+        }
+
+        function startTimer() {
+            if (timerActive) return;
+            timerActive = true;
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    stopTimer();
+                    stopRecording();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            timerActive = false;
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        function resetStudio() {
+            stopTimer();
+            stopRecording();
+            timerSeconds = 180;
+            updateTimerDisplay();
+            writtenResponseInput.value = '';
+            updateWordCount();
+            liveTranscriptionCard.classList.add('hidden');
+            liveTranscriptionText.innerText = '';
+        }
+
+        // ---------------------------------------------------------------------
+        // Voice & Web Speech API Simulation
+        // ---------------------------------------------------------------------
+        let speechRecognition = null;
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            speechRecognition = new SpeechRec();
+            speechRecognition.continuous = true;
+            speechRecognition.interimResults = true;
+
+            speechRecognition.onresult = (event) => {
+                let interim = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        writtenResponseInput.value += ' ' + event.results[i][0].transcript;
+                    } else {
+                        interim += event.results[i][0].transcript;
+                    }
+                }
+                liveTranscriptionCard.classList.remove('hidden');
+                liveTranscriptionText.innerText = interim || writtenResponseInput.value;
+                updateWordCount();
+            };
+        }
+
+        function startRecording() {
+            isRecording = true;
+            startTimer();
+            voiceActivePing.classList.remove('hidden');
+            recordToggleBtn.className = 'flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-700 text-white shadow-[0_0_20px_rgba(225,29,72,0.5)] animate-pulse transition-all';
+            recordBtnLabel.innerText = 'Stop Recording Response';
+            recordingStatusText.innerText = 'Capturing audio with spectral noise suppression...';
+
+            if (speechRecognition) {
+                try { speechRecognition.start(); } catch (e) {}
+            } else {
+                liveTranscriptionCard.classList.remove('hidden');
+                liveTranscriptionText.innerText = 'Speech recognition not supported in this browser. Please switch to Written / Code mode to submit your response.';
+            }
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            voiceActivePing.classList.add('hidden');
+            recordToggleBtn.className = 'flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-neon-cyan transition-all';
+            recordBtnLabel.innerText = 'Click to Speak (Record)';
+            recordingStatusText.innerText = 'Web Speech API active. Voice transcription auto-indexes below in real-time.';
+            if (speechRecognition) {
+                try { speechRecognition.stop(); } catch (e) {}
+            }
+        }
+
+        recordToggleBtn.addEventListener('click', () => {
+            if (isRecording) stopRecording();
+            else startRecording();
+        });
+
+        // ---------------------------------------------------------------------
+        // Input Tabs
+        // ---------------------------------------------------------------------
+        tabVoiceBtn.addEventListener('click', () => {
+            inputMode = 'voice';
+            tabVoiceBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan transition-all';
+            tabWrittenBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all';
+            voiceModeContainer.classList.remove('hidden');
+            writtenModeContainer.classList.add('hidden');
+        });
+
+        tabWrittenBtn.addEventListener('click', () => {
+            inputMode = 'written';
+            tabWrittenBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/40 shadow-neon-violet transition-all';
+            tabVoiceBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all';
+            writtenModeContainer.classList.remove('hidden');
+            voiceModeContainer.classList.add('hidden');
+        });
+
+        function updateWordCount() {
+            const val = writtenResponseInput.value.trim();
+            const words = val ? val.split(/\s+/).length : 0;
+            wordCountLabel.innerText = `${words} words`;
+            charCountLabel.innerText = `${val.length} characters`;
+        }
+        writtenResponseInput.addEventListener('input', updateWordCount);
+
+        // ---------------------------------------------------------------------
+        // Live Webcam & Vision Telemetry Toggle
+        // ---------------------------------------------------------------------
+        cameraToggleBtn.addEventListener('click', async () => {
+            if (!cameraActive) {
+                try {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } });
+                    liveWebcamVideo.srcObject = cameraStream;
+                    liveWebcamVideo.classList.remove('hidden');
+                    cyberAvatarFallback.classList.add('hidden');
+                    cameraActive = true;
+                    cameraToggleBtn.innerText = 'Use Neural Avatar';
+                } catch (e) {
+                    alert('Camera access denied or unavailable. Running in Simulated Vision Telemetry mode.');
+                }
+            } else {
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(t => t.stop());
+                    cameraStream = null;
+                }
+                liveWebcamVideo.classList.add('hidden');
+                cyberAvatarFallback.classList.remove('hidden');
+                cameraActive = false;
+                cameraToggleBtn.innerText = 'Toggle Live Camera';
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // Text-to-Speech (TTS) Read Question
+        // ---------------------------------------------------------------------
+        readQuestionBtn.addEventListener('click', () => {
+            if (!('speechSynthesis' in window)) {
+                alert('Text-to-speech not supported in this browser.');
+                return;
+            }
+            if (ttsActive) {
+                window.speechSynthesis.cancel();
+                ttsActive = false;
+                readQuestionBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all';
+                readQuestionLabel.innerText = 'Read Question (TTS)';
+            } else {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(`${activeQuestion.title}. Scenario: ${activeQuestion.scenario}`);
+                utterance.rate = 1.05;
+                utterance.onend = () => {
+                    ttsActive = false;
+                    readQuestionLabel.innerText = 'Read Question (TTS)';
+                    readQuestionBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all';
+                };
+                ttsActive = true;
+                readQuestionLabel.innerText = 'Speaking...';
+                readQuestionBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-400 shadow-neon-cyan animate-pulse transition-all';
+                window.speechSynthesis.speak(utterance);
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // Accordions
+        // ---------------------------------------------------------------------
+        togglePersonaBtn.addEventListener('click', () => {
+            const isHidden = personaContent.classList.contains('hidden');
+            if (isHidden) {
+                personaContent.classList.remove('hidden');
+                personaArrow.innerText = 'Hide ▴';
+            } else {
+                personaContent.classList.add('hidden');
+                personaArrow.innerText = 'View ▾';
+            }
+        });
+
+        toggleHintsBtn.addEventListener('click', () => {
+            const isHidden = hintsList.classList.contains('hidden');
+            if (isHidden) {
+                hintsList.classList.remove('hidden');
+                hintsArrow.innerText = 'Hide ▴';
+            } else {
+                hintsList.classList.add('hidden');
+                hintsArrow.innerText = 'Reveal ▾';
+            }
+        });
+
+        toggleSampleAnswerBtn.addEventListener('click', () => {
+            const isHidden = sampleAnswerBody.classList.contains('hidden');
+            if (isHidden) {
+                sampleAnswerBody.classList.remove('hidden');
+                sampleAnswerAction.innerText = 'Collapse Answer ▴';
+            } else {
+                sampleAnswerBody.classList.add('hidden');
+                sampleAnswerAction.innerText = 'Expand Answer ▾';
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // Action Buttons
+        // ---------------------------------------------------------------------
+        startTimerBtn.addEventListener('click', () => {
+            startTimer();
+            if (inputMode === 'voice') startRecording();
+        });
+
+        redoBtn.addEventListener('click', resetStudio);
+
+        skipBtn.addEventListener('click', () => {
+            currentQuestionIndex = (currentQuestionIndex + 1) % MOCK_QUESTIONS.length;
+            loadQuestion(MOCK_QUESTIONS[currentQuestionIndex]);
+        });
+
+        roleSelector.addEventListener('change', (e) => {
+            const matched = MOCK_QUESTIONS.find(q => q.role === e.target.value);
+            if (matched) loadQuestion(matched);
+        });
+
+        // Difficulty segmented buttons
+        document.querySelectorAll('.diff-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const diff = btn.getAttribute('data-diff');
+                document.querySelectorAll('.diff-btn').forEach(b => {
+                    b.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all';
+                });
+                btn.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all';
+                questionDifficultyPill.innerText = diff;
+
+                const currentRole = roleSelector.value;
+                const matched = MOCK_QUESTIONS.find(q => q.role === currentRole && q.difficulty.toLowerCase() === diff.toLowerCase())
+                    || MOCK_QUESTIONS.find(q => q.difficulty.toLowerCase() === diff.toLowerCase());
+                if (matched) {
+                    loadQuestion(matched);
+                }
+            });
+        });
+
+        function renderEvaluation(score, grade, summary) {
+            let gradeColor = 'border-emerald-500/30 text-emerald-400';
+            let ringColor = '#10b981';
+            if (score < 65) { grade = 'Needs Work'; gradeColor = 'border-rose-500/30 text-rose-400'; ringColor = '#f43f5e'; }
+            else if (score < 78) { grade = 'Borderline'; gradeColor = 'border-amber-500/30 text-amber-400'; ringColor = '#f59e0b'; }
+            else if (score < 90) { grade = 'Hire'; gradeColor = 'border-cyan-500/30 text-cyan-400'; ringColor = '#06b6d4'; }
+
+            // Update Circular Gauge
+            const offset = 339.29 - (score / 100) * 339.29;
+            const circle = document.getElementById('gaugeProgressCircle');
+            if (circle) {
+                circle.style.strokeDashoffset = offset;
+                circle.setAttribute('stroke', ringColor);
+            }
+            const scoreNum = document.getElementById('gaugeScoreNumber');
+            if (scoreNum) {
+                scoreNum.innerHTML = `${score}<span class="text-xs text-slate-400 font-sans">%</span>`;
+            }
+            const badge = document.getElementById('gaugeGradeBadge');
+            if (badge) {
+                badge.innerText = grade;
+                badge.className = `mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
+            }
+
+            // Update Dimensional Metric Bars
+            const tScore = (score / 10).toFixed(1);
+            const m1 = document.getElementById('mScore1');
+            const b1 = document.getElementById('mBar1');
+            const m2 = document.getElementById('mScore2');
+            const b2 = document.getElementById('mBar2');
+            if (m1) m1.innerText = tScore;
+            if (b1) b1.style.width = `${score}%`;
+            if (m2) m2.innerText = (Math.max(0, score - 4) / 10).toFixed(1);
+            if (b2) b2.style.width = `${Math.max(0, score - 4)}%`;
+
+            const sumEl = document.getElementById('evalSummaryText');
+            if (sumEl && summary) {
+                sumEl.innerText = summary;
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // Submit for AI Evaluation (Simulated Pipeline)
+        // ---------------------------------------------------------------------
+        submitEvaluationBtn.addEventListener('click', () => {
+            stopTimer();
+            stopRecording();
+
+            // Loading state with cyber steps
+            submitEvaluationBtn.disabled = true;
+            submitBtnLabel.innerText = 'Running Neural Evaluation...';
+            submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed';
+
+            setTimeout(() => {
+                // Calculate dynamic evaluation based on actual content
+                const text = writtenResponseInput.value.trim().toLowerCase();
+                const wordCount = text ? text.split(/\s+/).length : 0;
+                
+                let score = 60;
+                let summary = 'Basic response provided. Expand on system architecture, trade-offs, and edge cases.';
+                if (wordCount > 60) {
+                    score = 92;
+                    summary = 'Comprehensive response demonstrating structured problem solving, clear architecture, and solid grasp of trade-offs.';
+                } else if (wordCount > 25) {
+                    score = 82;
+                    summary = 'Good technical foundation. Consider providing deeper complexity analysis and concrete operational metrics.';
+                } else if (wordCount > 5) {
+                    score = 70;
+                    summary = 'Brief response detected. Elaboration on key algorithmic steps and failure recovery will boost score.';
+                }
+
+                let grade = score >= 90 ? 'Strong Hire' : (score >= 78 ? 'Hire' : (score >= 65 ? 'Borderline' : 'Needs Work'));
+
+                renderEvaluation(score, grade, summary);
+
+                // Reset button state
+                submitEvaluationBtn.disabled = false;
+                submitBtnLabel.innerText = 'Submit for AI Evaluation';
+                submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white shadow-neon-violet transition-all';
+
+                // Scroll to evaluation panel
+                document.getElementById('evaluationPanel').scrollIntoView({ behavior: 'smooth' });
+
+                // Add to history
+                const newSess = {
+                    id: 'hist-' + Date.now(),
+                    date: 'Today',
+                    role: activeQuestion.role,
+                    difficulty: activeQuestion.difficulty,
+                    category: activeQuestion.category,
+                    title: activeQuestion.title,
+                    score: score,
+                    grade: grade,
+                    duration: 180 - timerSeconds,
+                    summary: summary
+                };
+                sessionHistory.unshift(newSess);
+                renderHistory();
+            }, 1200);
+        });
+
+        // ---------------------------------------------------------------------
+        // History Drawer Management
+        // ---------------------------------------------------------------------
+        function renderHistory() {
+            sessionHistoryList.innerHTML = sessionHistory.map(sess => `
+                <div class="glass-panel-subtle hover:bg-slate-900/90 transition-all rounded-xl p-3.5 border border-indigo-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">${sess.date}</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">${sess.category}</span>
+                        </div>
+                        <div class="text-xs font-bold text-white truncate max-w-xs">${sess.title}</div>
+                        <div class="text-[11px] text-slate-400">${sess.role} • ${Math.floor(sess.duration / 60)}m ${sess.duration % 60}s</div>
+                    </div>
+                    <div class="flex items-center gap-3 shrink-0">
+                        <div class="text-right">
+                            <div class="text-sm font-bold font-mono text-cyan-300">${sess.score}%</div>
+                            <div class="text-[10px] text-emerald-400 font-semibold">${sess.grade}</div>
+                        </div>
+                        <button onclick="reviewSession('${sess.id}')" class="px-2.5 py-1.5 bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/30 text-xs rounded-lg transition-all">Review</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.reviewSession = function(id) {
+            const found = sessionHistory.find(s => s.id === id);
+            if (found) {
+                historyDrawer.classList.add('hidden');
+                renderEvaluation(found.score, found.grade, found.summary);
+                document.getElementById('evaluationPanel').scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        openHistoryBtn.addEventListener('click', () => {
+            renderHistory();
+            historyDrawer.classList.remove('hidden');
+        });
+        closeHistoryBtn.addEventListener('click', () => historyDrawer.classList.add('hidden'));
+        closeHistoryBtn2.addEventListener('click', () => historyDrawer.classList.add('hidden'));
+
+        // Initialize default view
+        loadQuestion(MOCK_QUESTIONS[0]);
+    </script>
+</body>
+</html>

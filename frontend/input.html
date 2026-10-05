@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dron AI - Student Profile & Quantitative Telemetry Input Portal">
+    <title>Dron AI — Student Profile Input Portal</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">Dron AI</span>
+                    <span class="brand-subtitle">Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Navigation</div>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Mentorship Dashboard</span>
+                </a>
+                <a href="input.html" class="nav-item active">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Data Input</span>
+                </a>
+
+                <div class="nav-section-title">Analytical Engines</div>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Outlook</span>
+                </a>
+                <a href="placement.html" class="nav-item">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>Placement Insight</span>
+                </a>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Direction</span>
+                </a>
+                <a href="roadmap.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Remediation Roadmap</span>
+                </a>
+                <a href="interview.html" class="nav-item">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Interview & Q&A Prep</span>
+                </a>
+                <a href="softskills.html" class="nav-item">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Soft Skills & Pitch</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
+                    <div class="user-details">
+                        <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <!-- Top Sticky Header Bar -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-greeting">
+                        <h1 class="greeting-title">Unified Profile <span>Telemetry</span></h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-badges">
+                        <span class="badge badge-purple" id="header-sem-badge">
+                            <span class="badge-dot badge-pulse"></span> Semester 6
+                        </span>
+                        <span class="badge badge-neutral" id="header-updated-badge">
+                            Updated Today
+                        </span>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-outline btn-small">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>View Dashboard</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Workspace Body -->
+            <div class="app-content">
+                <div class="input-page-header">
+                    <h1>Student Academic &amp; Skill Profile Intake</h1>
+                    <p>Provide your quantitative metrics, technical proficiencies, and developer telemetry to initialize the Dron AI predictive inference and career guidance engine.</p>
+                </div>
+
+                <form id="student-input-form" class="input-form-grid">
+                    <!-- Section 1: Demographics & Academic Performance -->
+                    <div class="form-section-card">
+                        <div class="section-card-title">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>1. Academic Records &amp; Demographics</span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label" for="input-full-name">Full Student Name</label>
+                                <input type="text" id="input-full-name" class="form-control" placeholder="e.g. Rohan Jha" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-branch">Academic Branch</label>
+                                <input type="text" id="input-branch" class="form-control" placeholder="Computer Science &amp; Engineering" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label" for="input-sem">Current Semester</label>
+                                <select id="input-sem" class="form-control">
+                                    <option value="Semester 4">Semester 4</option>
+                                    <option value="Semester 5">Semester 5</option>
+                                    <option value="Semester 6" selected>Semester 6</option>
+                                    <option value="Semester 7">Semester 7</option>
+                                    <option value="Semester 8">Semester 8</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-cohort">Graduation Year</label>
+                                <input type="number" id="input-cohort" class="form-control" value="2026" min="2024" max="2030">
+                            </div>
+                        </div>
+
+                        <div class="form-row-3" style="margin-top: 0.5rem;">
+                            <div class="form-group">
+                                <label class="form-label" for="input-tenth">10th Board Score (%)</label>
+                                <input type="number" step="0.1" id="input-tenth" class="form-control" placeholder="92.4" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-twelfth">12th Board Score (%)</label>
+                                <input type="number" step="0.1" id="input-twelfth" class="form-control" placeholder="89.6" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-cgpa">Current CGPA (0-10)</label>
+                                <input type="number" step="0.01" id="input-cgpa" class="form-control" placeholder="8.65" min="0" max="10" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2" style="margin-top: 0.5rem;">
+                            <div class="form-group">
+                                <label class="form-label" for="input-attendance">Attendance Percentage (%)</label>
+                                <input type="number" step="0.1" id="input-attendance" class="form-control" placeholder="88.5" min="0" max="100" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-backlogs">Active Academic Backlogs</label>
+                                <input type="number" id="input-backlogs" class="form-control" placeholder="0" min="0" value="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Technical Skills (Interactive Chips) -->
+                    <div class="form-section-card">
+                        <div class="section-card-title">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <span>2. Technical Proficiencies (Click to Toggle)</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Select the key programming languages, computational frameworks, and engineering competencies you are actively practicing:
+                        </p>
+
+                        <div class="skill-chips-grid" id="skill-chips-container">
+                            <div class="skill-chip active" data-skill="Python">
+                                <i class="fa-brands fa-python"></i>
+                                <span>Python</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip active" data-skill="DSA">
+                                <i class="fa-solid fa-diagram-project"></i>
+                                <span>Data Structures &amp; Algorithms</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip active" data-skill="C/C++">
+                                <i class="fa-solid fa-code"></i>
+                                <span>C / C++</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip active" data-skill="SQL">
+                                <i class="fa-solid fa-database"></i>
+                                <span>SQL &amp; Databases</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip active" data-skill="AI/ML">
+                                <i class="fa-solid fa-brain"></i>
+                                <span>AI &amp; Machine Learning</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip active" data-skill="Web Dev">
+                                <i class="fa-solid fa-globe"></i>
+                                <span>Web Development</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip" data-skill="Java">
+                                <i class="fa-brands fa-java"></i>
+                                <span>Java Core</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                            <div class="skill-chip" data-skill="Cloud/DevOps">
+                                <i class="fa-solid fa-cloud"></i>
+                                <span>Cloud &amp; DevOps</span>
+                                <i class="fa-solid fa-check chip-check"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Soft Skills & Analytical Aptitude (Sliders) -->
+                    <div class="form-section-card">
+                        <div class="section-card-title">
+                            <i class="fa-solid fa-users-gear"></i>
+                            <span>3. Soft Skills &amp; Behavioral Competencies</span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="slider-container">
+                                <div class="slider-header">
+                                    <span>Communication &amp; Articulation</span>
+                                    <span class="slider-val-tag" id="val-communication">76%</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="76" class="custom-slider" id="slider-communication">
+                            </div>
+                            <div class="slider-container">
+                                <div class="slider-header">
+                                    <span>Problem Solving &amp; Logic</span>
+                                    <span class="slider-val-tag" id="val-problem-solving">88%</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="88" class="custom-slider" id="slider-problem-solving">
+                            </div>
+                        </div>
+
+                        <div class="form-row-2" style="margin-top: 1.5rem;">
+                            <div class="slider-container">
+                                <div class="slider-header">
+                                    <span>Leadership &amp; Team Collaboration</span>
+                                    <span class="slider-val-tag" id="val-leadership">72%</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="72" class="custom-slider" id="slider-leadership">
+                            </div>
+                            <div class="slider-container">
+                                <div class="slider-header">
+                                    <span>Adaptability &amp; Work Ethic</span>
+                                    <span class="slider-val-tag" id="val-adaptability">82%</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="82" class="custom-slider" id="slider-adaptability">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Professional Experience & Projects -->
+                    <div class="form-section-card">
+                        <div class="section-card-title">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>4. Professional Projects &amp; Extracurriculars</span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label" for="input-projects">Completed Software Projects Count</label>
+                                <input type="number" id="input-projects" class="form-control" value="4" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-internships">Completed Industry Internships</label>
+                                <input type="number" id="input-internships" class="form-control" value="1" min="0">
+                            </div>
+                        </div>
+
+                        <div class="form-row-2" style="margin-top: 0.5rem;">
+                            <div class="form-group">
+                                <label class="form-label" for="input-certifications">Industry Certifications Earned</label>
+                                <input type="number" id="input-certifications" class="form-control" value="3" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-hackathons">Hackathons &amp; Code Competitions</label>
+                                <input type="number" id="input-hackathons" class="form-control" value="2" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Development Telemetry -->
+                    <div class="form-section-card">
+                        <div class="section-card-title">
+                            <i class="fa-solid fa-satellite-dish"></i>
+                            <span>5. Live Development Telemetry Profiles</span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label" for="input-github">GitHub Profile URL</label>
+                                <input type="url" id="input-github" class="form-control" placeholder="https://github.com/rohanjha9260">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-leetcode">LeetCode Profile URL</label>
+                                <input type="url" id="input-leetcode" class="form-control" placeholder="https://leetcode.com/u/rohanjha9260">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions Bar -->
+                    <div class="form-actions-bar">
+                        <button type="button" class="btn btn-outline" id="btn-load-demo">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Pre-fill Demo Data</span>
+                        </button>
+
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fa-solid fa-rocket"></i>
+                            <span>Run Dron AI Analysis &rarr;</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

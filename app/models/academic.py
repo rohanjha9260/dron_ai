@@ -13,8 +13,8 @@ Indexes:
     - uq_student_semester     : ensures a student has at most one record per semester
 """
 
-from datetime import datetime
-from app.extensions import db
+from datetime import datetime, timezone
+from app.extensions import db, UTCDateTime
 
 
 class AcademicHistory(db.Model):
@@ -51,7 +51,9 @@ class AcademicHistory(db.Model):
     active_backlogs = db.Column(db.Integer, default=0)       # number of backlogs
 
     # ── Timestamps ─────────────────────────────────────────────────────────────
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(
+        UTCDateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
     # ── Serialization ──────────────────────────────────────────────────────────
     def to_dict(self):

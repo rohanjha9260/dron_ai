@@ -19,8 +19,8 @@ JSON Columns:
 """
 
 import json
-from datetime import datetime
-from app.extensions import db
+from datetime import datetime, timezone
+from app.extensions import db, UTCDateTime
 
 
 class MLPrediction(db.Model):
@@ -58,7 +58,9 @@ class MLPrediction(db.Model):
     roadmap_json = db.Column(db.Text, nullable=True)
 
     # ── Timestamps ─────────────────────────────────────────────────────────────
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(
+        UTCDateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
     # ── Computed Properties ────────────────────────────────────────────────────
     @property

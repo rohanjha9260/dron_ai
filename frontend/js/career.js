@@ -14,8 +14,10 @@ let _roadmapRequestId = 0;
  * Fetch and render career recommendations.
  */
 async function getCareerRecommendations() {
-    const container = document.getElementById("career-recommendation-list");
-    if (!container) return;
+    const container = document.getElementById("career-recommendation-list") || document.getElementById("career-list");
+    const hubRole = document.getElementById("hub-stat-role");
+    const hubMatch = document.getElementById("hub-stat-match");
+    if (!container && !hubRole) return;
 
     try {
         const data = await apiRequest("/career/recommend", {
@@ -23,6 +25,32 @@ async function getCareerRecommendations() {
         });
 
         const recommendations = data.recommendations || [];
+        if (recommendations.length > 0) {
+            if (!selectedCareer) {
+                selectedCareer = recommendations[0].career;
+            }
+            if (hubRole) {
+                hubRole.textContent = selectedCareer;
+            }
+            if (hubMatch) {
+                const topMatch = recommendations.find((r) => r.career === selectedCareer) || recommendations[0];
+                hubMatch.textContent = `Alignment: ${Number(topMatch.match_pct || 0).toFixed(1)}%`;
+            }
+            const navTarget = document.getElementById("nav-target-role");
+            if (navTarget) {
+                navTarget.textContent = selectedCareer;
+            }
+
+            // Sync selected-target panel on career page
+            const initialRec = recommendations.find((r) => r.career === selectedCareer) || recommendations[0];
+            const selTitle = document.getElementById("selected-career-title");
+            const selDesc = document.getElementById("selected-career-desc");
+            if (selTitle) selTitle.textContent = initialRec.career;
+            if (selDesc && initialRec.description) selDesc.textContent = initialRec.description;
+        }
+
+        if (!container) return;
+
         if (recommendations.length === 0) {
             container.innerHTML = `<p class="placeholder-text" style="padding: 1rem; color: var(--color-text-muted);">No career paths matched your profile yet.</p>`;
             return;
@@ -39,6 +67,10 @@ async function getCareerRecommendations() {
             const card = document.createElement("div");
             card.className = `career-match-card ${isSelected ? "active-target" : ""}`;
             card.setAttribute("data-career", rec.career);
+            card.dataset.careerName = rec.career;
+            if (rec.description) {
+                card.dataset.careerDesc = rec.description;
+            }
 
             const matchFormatted = `${Number(rec.match_pct || 0).toFixed(1)}%`;
 
@@ -58,7 +90,7 @@ async function getCareerRecommendations() {
 
             // Click listener on card or button to select career
             card.addEventListener("click", () => {
-                selectCareer(rec.career);
+                selectCareer(rec.career, rec.description);
             });
 
             container.appendChild(card);
@@ -72,21 +104,52 @@ async function getCareerRecommendations() {
 
     } catch (error) {
         console.error("Failed to load career recommendations:", error);
-        container.innerHTML = `<p class="error-message" style="color: var(--color-danger); padding: 1rem;">Failed to load recommendations: ${error.message}</p>`;
+        if (container) {
+            const errP = document.createElement("p");
+            errP.className = "error-message";
+            errP.style.cssText = "color: var(--color-danger); padding: 1rem;";
+            errP.textContent = `Failed to load recommendations: ${error.message}`;
+            container.innerHTML = "";
+            container.appendChild(errP);
+        }
     }
 }
 
 /**
  * Select a career path as active target and update dashboard state.
  * @param {string} careerName - The target career role
+ * @param {string} [careerDesc] - Optional description for the target career
  */
-function selectCareer(careerName) {
+function selectCareer(careerName, careerDesc) {
     selectedCareer = careerName;
 
-    // Update Navbar indicator
+    // Update Navbar indicator & Hub
     const navTarget = document.getElementById("nav-target-role");
     if (navTarget) {
         navTarget.textContent = careerName;
+    }
+    const hubRole = document.getElementById("hub-stat-role");
+    if (hubRole) {
+        hubRole.textContent = careerName;
+    }
+
+    // Update selected-target panel on career page
+    const selTitle = document.getElementById("selected-career-title");
+    const selDesc = document.getElementById("selected-career-desc");
+    if (selTitle) {
+        selTitle.textContent = careerName;
+    }
+    if (selDesc) {
+        if (careerDesc) {
+            selDesc.textContent = careerDesc;
+        } else {
+            const safeSelector = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(careerName) : careerName.replace(/"/g, '\\"');
+            const matchedCard = document.querySelector(`.career-match-card[data-career="${safeSelector}"]`);
+            if (matchedCard) {
+                const descEl = matchedCard.querySelector(".career-desc");
+                if (descEl) selDesc.textContent = descEl.textContent;
+            }
+        }
     }
 
     // Update Roadmap subtitle
@@ -144,3 +207,9 @@ function selectCareer(careerName) {
 function initCareerSection() {
     getCareerRecommendations();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("career-recommendation-list") || document.getElementById("career-list")) {
+        initCareerSection();
+    }
+});

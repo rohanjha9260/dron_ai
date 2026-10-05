@@ -565,3 +565,162 @@ function initProfileSection() {
         form.addEventListener("submit", handleProfileFormSubmit);
     }
 }
+
+/**
+ * Initialize standalone profile page form (e.g. in profile.html).
+ */
+async function initStandaloneProfilePage() {
+    const saveBtn = document.getElementById("btn-save-profile");
+    const resetBtn = document.getElementById("btn-reset-profile");
+    const statusSpan = document.getElementById("profile-save-status");
+    if (!saveBtn) return;
+
+    // Connect slider readout labels
+    const sliders = [
+        { id: "slider-dsa", valId: "val-dsa", suffix: " / 100" },
+        { id: "slider-python", valId: "val-python", suffix: " / 100" },
+        { id: "slider-cpp", valId: "val-cpp", suffix: " / 100" },
+        { id: "slider-aiml", valId: "val-aiml", suffix: " / 100" },
+        { id: "slider-comm", valId: "val-comm", suffix: " / 100" },
+        { id: "slider-internship", valId: "val-internship", suffix: " Mos" },
+    ];
+    sliders.forEach(({ id, valId, suffix }) => {
+        const slider = document.getElementById(id);
+        const valEl = document.getElementById(valId);
+        if (slider && valEl) {
+            slider.addEventListener("input", () => {
+                valEl.textContent = `${slider.value}${suffix}`;
+            });
+        }
+    });
+
+    // Populate existing values
+    try {
+        if (typeof apiRequest === "function") {
+            const data = await apiRequest("/users/profile", { method: "GET" });
+            const user = data.user || {};
+            const academics = (data.academics && data.academics[0]) || {};
+            const links = data.platform_links || data.links || {};
+            const skills = data.skills || {};
+
+            const setVal = (id, v) => {
+                const el = document.getElementById(id);
+                if (el && v != null) el.value = v;
+            };
+
+            setVal("input-name", user.full_name);
+            setVal("input-email", user.email);
+            setVal("input-branch", user.academic_branch);
+            setVal("input-cohort", user.cohort_year);
+            setVal("input-cgpa", academics.cgpa);
+            setVal("input-attendance", academics.attendance_pct);
+            setVal("input-backlogs", academics.active_backlogs);
+            setVal("input-github", links.github_username);
+            setVal("input-leetcode", links.leetcode_username);
+
+            const setSlider = (id, valId, v, suffix) => {
+                const sl = document.getElementById(id);
+                const vl = document.getElementById(valId);
+                if (sl && v != null) {
+                    sl.value = v;
+                    if (vl) vl.textContent = `${v}${suffix}`;
+                }
+            };
+            setSlider("slider-dsa", "val-dsa", skills.dsa_score, " / 100");
+            setSlider("slider-python", "val-python", skills.python_prof, " / 100");
+            setSlider("slider-cpp", "val-cpp", skills.cpp_prof, " / 100");
+            setSlider("slider-aiml", "val-aiml", skills.aiml_knowledge, " / 100");
+            setSlider("slider-comm", "val-comm", skills.communication_score, " / 100");
+            setSlider("slider-internship", "val-internship", skills.internship_exp, " Mos");
+            setVal("input-commits", skills.total_commits);
+            setVal("input-solved", skills.problems_solved);
+            setVal("input-rating", skills.contest_rating);
+        }
+    } catch (e) {
+        console.warn("Could not load initial values for profile page:", e);
+    }
+
+    // Save profile handler
+    saveBtn.addEventListener("click", async () => {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving...";
+        if (statusSpan) {
+            statusSpan.style.display = "none";
+        }
+
+        const getNum = (id, def = 0) => {
+            const el = document.getElementById(id);
+            return el && el.value ? Number(el.value) : def;
+        };
+        const getStr = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : "";
+        };
+
+        const payload = {
+            full_name: getStr("input-name"),
+            academic_branch: getStr("input-branch"),
+            cohort_year: getNum("input-cohort", 2026),
+            academics: [
+                {
+                    semester: 6,
+                    cgpa: getNum("input-cgpa", 8.0),
+                    attendance_pct: getNum("input-attendance", 85.0),
+                    active_backlogs: getNum("input-backlogs", 0),
+                }
+            ],
+            platform_links: {
+                github_username: getStr("input-github") || null,
+                leetcode_username: getStr("input-leetcode") || null,
+            },
+            skills: {
+                dsa_score: getNum("slider-dsa", 75),
+                python_prof: getNum("slider-python", 75),
+                cpp_prof: getNum("slider-cpp", 70),
+                aiml_knowledge: getNum("slider-aiml", 70),
+                communication_score: getNum("slider-comm", 75),
+                internship_exp: getNum("slider-internship", 0),
+                total_commits: getNum("input-commits", 0),
+                problems_solved: getNum("input-solved", 0),
+                contest_rating: getNum("input-rating", 0),
+                project_count: 3,
+            }
+        };
+
+        try {
+            await apiRequest("/users/profile", {
+                method: "PUT",
+                body: payload,
+            });
+            if (statusSpan) {
+                statusSpan.textContent = "Profile Vector updated successfully!";
+                statusSpan.style.color = "var(--color-success)";
+                statusSpan.style.display = "inline";
+                setTimeout(() => { statusSpan.style.display = "none"; }, 3000);
+            }
+            if (typeof fetchMetrics === "function") {
+                fetchMetrics();
+            }
+        } catch (err) {
+            if (statusSpan) {
+                statusSpan.textContent = `Save failed: ${err.message}`;
+                statusSpan.style.color = "var(--color-danger)";
+                statusSpan.style.display = "inline";
+            }
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "Save Profile Vector";
+        }
+    });
+
+    if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+            initStandaloneProfilePage();
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    initProfileSection();
+    initStandaloneProfilePage();
+});

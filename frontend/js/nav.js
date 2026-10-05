@@ -15,6 +15,7 @@ const NAV_PAGES = [
     { id: "predictions", label: "Placement Prediction", href: "predictions.html", icon: "trending-up" },
     { id: "career", label: "Career Matching", href: "career.html", icon: "compass" },
     { id: "roadmap", label: "Skill Gap & Roadmap", href: "roadmap.html", icon: "map" },
+    { id: "interview", label: "Interview & Prep", href: "interview.html", icon: "briefcase" },
 ];
 
 const NAV_ICONS = {
@@ -23,6 +24,7 @@ const NAV_ICONS = {
     "trending-up": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
     compass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
     map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>',
+    briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
     layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
 };
 
@@ -124,6 +126,13 @@ function buildTopNavbar() {
                     <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                 </svg>
             </button>
+            <a href="profile.html" class="top-nav-user-profile" id="top-nav-user-profile" title="View Profile">
+                <div class="top-nav-avatar" id="top-nav-avatar">ST</div>
+                <div class="top-nav-user-details">
+                    <span class="top-nav-user-name" id="top-nav-username">Student</span>
+                    <span class="top-nav-user-role" id="top-nav-user-role">CSE '26</span>
+                </div>
+            </a>
         </div>
     </header>`;
 }
@@ -197,24 +206,80 @@ function initNavigation() {
     loadSidebarUserInfo();
 }
 
+function applyGuestUi(guestBadge, logoutBtn) {
+    if (guestBadge) {
+        guestBadge.style.display = "inline-flex";
+    }
+    if (logoutBtn) {
+        logoutBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Exit Guest Mode
+        `;
+    }
+
+    const sidebarFooter = document.querySelector(".sidebar-footer");
+    if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
+        const prompt = document.createElement("a");
+        prompt.id = "guest-register-prompt";
+        prompt.href = "register.html";
+        prompt.className = "btn btn-primary btn-small";
+        prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
+        prompt.innerHTML = `
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            Create Account
+        `;
+        if (logoutBtn) {
+            sidebarFooter.insertBefore(prompt, logoutBtn);
+        } else {
+            sidebarFooter.appendChild(prompt);
+        }
+    }
+}
+
 /**
  * Load basic user info into sidebar from API and apply Guest Mode indicators if applicable.
  */
 async function loadSidebarUserInfo() {
     const isGuestSession = localStorage.getItem("dron_is_guest") === "true";
 
+    const nameEl = document.getElementById("sidebar-username");
+    const avatarEl = document.getElementById("sidebar-avatar");
+    const roleEl = document.getElementById("sidebar-user-role");
+    const logoutBtn = document.getElementById("logout-btn");
+    const guestBadge = document.getElementById("nav-guest-badge");
+    const topNameEl = document.getElementById("top-nav-username");
+    const topAvatarEl = document.getElementById("top-nav-avatar");
+    const topRoleEl = document.getElementById("top-nav-user-role");
+
+    if (isGuestSession) {
+        if (nameEl) nameEl.textContent = "Guest Student";
+        if (topNameEl) topNameEl.textContent = "Guest Student";
+        if (avatarEl) {
+            avatarEl.textContent = "GS";
+            avatarEl.style.borderColor = "var(--color-primary)";
+            avatarEl.style.color = "var(--color-primary-light)";
+        }
+        if (topAvatarEl) {
+            topAvatarEl.textContent = "GS";
+            topAvatarEl.style.borderColor = "var(--color-primary)";
+            topAvatarEl.style.color = "var(--color-primary-light)";
+        }
+        if (roleEl) {
+            roleEl.innerHTML = `<span class="badge badge-warning" style="font-size:0.65rem;padding:2px 6px;text-transform:uppercase;letter-spacing:0.04em;">Guest Mode</span>`;
+        }
+        if (topRoleEl) {
+            topRoleEl.textContent = "Guest Mode";
+        }
+        applyGuestUi(guestBadge, logoutBtn);
+        return; // Skip fetching profile data for guest sessions
+    }
+
     try {
         if (typeof apiRequest !== "function") return;
 
         const data = await apiRequest("/users/profile", { method: "GET" });
         const user = data.user || {};
-        const isGuest = isGuestSession || user.email === "guest@dron.ai";
-
-        const nameEl = document.getElementById("sidebar-username");
-        const avatarEl = document.getElementById("sidebar-avatar");
-        const roleEl = document.getElementById("sidebar-user-role");
-        const logoutBtn = document.getElementById("logout-btn");
-        const guestBadge = document.getElementById("nav-guest-badge");
+        const isGuest = user.email === "guest@dron.ai";
 
         if (nameEl) {
             nameEl.textContent = isGuest ? "Guest Student" : (user.full_name || "Student");
@@ -239,31 +304,55 @@ async function loadSidebarUserInfo() {
             }
         }
 
-        if (isGuest) {
-            if (guestBadge) {
-                guestBadge.style.display = "inline-flex";
+        // Hydrate top-right navbar profile section
+        if (topNameEl) {
+            topNameEl.textContent = isGuest ? "Guest Student" : (user.full_name || "Student");
+        }
+        if (topAvatarEl) {
+            if (isGuest) {
+                topAvatarEl.textContent = "GS";
+                topAvatarEl.style.borderColor = "var(--color-primary)";
+                topAvatarEl.style.color = "var(--color-primary-light)";
+            } else if (user.full_name) {
+                topAvatarEl.textContent = user.full_name
+                    .trim().split(/\s+/).map((n) => n[0]).join("").substring(0, 2).toUpperCase();
             }
-            if (logoutBtn) {
-                logoutBtn.innerHTML = `
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                    Exit Guest Mode
-                `;
+        }
+        if (topRoleEl) {
+            if (isGuest) {
+                topRoleEl.textContent = "Guest Mode";
+            } else {
+                const branchMap = {
+                    "Computer Science & Engineering": "CSE",
+                    "Computer Science and Engineering": "CSE",
+                    "Computer Science": "CSE",
+                    "CSE": "CSE",
+                    "Information Technology": "IT",
+                    "IT": "IT",
+                    "Artificial Intelligence & Data Science": "AIDS",
+                    "Artificial Intelligence and Data Science": "AIDS",
+                    "AI & Data Science": "AIDS",
+                    "AIDS": "AIDS",
+                    "Electronics & Communication": "ECE",
+                    "Electronics and Communication": "ECE",
+                    "Electronics & Communication Engineering": "ECE",
+                    "ECE": "ECE",
+                    "Mechanical Engineering": "ME",
+                    "ME": "ME",
+                    "Civil Engineering": "CE",
+                    "CE": "CE",
+                    "Electrical Engineering": "EE",
+                    "EE": "EE",
+                };
+                const rawBranch = (user.academic_branch || "").trim();
+                const branchAbbr = branchMap[rawBranch] || (rawBranch ? rawBranch.split(" ")[0] : "Eng") || "Eng";
+                const cohort = user.cohort_year ? ` '${String(user.cohort_year).slice(-2)}` : "";
+                topRoleEl.textContent = `${branchAbbr}${cohort}`;
             }
+        }
 
-            // Provide "Create Account" prompt in sidebar footer for guests
-            const sidebarFooter = document.querySelector(".sidebar-footer");
-            if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
-                const prompt = document.createElement("a");
-                prompt.id = "guest-register-prompt";
-                prompt.href = "register.html";
-                prompt.className = "btn btn-primary btn-small";
-                prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
-                prompt.innerHTML = `
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-                    Create Account
-                `;
-                sidebarFooter.insertBefore(prompt, logoutBtn);
-            }
+        if (isGuest) {
+            applyGuestUi(guestBadge, logoutBtn);
         }
     } catch (e) {
         console.warn("Could not load user info for sidebar:", e.message);

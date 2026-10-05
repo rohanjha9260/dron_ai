@@ -20,8 +20,8 @@ Schema:
     updated_at
 """
 
-from datetime import datetime
-from app.extensions import db
+from datetime import datetime, timezone
+from app.extensions import db, UTCDateTime
 
 
 class SkillVector(db.Model):
@@ -56,9 +56,9 @@ class SkillVector(db.Model):
 
     # ── Timestamps ─────────────────────────────────────────────────────────────
     updated_at = db.Column(
-        db.DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        UTCDateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
 

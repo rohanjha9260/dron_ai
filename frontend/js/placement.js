@@ -66,10 +66,20 @@ async function analyzePlacement() {
             gaugeArc.style.strokeDashoffset = offset;
         }
 
-        // 2. Update Navbar probability pill
+        // 2. Update Navbar probability pill & Hub Snapshot
         if (navProb) {
             navProb.innerHTML = `<span class="badge-dot"></span> ${percentFormatted}`;
             navProb.className = `badge ${probability >= 0.6 ? "badge-success" : probability >= 0.4 ? "badge-warning" : "badge-danger"}`;
+        }
+
+        const hubProb = document.getElementById("hub-stat-prob");
+        const hubTier = document.getElementById("hub-stat-tier");
+        if (hubProb) {
+            hubProb.textContent = percentFormatted;
+        }
+        if (hubTier) {
+            hubTier.innerHTML = `<span class="badge-dot"></span> ${tier}`;
+            hubTier.className = `badge ${probability >= 0.6 ? "badge-success" : probability >= 0.4 ? "badge-warning" : "badge-danger"}`;
         }
 
         // 3. Update Readiness Tier badge & description
@@ -162,3 +172,45 @@ function initPlacementSection() {
         bannerBtn.addEventListener("click", analyzePlacement);
     }
 }
+
+/**
+ * Hydrate landing hub live snapshot bar.
+ */
+async function initDashboardSnapshot() {
+    const hubCgpa = document.getElementById("hub-stat-cgpa");
+    const hubAttendance = document.getElementById("hub-stat-attendance");
+    if (!hubCgpa && !document.getElementById("hub-stat-prob")) return;
+
+    try {
+        if (typeof apiRequest !== "function") return;
+        const profileData = await apiRequest("/users/profile", { method: "GET" });
+        if (profileData && profileData.user) {
+            const u = profileData.user;
+            if (hubCgpa && u.cgpa != null) {
+                hubCgpa.textContent = `${Number(u.cgpa).toFixed(2)} CGPA`;
+            }
+            if (hubAttendance) {
+                const att = u.attendance_pct != null ? `${Number(u.attendance_pct).toFixed(1)}%` : "--%";
+                const backlogs = u.active_backlogs != null ? `${u.active_backlogs} Backlogs` : "0 Backlogs";
+                hubAttendance.textContent = `Attendance: ${att} • ${backlogs}`;
+            }
+        }
+    } catch (e) {
+        console.warn("Could not load user profile for snapshot:", e);
+    }
+
+    if (document.getElementById("hub-stat-prob")) {
+        analyzePlacement().catch(() => {});
+    }
+
+    if (typeof loadCareerRecommendations === "function" && document.getElementById("hub-stat-role")) {
+        loadCareerRecommendations().catch(() => {});
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    initDashboardSnapshot();
+    if (document.getElementById("predict-btn") || document.getElementById("gauge-percent")) {
+        initPlacementSection();
+    }
+});
