@@ -7,7 +7,7 @@ Handles:
     - Normalizing external metrics into internal score format
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, Dict, Any
 
 from app.extensions import db
@@ -60,7 +60,7 @@ def fetch_and_update_metrics(
         raise ValueError("At least one handle/username is required")
 
     result: Dict[str, Any] = {}
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     # 1. Fetch and process GitHub stats
     if gh:
