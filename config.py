@@ -14,7 +14,7 @@ load_dotenv()
 class BaseConfig:
     """Base configuration shared across all environments."""
 
-    SECRET_KEY = os.getenv("SECRET_KEY", "dev-fallback-secret-key")
+    SECRET_KEY = os.getenv("SECRET_KEY", "dev-fallback-secret-key-dron-ai-32-chars-long")
 
     # Database (SQLite)
     DEFAULT_DB_PATH = os.path.join(
@@ -27,7 +27,7 @@ class BaseConfig:
 
 
     # JWT
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt-fallback-secret")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-jwt-fallback-secret-key-dron-ai-32-chars")
     JWT_ACCESS_TOKEN_EXPIRES = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 3600))
 
     # GitHub
