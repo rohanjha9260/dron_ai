@@ -276,6 +276,37 @@ function initProjectRecommendations() {
    ═══════════════════════════════════════════════════════════════ */
 const MONTHLY_LOGS_KEY = "dron_ai_monthly_logs_v1";
 
+function renderMilestoneNode(container, text, category, dateStr, prepend = true) {
+    const newNode = document.createElement("div");
+    newNode.className = "monthly-milestone-node";
+    newNode.innerHTML = `
+        <div class="milestone-dot"></div>
+        <div class="milestone-content-box">
+            <div class="milestone-header">
+                <span class="milestone-month-title"></span>
+                <div class="milestone-stats-pills">
+                    <span class="sprint-tag sprint-category-pill" style="color: var(--accent-orange); border-color: rgba(255, 122, 0, 0.4);"></span>
+                    <span class="sprint-tag sprint-date-pill"></span>
+                </div>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Verified candidate milestone logged during current month placement cycle.</p>
+        </div>
+    `;
+    const titleEl = newNode.querySelector(".milestone-month-title");
+    const catEl = newNode.querySelector(".sprint-category-pill");
+    const dateEl = newNode.querySelector(".sprint-date-pill");
+
+    if (titleEl) titleEl.textContent = text;
+    if (catEl) catEl.textContent = category;
+    if (dateEl) dateEl.textContent = dateStr;
+
+    if (prepend) {
+        container.prepend(newNode);
+    } else {
+        container.appendChild(newNode);
+    }
+}
+
 function initMonthlyCheckIn() {
     const runAuditBtn = document.getElementById("run-monthly-audit-btn");
     const auditResultCard = document.getElementById("audit-result-card");
@@ -306,11 +337,25 @@ function initMonthlyCheckIn() {
         });
     }
 
-    // Interactive Milestone Submission
+    // Interactive Milestone Submission & Restore
     const addMilestoneBtn = document.getElementById("add-milestone-btn");
     const milestoneInput = document.getElementById("milestone-input-text");
     const milestoneCategory = document.getElementById("milestone-category-select");
     const timelineList = document.getElementById("monthly-timeline-list");
+
+    if (timelineList) {
+        // Restore saved milestones from localStorage
+        try {
+            const savedLogs = JSON.parse(localStorage.getItem(MONTHLY_LOGS_KEY) || "[]");
+            savedLogs.forEach((item) => {
+                if (item && item.text) {
+                    renderMilestoneNode(timelineList, item.text, item.category || "Progress", item.dateStr || "Logged", false);
+                }
+            });
+        } catch (e) {
+            console.warn("Could not parse saved milestone logs:", e);
+        }
+    }
 
     if (addMilestoneBtn && milestoneInput && timelineList) {
         addMilestoneBtn.addEventListener("click", () => {
@@ -323,23 +368,17 @@ function initMonthlyCheckIn() {
             const category = milestoneCategory ? milestoneCategory.value : "Progress";
             const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-            const newNode = document.createElement("div");
-            newNode.className = "monthly-milestone-node";
-            newNode.innerHTML = `
-                <div class="milestone-dot"></div>
-                <div class="milestone-content-box">
-                    <div class="milestone-header">
-                        <span class="milestone-month-title">${text}</span>
-                        <div class="milestone-stats-pills">
-                            <span class="sprint-tag" style="color: var(--accent-orange); border-color: rgba(255, 122, 0, 0.4);">${category}</span>
-                            <span class="sprint-tag">${todayStr}</span>
-                        </div>
-                    </div>
-                    <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Verified candidate milestone logged during current month placement cycle.</p>
-                </div>
-            `;
+            renderMilestoneNode(timelineList, text, category, todayStr, true);
 
-            timelineList.prepend(newNode);
+            // Persist to localStorage
+            try {
+                const logs = JSON.parse(localStorage.getItem(MONTHLY_LOGS_KEY) || "[]");
+                logs.unshift({ text, category, dateStr: todayStr });
+                localStorage.setItem(MONTHLY_LOGS_KEY, JSON.stringify(logs.slice(0, 30)));
+            } catch (e) {
+                console.warn("Could not save milestone log:", e);
+            }
+
             milestoneInput.value = "";
         });
     }

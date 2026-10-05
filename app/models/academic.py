@@ -14,7 +14,7 @@ Indexes:
 """
 
 from datetime import datetime, timezone
-from app.extensions import db
+from app.extensions import db, UTCDateTime
 
 
 class AcademicHistory(db.Model):
@@ -52,7 +52,7 @@ class AcademicHistory(db.Model):
 
     # ── Timestamps ─────────────────────────────────────────────────────────────
     created_at = db.Column(
-        db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+        UTCDateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
 
     # ── Serialization ──────────────────────────────────────────────────────────

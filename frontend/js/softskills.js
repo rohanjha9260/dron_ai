@@ -55,12 +55,17 @@ function initSpeechSandbox() {
         speechRecognitionInstance.lang = "en-US";
 
         speechRecognitionInstance.onresult = (event) => {
-            let transcript = "";
+            let finalTranscript = "";
             for (let i = event.resultIndex; i < event.results.length; i++) {
-                transcript += event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript;
+                }
             }
-            pitchTextarea.value = (pitchTextarea.value + " " + transcript).trim();
-            runPitchAnalysis();
+            if (finalTranscript) {
+                const currentVal = pitchTextarea.value.trim();
+                pitchTextarea.value = (currentVal ? currentVal + " " : "") + finalTranscript.trim();
+                runPitchAnalysis();
+            }
         };
 
         speechRecognitionInstance.onerror = (err) => {
@@ -95,10 +100,15 @@ function initSpeechSandbox() {
     }
 
     function stopDictation() {
-        if (speechRecognitionInstance && isDictating) {
-            speechRecognitionInstance.stop();
-        }
+        const wasDictating = isDictating;
         isDictating = false;
+        if (speechRecognitionInstance && wasDictating) {
+            try {
+                speechRecognitionInstance.stop();
+            } catch (e) {
+                console.warn("Speech recognition already stopped:", e);
+            }
+        }
         if (micIcon) {
             micIcon.className = "fa-solid fa-microphone";
         }

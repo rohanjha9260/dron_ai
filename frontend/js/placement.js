@@ -173,7 +173,43 @@ function initPlacementSection() {
     }
 }
 
+/**
+ * Hydrate landing hub live snapshot bar.
+ */
+async function initDashboardSnapshot() {
+    const hubCgpa = document.getElementById("hub-stat-cgpa");
+    const hubAttendance = document.getElementById("hub-stat-attendance");
+    if (!hubCgpa && !document.getElementById("hub-stat-prob")) return;
+
+    try {
+        if (typeof apiRequest !== "function") return;
+        const profileData = await apiRequest("/users/profile", { method: "GET" });
+        if (profileData && profileData.user) {
+            const u = profileData.user;
+            if (hubCgpa && u.cgpa != null) {
+                hubCgpa.textContent = `${Number(u.cgpa).toFixed(2)} CGPA`;
+            }
+            if (hubAttendance) {
+                const att = u.attendance_pct != null ? `${Number(u.attendance_pct).toFixed(1)}%` : "--%";
+                const backlogs = u.active_backlogs != null ? `${u.active_backlogs} Backlogs` : "0 Backlogs";
+                hubAttendance.textContent = `Attendance: ${att} • ${backlogs}`;
+            }
+        }
+    } catch (e) {
+        console.warn("Could not load user profile for snapshot:", e);
+    }
+
+    if (document.getElementById("hub-stat-prob")) {
+        analyzePlacement().catch(() => {});
+    }
+
+    if (typeof loadCareerRecommendations === "function" && document.getElementById("hub-stat-role")) {
+        loadCareerRecommendations().catch(() => {});
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    initDashboardSnapshot();
     if (document.getElementById("predict-btn") || document.getElementById("gauge-percent")) {
         initPlacementSection();
     }

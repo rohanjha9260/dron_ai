@@ -20,7 +20,7 @@ JSON Columns:
 
 import json
 from datetime import datetime, timezone
-from app.extensions import db
+from app.extensions import db, UTCDateTime
 
 
 class MLPrediction(db.Model):
@@ -59,7 +59,7 @@ class MLPrediction(db.Model):
 
     # ── Timestamps ─────────────────────────────────────────────────────────────
     created_at = db.Column(
-        db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+        UTCDateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
 
     # ── Computed Properties ────────────────────────────────────────────────────

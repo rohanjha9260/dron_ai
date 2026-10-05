@@ -20,7 +20,7 @@ Cascade:
 """
 
 from datetime import datetime, timezone
-from app.extensions import db
+from app.extensions import db, UTCDateTime
 
 
 class User(db.Model):
@@ -40,10 +40,10 @@ class User(db.Model):
 
     # ── Timestamps ─────────────────────────────────────────────────────────────
     created_at = db.Column(
-        db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+        UTCDateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
     updated_at = db.Column(
-        db.DateTime,
+        UTCDateTime,
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,

@@ -655,6 +655,14 @@ function initPlacementPage() {
  * Page: career.html (Radar Comparison: Current vs Role Requirements)
  */
 function initCareerPage() {
+    const profile = getStudentProfile();
+    const topBadge = document.getElementById("top-career-match-badge");
+    if (topBadge && profile) {
+        const matches = typeof calculateCareerMatches === "function" ? calculateCareerMatches(profile) : [];
+        if (matches.length > 0) {
+            topBadge.textContent = `#1 Match: ${matches[0].role} (${matches[0].matchPct}%)`;
+        }
+    }
     const ctx = document.getElementById("careerRadarChart");
     if (ctx && typeof Chart !== "undefined") {
         new Chart(ctx, {

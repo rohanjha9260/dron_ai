@@ -11,8 +11,8 @@ Schema:
     github_username | leetcode_username | linkedin_url | last_synced
 """
 
-from datetime import datetime
-from app.extensions import db
+from datetime import datetime, timezone
+from app.extensions import db, UTCDateTime
 
 
 class PlatformLink(db.Model):
@@ -42,7 +42,7 @@ class PlatformLink(db.Model):
     # last_synced records when platform data was last pulled from external APIs.
     # This is semantically different from a generic updated_at — it only changes
     # when the integration service successfully fetches fresh data.
-    last_synced = db.Column(db.DateTime, nullable=True)
+    last_synced = db.Column(UTCDateTime, nullable=True)
 
     # ── Serialization ──────────────────────────────────────────────────────────
     def to_dict(self):

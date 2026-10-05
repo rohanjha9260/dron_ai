@@ -1099,13 +1099,8 @@
             if (speechRecognition) {
                 try { speechRecognition.start(); } catch (e) {}
             } else {
-                // Fallback simulation text stream
                 liveTranscriptionCard.classList.remove('hidden');
-                liveTranscriptionText.innerText = 'To design this system at scale, I first analyze the throughput requirements, SLA constraints, and partition strategy...';
-                if (!writtenResponseInput.value) {
-                    writtenResponseInput.value = 'To design this system at scale, I first analyze the throughput requirements, SLA constraints, and partition strategy...';
-                    updateWordCount();
-                }
+                liveTranscriptionText.innerText = 'Speech recognition not supported in this browser. Please switch to Written / Code mode to submit your response.';
             }
         }
 
@@ -1267,14 +1262,62 @@
         // Difficulty segmented buttons
         document.querySelectorAll('.diff-btn').forEach(btn => {
             btn.addEventListener('click', () => {
+                const diff = btn.getAttribute('data-diff');
                 document.querySelectorAll('.diff-btn').forEach(b => {
                     b.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all';
                 });
                 btn.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all';
-                const diff = btn.getAttribute('data-diff');
                 questionDifficultyPill.innerText = diff;
+
+                const currentRole = roleSelector.value;
+                const matched = MOCK_QUESTIONS.find(q => q.role === currentRole && q.difficulty.toLowerCase() === diff.toLowerCase())
+                    || MOCK_QUESTIONS.find(q => q.difficulty.toLowerCase() === diff.toLowerCase());
+                if (matched) {
+                    loadQuestion(matched);
+                }
             });
         });
+
+        function renderEvaluation(score, grade, summary) {
+            let gradeColor = 'border-emerald-500/30 text-emerald-400';
+            let ringColor = '#10b981';
+            if (score < 65) { grade = 'Needs Work'; gradeColor = 'border-rose-500/30 text-rose-400'; ringColor = '#f43f5e'; }
+            else if (score < 78) { grade = 'Borderline'; gradeColor = 'border-amber-500/30 text-amber-400'; ringColor = '#f59e0b'; }
+            else if (score < 90) { grade = 'Hire'; gradeColor = 'border-cyan-500/30 text-cyan-400'; ringColor = '#06b6d4'; }
+
+            // Update Circular Gauge
+            const offset = 339.29 - (score / 100) * 339.29;
+            const circle = document.getElementById('gaugeProgressCircle');
+            if (circle) {
+                circle.style.strokeDashoffset = offset;
+                circle.setAttribute('stroke', ringColor);
+            }
+            const scoreNum = document.getElementById('gaugeScoreNumber');
+            if (scoreNum) {
+                scoreNum.innerHTML = `${score}<span class="text-xs text-slate-400 font-sans">%</span>`;
+            }
+            const badge = document.getElementById('gaugeGradeBadge');
+            if (badge) {
+                badge.innerText = grade;
+                badge.className = `mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
+            }
+
+            // Update Dimensional Metric Bars
+            const tScore = (score / 10).toFixed(1);
+            const m1 = document.getElementById('mScore1');
+            const b1 = document.getElementById('mBar1');
+            const m2 = document.getElementById('mScore2');
+            const b2 = document.getElementById('mBar2');
+            if (m1) m1.innerText = tScore;
+            if (b1) b1.style.width = `${score}%`;
+            if (m2) m2.innerText = (Math.max(0, score - 4) / 10).toFixed(1);
+            if (b2) b2.style.width = `${Math.max(0, score - 4)}%`;
+
+            const sumEl = document.getElementById('evalSummaryText');
+            if (sumEl && summary) {
+                sumEl.innerText = summary;
+            }
+        }
 
         // ---------------------------------------------------------------------
         // Submit for AI Evaluation (Simulated Pipeline)
@@ -1289,44 +1332,26 @@
             submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed';
 
             setTimeout(() => {
-                // Calculate dynamic evaluation
+                // Calculate dynamic evaluation based on actual content
                 const text = writtenResponseInput.value.trim().toLowerCase();
                 const wordCount = text ? text.split(/\s+/).length : 0;
                 
-                // Heuristic calculations
-                let score = 88;
-                if (wordCount > 50) score = Math.min(97, 84 + Math.floor(Math.random() * 12));
-                else if (wordCount > 15) score = 75 + Math.floor(Math.random() * 10);
-                else score = 64;
+                let score = 60;
+                let summary = 'Basic response provided. Expand on system architecture, trade-offs, and edge cases.';
+                if (wordCount > 60) {
+                    score = 92;
+                    summary = 'Comprehensive response demonstrating structured problem solving, clear architecture, and solid grasp of trade-offs.';
+                } else if (wordCount > 25) {
+                    score = 82;
+                    summary = 'Good technical foundation. Consider providing deeper complexity analysis and concrete operational metrics.';
+                } else if (wordCount > 5) {
+                    score = 70;
+                    summary = 'Brief response detected. Elaboration on key algorithmic steps and failure recovery will boost score.';
+                }
 
-                let grade = 'Strong Hire';
-                let gradeColor = 'border-emerald-500/30 text-emerald-400';
-                let ringColor = '#10b981';
-                if (score < 65) { grade = 'Needs Work'; gradeColor = 'border-rose-500/30 text-rose-400'; ringColor = '#f43f5e'; }
-                else if (score < 78) { grade = 'Borderline'; gradeColor = 'border-amber-500/30 text-amber-400'; ringColor = '#f59e0b'; }
-                else if (score < 90) { grade = 'Hire'; gradeColor = 'border-cyan-500/30 text-cyan-400'; ringColor = '#06b6d4'; }
+                let grade = score >= 90 ? 'Strong Hire' : (score >= 78 ? 'Hire' : (score >= 65 ? 'Borderline' : 'Needs Work'));
 
-                // Update Circular Gauge
-                // Circumference = 2 * PI * 54 = 339.29
-                const offset = 339.29 - (score / 100) * 339.29;
-                const circle = document.getElementById('gaugeProgressCircle');
-                circle.style.strokeDashoffset = offset;
-                circle.setAttribute('stroke', ringColor);
-                document.getElementById('gaugeScoreNumber').innerHTML = `${score}<span class="text-xs text-slate-400 font-sans">%</span>`;
-                const badge = document.getElementById('gaugeGradeBadge');
-                badge.innerText = grade;
-                badge.className = `mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
-
-                // Update Dimensional Metric Bars
-                const tScore = (score / 10).toFixed(1);
-                document.getElementById('mScore1').innerText = tScore;
-                document.getElementById('mBar1').style.width = `${score}%`;
-                document.getElementById('mScore2').innerText = ((score - 4) / 10).toFixed(1);
-                document.getElementById('mBar2').style.width = `${score - 4}%`;
-                document.getElementById('mScore3').innerText = '9.1';
-                document.getElementById('mBar3').style.width = '91%';
-                document.getElementById('mScore4').innerText = '8.7';
-                document.getElementById('mBar4').style.width = '87%';
+                renderEvaluation(score, grade, summary);
 
                 // Reset button state
                 submitEvaluationBtn.disabled = false;
@@ -1347,7 +1372,7 @@
                     score: score,
                     grade: grade,
                     duration: 180 - timerSeconds,
-                    summary: 'Fresh evaluation indexed via live simulator.'
+                    summary: summary
                 };
                 sessionHistory.unshift(newSess);
                 renderHistory();
@@ -1383,9 +1408,7 @@
             const found = sessionHistory.find(s => s.id === id);
             if (found) {
                 historyDrawer.classList.add('hidden');
-                document.getElementById('gaugeScoreNumber').innerHTML = `${found.score}<span class="text-xs text-slate-400 font-sans">%</span>`;
-                document.getElementById('gaugeGradeBadge').innerText = found.grade;
-                document.getElementById('evalSummaryText').innerText = found.summary;
+                renderEvaluation(found.score, found.grade, found.summary);
                 document.getElementById('evaluationPanel').scrollIntoView({ behavior: 'smooth' });
             }
         };

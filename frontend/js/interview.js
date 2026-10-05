@@ -683,14 +683,25 @@ function initCtcCalculator() {
         let taxableIncome = Math.max(0, annualGrossSalary - 75000); // Standard deduction 75k
         let estimatedAnnualTax = 0;
 
-        if (taxableIncome > 1500000) {
-            estimatedAnnualTax = 140000 + (taxableIncome - 1500000) * 0.30;
-        } else if (taxableIncome > 1200000) {
-            estimatedAnnualTax = 90000 + (taxableIncome - 1200000) * 0.20;
-        } else if (taxableIncome > 1000000) {
-            estimatedAnnualTax = 60000 + (taxableIncome - 1000000) * 0.15;
-        } else if (taxableIncome > 700000) {
-            estimatedAnnualTax = 25000 + (taxableIncome - 700000) * 0.10;
+        if (taxableIncome > 700000) {
+            // Progressive tax calculation:
+            // 0 to 3L: Nil
+            // 3L to 7L (4L @ 5%): 20,000
+            estimatedAnnualTax += 20000;
+
+            if (taxableIncome > 1500000) {
+                // 7L to 10L (30k) + 10L to 12L (30k) + 12L to 15L (60k) + above 15L @ 30%
+                estimatedAnnualTax += 30000 + 30000 + 60000 + (taxableIncome - 1500000) * 0.30;
+            } else if (taxableIncome > 1200000) {
+                // 7L to 10L (30k) + 10L to 12L (30k) + above 12L @ 20%
+                estimatedAnnualTax += 30000 + 30000 + (taxableIncome - 1200000) * 0.20;
+            } else if (taxableIncome > 1000000) {
+                // 7L to 10L (30k) + above 10L @ 15%
+                estimatedAnnualTax += 30000 + (taxableIncome - 1000000) * 0.15;
+            } else {
+                // 7L to taxableIncome @ 10%
+                estimatedAnnualTax += (taxableIncome - 700000) * 0.10;
+            }
         }
 
         // Net In-Hand Annual
@@ -834,7 +845,7 @@ function initStarBuilder() {
 document.addEventListener("DOMContentLoaded", () => {
     initInterviewFilters();
     updateMasteredRibbon();
-    renderInterviewQuestions(INTERVIEW_QUESTIONS);
+    applyFilters();
     initCtcCalculator();
     initStarBuilder();
 });
