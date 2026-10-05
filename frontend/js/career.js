@@ -105,7 +105,12 @@ async function getCareerRecommendations() {
     } catch (error) {
         console.error("Failed to load career recommendations:", error);
         if (container) {
-            container.innerHTML = `<p class="error-message" style="color: var(--color-danger); padding: 1rem;">Failed to load recommendations: ${error.message}</p>`;
+            const errP = document.createElement("p");
+            errP.className = "error-message";
+            errP.style.cssText = "color: var(--color-danger); padding: 1rem;";
+            errP.textContent = `Failed to load recommendations: ${error.message}`;
+            container.innerHTML = "";
+            container.appendChild(errP);
         }
     }
 }
@@ -138,7 +143,8 @@ function selectCareer(careerName, careerDesc) {
         if (careerDesc) {
             selDesc.textContent = careerDesc;
         } else {
-            const matchedCard = document.querySelector(`.career-match-card[data-career="${careerName}"]`);
+            const safeSelector = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(careerName) : careerName.replace(/"/g, '\\"');
+            const matchedCard = document.querySelector(`.career-match-card[data-career="${safeSelector}"]`);
             if (matchedCard) {
                 const descEl = matchedCard.querySelector(".career-desc");
                 if (descEl) selDesc.textContent = descEl.textContent;

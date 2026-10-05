@@ -60,6 +60,17 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
     TESTING = False
 
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
+    @classmethod
+    def validate(cls):
+        """Validate production configuration parameters."""
+        if not cls.SECRET_KEY or cls.SECRET_KEY.startswith("dev-"):
+            raise ValueError("SECRET_KEY must be set to a secure, non-default value in production.")
+        if not cls.JWT_SECRET_KEY or cls.JWT_SECRET_KEY.startswith("dev-"):
+            raise ValueError("JWT_SECRET_KEY must be set to a secure, non-default value in production.")
+
 
 # Configuration selector
 config_by_name = {

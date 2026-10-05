@@ -206,6 +206,36 @@ function initNavigation() {
     loadSidebarUserInfo();
 }
 
+function applyGuestUi(guestBadge, logoutBtn) {
+    if (guestBadge) {
+        guestBadge.style.display = "inline-flex";
+    }
+    if (logoutBtn) {
+        logoutBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Exit Guest Mode
+        `;
+    }
+
+    const sidebarFooter = document.querySelector(".sidebar-footer");
+    if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
+        const prompt = document.createElement("a");
+        prompt.id = "guest-register-prompt";
+        prompt.href = "register.html";
+        prompt.className = "btn btn-primary btn-small";
+        prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
+        prompt.innerHTML = `
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            Create Account
+        `;
+        if (logoutBtn) {
+            sidebarFooter.insertBefore(prompt, logoutBtn);
+        } else {
+            sidebarFooter.appendChild(prompt);
+        }
+    }
+}
+
 /**
  * Load basic user info into sidebar from API and apply Guest Mode indicators if applicable.
  */
@@ -240,29 +270,7 @@ async function loadSidebarUserInfo() {
         if (topRoleEl) {
             topRoleEl.textContent = "Guest Mode";
         }
-        if (guestBadge) {
-            guestBadge.style.display = "inline-flex";
-        }
-        if (logoutBtn) {
-            logoutBtn.innerHTML = `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                Exit Guest Mode
-            `;
-        }
-
-        const sidebarFooter = document.querySelector(".sidebar-footer");
-        if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
-            const prompt = document.createElement("a");
-            prompt.id = "guest-register-prompt";
-            prompt.href = "register.html";
-            prompt.className = "btn btn-primary btn-small";
-            prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
-            prompt.innerHTML = `
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-                Create Account
-            `;
-            sidebarFooter.insertBefore(prompt, logoutBtn);
-        }
+        applyGuestUi(guestBadge, logoutBtn);
         return; // Skip fetching profile data for guest sessions
     }
 
@@ -344,29 +352,7 @@ async function loadSidebarUserInfo() {
         }
 
         if (isGuest) {
-            if (guestBadge) {
-                guestBadge.style.display = "inline-flex";
-            }
-            if (logoutBtn) {
-                logoutBtn.innerHTML = `
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                    Exit Guest Mode
-                `;
-            }
-
-            const sidebarFooter = document.querySelector(".sidebar-footer");
-            if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
-                const prompt = document.createElement("a");
-                prompt.id = "guest-register-prompt";
-                prompt.href = "register.html";
-                prompt.className = "btn btn-primary btn-small";
-                prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
-                prompt.innerHTML = `
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-                    Create Account
-                `;
-                sidebarFooter.insertBefore(prompt, logoutBtn);
-            }
+            applyGuestUi(guestBadge, logoutBtn);
         }
     } catch (e) {
         console.warn("Could not load user info for sidebar:", e.message);
