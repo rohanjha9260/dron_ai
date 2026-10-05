@@ -11,8 +11,9 @@ Usage:
 import os
 import sys
 
-# Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path (train_model.py -> scripts -> ml_engine -> project root)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, PROJECT_ROOT)
 
 from ml_engine.xgboost_model import PlacementPredictor
 from ml_engine.marks_predictor import MarksPredictor
@@ -20,7 +21,7 @@ from ml_engine.marks_predictor import MarksPredictor
 
 def train():
     """Train the XGBoost model and save to disk."""
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base_dir = PROJECT_ROOT
     
     # Primary dataset path with fallback
     dataset_candidates = [
