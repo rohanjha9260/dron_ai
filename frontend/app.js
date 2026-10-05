@@ -177,6 +177,11 @@ function calculateCareerMatches(profile) {
 // Common UI Hydration (Header, Sidebar, User Initials)
 // ═══════════════════════════════════════════════════════════════
 function hydrateCommonUI(profile) {
+<<<<<<< HEAD
+=======
+    if (!profile) return;
+
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
     // 1. Header Greeting & User Avatar
     const greetingEl = document.getElementById("header-greeting-name");
     if (greetingEl) {
@@ -193,6 +198,14 @@ function hydrateCommonUI(profile) {
         sidebarMetaEl.textContent = `${profile.currentSem} • ${profile.cohortYear || "2026"}`;
     }
 
+<<<<<<< HEAD
+=======
+    const roleEl = document.getElementById("sidebar-user-role");
+    if (roleEl && profile.branch) {
+        roleEl.textContent = `${profile.branch} '${(profile.cohortYear || "2026").slice(-2)}`;
+    }
+
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
     const avatarEl = document.getElementById("sidebar-user-avatar");
     if (avatarEl) {
         const initials = (profile.fullName || "Student")
@@ -261,6 +274,7 @@ function initInputPage() {
     const chipElements = document.querySelectorAll(".skill-chip");
     chipElements.forEach((chip) => {
         const skill = chip.getAttribute("data-skill");
+<<<<<<< HEAD
         if (selectedSkills.has(skill)) {
             chip.classList.add("active");
         } else {
@@ -269,6 +283,15 @@ function initInputPage() {
 
         chip.addEventListener("click", () => {
             chip.classList.toggle("active");
+=======
+        const isActive = selectedSkills.has(skill);
+        chip.classList.toggle("active", isActive);
+        chip.setAttribute("aria-pressed", isActive ? "true" : "false");
+
+        chip.addEventListener("click", () => {
+            const active = chip.classList.toggle("active");
+            chip.setAttribute("aria-pressed", active ? "true" : "false");
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
         });
     });
 
@@ -735,6 +758,7 @@ function initRoadmapPage() {
     updateRoadmapProgress();
 }
 
+<<<<<<< HEAD
 /**
  * Hydrate shared sidebar and header student profile indicators safely if elements exist.
  */
@@ -749,6 +773,8 @@ function hydrateCommonUI(profile) {
         avatarEl.textContent = profile.fullName.trim().split(/\s+/).map((n) => n[0]).join("").substring(0, 2).toUpperCase();
     }
 }
+=======
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
 
 // ═══════════════════════════════════════════════════════════════
 // Main Landing Dashboard Controller (Black & Gold Theme)

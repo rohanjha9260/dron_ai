@@ -11,10 +11,17 @@ Usage:
 import os
 import sys
 
+<<<<<<< HEAD
 # Add project root to path (train_model.py -> scripts -> ml_engine -> project root)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
+=======
+# Add project root to path
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if base_dir not in sys.path:
+    sys.path.insert(0, base_dir)
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
 
 from ml_engine.xgboost_model import PlacementPredictor
 from ml_engine.marks_predictor import MarksPredictor
@@ -22,7 +29,10 @@ from ml_engine.marks_predictor import MarksPredictor
 
 def train():
     """Train the XGBoost model and save to disk."""
+<<<<<<< HEAD
     base_dir = PROJECT_ROOT
+=======
+>>>>>>> 1de05c036f6093e80bf9fa7f90f81b05f26ce5e0
     # Primary dataset path with fallback
     dataset_candidates = [
         os.path.join(base_dir, "ml_engine", "data", "student_career_success_dataset.csv"),
