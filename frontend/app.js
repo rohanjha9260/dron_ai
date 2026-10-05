@@ -405,20 +405,20 @@ function renderAcademicTrajectoryChart(profile) {
                 {
                     label: "Historical CGPA",
                     data: historicalData,
-                    borderColor: "#00d2ff",
+                    borderColor: "#ff7a00",
                     backgroundColor: (context) => {
                         const chart = context.chart;
                         const { ctx, chartArea } = chart;
-                        if (!chartArea) return "rgba(0, 210, 255, 0.1)";
+                        if (!chartArea) return "rgba(255, 122, 0, 0.1)";
                         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, "rgba(0, 210, 255, 0.35)");
-                        gradient.addColorStop(1, "rgba(0, 210, 255, 0.0)");
+                        gradient.addColorStop(0, "rgba(255, 122, 0, 0.35)");
+                        gradient.addColorStop(1, "rgba(255, 122, 0, 0.0)");
                         return gradient;
                     },
                     borderWidth: 3,
                     fill: true,
                     tension: 0.35,
-                    pointBackgroundColor: "#00d2ff",
+                    pointBackgroundColor: "#ff7a00",
                     pointBorderColor: "#0c1017",
                     pointBorderWidth: 2,
                     pointRadius: 5,
@@ -427,12 +427,12 @@ function renderAcademicTrajectoryChart(profile) {
                 {
                     label: "AI Projected Trajectory",
                     data: projectionData,
-                    borderColor: "#a855f7",
+                    borderColor: "#ffffff",
                     borderDash: [6, 4],
                     borderWidth: 2.5,
                     fill: false,
                     tension: 0.35,
-                    pointBackgroundColor: "#a855f7",
+                    pointBackgroundColor: "#ffffff",
                     pointBorderColor: "#0c1017",
                     pointBorderWidth: 2,
                     pointRadius: 5,
@@ -513,11 +513,11 @@ function renderPlacementGaugeChart(readinessScore) {
                 {
                     data: [readinessScore, remaining],
                     backgroundColor: [
-                        "#00d2ff",
+                        "#ff7a00",
                         "#1e293b"
                     ],
                     hoverBackgroundColor: [
-                        "#38bdf8",
+                        "#ff9838",
                         "#1e293b"
                     ],
                     borderWidth: 0,
@@ -586,8 +586,8 @@ function initAcademicPage() {
                     {
                         label: "Academic Performance",
                         data: [8.10, 8.35, 8.50, 8.90, 8.65, 8.85, 8.95, 9.05],
-                        borderColor: "#00d2ff",
-                        backgroundColor: "rgba(0, 210, 255, 0.15)",
+                        borderColor: "#ff7a00",
+                        backgroundColor: "rgba(255, 122, 0, 0.15)",
                         fill: true,
                         tension: 0.3,
                         pointRadius: 5,
@@ -595,7 +595,7 @@ function initAcademicPage() {
                     {
                         label: "University Cohort Benchmark (CSE)",
                         data: [7.80, 7.90, 8.00, 8.10, 8.15, 8.20, 8.25, 8.30],
-                        borderColor: "rgba(148, 163, 184, 0.4)",
+                        borderColor: "rgba(255, 255, 255, 0.4)",
                         borderDash: [5, 5],
                         fill: false,
                         pointRadius: 0,
@@ -606,11 +606,11 @@ function initAcademicPage() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { labels: { color: "#94a3b8" } }
+                    legend: { labels: { color: "#ffffff" } }
                 },
                 scales: {
-                    y: { min: 7.0, max: 10.0, grid: { color: "#23324d" }, ticks: { color: "#64748b" } },
-                    x: { grid: { display: false }, ticks: { color: "#94a3b8" } }
+                    y: { min: 7.0, max: 10.0, grid: { color: "#23324d" }, ticks: { color: "#cbd5e1" } },
+                    x: { grid: { display: false }, ticks: { color: "#ffffff" } }
                 }
             }
         });
@@ -631,12 +631,12 @@ function initPlacementPage() {
                     label: "XGBoost Model Feature Impact Weight (%)",
                     data: [28, 24, 18, 14, 10, 6],
                     backgroundColor: [
-                        "#00d2ff",
-                        "#38bdf8",
-                        "#818cf8",
-                        "#a855f7",
-                        "#c084fc",
-                        "#e879f9"
+                        "#ff7a00",
+                        "#ff8c1a",
+                        "#ff9e33",
+                        "#ffb04d",
+                        "#ffc266",
+                        "#ffd480"
                     ],
                     borderRadius: 6,
                 }]
@@ -649,8 +649,8 @@ function initPlacementPage() {
                     legend: { display: false },
                 },
                 scales: {
-                    x: { max: 35, grid: { color: "#23324d" }, ticks: { color: "#64748b" } },
-                    y: { grid: { display: false }, ticks: { color: "#94a3b8" } }
+                    x: { max: 35, grid: { color: "#23324d" }, ticks: { color: "#cbd5e1" } },
+                    y: { grid: { display: false }, ticks: { color: "#ffffff" } }
                 }
             }
         });
@@ -671,17 +671,17 @@ function initCareerPage() {
                     {
                         label: "Current Student Profile",
                         data: [82, 88, 65, 80, 75, 76],
-                        borderColor: "#00d2ff",
-                        backgroundColor: "rgba(0, 210, 255, 0.25)",
-                        pointBackgroundColor: "#00d2ff",
+                        borderColor: "#ff7a00",
+                        backgroundColor: "rgba(255, 122, 0, 0.25)",
+                        pointBackgroundColor: "#ff7a00",
                         borderWidth: 2,
                     },
                     {
                         label: "Ideal Target (Data / ML Engineer)",
                         data: [85, 90, 80, 85, 85, 80],
-                        borderColor: "#a855f7",
-                        backgroundColor: "rgba(168, 85, 247, 0.15)",
-                        pointBackgroundColor: "#a855f7",
+                        borderColor: "#ffffff",
+                        backgroundColor: "rgba(255, 255, 255, 0.12)",
+                        pointBackgroundColor: "#ffffff",
                         borderDash: [4, 4],
                         borderWidth: 2,
                     }
@@ -769,19 +769,26 @@ function initLandingDashboard() {
         }, 3600);
     }
 
-    // 2. Interactive Spotlight & Glow Physics on the 4 Engine Navigation Cards
+    // 2. Interactive Spotlight & Glow Physics on the 4 Engine Navigation Cards (GPU Throttled)
     const cards = document.querySelectorAll(".engine-card");
     cards.forEach((card) => {
+        let isTicking = false;
         card.addEventListener("mousemove", (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const glowLayer = card.querySelector(".card-glow-layer");
-            if (glowLayer) {
-                glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(255, 215, 0, 0.22) 0%, rgba(212, 175, 55, 0.06) 50%, transparent 80%)`;
-                glowLayer.style.opacity = "1";
+            if (!isTicking) {
+                requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const glowLayer = card.querySelector(".card-glow-layer");
+                    if (glowLayer) {
+                        glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(255, 122, 0, 0.22) 0%, rgba(255, 152, 56, 0.06) 50%, transparent 80%)`;
+                        glowLayer.style.opacity = "1";
+                    }
+                    isTicking = false;
+                });
+                isTicking = true;
             }
-        });
+        }, { passive: true });
 
         card.addEventListener("mouseleave", () => {
             const glowLayer = card.querySelector(".card-glow-layer");
@@ -789,7 +796,7 @@ function initLandingDashboard() {
                 glowLayer.style.background = "";
                 glowLayer.style.opacity = "";
             }
-        });
+        }, { passive: true });
     });
 
     // 3. Header Scrolled Glass Effect
