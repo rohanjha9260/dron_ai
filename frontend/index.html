@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron AI: Intelligent Student Future & Career Guidance System — Landing Dashboard">
+    <meta name="description" content="Dron AI: Placement readiness & career planning for engineering students — Landing Dashboard">
     <title>Dron AI — Intelligent Student Career & Future Guidance System</title>
     <!-- Google Fonts: Inter & Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,16 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 Icons via CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Main Stylesheet -->
+    <!-- Main Stylesheet & Carousel Controller -->
     <link rel="stylesheet" href="styles.css">
+    <script src="js/carousel.js" defer></script>
 </head>
 <body class="landing-page-body">
 
-    <!-- Background Ambient Luxury Gold Glows -->
+    <!-- Background Ambient Dark Chassis Overlay -->
     <div class="landing-ambient-bg">
-        <div class="ambient-glow ambient-glow-top"></div>
-        <div class="ambient-glow ambient-glow-center"></div>
-        <div class="ambient-glow ambient-glow-bottom"></div>
         <div class="gold-grid-overlay"></div>
     </div>
 
@@ -32,11 +30,11 @@
             <!-- Brand Logo with Gold Accent -->
             <a href="index.html" class="landing-brand">
                 <div class="brand-gold-symbol">
-                    <i class="fa-solid fa-brain"></i>
+                    <i class="fa-solid fa-microchip"></i>
                 </div>
                 <div class="brand-title-wrap">
                     <span class="brand-name-gold">DRON <span class="brand-ai-text">AI</span></span>
-                    <span class="brand-badge-mini">INTELLIGENCE</span>
+                    <span class="brand-badge-mini">PLACEMENT ANALYTICS</span>
                 </div>
             </a>
 
@@ -44,7 +42,7 @@
             <nav class="landing-nav" aria-label="Main Navigation">
                 <a href="#engines" class="landing-nav-link active">
                     <i class="fa-solid fa-cubes"></i>
-                    <span>Engines</span>
+                    <span>Modules</span>
                 </a>
                 <a href="dashboard.html" class="landing-nav-link">
                     <i class="fa-solid fa-chart-pie"></i>
@@ -91,7 +89,7 @@
         <section class="landing-hero-section" id="hero">
             <div class="hero-container">
                 
-                <!-- AI Engineering Tag -->
+                <!-- Quantitative Engineering Tag -->
                 <div class="hero-eyebrow-badge fade-in-element" style="--stagger: 0.1s;">
                     <i class="fa-solid fa-shield-halved"></i>
                     <span>QUANTITATIVE STUDENT GUIDANCE SYSTEM • 3RD YEAR CAPSTONE</span>
@@ -113,8 +111,8 @@
 
                 <!-- Dynamic Fading Subtitle -->
                 <p class="hero-subtitle-text fade-in-element" id="hero-subtitle" style="--stagger: 0.45s;">
-                    <span class="subtitle-static">Transforming cold student data into </span>
-                    <span class="subtitle-dynamic" id="dynamic-subtitle-target">actionable intelligence.</span>
+                    <span class="subtitle-static">Quantitative placement readiness and </span>
+                    <span class="subtitle-dynamic" id="dynamic-subtitle-target">skill gap architecture.</span>
                 </p>
 
                 <!-- Telemetry Metrics Strip -->
@@ -144,15 +142,15 @@
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════
-             3. Main Navigation Grid: 4 Core Modules
+             3. Main Navigation Grid: Core Modules & Tactile Carousel
              ═══════════════════════════════════════════════════════════ -->
         <section class="landing-grid-section" id="engines">
             <div class="grid-section-container">
 
                 <div class="section-heading-wrap fade-in-element" style="--stagger: 0.65s;">
                     <div class="heading-gold-accent">
-                        <i class="fa-solid fa-sparkles"></i>
-                        <span>INTELLIGENCE MODULES</span>
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>ANALYTICAL MODULES</span>
                     </div>
                     <h2 class="section-title-text">Core Guidance & Predictive Engines</h2>
                     <p class="section-subtitle-text">
@@ -160,165 +158,186 @@
                     </p>
                 </div>
 
-                <!-- The 4 Navigation Cards Grid -->
-                <div class="engines-navigation-grid">
+                <!-- Tactile Metallic Modules Carousel -->
+                <div class="metallic-carousel-wrapper fade-in-element" style="--stagger: 0.75s;">
+                    <div class="metallic-carousel-track">
 
-                    <!-- Card 1: Academic Prediction -->
-                    <a href="academic.html" class="engine-card fade-in-element" id="card-academic" style="--stagger: 0.75s;">
-                        <div class="card-glow-layer"></div>
-                        <div class="card-border-frame"></div>
-                        <div class="card-inner-content">
-                            <div class="card-top-row">
-                                <div class="card-icon-emblem">
-                                    <i class="fa-solid fa-chart-line"></i>
+                        <!-- Slide 1: Academic Prediction -->
+                        <div class="metallic-carousel-slide">
+                            <a href="academic.html" class="engine-card" id="card-academic">
+                                <div class="card-glow-layer"></div>
+                                <div class="card-border-frame"></div>
+                                <div class="card-inner-content">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-emblem">
+                                            <i class="fa-solid fa-chart-line"></i>
+                                        </div>
+                                        <span class="card-category-tag">PREDICTIVE ANALYTICS</span>
+                                    </div>
+                                    
+                                    <h3 class="card-engine-title">Academic Prediction</h3>
+                                    <p class="card-engine-description">
+                                        Forecast future academic performance through 8-semester regression analysis and grade velocity tracking.
+                                    </p>
+
+                                    <div class="card-features-list">
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> SGPA Trendline</span>
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Backlog Risk Index</span>
+                                    </div>
+
+                                    <div class="card-action-footer">
+                                        <span class="action-prompt">Launch Academic Engine</span>
+                                        <div class="action-icon-circle">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="card-category-tag">PREDICTIVE ANALYTICS</span>
-                            </div>
-                            
-                            <h3 class="card-engine-title">Academic Prediction</h3>
-                            <p class="card-engine-description">
-                                Forecast future academic performance through 8-semester regression analysis and grade velocity tracking.
-                            </p>
-
-                            <div class="card-features-list">
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> SGPA Trendline</span>
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Backlog Risk Index</span>
-                            </div>
-
-                            <div class="card-action-footer">
-                                <span class="action-prompt">Launch Academic Engine</span>
-                                <div class="action-icon-circle">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
 
-                    <!-- Card 2: Career Recommendation -->
-                    <a href="career.html" class="engine-card fade-in-element" id="card-career" style="--stagger: 0.85s;">
-                        <div class="card-glow-layer"></div>
-                        <div class="card-border-frame"></div>
-                        <div class="card-inner-content">
-                            <div class="card-top-row">
-                                <div class="card-icon-emblem">
-                                    <i class="fa-solid fa-compass"></i>
+                        <!-- Slide 2: Career Recommendation -->
+                        <div class="metallic-carousel-slide">
+                            <a href="career.html" class="engine-card" id="card-career">
+                                <div class="card-glow-layer"></div>
+                                <div class="card-border-frame"></div>
+                                <div class="card-inner-content">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-emblem">
+                                            <i class="fa-solid fa-compass"></i>
+                                        </div>
+                                        <span class="card-category-tag">VECTOR SIMILARITY</span>
+                                    </div>
+                                    
+                                    <h3 class="card-engine-title">Career Recommendation</h3>
+                                    <p class="card-engine-description">
+                                        Discover your best-matching career paths via mathematical cosine similarity matching against industry role benchmarks.
+                                    </p>
+
+                                    <div class="card-features-list">
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Radar Competency</span>
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Role Fit %</span>
+                                    </div>
+
+                                    <div class="card-action-footer">
+                                        <span class="action-prompt">Discover Career Paths</span>
+                                        <div class="action-icon-circle">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="card-category-tag">VECTOR SIMILARITY</span>
-                            </div>
-                            
-                            <h3 class="card-engine-title">Career Recommendation</h3>
-                            <p class="card-engine-description">
-                                Discover your best-matching career paths via mathematical cosine similarity matching against industry role benchmarks.
-                            </p>
-
-                            <div class="card-features-list">
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Radar Competency</span>
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Role Fit %</span>
-                            </div>
-
-                            <div class="card-action-footer">
-                                <span class="action-prompt">Discover Career Paths</span>
-                                <div class="action-icon-circle">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
 
-                    <!-- Card 3: Placement Readiness -->
-                    <a href="placement.html" class="engine-card fade-in-element" id="card-placement" style="--stagger: 0.95s;">
-                        <div class="card-glow-layer"></div>
-                        <div class="card-border-frame"></div>
-                        <div class="card-inner-content">
-                            <div class="card-top-row">
-                                <div class="card-icon-emblem">
-                                    <i class="fa-solid fa-gauge-high"></i>
+                        <!-- Slide 3: Placement Readiness -->
+                        <div class="metallic-carousel-slide">
+                            <a href="placement.html" class="engine-card" id="card-placement">
+                                <div class="card-glow-layer"></div>
+                                <div class="card-border-frame"></div>
+                                <div class="card-inner-content">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-emblem">
+                                            <i class="fa-solid fa-gauge-high"></i>
+                                        </div>
+                                        <span class="card-category-tag">MACHINE LEARNING</span>
+                                    </div>
+                                    
+                                    <h3 class="card-engine-title">Placement Readiness</h3>
+                                    <p class="card-engine-description">
+                                        Calculate your statistical probability of securing a placement with XGBoost scoring and SHAP feature importance analysis.
+                                    </p>
+
+                                    <div class="card-features-list">
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Readiness Gauge</span>
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Tier Clearance</span>
+                                    </div>
+
+                                    <div class="card-action-footer">
+                                        <span class="action-prompt">Calculate Probability</span>
+                                        <div class="action-icon-circle">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="card-category-tag">MACHINE LEARNING</span>
-                            </div>
-                            
-                            <h3 class="card-engine-title">Placement Readiness</h3>
-                            <p class="card-engine-description">
-                                Calculate your statistical probability of securing a placement with XGBoost scoring and SHAP feature importance analysis.
-                            </p>
-
-                            <div class="card-features-list">
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Readiness Gauge</span>
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Tier Clearance</span>
-                            </div>
-
-                            <div class="card-action-footer">
-                                <span class="action-prompt">Calculate Probability</span>
-                                <div class="action-icon-circle">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
 
-                    <!-- Card 4: Personalized Roadmap -->
-                    <a href="roadmap.html" class="engine-card fade-in-element" id="card-roadmap" style="--stagger: 1.05s;">
-                        <div class="card-glow-layer"></div>
-                        <div class="card-border-frame"></div>
-                        <div class="card-inner-content">
-                            <div class="card-top-row">
-                                <div class="card-icon-emblem">
-                                    <i class="fa-solid fa-map-location-dot"></i>
+                        <!-- Slide 4: Personalized Roadmap -->
+                        <div class="metallic-carousel-slide">
+                            <a href="roadmap.html" class="engine-card" id="card-roadmap">
+                                <div class="card-glow-layer"></div>
+                                <div class="card-border-frame"></div>
+                                <div class="card-inner-content">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-emblem">
+                                            <i class="fa-solid fa-map-location-dot"></i>
+                                        </div>
+                                        <span class="card-category-tag">REMEDIATION ENGINE</span>
+                                    </div>
+                                    
+                                    <h3 class="card-engine-title">Personalized Roadmap</h3>
+                                    <p class="card-engine-description">
+                                        Identify exact skill gaps and sequence your preparation through milestone checklists, DSA tracks, and weekly goals.
+                                    </p>
+
+                                    <div class="card-features-list">
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Skill Gap Subtraction</span>
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Sequenced Plan</span>
+                                    </div>
+
+                                    <div class="card-action-footer">
+                                        <span class="action-prompt">Generate Action Plan</span>
+                                        <div class="action-icon-circle">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="card-category-tag">REMEDIATION ENGINE</span>
-                            </div>
-                            
-                            <h3 class="card-engine-title">Personalized Roadmap</h3>
-                            <p class="card-engine-description">
-                                Identify exact skill gaps and sequence your preparation through milestone checklists, DSA tracks, and weekly goals.
-                            </p>
-
-                            <div class="card-features-list">
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Skill Gap Subtraction</span>
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Sequenced Plan</span>
-                            </div>
-
-                            <div class="card-action-footer">
-                                <span class="action-prompt">Generate Action Plan</span>
-                                <div class="action-icon-circle">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
 
-                    <!-- Card 5: Interview Prep & Question Hub -->
-                    <a href="interview.html" class="engine-card fade-in-element" id="card-interview" style="--stagger: 1.15s;">
-                        <div class="card-glow-layer"></div>
-                        <div class="card-border-frame"></div>
-                        <div class="card-inner-content">
-                            <div class="card-top-row">
-                                <div class="card-icon-emblem" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
-                                    <i class="fa-solid fa-user-tie"></i>
+                        <!-- Slide 5: Interview Prep & Question Hub -->
+                        <div class="metallic-carousel-slide">
+                            <a href="interview.html" class="engine-card" id="card-interview">
+                                <div class="card-glow-layer"></div>
+                                <div class="card-border-frame"></div>
+                                <div class="card-inner-content">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-emblem" style="background: rgba(180, 189, 201, 0.12); color: var(--accent-cyan);">
+                                            <i class="fa-solid fa-user-tie"></i>
+                                        </div>
+                                        <span class="card-category-tag">CAMPUS RECRUITMENT HUB</span>
+                                    </div>
+                                    
+                                    <h3 class="card-engine-title">Interview &amp; Q&amp;A Hub</h3>
+                                    <p class="card-engine-description">
+                                        Master 140+ curated company interview questions across DSA, Core CS, System Design, and STAR behavioral rounds with authentic senior placement diaries and In-Hand CTC calculator.
+                                    </p>
+
+                                    <div class="card-features-list">
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> 140+ Curated Questions</span>
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> Senior Diaries</span>
+                                        <span class="card-chip"><i class="fa-solid fa-check"></i> In-Hand CTC Calc</span>
+                                    </div>
+
+                                    <div class="card-action-footer">
+                                        <span class="action-prompt">Practice Interview Questions</span>
+                                        <div class="action-icon-circle">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="card-category-tag">CAMPUS RECRUITMENT HUB</span>
-                            </div>
-                            
-                            <h3 class="card-engine-title">Interview &amp; Q&amp;A Hub</h3>
-                            <p class="card-engine-description">
-                                Master 140+ curated company interview questions across DSA, Core CS, System Design, and STAR behavioral rounds with authentic senior placement diaries and In-Hand CTC calculator.
-                            </p>
-
-                            <div class="card-features-list">
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> 140+ Curated Questions</span>
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> Senior Diaries</span>
-                                <span class="card-chip"><i class="fa-solid fa-check"></i> In-Hand CTC Calc</span>
-                            </div>
-
-                            <div class="card-action-footer">
-                                <span class="action-prompt">Practice Interview Questions</span>
-                                <div class="action-icon-circle">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
 
+                    </div>
+
+                    <!-- Carousel Tactile Controls -->
+                    <div class="carousel-controls-bar">
+                        <div class="carousel-pagination"></div>
+                        <div class="carousel-btn-group">
+                            <button class="carousel-nav-btn carousel-prev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="carousel-nav-btn carousel-next" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Secondary Exploration Banner -->
@@ -357,7 +376,7 @@
         <div class="footer-inner">
             <div class="footer-left">
                 <span class="footer-brand">DRON <span class="brand-gold">AI</span></span>
-                <span class="footer-tagline">Intelligent Student Future &amp; Career Guidance System</span>
+                <span class="footer-tagline">Placement readiness &amp; career planning for engineering students</span>
             </div>
             <div class="footer-center">
                 <span class="footer-copy">3rd-Year Engineering Capstone &bull; Built with Flask &amp; Vanilla Web Technologies</span>

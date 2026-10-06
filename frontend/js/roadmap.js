@@ -168,7 +168,7 @@ async function generateRoadmap(targetCareer, requestId) {
                         </div>
                         <span class="badge ${priorityClass}">${escapeHtml(phase.duration)} • ${phase.priority ? escapeHtml(phase.priority.toUpperCase()) : "NORMAL"}</span>
                     </div>
-                    ${phase.milestone ? `<div style="font-size: 11px; color: var(--color-accent-light); margin-bottom: 8px; font-weight: 500;">🎯 Goal: ${escapeHtml(phase.milestone)}</div>` : ""}
+                    ${phase.milestone ? `<div style="font-size: 11px; color: var(--color-accent-light); margin-bottom: 8px; font-weight: 500;">Goal: ${escapeHtml(phase.milestone)}</div>` : ""}
                     <ul class="step-tasks-list">
                         ${tasksListHtml}
                     </ul>

@@ -285,7 +285,7 @@ function renderMilestoneNode(container, text, category, dateStr, prepend = true)
             <div class="milestone-header">
                 <span class="milestone-month-title"></span>
                 <div class="milestone-stats-pills">
-                    <span class="sprint-tag sprint-category-pill" style="color: var(--accent-orange); border-color: rgba(255, 122, 0, 0.4);"></span>
+                    <span class="sprint-tag sprint-category-pill" style="color: var(--accent-orange); border-color: rgba(201, 164, 106, 0.4);"></span>
                     <span class="sprint-tag sprint-date-pill"></span>
                 </div>
             </div>
@@ -319,7 +319,7 @@ function initMonthlyCheckIn() {
 
             setTimeout(() => {
                 runAuditBtn.disabled = false;
-                runAuditBtn.innerHTML = `<i class="fa-solid fa-rotate-right"></i> Re-Run AI Audit`;
+                runAuditBtn.innerHTML = `<i class="fa-solid fa-rotate-right"></i> Run Review Again`;
 
                 if (auditResultCard) {
                     auditResultCard.style.display = "block";

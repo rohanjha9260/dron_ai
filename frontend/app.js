@@ -399,21 +399,21 @@ function renderAcademicTrajectoryChart(profile) {
                 {
                     label: "Historical CGPA",
                     data: historicalData,
-                    borderColor: "#ff7a00",
+                    borderColor: "#B8925A",
                     backgroundColor: (context) => {
                         const chart = context.chart;
                         const { ctx, chartArea } = chart;
-                        if (!chartArea) return "rgba(255, 122, 0, 0.1)";
+                        if (!chartArea) return "rgba(201, 164, 106, 0.1)";
                         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, "rgba(255, 122, 0, 0.35)");
-                        gradient.addColorStop(1, "rgba(255, 122, 0, 0.0)");
+                        gradient.addColorStop(0, "rgba(201, 164, 106, 0.35)");
+                        gradient.addColorStop(1, "rgba(201, 164, 106, 0.0)");
                         return gradient;
                     },
                     borderWidth: 3,
                     fill: true,
                     tension: 0.35,
-                    pointBackgroundColor: "#ff7a00",
-                    pointBorderColor: "#0c1017",
+                    pointBackgroundColor: "#B8925A",
+                    pointBorderColor: "#0B0C0F",
                     pointBorderWidth: 2,
                     pointRadius: 5,
                     pointHoverRadius: 7,
@@ -427,7 +427,7 @@ function renderAcademicTrajectoryChart(profile) {
                     fill: false,
                     tension: 0.35,
                     pointBackgroundColor: "#ffffff",
-                    pointBorderColor: "#0c1017",
+                    pointBorderColor: "#0B0C0F",
                     pointBorderWidth: 2,
                     pointRadius: 5,
                     pointHoverRadius: 7,
@@ -454,10 +454,10 @@ function renderAcademicTrajectoryChart(profile) {
                     }
                 },
                 tooltip: {
-                    backgroundColor: "#161f30",
+                    backgroundColor: "#161920",
                     titleColor: "#f8fafc",
-                    bodyColor: "#38bdf8",
-                    borderColor: "#23324d",
+                    bodyColor: "#B4BDC9",
+                    borderColor: "#2A2F38",
                     borderWidth: 1,
                     padding: 10,
                     boxPadding: 4,
@@ -468,7 +468,7 @@ function renderAcademicTrajectoryChart(profile) {
                     min: 7.0,
                     max: 10.0,
                     grid: {
-                        color: "rgba(35, 50, 77, 0.5)",
+                        color: "rgba(42, 47, 56, 0.5)",
                     },
                     ticks: {
                         color: "#64748b",
@@ -507,12 +507,12 @@ function renderPlacementGaugeChart(readinessScore) {
                 {
                     data: [readinessScore, remaining],
                     backgroundColor: [
-                        "#ff7a00",
-                        "#1e293b"
+                        "#B8925A",
+                        "#1E2229"
                     ],
                     hoverBackgroundColor: [
-                        "#ff9838",
-                        "#1e293b"
+                        "#C9A46A",
+                        "#1E2229"
                     ],
                     borderWidth: 0,
                     borderRadius: [10, 0],
@@ -580,8 +580,8 @@ function initAcademicPage() {
                     {
                         label: "Academic Performance",
                         data: [8.10, 8.35, 8.50, 8.90, 8.65, 8.85, 8.95, 9.05],
-                        borderColor: "#ff7a00",
-                        backgroundColor: "rgba(255, 122, 0, 0.15)",
+                        borderColor: "#B8925A",
+                        backgroundColor: "rgba(201, 164, 106, 0.15)",
                         fill: true,
                         tension: 0.3,
                         pointRadius: 5,
@@ -603,7 +603,7 @@ function initAcademicPage() {
                     legend: { labels: { color: "#ffffff" } }
                 },
                 scales: {
-                    y: { min: 7.0, max: 10.0, grid: { color: "#23324d" }, ticks: { color: "#cbd5e1" } },
+                    y: { min: 7.0, max: 10.0, grid: { color: "#2A2F38" }, ticks: { color: "#cbd5e1" } },
                     x: { grid: { display: false }, ticks: { color: "#ffffff" } }
                 }
             }
@@ -625,12 +625,12 @@ function initPlacementPage() {
                     label: "XGBoost Model Feature Impact Weight (%)",
                     data: [28, 24, 18, 14, 10, 6],
                     backgroundColor: [
-                        "#ff7a00",
-                        "#ff8c1a",
-                        "#ff9e33",
-                        "#ffb04d",
-                        "#ffc266",
-                        "#ffd480"
+                        "#B8925A",
+                        "#C9A46A",
+                        "#C9A46A",
+                        "#D4B583",
+                        "#DCC293",
+                        "#E3CFA8"
                     ],
                     borderRadius: 6,
                 }]
@@ -643,7 +643,7 @@ function initPlacementPage() {
                     legend: { display: false },
                 },
                 scales: {
-                    x: { max: 35, grid: { color: "#23324d" }, ticks: { color: "#cbd5e1" } },
+                    x: { max: 35, grid: { color: "#2A2F38" }, ticks: { color: "#cbd5e1" } },
                     y: { grid: { display: false }, ticks: { color: "#ffffff" } }
                 }
             }
@@ -673,9 +673,9 @@ function initCareerPage() {
                     {
                         label: "Current Student Profile",
                         data: [82, 88, 65, 80, 75, 76],
-                        borderColor: "#ff7a00",
-                        backgroundColor: "rgba(255, 122, 0, 0.25)",
-                        pointBackgroundColor: "#ff7a00",
+                        borderColor: "#B8925A",
+                        backgroundColor: "rgba(201, 164, 106, 0.25)",
+                        pointBackgroundColor: "#B8925A",
                         borderWidth: 2,
                     },
                     {
@@ -697,8 +697,8 @@ function initCareerPage() {
                 },
                 scales: {
                     r: {
-                        angleLines: { color: "#23324d" },
-                        grid: { color: "#23324d" },
+                        angleLines: { color: "#2A2F38" },
+                        grid: { color: "#2A2F38" },
                         pointLabels: { color: "#94a3b8", font: { size: 11 } },
                         ticks: { display: false, min: 0, max: 100 }
                     }
@@ -797,7 +797,7 @@ function initLandingDashboard() {
                     const y = e.clientY - rect.top;
                     const glowLayer = card.querySelector(".card-glow-layer");
                     if (glowLayer) {
-                        glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(255, 122, 0, 0.22) 0%, rgba(255, 152, 56, 0.06) 50%, transparent 80%)`;
+                        glowLayer.style.background = `radial-gradient(circle 300px at ${x}px ${y}px, rgba(201, 164, 106, 0.22) 0%, rgba(201, 164, 106, 0.06) 50%, transparent 80%)`;
                         glowLayer.style.opacity = "1";
                     }
                     isTicking = false;

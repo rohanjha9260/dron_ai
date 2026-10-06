@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron AI - Intelligent Student Future & Career Guidance System Mentorship Dashboard">
-    <title>Dron AI — Mentorship Analytical Dashboard</title>
+    <meta name="description" content="Dron AI - Placement readiness & career planning for engineering students Mentorship Dashboard">
+    <title>Dron AI — Student Dashboard</title>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/carousel.js" defer></script>
 </head>
 <body>
 
@@ -19,11 +20,11 @@
         <aside class="app-sidebar">
             <div class="sidebar-header">
                 <div class="brand-logo-icon">
-                    <i class="fa-solid fa-brain"></i>
+                    <span class="brand-monogram" aria-hidden="true">D</span>
                 </div>
                 <div class="brand-info">
                     <span class="brand-title">Dron AI</span>
-                    <span class="brand-subtitle">Career Intelligence</span>
+                    <span class="brand-subtitle">Placement Readiness</span>
                 </div>
             </div>
 
@@ -67,7 +68,7 @@
                 </a>
                 <a href="mock_interview.html" class="nav-item">
                     <i class="fa-solid fa-microphone-lines"></i>
-                    <span>AI Voice Mock Room</span>
+                    <span>Mock Interview Room</span>
                 </a>
             </nav>
 
@@ -91,7 +92,7 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="header-greeting">
-                        <h1 class="greeting-title">Welcome back, <span id="header-greeting-name">Rohan</span> 👋</h1>
+                        <h1 class="greeting-title">Welcome back, <span id="header-greeting-name">Rohan</span></h1>
                     </div>
                 </div>
 
@@ -123,9 +124,9 @@
             <div class="app-content">
 
                 <!-- Humanized Campus Placement Advisory Banner -->
-                <div class="interview-mock-banner" style="margin-bottom: 1.75rem; background: linear-gradient(135deg, rgba(16, 23, 38, 0.95) 0%, rgba(26, 20, 48, 0.9) 100%); border-color: rgba(168, 85, 247, 0.35);">
+                <div class="interview-mock-banner" style="margin-bottom: 1.75rem; background: linear-gradient(135deg, rgba(18, 20, 25, 0.95) 0%, rgba(22, 24, 29, 0.9) 100%); border-color: rgba(138, 147, 160, 0.35);">
                     <div class="mock-banner-content">
-                        <div class="mock-badge" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple-light); border-color: rgba(168, 85, 247, 0.3);">
+                        <div class="mock-badge" style="background: rgba(138, 147, 160, 0.12); color: var(--accent-purple-light); border-color: rgba(138, 147, 160, 0.3);">
                             <i class="fa-solid fa-graduation-cap"></i>
                             <span>CAMPUS T&amp;P CELL &bull; MENTOR ADVISORY</span>
                         </div>
@@ -215,7 +216,7 @@
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <div class="dash-card-icon" style="background: rgba(180, 189, 201, 0.12); color: var(--accent-cyan);">
                                     <i class="fa-solid fa-chart-area"></i>
                                 </div>
                                 <h2>Academic Outlook</h2>
@@ -246,7 +247,7 @@
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                <div class="dash-card-icon" style="background: rgba(138, 147, 160, 0.12); color: var(--accent-purple);">
                                     <i class="fa-solid fa-bullseye"></i>
                                 </div>
                                 <h2>Placement Insight</h2>
@@ -306,7 +307,7 @@
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <div class="dash-card-icon" style="background: rgba(180, 189, 201, 0.12); color: var(--accent-cyan);">
                                     <i class="fa-solid fa-compass"></i>
                                 </div>
                                 <h2>Career Direction</h2>
@@ -375,7 +376,7 @@
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                <div class="dash-card-icon" style="background: rgba(138, 147, 160, 0.12); color: var(--accent-purple);">
                                     <i class="fa-solid fa-timeline"></i>
                                 </div>
                                 <h2>Action Plan / Roadmap Preview</h2>

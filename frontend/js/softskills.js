@@ -235,13 +235,13 @@ function runPitchAnalysis() {
         let feedbackHTML = "";
 
         if (totalFillerCount > 2) {
-            feedbackHTML += `⚠️ <strong>Filler Word Alert:</strong> We noticed you used filler phrases like <em>"${detectedFillers.map(f => f.word + ' (' + f.count + ')').join(', ')}"</em>. Replace these with deliberate 1-second pauses.<br><br>`;
+            feedbackHTML += `<strong>Filler words:</strong> We noticed you used filler phrases like <em>"${detectedFillers.map(f => f.word + ' (' + f.count + ')').join(', ')}"</em>. Replace these with deliberate 1-second pauses.<br><br>`;
         }
 
         if (detectedPower.length >= 3) {
-            feedbackHTML += `🌟 <strong>Great Engineering Impact:</strong> High-value action verbs detected: <code>${detectedPower.join(', ')}</code>.<br><br>`;
+            feedbackHTML += `<strong>Strong verbs:</strong> High-value action verbs detected: <code>${detectedPower.join(', ')}</code>.<br><br>`;
         } else {
-            feedbackHTML += `💡 <strong>Pro Tip:</strong> Strengthen your impact by using verbs like <em>architected, streamlined, deployed,</em> or <em>benchmarked</em> instead of passive phrases like "I worked on" or "we made".<br><br>`;
+            feedbackHTML += `<strong>Tip:</strong> Strengthen your impact by using verbs like <em>architected, streamlined, deployed,</em> or <em>benchmarked</em> instead of passive phrases like "I worked on" or "we made".<br><br>`;
         }
 
         if (totalWords >= 80 && totalWords <= 170 && totalFillerCount <= 1) {
@@ -330,12 +330,12 @@ function initSoftSkillsDiagnostic() {
                             parseInt(sTeam.value),
                             parseInt(sPresence.value)
                         ],
-                        backgroundColor: "rgba(255, 122, 0, 0.22)",
-                        borderColor: "#ff7a00",
-                        pointBackgroundColor: "#ff7a00",
+                        backgroundColor: "rgba(201, 164, 106, 0.22)",
+                        borderColor: "#B8925A",
+                        pointBackgroundColor: "#B8925A",
                         pointBorderColor: "#fff",
                         pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "#ff7a00",
+                        pointHoverBorderColor: "#B8925A",
                         borderWidth: 2
                     },
                     {
@@ -390,10 +390,10 @@ function initSoftSkillsDiagnostic() {
                         }
                     },
                     tooltip: {
-                        backgroundColor: "#161f30",
-                        borderColor: "rgba(255, 122, 0, 0.4)",
+                        backgroundColor: "#161920",
+                        borderColor: "rgba(201, 164, 106, 0.4)",
                         borderWidth: 1,
-                        titleColor: "#ff7a00",
+                        titleColor: "#B8925A",
                         bodyColor: "#ffffff"
                     }
                 }

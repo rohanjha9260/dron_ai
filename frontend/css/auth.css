@@ -12,8 +12,8 @@
     min-height: 100vh;
     padding: var(--space-xl) var(--space-md);
     background: 
-        radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 80%, rgba(170, 124, 17, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(201, 164, 106, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(184, 146, 90, 0.08) 0%, transparent 50%),
         var(--color-bg-dark);
     position: relative;
     overflow: hidden;
@@ -28,7 +28,7 @@
     right: 0;
     bottom: 0;
     background-image: 
-        radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+        radial-gradient(rgba(201, 164, 106, 0.04) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
@@ -39,15 +39,14 @@
     width: 100%;
     max-width: 460px;
     background: var(--color-bg-glass);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
     box-shadow: 
         0 24px 60px rgba(0, 0, 0, 0.8),
-        0 0 35px rgba(212, 175, 55, 0.08),
-        inset 0 1px 0 rgba(243, 229, 171, 0.2);
+        inset 0 1px 0 rgba(220, 194, 147, 0.2);
     position: relative;
     z-index: 1;
     transition: box-shadow var(--transition-slow), border-color var(--transition-slow);
@@ -58,11 +57,10 @@
 }
 
 .auth-card:hover {
-    border-color: rgba(212, 175, 55, 0.4);
+    border-color: rgba(201, 164, 106, 0.4);
     box-shadow: 
         0 28px 70px rgba(0, 0, 0, 0.85),
-        0 0 45px rgba(212, 175, 55, 0.14),
-        inset 0 1px 0 rgba(243, 229, 171, 0.3);
+        inset 0 1px 0 rgba(220, 194, 147, 0.3);
 }
 
 /* Top Gold Glow Accent Line */
@@ -90,9 +88,9 @@
     width: 54px;
     height: 54px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(18, 18, 23, 0.9));
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    background: linear-gradient(135deg, rgba(201, 164, 106, 0.15), rgba(18, 20, 25, 0.9));
+    border: 1px solid rgba(201, 164, 106, 0.35);
+    box-shadow: none;
     margin-bottom: var(--space-md);
     color: var(--color-primary);
 }
@@ -222,7 +220,7 @@
 .auth-divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    border-bottom: 1px solid rgba(201, 164, 106, 0.15);
 }
 
 .auth-divider span {
@@ -241,8 +239,8 @@
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-gold);
-    background: rgba(212, 175, 55, 0.06);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: rgba(201, 164, 106, 0.06);
+    border: 1px solid rgba(201, 164, 106, 0.3);
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all var(--transition-base);
@@ -251,11 +249,11 @@
 }
 
 .btn-guest:hover {
-    background: rgba(212, 175, 55, 0.15);
+    background: rgba(201, 164, 106, 0.15);
     border-color: var(--color-primary);
     color: var(--color-text-primary);
     transform: translateY(-1px);
-    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.18);
+    box-shadow: 0 4px 18px rgba(201, 164, 106, 0.18);
 }
 
 .btn-guest:active {
