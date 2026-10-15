@@ -12,7 +12,6 @@ Algorithm: XGBClassifier (binary classification: placed / not placed)
 
 import os
 import time
-import hashlib
 import logging
 from typing import Dict, Any, Optional, Tuple, List, Union
 import numpy as np
@@ -31,6 +30,7 @@ from sklearn.preprocessing import StandardScaler
 
 from ml_engine.preprocessing import (
     FEATURE_NAMES,
+    _compute_sha256,
     clean_data,
     prepare_dataset_features,
     normalize_features,
@@ -39,15 +39,6 @@ from ml_engine.preprocessing import (
 )
 
 logger = logging.getLogger(__name__)
-
-
-def _compute_sha256(filepath: str) -> str:
-    """Compute SHA-256 hash of a file."""
-    hasher = hashlib.sha256()
-    with open(filepath, "rb") as f:
-        while chunk := f.read(8192):
-            hasher.update(chunk)
-    return hasher.hexdigest()
 
 
 class ChecksumNotFoundError(FileNotFoundError, ValueError):

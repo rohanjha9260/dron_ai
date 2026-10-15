@@ -71,7 +71,7 @@ def _load_placement_model_locked(model_dir: Optional[str] = None):
 
     predictor = PlacementPredictor()
     try:
-        predictor.load(xgb_path)
+        predictor.load(xgb_path, allowed_dir=model_dir)
         _placement_model = predictor
         logger.info(f"Loaded XGBoost model from: {xgb_path}")
     except FileNotFoundError as e:
@@ -101,7 +101,9 @@ def _load_career_recommender_locked(career_vectors_path: Optional[str] = None):
 
     recommender = CareerRecommender(path=career_vectors_path)
     try:
-        recommender.load_career_vectors(career_vectors_path)
+        # CareerRecommender already loads in __init__; retry only if that failed.
+        if not recommender.career_names:
+            recommender.load_career_vectors(career_vectors_path)
         _career_recommender = recommender
         logger.info("Loaded career vectors for Cosine Similarity recommender")
     except Exception as e:
