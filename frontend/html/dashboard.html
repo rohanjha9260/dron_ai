@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron AI - Intelligent Student Future & Career Guidance System Mentorship Dashboard">
-    <title>Dron AI — Mentorship Analytical Dashboard</title>
+    <meta name="description" content="Dron AI - Intelligent Student Future Predictions, Placement Readiness & Career Analytics SaaS Dashboard">
+    <title>Dron AI — Your Future, Powered by AI</title>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../css/styles.css">
     <!-- Font Awesome 6 Icons -->
@@ -15,59 +15,61 @@
 <body>
 
     <div class="app-container">
-        <!-- Fixed Left Sidebar -->
+        <!-- ── 1. Slim Left Sidebar ──────────────────────────────── -->
         <aside class="app-sidebar">
             <div class="sidebar-header">
-                <div class="brand-logo-icon">
-                    <i class="fa-solid fa-brain"></i>
-                </div>
-                <div class="brand-info">
-                    <span class="brand-title">Dron AI</span>
-                    <span class="brand-subtitle">Career Intelligence</span>
-                </div>
+                <a href="index.html" class="sidebar-brand-link" title="Open Main Landing Page">
+                    <div class="brand-logo-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="brand-info">
+                        <span class="brand-title">Dron AI</span>
+                        <span class="brand-subtitle">Career Intelligence</span>
+                    </div>
+                </a>
             </div>
 
             <nav class="sidebar-nav">
-                <div class="nav-section-title">Navigation</div>
+                <div class="nav-section-title">Overview</div>
                 <a href="dashboard.html" class="nav-item active">
                     <i class="fa-solid fa-chart-line"></i>
-                    <span>Mentorship Dashboard</span>
+                    <span>Dashboard</span>
                 </a>
                 <a href="input.html" class="nav-item">
                     <i class="fa-solid fa-id-card"></i>
-                    <span>Student Data Input</span>
+                    <span>Student Profile</span>
                 </a>
 
-                <div class="nav-section-title">Analytical Engines</div>
-                <a href="academic.html" class="nav-item">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    <span>Academic Outlook</span>
+                <div class="nav-section-title">AI Engines</div>
+                <a href="career.html" class="nav-item">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Career Prediction</span>
                 </a>
                 <a href="placement.html" class="nav-item">
                     <i class="fa-solid fa-bullseye"></i>
-                    <span>Placement Insight</span>
+                    <span>Placement Readiness</span>
                 </a>
-                <a href="career.html" class="nav-item">
-                    <i class="fa-solid fa-compass"></i>
-                    <span>Career Direction</span>
+                <a href="softskills.html" class="nav-item">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Skill Gap Analysis</span>
                 </a>
                 <a href="roadmap.html" class="nav-item">
                     <i class="fa-solid fa-route"></i>
-                    <span>Execution Hub &amp; Sprint</span>
+                    <span>Learning Roadmap</span>
                 </a>
 
-                <div class="nav-section-title">Campus Placement Prep</div>
-                <a href="interview.html" class="nav-item">
-                    <i class="fa-solid fa-user-tie"></i>
-                    <span>Interview &amp; Q&amp;A Prep</span>
-                </a>
-                <a href="softskills.html" class="nav-item">
-                    <i class="fa-solid fa-comments"></i>
-                    <span>Soft Skills &amp; Pitch</span>
-                </a>
+                <div class="nav-section-title">Interview Hub</div>
                 <a href="mock_interview.html" class="nav-item">
                     <i class="fa-solid fa-microphone-lines"></i>
-                    <span>AI Voice Mock Room</span>
+                    <span>AI Mock Interview</span>
+                </a>
+                <a href="interview.html" class="nav-item">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <span>Interview Feedback</span>
+                </a>
+                <a href="academic.html" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academic Performance</span>
                 </a>
             </nav>
 
@@ -76,45 +78,43 @@
                     <div class="user-avatar" id="sidebar-user-avatar">RJ</div>
                     <div class="user-details">
                         <div class="user-name" id="sidebar-user-name">Rohan Jha</div>
-                        <div class="user-meta" id="sidebar-user-meta">Sem 6 • B.Tech CSE</div>
+                        <div class="user-meta" id="sidebar-user-meta">Sem 6 &bull; B.Tech CSE</div>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Workspace -->
+        <!-- ── 2. Main Workspace ─────────────────────────────────── -->
         <main class="app-main">
-            <!-- Top Header Bar -->
+            <!-- Top Navigation Bar -->
             <header class="app-header">
                 <div class="header-left">
                     <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    <div class="header-greeting">
-                        <h1 class="greeting-title">Welcome back, <span id="header-greeting-name">Rohan</span> 👋</h1>
+                    <!-- Search input in top navbar -->
+                    <div class="header-search-box" style="position: relative; width: 280px;">
+                        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #94A3B8;"></i>
+                        <input type="text" placeholder="Search skills, careers, roadmaps..." style="width: 100%; padding: 0.45rem 0.75rem 0.45rem 2.1rem; border-radius: 8px; border: 1px solid #E5E7EB; font-size: 0.82rem; background: #FFFFFF; outline: none; transition: border-color 0.15s ease;">
                     </div>
                 </div>
 
                 <div class="header-right">
                     <div class="header-badges">
-                        <span class="badge badge-purple" id="header-sem-badge">
-                            <span class="badge-dot badge-pulse"></span> Semester 6
+                        <span class="badge" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">
+                            <span class="badge-dot" style="background: #16A34A;"></span> Ready for Placement
                         </span>
-                        <span class="badge badge-success">
-                            <span class="badge-dot"></span> Ready for Placement
+                        <span class="badge" style="background: #F8FAFC; color: #64748B; border: 1px solid #E5E7EB;" id="header-sem-badge">
+                            Semester 6
                         </span>
-                        <span class="badge badge-neutral" id="header-updated-badge">
+                        <span class="badge" style="background: #F8FAFC; color: #64748B; border: 1px solid #E5E7EB;" id="header-updated-badge">
                             Updated Today
                         </span>
                     </div>
 
-                    <a href="interview.html" class="btn btn-primary btn-small">
-                        <i class="fa-solid fa-user-tie"></i>
-                        <span>Interview Hub</span>
-                    </a>
                     <a href="input.html" class="btn btn-outline btn-small">
                         <i class="fa-solid fa-user-pen"></i>
-                        <span>Edit Profile Data</span>
+                        <span>Edit Profile</span>
                     </a>
                 </div>
             </header>
@@ -122,339 +122,376 @@
             <!-- Workspace Body -->
             <div class="app-content">
 
-                <!-- Humanized Campus Placement Advisory Banner -->
-                <div class="interview-mock-banner" style="margin-bottom: 1.75rem; background: linear-gradient(135deg, rgba(16, 23, 38, 0.95) 0%, rgba(26, 20, 48, 0.9) 100%); border-color: rgba(168, 85, 247, 0.35);">
-                    <div class="mock-banner-content">
-                        <div class="mock-badge" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple-light); border-color: rgba(168, 85, 247, 0.3);">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                            <span>CAMPUS T&amp;P CELL &bull; MENTOR ADVISORY</span>
+                <!-- ── 3. Welcoming Hero Banner with Soft Mint Glow ──────── -->
+                <div class="dashboard-hero-banner" style="background: linear-gradient(135deg, #FFFFFF 0%, #DCFCE7 100%); border: 1px solid #86EFAC; border-radius: 20px; padding: 2rem 2.25rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(134, 239, 172, 0.25); display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                    <div style="max-width: 680px;">
+                        <div style="display: inline-flex; align-items: center; gap: 0.45rem; background: #FFFFFF; border: 1px solid #86EFAC; border-radius: 9999px; padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 600; color: #16A34A; margin-bottom: 0.75rem;">
+                            <i class="fa-solid fa-sparkles"></i>
+                            <span>AI Career Intelligence v3.2 &bull; Active Cohort</span>
                         </div>
-                        <h2 class="mock-title" style="font-size: 1.25rem;">Day-1 Super Dream Recruitment Drives Approaching</h2>
-                        <p class="mock-desc">
-                            "Rohan, your 8.65 CGPA clears all initial shortlists for Amazon and TCS Digital. Focus on vocalizing edge cases in DSA and prepare your STAR behavioral stories. Review our curated questions and real-world CTC in-hand breakdown before mock rounds." — <em>Prof. S. Sharma, Training &amp; Placement Cell</em>
+                        <h1 style="font-size: 2rem; font-weight: 800; color: #111827; letter-spacing: -0.03em; margin-bottom: 0.5rem; line-height: 1.2;">
+                            Your Future, Powered by AI
+                        </h1>
+                        <p style="font-size: 1rem; color: #475569; line-height: 1.5; margin-bottom: 0;">
+                            Understand your skills. Discover your career. Get placement-ready with continuous multi-dimensional academic telemetry.
                         </p>
                     </div>
-                    <div class="mock-banner-cta">
-                        <a href="interview.html" class="btn btn-primary" style="white-space: nowrap;">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Open Interview Hub</span>
+                    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                        <a href="career.html" class="btn btn-primary" style="box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
+                            <i class="fa-solid fa-compass"></i>
+                            <span>Explore Careers</span>
+                        </a>
+                        <a href="roadmap.html" class="btn btn-outline" style="background: #FFFFFF;">
+                            <i class="fa-solid fa-route"></i>
+                            <span>View Roadmap</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- KPI Ribbon Summary Bar -->
-                <section class="kpi-ribbon-grid">
+                <!-- ── 4. Four Required Summary Cards ────────────────────── -->
+                <section class="kpi-ribbon-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 2rem;">
+                    <!-- 1. Career Readiness Score -->
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap kpi-icon-cyan">
-                            <i class="fa-solid fa-award"></i>
+                        <div class="kpi-icon-wrap" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">
+                            <i class="fa-solid fa-gauge-high"></i>
                         </div>
                         <div class="kpi-data">
-                            <span class="kpi-label">Cumulative GPA</span>
-                            <span class="kpi-value" id="kpi-cgpa-val">8.65</span>
-                            <span class="kpi-subtext" style="color: var(--status-success);">
-                                <i class="fa-solid fa-arrow-trend-up"></i> +0.15 Trend
+                            <span class="kpi-label">Career Readiness</span>
+                            <span class="kpi-value" id="kpi-readiness-val">84 / 100</span>
+                            <span class="kpi-subtext" style="color: #16A34A;">
+                                <i class="fa-solid fa-arrow-trend-up"></i> Top 12% in Batch
                             </span>
                         </div>
                     </div>
 
+                    <!-- 2. Placement Probability Estimate -->
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap kpi-icon-purple">
-                            <i class="fa-solid fa-calendar-check"></i>
+                        <div class="kpi-icon-wrap" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">
+                            <i class="fa-solid fa-bullseye"></i>
                         </div>
                         <div class="kpi-data">
-                            <span class="kpi-label">Attendance Rate</span>
-                            <span class="kpi-value" id="kpi-attendance-val">88.5%</span>
-                            <span class="kpi-subtext" style="color: var(--status-success);">
-                                <i class="fa-solid fa-circle-check"></i> Eligible (&gt;75%)
+                            <span class="kpi-label">Placement Probability</span>
+                            <span class="kpi-value" id="kpi-probability-val">74.2%</span>
+                            <span class="kpi-subtext" style="color: #16A34A;">
+                                <i class="fa-solid fa-shield-check"></i> High Confidence (XGBoost)
                             </span>
                         </div>
                     </div>
 
+                    <!-- 3. Skills Match Percentage -->
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap kpi-icon-success">
-                            <i class="fa-solid fa-shield-halved"></i>
+                        <div class="kpi-icon-wrap" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">
+                            <i class="fa-solid fa-chart-pie"></i>
                         </div>
                         <div class="kpi-data">
-                            <span class="kpi-label">Academic Backlogs</span>
-                            <span class="kpi-value" id="kpi-backlogs-val">0 Active</span>
-                            <span class="kpi-subtext" style="color: var(--status-success);">
-                                <i class="fa-solid fa-check-double"></i> Clean Transcript
+                            <span class="kpi-label">Skills Match</span>
+                            <span class="kpi-value" id="kpi-skills-match-val">88% Match</span>
+                            <span class="kpi-subtext" style="color: #64748B;">
+                                <i class="fa-solid fa-code"></i> Python &bull; DSA &bull; SQL
                             </span>
                         </div>
                     </div>
 
+                    <!-- 4. Recommended Career Paths -->
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap kpi-icon-cyan">
-                            <i class="fa-solid fa-code"></i>
+                        <div class="kpi-icon-wrap" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">
+                            <i class="fa-solid fa-briefcase"></i>
                         </div>
                         <div class="kpi-data">
-                            <span class="kpi-label">LeetCode Practice</span>
-                            <span class="kpi-value" id="kpi-solved-val">242+</span>
-                            <span class="kpi-subtext">Medium &amp; Hard focus</span>
-                        </div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-icon-wrap kpi-icon-purple">
-                            <i class="fa-brands fa-github"></i>
-                        </div>
-                        <div class="kpi-data">
-                            <span class="kpi-label">Git Commit Activity</span>
-                            <span class="kpi-value" id="kpi-commits-val">184+</span>
-                            <span class="kpi-subtext">Active repository pipeline</span>
+                            <span class="kpi-label">Top Recommended Role</span>
+                            <span class="kpi-value" style="font-size: 1.15rem; font-weight: 700;">Data Engineer</span>
+                            <span class="kpi-subtext" style="color: #16A34A;">
+                                <i class="fa-solid fa-sparkles"></i> 3 Matched Pathways
+                            </span>
                         </div>
                     </div>
                 </section>
 
-                <!-- ═══════════════════════════════════════════════════════════════
-                     Core 4-Card Analytical Grid
-                     ═══════════════════════════════════════════════════════════════ -->
-                <section class="dashboard-grid-2x2">
+                <!-- ── 5. AI Career Insights (Dark Contrast Card #111111) ── -->
+                <div class="card-dark-contrast" style="background: #111111; color: #FFFFFF; border: 1px solid #27272A; border-radius: 20px; padding: 1.75rem 2rem; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(34, 197, 94, 0.15); border: 1px solid #22C55E; color: #86EFAC; border-radius: 9999px; padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.65rem;">
+                            <i class="fa-solid fa-microchip-ai"></i>
+                            <span>AI Career Recommendations &bull; Executive Digest</span>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.45rem;">
+                            Priority Recommendation: Solidify System Design &amp; Complete 1 Cloud Capstone
+                        </h3>
+                        <p style="font-size: 0.88rem; color: #94A3B8; line-height: 1.6; margin-bottom: 0;">
+                            Your 8.65 CGPA and 242+ LeetCode problems place you in the Tier-1 recruitment bracket. Closing the 12% gap in distributed systems fundamentals and conducting one mock technical interview will raise your predicted placement odds to <strong style="color: #86EFAC;">86%</strong>.
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <a href="mock_interview.html" class="btn btn-primary" style="background: #22C55E; color: #FFFFFF; border: 1px solid #22C55E; font-weight: 700;">
+                            <span>Run AI Mock Interview</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="softskills.html" class="btn btn-outline" style="background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); color: #FFFFFF;">
+                            <span>Skill Gap Audit</span>
+                        </a>
+                    </div>
+                </div>
 
-                    <!-- ── Card 1: Academic Outlook ── -->
+                <!-- ── 6. Core 4-Card Analytical Grid ────────────────────── -->
+                <section class="dashboard-grid-2x2" style="margin-bottom: 2rem;">
+
+                    <!-- Card 1: Academic Performance & Trajectory -->
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
-                                    <i class="fa-solid fa-chart-area"></i>
+                                <div class="dash-card-icon">
+                                    <i class="fa-solid fa-chart-line"></i>
                                 </div>
-                                <h2>Academic Outlook</h2>
+                                <h2>Academic Trajectory</h2>
                             </div>
-                            <span class="badge badge-cyan">Regression Model</span>
+                            <span class="badge" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">Regression Forecast</span>
                         </div>
 
                         <div class="dash-card-body">
-                            <div class="chart-container-relative">
+                            <div class="chart-container-relative" style="height: 220px; position: relative;">
                                 <canvas id="academicTrajectoryChart"></canvas>
                             </div>
 
-                            <div class="chart-subtitle-note">
-                                <strong>AI Prognosis:</strong> Steady growth in core courses. Maintain current trajectory to graduate with First Class with Distinction (Predicted CGPA: <strong>8.85</strong>).
+                            <div style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 0.85rem 1rem; margin-top: 1rem; font-size: 0.8rem; color: #475569;">
+                                <strong style="color: #111827;">AI Prognosis:</strong> Consistent performance across core CS labs. Maintained trajectory predicts a graduating CGPA of <strong style="color: #16A34A;">8.85</strong> with First Class with Distinction.
                             </div>
                         </div>
 
                         <div class="dash-card-footer">
-                            <span>Historical Sem 1–Sem 5 records</span>
+                            <span>Historical Sem 1–Sem 5 Verified Records</span>
                             <a href="academic.html">
-                                <span>Deep-Dive Regression Curve</span>
+                                <span>Detailed Academic Breakdown</span>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
 
-                    <!-- ── Card 2: Placement Insight ── -->
+                    <!-- Card 2: Placement Readiness Assessment -->
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
+                                <div class="dash-card-icon">
                                     <i class="fa-solid fa-bullseye"></i>
                                 </div>
-                                <h2>Placement Insight</h2>
+                                <h2>Placement Readiness Assessment</h2>
                             </div>
-                            <span class="badge badge-purple">XGBoost Inference</span>
+                            <span class="badge" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">XGBoost Classifier</span>
                         </div>
 
                         <div class="dash-card-body">
                             <div class="placement-gauge-wrapper">
-                                <div class="gauge-chart-box">
+                                <div class="gauge-chart-box" style="height: 170px; position: relative;">
                                     <canvas id="placementGaugeChart"></canvas>
-                                    <div class="gauge-center-stat">
-                                        <span class="gauge-percent-text" id="gauge-readout-percent">74%</span>
-                                        <span class="gauge-label-text">Readiness Index</span>
+                                    <div class="gauge-center-stat" style="position: absolute; left: 50%; bottom: 15px; transform: translateX(-50%); text-align: center;">
+                                        <span class="gauge-percent-text" id="gauge-readout-percent" style="font-size: 1.75rem; font-weight: 800; color: #111827; font-family: var(--font-mono);">74%</span>
+                                        <span class="gauge-label-text" style="display: block; font-size: 0.72rem; color: #64748B; text-transform: uppercase;">Readiness Index</span>
                                     </div>
                                 </div>
 
-                                <div class="target-indicator-bar">
-                                    <span class="target-info">
-                                        <i class="fa-solid fa-flag-checkered" style="color: var(--accent-cyan); margin-right: 4px;"></i>
-                                        Target Benchmark:
-                                    </span>
-                                    <span class="target-badge">85% Tier-1 Readiness</span>
-                                </div>
-
-                                <div class="placement-factors-list">
-                                    <div class="factor-item">
-                                        <span>Academic CGPA Filter (Cleared)</span>
-                                        <span style="color: var(--status-success); font-weight: 700;">92%</span>
+                                <div class="placement-factors-list" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                                    <div class="factor-item" style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                        <span style="color: #475569;">Academic Eligibility (CGPA &gt; 8.0)</span>
+                                        <span style="color: #16A34A; font-weight: 700;">Cleared (92%)</span>
                                     </div>
-                                    <div class="factor-item">
-                                        <span>Algorithmic DSA Competency</span>
-                                        <span style="color: var(--accent-cyan-light); font-weight: 700;">78%</span>
+                                    <div class="factor-item" style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                        <span style="color: #475569;">DSA &amp; Coding Telemetry (LeetCode 242)</span>
+                                        <span style="color: #16A34A; font-weight: 700;">Strong (78%)</span>
                                     </div>
-                                    <div class="factor-item">
-                                        <span>Soft Skills &amp; Communication</span>
-                                        <span style="color: var(--status-warning); font-weight: 700;">68%</span>
+                                    <div class="factor-item" style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                        <span style="color: #475569;">Soft Skills &amp; Behavioral Pitch</span>
+                                        <span style="color: #F59E0B; font-weight: 700;">Needs Sprint (68%)</span>
                                     </div>
                                 </div>
                             </div>
-
-                            <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.75rem; text-align: center;">
-                                Strong technical skills in Python &amp; DSA. Focus on project portfolio depth and soft skills to bridge the final 11% gap.
-                            </p>
                         </div>
 
                         <div class="dash-card-footer">
-                            <span>Evaluated across 13 engineering dimensions</span>
+                            <span>Evaluated across 13 engineering features</span>
                             <a href="placement.html">
-                                <span>View Classification Factors</span>
+                                <span>Inspect Feature Weights</span>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
 
-                    <!-- ── Card 3: Career Direction ── -->
+                    <!-- Card 3: Career Direction & Recommended Roles -->
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(0, 210, 255, 0.12); color: var(--accent-cyan);">
+                                <div class="dash-card-icon">
                                     <i class="fa-solid fa-compass"></i>
                                 </div>
-                                <h2>Career Direction</h2>
+                                <h2>Career Direction &amp; Recommendations</h2>
                             </div>
-                            <span class="badge badge-cyan">Cosine Similarity</span>
+                            <span class="badge" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">Cosine Vector Match</span>
                         </div>
 
                         <div class="dash-card-body">
-                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                                Geometric vector alignment between student profile and benchmark requirements of industry roles:
+                            <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 1rem;">
+                                Vector proximity between your skill profile and benchmark industry requirements:
                             </p>
 
-                            <div class="career-match-list" id="career-matches-container">
-                                <!-- Populated dynamically by app.js -->
-                                <div class="career-item-card">
-                                    <div class="career-item-header">
-                                        <div class="career-title-wrap">
-                                            <span class="career-rank-pill rank-1">#1</span>
-                                            <span class="career-name">Data Engineer</span>
+                            <div class="career-match-list" id="career-matches-container" style="display: flex; flex-direction: column; gap: 0.85rem;">
+                                <div class="career-item-card" style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 0.85rem 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span style="background: #22C55E; color: #FFFFFF; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 4px;">#1</span>
+                                            <span style="font-size: 0.9rem; font-weight: 700; color: #111827;">Data Engineer</span>
                                         </div>
-                                        <span class="career-score-pill">88% Match</span>
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: #16A34A; background: #ECFDF5; border: 1px solid #86EFAC; padding: 0.15rem 0.5rem; border-radius: 6px;">88% Match</span>
                                     </div>
-                                    <div class="career-progress-bar-bg">
-                                        <div class="career-progress-fill fill-cyan" style="width: 88%;"></div>
+                                    <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 9999px; overflow: hidden;">
+                                        <div style="width: 88%; height: 100%; background: #22C55E; border-radius: 9999px;"></div>
                                     </div>
                                 </div>
 
-                                <div class="career-item-card">
-                                    <div class="career-item-header">
-                                        <div class="career-title-wrap">
-                                            <span class="career-rank-pill rank-2">#2</span>
-                                            <span class="career-name">Machine Learning Engineer</span>
+                                <div class="career-item-card" style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 0.85rem 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span style="background: #86EFAC; color: #111827; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 4px;">#2</span>
+                                            <span style="font-size: 0.9rem; font-weight: 700; color: #111827;">Machine Learning Engineer</span>
                                         </div>
-                                        <span class="career-score-pill">82% Match</span>
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: #16A34A; background: #ECFDF5; border: 1px solid #86EFAC; padding: 0.15rem 0.5rem; border-radius: 6px;">82% Match</span>
                                     </div>
-                                    <div class="career-progress-bar-bg">
-                                        <div class="career-progress-fill fill-purple" style="width: 82%;"></div>
+                                    <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 9999px; overflow: hidden;">
+                                        <div style="width: 82%; height: 100%; background: #22C55E; border-radius: 9999px;"></div>
                                     </div>
                                 </div>
 
-                                <div class="career-item-card">
-                                    <div class="career-item-header">
-                                        <div class="career-title-wrap">
-                                            <span class="career-rank-pill rank-3">#3</span>
-                                            <span class="career-name">Backend Developer</span>
+                                <div class="career-item-card" style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 0.85rem 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span style="background: #E2E8F0; color: #475569; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 4px;">#3</span>
+                                            <span style="font-size: 0.9rem; font-weight: 700; color: #111827;">Backend Developer</span>
                                         </div>
-                                        <span class="career-score-pill">75% Match</span>
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: #64748B; background: #F1F5F9; border: 1px solid #E2E8F0; padding: 0.15rem 0.5rem; border-radius: 6px;">75% Match</span>
                                     </div>
-                                    <div class="career-progress-bar-bg">
-                                        <div class="career-progress-fill fill-slate" style="width: 75%;"></div>
+                                    <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 9999px; overflow: hidden;">
+                                        <div style="width: 75%; height: 100%; background: #86EFAC; border-radius: 9999px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="dash-card-footer">
-                            <span>Ranked against 10 target careers</span>
+                            <span>Ranked across 10 industry roles</span>
                             <a href="career.html">
-                                <span>View Detailed Match Breakdown</span>
+                                <span>Detailed Role Comparisons</span>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
 
-                    <!-- ── Card 4: Action Plan / Roadmap Preview ── -->
+                    <!-- Card 4: Skill-Gap Analysis & Action Plan -->
                     <div class="dash-card">
                         <div class="dash-card-header">
                             <div class="dash-card-title-group">
-                                <div class="dash-card-icon" style="background: rgba(168, 85, 247, 0.12); color: var(--accent-purple);">
-                                    <i class="fa-solid fa-timeline"></i>
+                                <div class="dash-card-icon">
+                                    <i class="fa-solid fa-sliders"></i>
                                 </div>
-                                <h2>Action Plan / Roadmap Preview</h2>
+                                <h2>Skill-Gap Analysis &amp; Milestones</h2>
                             </div>
-                            <span class="badge badge-purple">Phased Sequencer</span>
+                            <span class="badge" style="background: #ECFDF5; color: #16A34A; border: 1px solid #86EFAC;">Vector Delta</span>
                         </div>
 
                         <div class="dash-card-body">
                             <div class="milestone-timeline">
                                 <!-- Phase 1 -->
-                                <div class="timeline-phase">
-                                    <div class="timeline-dot">1</div>
-                                    <div class="timeline-header">
-                                        <span class="phase-tag">Phase 1: Immediate (Weeks 1–2)</span>
+                                <div class="timeline-phase" style="margin-bottom: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                        <span style="background: #22C55E; color: #FFFFFF; font-size: 0.7rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">1</span>
+                                        <strong style="font-size: 0.85rem; color: #111827;">Phase 1: Immediate Sprint (Weeks 1–2)</strong>
                                     </div>
-                                    <ul class="timeline-tasks">
-                                        <li class="timeline-task-item">
-                                            <i class="fa-solid fa-circle-check"></i>
-                                            <span>Complete Python data analysis &amp; SQL pipeline module</span>
-                                        </li>
-                                        <li class="timeline-task-item">
-                                            <i class="fa-solid fa-circle-check"></i>
-                                            <span>Schedule mock technical coding interview</span>
-                                        </li>
-                                        <li class="timeline-task-item">
-                                            <i class="fa-solid fa-circle-check"></i>
-                                            <span>Refine resume with ATS optimization keywords</span>
-                                        </li>
+                                    <ul style="list-style: none; padding-left: 1.6rem; font-size: 0.78rem; color: #475569; display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <li><i class="fa-solid fa-circle-check" style="color: #16A34A; margin-right: 4px;"></i> Master SQL window functions &amp; indexing strategies</li>
+                                        <li><i class="fa-solid fa-circle-check" style="color: #16A34A; margin-right: 4px;"></i> Schedule AI Mock Interview on Distributed Systems</li>
                                     </ul>
                                 </div>
 
                                 <!-- Phase 2 -->
-                                <div class="timeline-phase">
-                                    <div class="timeline-dot">2</div>
-                                    <div class="timeline-header">
-                                        <span class="phase-tag">Phase 2: Next Month (Weeks 3–6)</span>
+                                <div class="timeline-phase" style="margin-bottom: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                        <span style="background: #86EFAC; color: #111827; font-size: 0.7rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">2</span>
+                                        <strong style="font-size: 0.85rem; color: #111827;">Phase 2: Project Deployment (Weeks 3–6)</strong>
                                     </div>
-                                    <ul class="timeline-tasks">
-                                        <li class="timeline-task-item">
-                                            <i class="fa-solid fa-clock" style="color: var(--accent-purple);"></i>
-                                            <span>Start final year capstone project (ML/Data pipeline focus)</span>
-                                        </li>
-                                        <li class="timeline-task-item">
-                                            <i class="fa-solid fa-clock" style="color: var(--accent-purple);"></i>
-                                            <span>Attend campus career fair workshop &amp; alumni mixer</span>
-                                        </li>
+                                    <ul style="list-style: none; padding-left: 1.6rem; font-size: 0.78rem; color: #475569; display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <li><i class="fa-solid fa-clock" style="color: #F59E0B; margin-right: 4px;"></i> Deploy end-to-end Kafka telemetry pipeline on AWS</li>
+                                        <li><i class="fa-solid fa-clock" style="color: #F59E0B; margin-right: 4px;"></i> Prepare STAR behavioral interview pitch deck</li>
                                     </ul>
                                 </div>
 
                                 <!-- Phase 3 -->
                                 <div class="timeline-phase">
-                                    <div class="timeline-dot">3</div>
-                                    <div class="timeline-header">
-                                        <span class="phase-tag">Phase 3: Future Target (Weeks 7–12)</span>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                        <span style="background: #E2E8F0; color: #475569; font-size: 0.7rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">3</span>
+                                        <strong style="font-size: 0.85rem; color: #111827;">Phase 3: Campus Drives (Weeks 7–12)</strong>
                                     </div>
-                                    <ul class="timeline-tasks">
-                                        <li class="timeline-task-item">
-                                            <i class="fa-regular fa-circle" style="color: var(--text-muted);"></i>
-                                            <span>Secure Tier-1 software engineering placement offer</span>
-                                        </li>
-                                        <li class="timeline-task-item">
-                                            <i class="fa-regular fa-circle" style="color: var(--text-muted);"></i>
-                                            <span>Smoothly transition into professional engineering role</span>
-                                        </li>
+                                    <ul style="list-style: none; padding-left: 1.6rem; font-size: 0.78rem; color: #475569; display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <li><i class="fa-regular fa-circle" style="color: #94A3B8; margin-right: 4px;"></i> Secure Super-Dream Tier-1 Placement Offer</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
                         <div class="dash-card-footer">
-                            <span>Remediating identified skill gaps</span>
+                            <span>Remediating identified vector gaps</span>
                             <a href="roadmap.html">
-                                <span>Interactive Remediation Roadmap</span>
+                                <span>Interactive Action Roadmap</span>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
 
                 </section>
+
+                <!-- ── 7. Recent Activity & Telemetry Audit ──────────────── -->
+                <div class="recent-activity-section" style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 18px; padding: 1.5rem 1.75rem; box-shadow: var(--shadow-card);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                        <div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #111827; margin-bottom: 0.2rem;">
+                                <i class="fa-solid fa-clock-rotate-left" style="color: #16A34A; margin-right: 6px;"></i> Recent Activity &amp; Telemetry Updates
+                            </h3>
+                            <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0;">Verified actions logged in your academic career ledger</p>
+                        </div>
+                        <a href="input.html" class="btn btn-outline btn-small">Update Profile Data</a>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                <span style="background: #ECFDF5; color: #16A34A; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">
+                                    <i class="fa-solid fa-microphone-lines"></i>
+                                </span>
+                                <strong style="font-size: 0.85rem; color: #111827;">Mock Interview Evaluated</strong>
+                            </div>
+                            <p style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.35rem;">System Design: Sliding Window Rate Limiter &bull; Scored <strong>9.2 / 10</strong></p>
+                            <span style="font-size: 0.7rem; color: #94A3B8;">Today &bull; Verified</span>
+                        </div>
+
+                        <div style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                <span style="background: #ECFDF5; color: #16A34A; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">
+                                    <i class="fa-solid fa-code"></i>
+                                </span>
+                                <strong style="font-size: 0.85rem; color: #111827;">LeetCode Telemetry Refreshed</strong>
+                            </div>
+                            <p style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.35rem;">Synchronized 242 solved problems &bull; Contest Rating: <strong>1640</strong></p>
+                            <span style="font-size: 0.7rem; color: #94A3B8;">Yesterday &bull; Auto-synced</span>
+                        </div>
+
+                        <div style="background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                <span style="background: #ECFDF5; color: #16A34A; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">
+                                    <i class="fa-brands fa-github"></i>
+                                </span>
+                                <strong style="font-size: 0.85rem; color: #111827;">GitHub Commit Activity Logged</strong>
+                            </div>
+                            <p style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.35rem;">184 commits across 4 active capstone repositories</p>
+                            <span style="font-size: 0.7rem; color: #94A3B8;">3 days ago &bull; Public API</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>

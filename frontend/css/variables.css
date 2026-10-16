@@ -1,97 +1,120 @@
 /*
- * Dron-AI Design System Variables
+ * Dron-AI Design System Variables — Premium White & Mint Green SaaS
  *
- * Theme: Obsidian & Champagne Gold (Dark) / Ivory & Antique Gold (Light)
- * Central design tokens for colors, typography, spacing, elevations, and animations.
- * All UI components reference these tokens for consistency.
+ * Theme: Modern Minimalist Light SaaS with Soft Mint Glow
+ * Main background: #F8FAFC
+ * Card background: #FFFFFF
+ * Primary accent / mint green: #86EFAC
+ * Strong green for buttons and highlights: #22C55E
+ * Soft mint background: #ECFDF5
+ * Main text: #111827
+ * Secondary text: #64748B
+ * Borders: #E5E7EB
+ * Dark contrast card: #111111
+ * Success indicators: #16A34A
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ══════════════════════════════════════════════════════════
-   DARK MODE (Default)
-   ══════════════════════════════════════════════════════════ */
 :root {
-    /* ── Background Obsidian Hierarchy ── */
-    --color-bg-dark: #0A0A0C;
-    --color-bg-base: #0A0A0C;
-    --color-bg-card: #121217;
-    --color-bg-surface: #121217;
-    --color-bg-card-hover: #1A1A22;
-    --color-bg-input: #1A1A22;
-    --color-bg-input-focus: #20202B;
-    --color-bg-glass: rgba(18, 18, 23, 0.82);
-    --color-bg-glass-subtle: rgba(26, 26, 34, 0.55);
-    --color-bg-sidebar: #0E0E12;
+    /* ── Background Hierarchy ── */
+    --color-bg-base: #F8FAFC;
+    --color-bg-dark: #F8FAFC;
+    --color-bg-card: #FFFFFF;
+    --color-bg-surface: #FFFFFF;
+    --color-bg-card-hover: #F8FAFC;
+    --color-bg-input: #FFFFFF;
+    --color-bg-input-focus: #F0FDF4;
+    --color-bg-glass: rgba(255, 255, 255, 0.85);
+    --color-bg-glass-subtle: rgba(248, 250, 252, 0.7);
+    --color-bg-sidebar: #FFFFFF;
+    --color-bg-mint-soft: #ECFDF5;
 
-    /* ── Primary Metallic Gold Hierarchy ── */
-    --color-primary: #D4AF37;
-    --color-primary-light: #F3E5AB;
-    --color-primary-dark: #AA7C11;
-    --color-gold: #D4AF37;
-    --color-gold-light: #F3E5AB;
-    --color-gold-dark: #AA7C11;
+    /* ── Green & Mint Accents ── */
+    --color-primary: #22C55E;
+    --color-primary-light: #86EFAC;
+    --color-primary-dark: #16A34A;
+    --color-mint: #86EFAC;
+    --color-mint-light: #DCFCE7;
+    --color-mint-soft: #ECFDF5;
+    --color-mint-dark: #15803D;
 
-    /* ── Accent Glow ── */
-    --color-accent: #E5C158;
-    --color-accent-dark: #C9A038;
-    --color-accent-light: #FFF0BD;
+    --color-accent: #86EFAC;
+    --color-accent-dark: #16A34A;
+    --color-accent-light: #DCFCE7;
+
+    /* ── Dark Contrast Card (Reference Spec) ── */
+    --color-card-dark: #111111;
+    --color-card-dark-text: #FFFFFF;
 
     /* ── Text Hierarchy ── */
-    --color-text-primary: #FFFFFF;
-    --color-text-header: #FFFFFF;
-    --color-text-secondary: #E0D8C3;
-    --color-text-body: #E0D8C3;
-    --color-text-muted: #8A8A99;
-    --color-text-gold: #F3E5AB;
+    --color-text-primary: #111827;
+    --color-text-header: #111827;
+    --color-text-secondary: #64748B;
+    --color-text-body: #64748B;
+    --color-text-muted: #94A3B8;
+    --color-text-dim: #94A3B8;
+    --color-text-mint: #16A34A;
+    --color-text-white: #FFFFFF;
 
     /* ── Status Colors ── */
-    --color-success: #10B981;
-    --color-success-bg: rgba(16, 185, 129, 0.12);
-    --color-success-border: rgba(16, 185, 129, 0.35);
+    --color-success: #16A34A;
+    --color-success-bg: #ECFDF5;
+    --color-success-border: #86EFAC;
 
-    --color-warning: #E5A93C;
-    --color-warning-bg: rgba(229, 169, 60, 0.12);
-    --color-warning-border: rgba(229, 169, 60, 0.35);
+    --color-warning: #F59E0B;
+    --color-warning-bg: #FEF3C7;
+    --color-warning-border: #FCD34D;
 
     --color-danger: #EF4444;
-    --color-danger-bg: rgba(239, 68, 68, 0.12);
-    --color-danger-border: rgba(239, 68, 68, 0.35);
+    --color-danger-bg: #FEE2E2;
+    --color-danger-border: #FCA5A5;
 
-    --color-info: #38BDF8;
-    --color-info-bg: rgba(56, 189, 248, 0.12);
-    --color-info-border: rgba(56, 189, 248, 0.35);
+    --color-info: #0284C7;
+    --color-info-bg: #E0F2FE;
+    --color-info-border: #7DD3FC;
 
     /* ── Borders & Outlines ── */
-    --color-border: #2A2720;
-    --color-border-subtle: #2A2720;
-    --color-border-hover: rgba(212, 175, 55, 0.4);
-    --color-border-focus: #D4AF37;
-    --color-border-glow: rgba(212, 175, 55, 0.55);
+    --color-border: #E5E7EB;
+    --color-border-subtle: #F1F5F9;
+    --color-border-hover: #CBD5E1;
+    --color-border-focus: #22C55E;
+    --color-border-mint: #86EFAC;
 
     /* ── Gradients ── */
-    --gradient-gold: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
-    --gradient-gold-hover: linear-gradient(135deg, #FFF0BD 0%, #E5C158 50%, #D4AF37 100%);
-    --gradient-gold-text: linear-gradient(135deg, #FFFFFF 0%, #F3E5AB 40%, #D4AF37 100%);
-    --gradient-gold-subtle: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(18, 18, 23, 0.6) 100%);
-    --gradient-dark-card: linear-gradient(180deg, rgba(26, 26, 34, 0.75) 0%, rgba(18, 18, 23, 0.95) 100%);
+    --gradient-mint: linear-gradient(135deg, #FFFFFF 0%, #DCFCE7 100%);
+    --gradient-mint-soft: linear-gradient(135deg, #F8FAFC 0%, #ECFDF5 100%);
+    --gradient-mint-glow: radial-gradient(circle at 50% 0%, rgba(134, 239, 172, 0.35) 0%, rgba(248, 250, 252, 0) 70%);
+    --gradient-green-button: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+    --gradient-green-hover: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+    --gradient-dark-card: linear-gradient(145deg, #18181B 0%, #111111 100%);
 
-    /* ── Shadows & Glow ── */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
-    --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.85);
-    --shadow-glow: none;
-    --shadow-gold-hover: 0 4px 16px rgba(0, 0, 0, 0.6);
-    --shadow-gold-focus: 0 0 0 2px rgba(212, 175, 55, 0.4);
-    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(243, 229, 171, 0.08);
+    /* Aliases for theme backward compatibility */
+    --gradient-gold: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+    --gradient-gold-hover: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+    --gradient-gold-text: linear-gradient(135deg, #111827 0%, #16A34A 100%);
+    --gradient-gold-subtle: linear-gradient(135deg, rgba(134, 239, 172, 0.25) 0%, rgba(248, 250, 252, 0) 100%);
+    --shadow-gold-hover: 0 4px 14px rgba(34, 197, 94, 0.25);
+    --shadow-gold-focus: 0 0 0 3px rgba(34, 197, 94, 0.2);
 
-    --glass-blur: blur(16px);
+
+    /* ── Subtle SaaS Shadows ── */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+    --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.05), 0 16px 32px -4px rgba(34, 197, 94, 0.08);
+    --shadow-mint-glow: 0 0 20px rgba(134, 239, 172, 0.45);
+    --shadow-green-focus: 0 0 0 3px rgba(34, 197, 94, 0.2);
+
+    --glass-blur: blur(12px);
 
     /* ── Typography ── */
-    --font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-    --font-family-display: 'Plus Jakarta Sans', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
     --font-size-2xs: 0.7rem;
     --font-size-xs: 0.75rem;
@@ -119,77 +142,29 @@
     --space-2xl: 3rem;
     --space-3xl: 4rem;
 
-    /* ── Border Radius ── */
-    --radius-xs: 4px;
+    /* ── Border Radius (16–22px Rounded Cards) ── */
+    --radius-xs: 6px;
     --radius-sm: 8px;
     --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
+    --radius-lg: 18px;
+    --radius-xl: 22px;
+    --radius-card: 18px;
     --radius-full: 9999px;
 
     /* ── Transitions ── */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    /* ── Sidebar ── */
-    --sidebar-width: 260px;
+    /* ── Sidebar & Navbar ── */
+    --sidebar-width: 250px;
     --sidebar-collapsed-width: 72px;
     --navbar-height: 64px;
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   LIGHT MODE
-   ══════════════════════════════════════════════════════════ */
-[data-theme="light"] {
-    --color-bg-dark: #FAFAF5;
-    --color-bg-base: #FAFAF5;
+[data-theme="light"], [data-theme="dark"] {
+    /* Keep consistent bright SaaS white & mint palette */
+    --color-bg-base: #F8FAFC;
     --color-bg-card: #FFFFFF;
     --color-bg-surface: #FFFFFF;
-    --color-bg-card-hover: #F5F0E8;
-    --color-bg-input: #F5F0E8;
-    --color-bg-input-focus: #EEEAD8;
-    --color-bg-glass: rgba(255, 255, 255, 0.88);
-    --color-bg-glass-subtle: rgba(250, 250, 245, 0.65);
-    --color-bg-sidebar: #F0ECE0;
-
-    --color-primary: #AA7C11;
-    --color-primary-light: #D4AF37;
-    --color-primary-dark: #8B6914;
-    --color-gold: #AA7C11;
-    --color-gold-light: #D4AF37;
-    --color-gold-dark: #8B6914;
-
-    --color-accent: #C9A038;
-    --color-accent-dark: #AA7C11;
-    --color-accent-light: #E5C158;
-
-    --color-text-primary: #1A1A1A;
-    --color-text-header: #1A1A1A;
-    --color-text-secondary: #5A5040;
-    --color-text-body: #5A5040;
-    --color-text-muted: #6E6456;
-    --color-text-gold: #8B6914;
-
-    --color-border: #E0D8C3;
-    --color-border-subtle: #E8E2D4;
-    --color-border-hover: rgba(170, 124, 17, 0.4);
-    --color-border-focus: #AA7C11;
-    --color-border-glow: rgba(170, 124, 17, 0.35);
-
-    --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #AA7C11 50%, #8B6914 100%);
-    --gradient-gold-hover: linear-gradient(135deg, #E5C158 0%, #D4AF37 50%, #AA7C11 100%);
-    --gradient-gold-text: linear-gradient(135deg, #8B6914 0%, #AA7C11 40%, #D4AF37 100%);
-    --gradient-gold-subtle: linear-gradient(135deg, rgba(170, 124, 17, 0.08) 0%, rgba(255, 255, 255, 0.6) 100%);
-
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.12);
-    --shadow-glow: none;
-    --shadow-gold-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-gold-focus: 0 0 0 2px rgba(170, 124, 17, 0.3);
-    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(170, 124, 17, 0.06);
 }

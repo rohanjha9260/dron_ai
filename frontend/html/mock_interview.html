@@ -15,26 +15,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        cyberDark: '#0a0f1d',
-                        cyberCard: 'rgba(15, 23, 42, 0.85)',
-                        cyberBorder: 'rgba(255, 122, 0, 0.28)',
-                        neonCyan: '#ff7a00',
-                        neonViolet: '#ff9838',
-                        neonEmerald: '#10b981',
-                        neonAmber: '#f59e0b',
+                        cyberDark: '#F8FAFC',
+                        cyberCard: '#FFFFFF',
+                        cyberBorder: '#E5E7EB',
+                        neonCyan: '#22C55E',
+                        neonViolet: '#86EFAC',
+                        neonEmerald: '#16A34A',
+                        neonAmber: '#F59E0B',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace'],
                     },
                     boxShadow: {
-                        'neon-cyan': '0 0 20px -3px rgba(255, 122, 0, 0.45)',
-                        'neon-violet': '0 0 25px -4px rgba(255, 152, 56, 0.40)',
-                        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.55)',
+                        'neon-cyan': '0 2px 10px rgba(34, 197, 94, 0.25)',
+                        'neon-violet': '0 2px 10px rgba(134, 239, 172, 0.35)',
+                        'glass-card': '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.03)',
                     }
                 }
             }
@@ -46,27 +45,22 @@
 
     <style>
         body {
-            background-color: #080c14;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(255, 122, 0, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(255, 152, 56, 0.08) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(255, 122, 0, 0.06) 0px, transparent 50%);
+            background-color: #F8FAFC;
+            background-image: radial-gradient(circle at 50% -10%, rgba(134, 239, 172, 0.22) 0%, rgba(248, 250, 252, 0) 65%);
             background-attachment: fixed;
-            color: #ffffff;
+            color: #111827;
         }
 
-        /* Glassmorphism Classes */
+        /* SaaS Card Classes */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(99, 102, 241, 0.20);
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.03);
         }
 
         .glass-panel-subtle {
-            background: rgba(10, 15, 29, 0.65);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(99, 102, 241, 0.15);
+            background: #F8FAFC;
+            border: 1px solid #E5E7EB;
         }
 
         /* Custom Scrollbar */
@@ -75,15 +69,16 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a0f1d;
+            background: #F8FAFC;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155;
+            background: #CBD5E1;
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #06b6d4;
+            background: #94A3B8;
         }
+
 
         /* Pulse glow animation */
         @keyframes pulseGlow {
@@ -119,16 +114,16 @@
 
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                            Dron AI <span class="text-[11px] px-2 py-0.5 rounded-full bg-violet-500/20 border border-violet-500/40 text-violet-300 font-mono">NeuroMock v2.4</span>
+                        <h1 class="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                            Dron AI <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">NeuroMock v2.4</span>
                         </h1>
                     </div>
                     <div class="flex items-center gap-2 mt-0.5">
-                        <span id="roundTrackerText" class="text-xs font-mono text-neonCyan font-semibold tracking-wide">
+                        <span id="roundTrackerText" class="text-xs font-mono text-emerald-600 font-semibold tracking-wide">
                             Round 2 of 4
                         </span>
-                        <span class="text-slate-600">•</span>
-                        <span id="roundSubcategoryText" class="text-xs text-slate-400 truncate max-w-xs">
+                        <span class="text-slate-300">•</span>
+                        <span id="roundSubcategoryText" class="text-xs text-slate-500 truncate max-w-xs">
                             System Design & Distributed Scalability
                         </span>
                     </div>
@@ -140,7 +135,7 @@
                 <!-- Target Role Dropdown -->
                 <div class="relative">
                     <label for="roleSelector" class="sr-only">Target Role</label>
-                    <select id="roleSelector" class="bg-slate-900/90 text-slate-200 border border-indigo-500/30 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all cursor-pointer shadow-inner">
+                    <select id="roleSelector" class="bg-white text-slate-800 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all cursor-pointer shadow-sm">
                         <option value="Fullstack Engineer">Fullstack Engineer</option>
                         <option value="AI/ML Engineer">AI/ML Engineer</option>
                         <option value="Product Manager">Product Manager</option>
@@ -150,27 +145,27 @@
                 </div>
 
                 <!-- Difficulty Segmented Toggle -->
-                <div id="difficultyContainer" class="flex items-center bg-slate-900/90 border border-indigo-500/30 rounded-lg p-0.5">
-                    <button data-diff="Junior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Junior</button>
-                    <button data-diff="Mid-Level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Mid-Level</button>
-                    <button data-diff="Senior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all">Senior</button>
-                    <button data-diff="FAANG-level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">FAANG-level</button>
+                <div id="difficultyContainer" class="flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5">
+                    <button data-diff="Junior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition-all">Junior</button>
+                    <button data-diff="Mid-Level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition-all">Mid-Level</button>
+                    <button data-diff="Senior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-white text-emerald-700 border border-slate-200 shadow-sm font-semibold transition-all">Senior</button>
+                    <button data-diff="FAANG-level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition-all">FAANG-level</button>
                 </div>
 
                 <!-- Performance Analytics & History Button -->
-                <button id="openHistoryBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/70 border border-indigo-500/30 text-xs font-medium text-slate-200 hover:text-cyan-300 transition-all shadow-sm">
-                    <i data-lucide="history" class="w-3.5 h-3.5 text-neonCyan"></i>
+                <button id="openHistoryBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 hover:text-emerald-700 transition-all shadow-sm">
+                    <i data-lucide="history" class="w-3.5 h-3.5 text-emerald-600"></i>
                     <span>Past Sessions</span>
                 </button>
 
                 <!-- Return to Interview Hub -->
-                <a href="interview.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/70 border border-cyan-500/40 text-xs font-medium text-cyan-300 hover:text-white transition-all shadow-sm">
-                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-neonCyan"></i>
+                <a href="interview.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs font-medium text-emerald-700 transition-all shadow-sm">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-emerald-600"></i>
                     <span>Q&amp;A Hub</span>
                 </a>
 
-                <a href="dashboard.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm">
-                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-slate-400"></i>
+                <a href="dashboard.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 transition-all shadow-sm">
+                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-slate-500"></i>
                     <span>Dashboard</span>
                 </a>
             </div>
@@ -190,39 +185,40 @@
             <!-- A. Question Display Banner -->
             <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card relative overflow-hidden">
                 <!-- Glowing accent spheres -->
-                <div class="absolute -right-24 -top-24 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -right-24 -top-24 w-72 h-72 bg-emerald-100/60 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-emerald-50/80 rounded-full blur-3xl pointer-events-none"></div>
 
                 <!-- Banner Header: Category Pill & Audio TTS Playback -->
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                        <span id="questionCategoryPill" class="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-neon-cyan">
+                        <span id="questionCategoryPill" class="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm">
                             System Design
                         </span>
-                        <span id="questionDifficultyPill" class="text-xs font-mono text-slate-400 px-2.5 py-0.5 rounded bg-slate-800/80 border border-slate-700/60">
+                        <span id="questionDifficultyPill" class="text-xs font-mono text-slate-600 px-2.5 py-0.5 rounded bg-slate-100 border border-slate-200">
                             Senior Level
                         </span>
-                        <span id="questionRolePill" class="text-xs font-mono text-violet-300 px-2.5 py-0.5 rounded bg-violet-500/10 border border-violet-500/20">
+                        <span id="questionRolePill" class="text-xs font-mono text-slate-600 px-2.5 py-0.5 rounded bg-slate-100 border border-slate-200">
                             Fullstack Engineer
                         </span>
                     </div>
 
                     <!-- Read Question Audio Button -->
-                    <button id="readQuestionBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all">
-                        <i data-lucide="volume-2" class="w-4 h-4 text-neonCyan"></i>
+                    <button id="readQuestionBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 transition-all shadow-sm">
+                        <i data-lucide="volume-2" class="w-4 h-4 text-emerald-600"></i>
                         <span id="readQuestionLabel">Read Question (TTS)</span>
                     </button>
                 </div>
 
                 <!-- Primary Question Title -->
-                <h2 id="questionTitle" class="text-xl md:text-2xl font-extrabold text-white tracking-tight mb-3">
+                <h2 id="questionTitle" class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
                     Design a Real-Time Collaborative Document Editing Service
                 </h2>
 
                 <!-- Scenario Details -->
-                <p id="questionScenario" class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+                <p id="questionScenario" class="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
                     Architect a Google Docs-like collaborative editor serving 500,000 peak concurrent active documents. Multiple users can edit the same document simultaneously with sub-50ms latency. Explain conflict resolution (CRDT vs OT), live transport protocols, persistence tiers, and offline resynchronization.
                 </p>
+
 
                 <!-- Expandable Accordions: Interviewer Persona & Architectural Hints -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4 border-t border-slate-800">

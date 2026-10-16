@@ -42,10 +42,6 @@
 
             <!-- Minimalist Navigation Links -->
             <nav class="landing-nav" aria-label="Main Navigation">
-                <a href="#engines" class="landing-nav-link active">
-                    <i class="fa-solid fa-cubes"></i>
-                    <span>Engines</span>
-                </a>
                 <a href="dashboard.html" class="landing-nav-link">
                     <i class="fa-solid fa-chart-pie"></i>
                     <span>Mentorship Hub</span>
@@ -66,16 +62,10 @@
 
             <!-- Right Utilities & Status -->
             <div class="landing-header-actions">
-                <div class="engine-live-pill" title="Inference Engine Ready (<2ms latency)">
-                    <span class="status-indicator-dot"></span>
-                    <span class="status-indicator-text">SYSTEM ONLINE</span>
+                <div class="engine-live-pill checking" id="system-status-pill" title="Checking AI Engine &amp; Backend status...">
+                    <span class="status-indicator-dot" id="system-status-dot"></span>
+                    <span class="status-indicator-text" id="system-status-text">CHECKING...</span>
                 </div>
-                <a href="input.html" class="btn-gold-outline">
-                    <span><i class="fa-solid fa-bolt"></i> Quick Start</span>
-                </a>
-                <a href="dashboard.html" class="btn-gold-primary">
-                    <span>Open Hub <i class="fa-solid fa-arrow-right"></i></span>
-                </a>
             </div>
         </div>
     </header>
@@ -93,50 +83,69 @@
                 
                 <!-- AI Engineering Tag -->
                 <div class="hero-eyebrow-badge fade-in-element" style="--stagger: 0.1s;">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>QUANTITATIVE STUDENT GUIDANCE SYSTEM • 3RD YEAR CAPSTONE</span>
+                    <span class="status-indicator-dot" style="width: 7px; height: 7px; background: #16A34A; box-shadow: 0 0 8px #22C55E;"></span>
+                    <span>AI-POWERED STUDENT CAREER &amp; PLACEMENT INTELLIGENCE</span>
                 </div>
 
-                <!-- Core Philosophy Quote -->
-                <div class="hero-quote-wrapper fade-in-element" style="--stagger: 0.25s;">
+                <!-- Core Headline -->
+                <div class="hero-quote-wrapper fade-in-element" style="--stagger: 0.2s;">
                     <h1 class="hero-quote-text">
-                        <span class="quote-phrase phrase-1">Know where you stand.</span>
-                        <span class="quote-phrase phrase-2">Know where you can go.</span>
-                        <span class="quote-phrase phrase-3">Know what to do next.</span>
+                        <span class="quote-phrase phrase-1">From Campus to Career,</span>
+                        <span class="quote-phrase phrase-2">Powered by Predictive Intelligence.</span>
                     </h1>
                 </div>
 
-                <!-- Subtle Golden Accent Line -->
-                <div class="hero-gold-divider fade-in-element" style="--stagger: 0.35s;">
-                    <span class="gold-line-glow"></span>
-                </div>
-
-                <!-- Dynamic Fading Subtitle -->
-                <p class="hero-subtitle-text fade-in-element" id="hero-subtitle" style="--stagger: 0.45s;">
-                    <span class="subtitle-static">Transforming cold student data into </span>
-                    <span class="subtitle-dynamic" id="dynamic-subtitle-target">actionable intelligence.</span>
+                <!-- Descriptive Subtitle -->
+                <p class="hero-subtitle-text fade-in-element" id="hero-subtitle" style="--stagger: 0.3s;">
+                    <span>Know where you stand, predict placement probability, and execute actionable milestone roadmaps.</span>
                 </p>
 
-                <!-- Telemetry Metrics Strip -->
-                <div class="hero-metrics-strip fade-in-element" style="--stagger: 0.55s;">
-                    <div class="metric-item">
-                        <span class="metric-val">13D</span>
-                        <span class="metric-lbl">Feature Vectors</span>
+                <!-- Hero Action Buttons -->
+                <div class="hero-cta-actions fade-in-element" style="--stagger: 0.4s;">
+                    <a href="dashboard.html" class="hero-cta-primary">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Explore Student Dashboard</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Modern Feature Stat Cards (Replacing the old box) -->
+                <div class="hero-capabilities-grid fade-in-element" style="--stagger: 0.5s;">
+                    <div class="hero-cap-card">
+                        <div class="cap-card-icon">
+                            <i class="fa-solid fa-dna"></i>
+                        </div>
+                        <div class="cap-card-info">
+                            <span class="cap-card-title">13D Vectors</span>
+                            <span class="cap-card-desc">Academic &amp; Skill Profiling</span>
+                        </div>
                     </div>
-                    <div class="metric-sep"></div>
-                    <div class="metric-item">
-                        <span class="metric-val">&lt; 2ms</span>
-                        <span class="metric-lbl">Inference Latency</span>
+                    <div class="hero-cap-card">
+                        <div class="cap-card-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div class="cap-card-info">
+                            <span class="cap-card-title">&lt; 2ms Latency</span>
+                            <span class="cap-card-desc">Real-Time Inference</span>
+                        </div>
                     </div>
-                    <div class="metric-sep"></div>
-                    <div class="metric-item">
-                        <span class="metric-val">XGBoost</span>
-                        <span class="metric-lbl">Probability Engine</span>
+                    <div class="hero-cap-card">
+                        <div class="cap-card-icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <div class="cap-card-info">
+                            <span class="cap-card-title">XGBoost ML</span>
+                            <span class="cap-card-desc">Placement Probability</span>
+                        </div>
                     </div>
-                    <div class="metric-sep"></div>
-                    <div class="metric-item">
-                        <span class="metric-val">Cosine</span>
-                        <span class="metric-lbl">Vector Alignment</span>
+                    <div class="hero-cap-card">
+                        <div class="cap-card-icon">
+                            <i class="fa-solid fa-compass"></i>
+                        </div>
+                        <div class="cap-card-info">
+                            <span class="cap-card-title">Cosine Match</span>
+                            <span class="cap-card-desc">Career Role Alignment</span>
+                        </div>
                     </div>
                 </div>
 
@@ -361,13 +370,6 @@
             </div>
             <div class="footer-center">
                 <span class="footer-copy">3rd-Year Engineering Capstone &bull; Built with Flask &amp; Vanilla Web Technologies</span>
-            </div>
-            <div class="footer-right">
-                <a href="dashboard.html" class="footer-link">Dashboard</a>
-                <a href="interview.html" class="footer-link">Interview Prep</a>
-                <a href="softskills.html" class="footer-link">Soft Skills</a>
-                <a href="input.html" class="footer-link">Data Input</a>
-                <a href="#engines" class="footer-link">Engines</a>
             </div>
         </div>
     </footer>

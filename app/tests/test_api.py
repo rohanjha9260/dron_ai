@@ -559,3 +559,38 @@ class TestRoadmapEndpoints:
         # TODO: Implement
         pass
 
+
+class TestHealthEndpoint:
+    """Tests for /api/health endpoint."""
+
+    def test_health_check_returns_status(self, client):
+        """Test that /api/health returns 200 or 503 and valid json structure."""
+        resp = client.get("/api/health")
+        assert resp.status_code in (200, 503)
+        data = resp.get_json()
+        assert "status" in data
+        assert "backend" in data
+        assert data["backend"] is True
+        assert "models_active" in data
+        assert "models" in data
+        assert "placement_model" in data["models"]
+        assert "career_recommender" in data["models"]
+
+    def test_health_check_exception_returns_fixed_error(self, client, monkeypatch):
+        """Test that unhandled exception in health check returns fixed non-sensitive message."""
+        import ml_engine.model_loader
+
+        def mock_error(*args, **kwargs):
+            raise RuntimeError("Database connection string postgres://secret:pass@internal:5432")
+
+        monkeypatch.setattr(ml_engine.model_loader, "get_placement_model", mock_error)
+        resp = client.get("/api/health")
+        assert resp.status_code == 500
+        data = resp.get_json()
+        assert data["status"] == "offline"
+        assert data["backend"] is True
+        assert data["models_active"] is False
+        assert data["error"] == "Internal health check error"
+        assert "secret" not in data["error"]
+
+

@@ -12,7 +12,7 @@ The create_app() function:
 5. Registers all API blueprints
 """
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 from config import config_by_name
@@ -48,6 +48,9 @@ def create_app(config_name="development"):
     # Register API blueprints
     _register_blueprints(app)
 
+    # Register system health and ML status endpoint
+    _register_health_endpoint(app)
+
     # Create database tables
     # Models MUST be imported before db.create_all() so that SQLAlchemy's metadata
     # registry knows about every table. Without these imports, create_all() is a no-op.
@@ -79,3 +82,53 @@ def _register_blueprints(app):
     app.register_blueprint(predictions_bp, url_prefix="/api/predictions")
     app.register_blueprint(career_bp, url_prefix="/api/career")
     app.register_blueprint(roadmap_bp, url_prefix="/api/roadmap")
+
+
+def _register_health_endpoint(app):
+    """Register public system health and ML engine status endpoint."""
+
+    @app.route("/api/health", methods=["GET"])
+    @limiter.exempt
+    def health_check():
+        try:
+            from ml_engine.model_loader import (
+                get_placement_model,
+                get_career_recommender,
+            )
+
+            placement_model = get_placement_model()
+            career_recommender = get_career_recommender()
+
+            placement_active = bool(
+                placement_model is not None
+                and getattr(placement_model, "is_trained", False)
+                and placement_model.model is not None
+            )
+            career_active = bool(
+                career_recommender is not None
+                and bool(getattr(career_recommender, "career_vectors", None))
+            )
+
+            all_models_active = placement_active and career_active
+            status = "online" if all_models_active else "offline"
+
+            response_data = {
+                "status": status,
+                "backend": True,
+                "models_active": all_models_active,
+                "models": {
+                    "placement_model": placement_active,
+                    "career_recommender": career_active,
+                },
+            }
+            status_code = 200 if all_models_active else 503
+            return jsonify(response_data), status_code
+        except Exception as e:
+            app.logger.error("Health check failed: %s", e, exc_info=True)
+            return jsonify({
+                "status": "offline",
+                "backend": True,
+                "models_active": False,
+                "error": "Internal health check error",
+            }), 500
+

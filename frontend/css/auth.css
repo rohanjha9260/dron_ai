@@ -1,7 +1,7 @@
 /*
  * Dron-AI Authentication Page Styles
  *
- * Theme: Premium Obsidian & Champagne Gold
+ * Theme: Premium White & Mint Green SaaS
  * Styles for login.html and register.html
  */
 
@@ -12,8 +12,8 @@
     min-height: 100vh;
     padding: var(--space-xl) var(--space-md);
     background: 
-        radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 80%, rgba(170, 124, 17, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(134, 239, 172, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
         var(--color-bg-dark);
     position: relative;
     overflow: hidden;
@@ -28,7 +28,7 @@
     right: 0;
     bottom: 0;
     background-image: 
-        radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+        radial-gradient(rgba(134, 239, 172, 0.04) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
@@ -44,7 +44,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(212, 175, 55, 0.2);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(134, 239, 172, 0.2);
     position: relative;
     z-index: 1;
     transition: box-shadow var(--transition-slow), border-color var(--transition-slow);
@@ -55,8 +55,8 @@
 }
 
 .auth-card:hover {
-    border-color: rgba(212, 175, 55, 0.4);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(212, 175, 55, 0.25);
+    border-color: rgba(134, 239, 172, 0.4);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(134, 239, 172, 0.25);
 }
 
 /* Top Gold Glow Accent Line */
@@ -84,8 +84,8 @@
     width: 54px;
     height: 54px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(18, 18, 23, 0.9));
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    background: linear-gradient(135deg, rgba(134, 239, 172, 0.15), #FFFFFF);
+    border: 1px solid rgba(134, 239, 172, 0.35);
     box-shadow: none;
     margin-bottom: var(--space-md);
     color: var(--color-primary);
@@ -216,7 +216,7 @@
 .auth-divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    border-bottom: 1px solid rgba(134, 239, 172, 0.15);
 }
 
 .auth-divider span {
@@ -235,8 +235,8 @@
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-gold);
-    background: rgba(212, 175, 55, 0.06);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: rgba(134, 239, 172, 0.06);
+    border: 1px solid rgba(134, 239, 172, 0.3);
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all var(--transition-base);
@@ -245,7 +245,7 @@
 }
 
 .btn-guest:hover {
-    background: rgba(212, 175, 55, 0.15);
+    background: rgba(134, 239, 172, 0.15);
     border-color: var(--color-primary);
     color: var(--color-text-primary);
     transform: translateY(-1px);

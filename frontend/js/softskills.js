@@ -330,12 +330,12 @@ function initSoftSkillsDiagnostic() {
                             parseInt(sTeam.value),
                             parseInt(sPresence.value)
                         ],
-                        backgroundColor: "rgba(255, 122, 0, 0.22)",
-                        borderColor: "#ff7a00",
-                        pointBackgroundColor: "#ff7a00",
+                        backgroundColor: "rgba(134, 239, 172, 0.25)",
+                        borderColor: "#22C55E",
+                        pointBackgroundColor: "#22C55E",
                         pointBorderColor: "#fff",
                         pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "#ff7a00",
+                        pointHoverBorderColor: "#22C55E",
                         borderWidth: 2
                     },
                     {
@@ -362,16 +362,16 @@ function initSoftSkillsDiagnostic() {
                             backdropColor: "transparent"
                         },
                         grid: {
-                            color: "rgba(255, 255, 255, 0.08)"
+                            color: "#E5E7EB"
                         },
                         angleLines: {
-                            color: "rgba(255, 255, 255, 0.08)"
+                            color: "#E5E7EB"
                         },
                         pointLabels: {
-                            color: "#ffffff",
+                            color: "#111827",
                             font: {
                                 size: 11,
-                                family: "'Plus Jakarta Sans', sans-serif",
+                                family: "'Inter', sans-serif",
                                 weight: "600"
                             }
                         }
@@ -381,7 +381,7 @@ function initSoftSkillsDiagnostic() {
                     legend: {
                         position: "top",
                         labels: {
-                            color: "#ffffff",
+                            color: "#111827",
                             font: {
                                 size: 11,
                                 family: "'Plus Jakarta Sans', sans-serif"
@@ -393,7 +393,7 @@ function initSoftSkillsDiagnostic() {
                         backgroundColor: "#161f30",
                         borderColor: "rgba(255, 122, 0, 0.4)",
                         borderWidth: 1,
-                        titleColor: "#ff7a00",
+                        titleColor: "#22C55E",
                         bodyColor: "#ffffff"
                     }
                 }
