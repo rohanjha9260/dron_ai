@@ -174,7 +174,7 @@ Built on HTTP/2 with binary serialization via Protocol Buffers. Features multipl
         modelAnswer: `<strong>1. Identifying High Variance:</strong><br>
 High variance occurs when an XGBoost model memorizes the training data noise instead of general patterns. Diagnostic sign: Training accuracy is 99% while validation accuracy is 78%.<br><br>
 <strong>2. Remediation Strategies in XGBoost:</strong><br>
-&bull; <strong>Control Tree Complexity:</strong> Lower <code>max_depth</code> (e.g. from 8 down to 3–5) to restrict individual tree expressiveness. Increase <code>min_child_weight</code> to prevent splits on tiny leaf partitions.<br>
+&bull; <strong>Control Tree Complexity:</strong> Lower <code>max_depth</code> (e.g. from 8 down to 3-5) to restrict individual tree expressiveness. Increase <code>min_child_weight</code> to prevent splits on tiny leaf partitions.<br>
 &bull; <strong>Stochastic Regularization:</strong> Set <code>subsample=0.8</code> (sample 80% rows per tree) and <code>colsample_bytree=0.8</code> (sample 80% features per tree) to introduce bagging randomness.<br>
 &bull; <strong>Shrinkage (Learning Rate):</strong> Reduce <code>learning_rate (eta)</code> from 0.3 down to 0.05 and use Early Stopping with validation rounds.<br>
 &bull; <strong>Mathematical Regularization:</strong> Tune <code>reg_lambda</code> (L2 regularization) and <code>reg_alpha</code> (L1 regularization) on leaf weights.`,
@@ -582,7 +582,7 @@ function resetAllFilters() {
     if (companySelect) companySelect.value = "all";
     if (diffSelect) diffSelect.value = "all";
 
-    document.querySelectorAll(".filter-pill").forEach(p => {
+    document.querySelectorAll(".filter-tab").forEach(p => {
         p.classList.toggle("active", p.getAttribute("data-filter") === "all");
     });
 
@@ -591,9 +591,9 @@ function resetAllFilters() {
 
 function initInterviewFilters() {
     // Domain Pills
-    document.querySelectorAll(".filter-pill").forEach(pill => {
+    document.querySelectorAll(".filter-tab").forEach(pill => {
         pill.addEventListener("click", () => {
-            document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".filter-tab").forEach(p => p.classList.remove("active"));
             pill.classList.add("active");
             activeDomain = pill.getAttribute("data-filter");
             applyFilters();

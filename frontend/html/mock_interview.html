@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron AI - Interactive AI Mock Interview & Real-Time Performance Analytics Dashboard">
-    <title>Dron AI — NeuroMock Interview & Analytics Dashboard</title>
+    <meta name="description"
+        content="Dron AI - Interactive AI Mock Interview & Real-Time Performance Analytics Dashboard">
+    <title>Dron AI - NeuroMock Interview & Analytics Dashboard</title>
 
     <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,7 +27,7 @@
                         cyberCard: 'rgba(15, 23, 42, 0.85)',
                         cyberBorder: 'rgba(255, 122, 0, 0.28)',
                         neonCyan: '#ff7a00',
-                        neonViolet: '#ff9838',
+                        neonAmber: '#ff9838',
                         neonEmerald: '#10b981',
                         neonAmber: '#f59e0b',
                     },
@@ -47,7 +51,7 @@
     <style>
         body {
             background-color: #080c14;
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(255, 122, 0, 0.12) 0px, transparent 50%),
                 radial-gradient(at 100% 0%, rgba(255, 152, 56, 0.08) 0px, transparent 50%),
                 radial-gradient(at 50% 100%, rgba(255, 122, 0, 0.06) 0px, transparent 50%);
@@ -74,22 +78,33 @@
             width: 6px;
             height: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: #0a0f1d;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #334155;
-            border-radius: 9999px;
+            border-radius: 3px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #06b6d4;
         }
 
         /* Pulse glow animation */
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.8); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(6, 182, 212, 0.8);
+            }
         }
+
         .animate-pulse-glow {
             animation: pulseGlow 2s infinite ease-in-out;
         }
@@ -100,6 +115,7 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-black">
 
     <!-- ===================================================================== -->
@@ -109,18 +125,22 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <!-- Brand & Progress Tracker -->
             <div class="flex items-center gap-4">
-                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-violet-500/30 border border-cyan-500/30 shadow-neon-cyan">
+                <div
+                    class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-neonAmber/30 border border-cyan-500/30 shadow-neon-cyan">
                     <i data-lucide="cpu" class="w-6 h-6 text-neonCyan"></i>
                     <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-md bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-md h-3 w-3 bg-cyan-500"></span>
                     </span>
                 </div>
 
                 <div>
                     <div class="flex items-center gap-2">
                         <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                            Dron AI <span class="text-[11px] px-2 py-0.5 rounded-full bg-violet-500/20 border border-violet-500/40 text-violet-300 font-mono">NeuroMock v2.4</span>
+                            Dron AI <span
+                                class="text-[11px] px-2 py-0.5 rounded-md bg-neonAmber/20 border border-neonAmber/40 text-neonAmber font-mono">NeuroMock
+                                v2.4</span>
                         </h1>
                     </div>
                     <div class="flex items-center gap-2 mt-0.5">
@@ -140,7 +160,8 @@
                 <!-- Target Role Dropdown -->
                 <div class="relative">
                     <label for="roleSelector" class="sr-only">Target Role</label>
-                    <select id="roleSelector" class="bg-slate-900/90 text-slate-200 border border-indigo-500/30 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all cursor-pointer shadow-inner">
+                    <select id="roleSelector"
+                        class="bg-slate-900/90 text-slate-200 border border-indigo-500/30 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all cursor-pointer shadow-inner">
                         <option value="Fullstack Engineer">Fullstack Engineer</option>
                         <option value="AI/ML Engineer">AI/ML Engineer</option>
                         <option value="Product Manager">Product Manager</option>
@@ -150,26 +171,34 @@
                 </div>
 
                 <!-- Difficulty Segmented Toggle -->
-                <div id="difficultyContainer" class="flex items-center bg-slate-900/90 border border-indigo-500/30 rounded-lg p-0.5">
-                    <button data-diff="Junior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Junior</button>
-                    <button data-diff="Mid-Level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Mid-Level</button>
-                    <button data-diff="Senior" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all">Senior</button>
-                    <button data-diff="FAANG-level" class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">FAANG-level</button>
+                <div id="difficultyContainer"
+                    class="flex items-center bg-slate-900/90 border border-indigo-500/30 rounded-lg p-0.5">
+                    <button data-diff="Junior"
+                        class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Junior</button>
+                    <button data-diff="Mid-Level"
+                        class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">Mid-Level</button>
+                    <button data-diff="Senior"
+                        class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all">Senior</button>
+                    <button data-diff="FAANG-level"
+                        class="diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all">FAANG-level</button>
                 </div>
 
                 <!-- Performance Analytics & History Button -->
-                <button id="openHistoryBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/70 border border-indigo-500/30 text-xs font-medium text-slate-200 hover:text-cyan-300 transition-all shadow-sm">
+                <button id="openHistoryBtn"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/70 border border-indigo-500/30 text-xs font-medium text-slate-200 hover:text-cyan-300 transition-all shadow-sm">
                     <i data-lucide="history" class="w-3.5 h-3.5 text-neonCyan"></i>
                     <span>Past Sessions</span>
                 </button>
 
                 <!-- Return to Interview Hub -->
-                <a href="interview.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/70 border border-cyan-500/40 text-xs font-medium text-cyan-300 hover:text-white transition-all shadow-sm">
+                <a href="interview.html"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/70 border border-cyan-500/40 text-xs font-medium text-cyan-300 hover:text-white transition-all shadow-sm">
                     <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-neonCyan"></i>
                     <span>Q&amp;A Hub</span>
                 </a>
 
-                <a href="dashboard.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm">
+                <a href="dashboard.html"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm">
                     <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-slate-400"></i>
                     <span>Dashboard</span>
                 </a>
@@ -190,25 +219,33 @@
             <!-- A. Question Display Banner -->
             <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card relative overflow-hidden">
                 <!-- Glowing accent spheres -->
-                <div class="absolute -right-24 -top-24 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div
+                    class="absolute -right-24 -top-24 w-72 h-72 bg-neonAmber/10 rounded-md blur-3xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyan-500/10 rounded-md blur-3xl pointer-events-none">
+                </div>
 
                 <!-- Banner Header: Category Pill & Audio TTS Playback -->
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                        <span id="questionCategoryPill" class="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-neon-cyan">
+                        <span id="questionCategoryPill"
+                            class="px-3 py-1 rounded-md text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-neon-cyan">
                             System Design
                         </span>
-                        <span id="questionDifficultyPill" class="text-xs font-mono text-slate-400 px-2.5 py-0.5 rounded bg-slate-800/80 border border-slate-700/60">
+                        <span id="questionDifficultyPill"
+                            class="text-xs font-mono text-slate-400 px-2.5 py-0.5 rounded bg-slate-800/80 border border-slate-700/60">
                             Senior Level
                         </span>
-                        <span id="questionRolePill" class="text-xs font-mono text-violet-300 px-2.5 py-0.5 rounded bg-violet-500/10 border border-violet-500/20">
+                        <span id="questionRolePill"
+                            class="text-xs font-mono text-neonAmber px-2.5 py-0.5 rounded bg-neonAmber/10 border border-neonAmber/20">
                             Fullstack Engineer
                         </span>
                     </div>
 
                     <!-- Read Question Audio Button -->
-                    <button id="readQuestionBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all">
+                    <button id="readQuestionBtn"
+                        class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all">
                         <i data-lucide="volume-2" class="w-4 h-4 text-neonCyan"></i>
                         <span id="readQuestionLabel">Read Question (TTS)</span>
                     </button>
@@ -221,35 +258,48 @@
 
                 <!-- Scenario Details -->
                 <p id="questionScenario" class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
-                    Architect a Google Docs-like collaborative editor serving 500,000 peak concurrent active documents. Multiple users can edit the same document simultaneously with sub-50ms latency. Explain conflict resolution (CRDT vs OT), live transport protocols, persistence tiers, and offline resynchronization.
+                    Architect a Google Docs-like collaborative editor serving 500,000 peak concurrent active documents.
+                    Multiple users can edit the same document simultaneously with sub-50ms latency. Explain conflict
+                    resolution (CRDT vs OT), live transport protocols, persistence tiers, and offline resynchronization.
                 </p>
 
                 <!-- Expandable Accordions: Interviewer Persona & Architectural Hints -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4 border-t border-slate-800">
                     <!-- Persona Accordion -->
                     <div class="glass-panel-subtle rounded-xl p-3.5 transition-all">
-                        <button id="togglePersonaBtn" class="w-full flex items-center justify-between text-left text-xs font-semibold text-violet-300 hover:text-violet-200">
+                        <button id="togglePersonaBtn"
+                            class="w-full flex items-center justify-between text-left text-xs font-semibold text-neonAmber hover:text-neonAmber">
                             <div class="flex items-center gap-2">
-                                <i data-lucide="user-check" class="w-4 h-4 text-neonViolet"></i>
+                                <i data-lucide="user-check" class="w-4 h-4 text-neonAmber"></i>
                                 <span id="personaNameLabel">Interviewer Persona: Dr. Aris Thorne</span>
                             </div>
                             <span id="personaArrow" class="text-slate-400 text-xs font-mono">View ▾</span>
                         </button>
 
                         <div id="personaContent" class="hidden mt-3 text-xs text-slate-300 space-y-2">
-                            <p id="personaTitle" class="text-slate-400 italic">Principal Distributed Systems Architect @ HyperScale</p>
-                            <p id="personaExpectations" class="leading-relaxed">Looking for end-to-end depth: client state representation, transport framing, memory bounds on document state vectors, and graceful fallback when clients disconnect unexpectedly.</p>
+                            <p id="personaTitle" class="text-slate-400 italic">Principal Distributed Systems Architect @
+                                HyperScale</p>
+                            <p id="personaExpectations" class="leading-relaxed">Looking for end-to-end depth: client
+                                state representation, transport framing, memory bounds on document state vectors, and
+                                graceful fallback when clients disconnect unexpectedly.</p>
                             <div id="personaFocusTags" class="flex flex-wrap gap-1.5 pt-1">
-                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">CRDT vs OT</span>
-                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">WebSocket Fanout</span>
-                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">Vector Clocks</span>
+                                <span
+                                    class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">CRDT
+                                    vs OT</span>
+                                <span
+                                    class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">WebSocket
+                                    Fanout</span>
+                                <span
+                                    class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">Vector
+                                    Clocks</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Hints Accordion -->
                     <div class="glass-panel-subtle rounded-xl p-3.5 transition-all">
-                        <button id="toggleHintsBtn" class="w-full flex items-center justify-between text-left text-xs font-semibold text-cyan-300 hover:text-cyan-200">
+                        <button id="toggleHintsBtn"
+                            class="w-full flex items-center justify-between text-left text-xs font-semibold text-cyan-300 hover:text-cyan-200">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="lightbulb" class="w-4 h-4 text-neonCyan"></i>
                                 <span>Architectural Hints (<span id="hintsCount">3</span>)</span>
@@ -258,9 +308,12 @@
                         </button>
 
                         <ul id="hintsList" class="hidden mt-3 space-y-1.5 text-xs text-slate-300 list-disc list-inside">
-                            <li>Contrast Operational Transformation (central server authority) with Conflict-free Replicated Data Types (peer-to-peer convergence).</li>
-                            <li>How will you partition the active connection servers so that collaborators on Document #482 hit the same cluster or pub/sub channel?</li>
-                            <li>Consider snapshot frequency in an Append-Only Event Store versus compaction in PostgreSQL or DynamoDB.</li>
+                            <li>Contrast Operational Transformation (central server authority) with Conflict-free
+                                Replicated Data Types (peer-to-peer convergence).</li>
+                            <li>How will you partition the active connection servers so that collaborators on Document
+                                #482 hit the same cluster or pub/sub channel?</li>
+                            <li>Consider snapshot frequency in an Append-Only Event Store versus compaction in
+                                PostgreSQL or DynamoDB.</li>
                         </ul>
                     </div>
                 </div>
@@ -269,21 +322,26 @@
             <!-- B. Candidate Response Studio -->
             <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card">
                 <!-- Studio Header Bar -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
                     <!-- Tabbed Input Toggle -->
                     <div class="flex items-center gap-2 bg-slate-900/80 p-1 rounded-xl border border-indigo-500/20">
-                        <button id="tabVoiceBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan transition-all">
-                            <span>🎙️ Voice Mode</span>
-                            <span id="voiceActivePing" class="hidden w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <button id="tabVoiceBtn"
+                            class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan transition-all">
+                            <span><i class="fa-solid fa-microphone"></i> Voice Mode</span>
+                            <span id="voiceActivePing"
+                                class="hidden w-2 h-2 rounded-md bg-emerald-400 animate-ping"></span>
                         </button>
-                        <button id="tabWrittenBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all">
-                            <span>⌨️ Written Response</span>
+                        <button id="tabWrittenBtn"
+                            class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all">
+                            <span><i class="fa-solid fa-keyboard"></i> Written Response</span>
                         </button>
                     </div>
 
                     <!-- Timer Countdown Badge -->
                     <div class="flex items-center gap-3">
-                        <div id="timerBadge" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-700 bg-slate-900/80 font-mono text-sm font-bold text-cyan-300 transition-all">
+                        <div id="timerBadge"
+                            class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-700 bg-slate-900/80 font-mono text-sm font-bold text-cyan-300 transition-all">
                             <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i>
                             <span id="timerCountdown">03:00</span>
                         </div>
@@ -296,12 +354,15 @@
                     <!-- Left / Primary Input Area (8 cols) -->
                     <div class="lg:col-span-8 flex flex-col justify-between">
                         <!-- Voice Mode Container -->
-                        <div id="voiceModeContainer" class="flex flex-col items-center justify-center p-8 glass-panel-subtle rounded-xl min-h-[220px]">
+                        <div id="voiceModeContainer"
+                            class="flex flex-col items-center justify-center p-8 glass-panel-subtle rounded-xl min-h-[220px]">
                             <!-- Animated Canvas Waveform -->
-                            <canvas id="waveformCanvas" width="500" height="70" class="w-full max-w-md h-[70px] mb-6 rounded-lg"></canvas>
+                            <canvas id="waveformCanvas" width="500" height="70"
+                                class="w-full max-w-md h-[70px] mb-6 rounded-lg"></canvas>
 
                             <div class="flex flex-col items-center gap-3">
-                                <button id="recordToggleBtn" class="flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-neon-cyan transition-all">
+                                <button id="recordToggleBtn"
+                                    class="flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-neon-cyan transition-all">
                                     <i data-lucide="mic" id="recordIcon" class="w-5 h-5"></i>
                                     <span id="recordBtnLabel">Click to Speak (Record)</span>
                                 </button>
@@ -311,7 +372,8 @@
                             </div>
 
                             <!-- Real-time Transcription Stream Preview -->
-                            <div id="liveTranscriptionCard" class="w-full mt-4 p-3 rounded-lg bg-slate-900/80 border border-slate-800 text-xs text-slate-300 font-mono hidden">
+                            <div id="liveTranscriptionCard"
+                                class="w-full mt-4 p-3 rounded-lg bg-slate-900/80 border border-slate-800 text-xs text-slate-300 font-mono hidden">
                                 <span class="text-cyan-400 font-bold">Transcription Preview:</span>
                                 <span id="liveTranscriptionText" class="ml-1 text-slate-200"></span>
                             </div>
@@ -322,7 +384,8 @@
                             <textarea id="writtenResponseInput" placeholder="Structure your answer systematically:
 1. Requirements & Back-of-the-envelope Scale Calculation
 2. Core Component Design (Ingress, Messaging, Data Store)
-3. Failure Boundaries, Race Conditions, and Resiliency Protocols..." class="w-full h-56 bg-slate-900/80 text-slate-200 border border-indigo-500/25 rounded-xl p-4 text-sm leading-relaxed focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 resize-none font-sans placeholder-slate-600 transition-all shadow-inner"></textarea>
+3. Failure Boundaries, Race Conditions, and Resiliency Protocols..."
+                                class="w-full h-56 bg-slate-900/80 text-slate-200 border border-indigo-500/25 rounded-xl p-4 text-sm leading-relaxed focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 resize-none font-sans placeholder-slate-600 transition-all shadow-inner"></textarea>
                             <div class="flex justify-between items-center text-xs font-mono text-slate-400 mt-2 px-1">
                                 <span id="wordCountLabel">0 words</span>
                                 <span id="charCountLabel">0 characters</span>
@@ -331,33 +394,41 @@
                     </div>
 
                     <!-- Right: Simulated Video PIP & AI Telemetry Badges (4 cols) -->
-                    <div class="lg:col-span-4 flex flex-col justify-between glass-panel-subtle rounded-xl p-4 relative overflow-hidden">
+                    <div
+                        class="lg:col-span-4 flex flex-col justify-between glass-panel-subtle rounded-xl p-4 relative overflow-hidden">
                         <div class="flex items-center justify-between mb-3">
-                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span
+                                class="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-md bg-emerald-400 animate-pulse"></span>
                                 Vision Telemetry
                             </span>
-                            <button id="cameraToggleBtn" class="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 underline">
+                            <button id="cameraToggleBtn"
+                                class="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 underline">
                                 Toggle Live Camera
                             </button>
                         </div>
 
                         <!-- Video PIP or Cyber Avatar Feed -->
-                        <div class="w-full h-36 bg-slate-950 rounded-lg border border-indigo-500/30 overflow-hidden relative flex items-center justify-center">
+                        <div
+                            class="w-full h-36 bg-slate-950 rounded-lg border border-indigo-500/30 overflow-hidden relative flex items-center justify-center">
                             <!-- Live webcam video stream element -->
-                            <video id="liveWebcamVideo" autoplay playsinline muted class="w-full h-full object-cover transform -scale-x-100 hidden"></video>
+                            <video id="liveWebcamVideo" autoplay playsinline muted
+                                class="w-full h-full object-cover transform -scale-x-100 hidden"></video>
 
                             <!-- Cyber Avatar Fallback -->
-                            <div id="cyberAvatarFallback" class="flex flex-col items-center justify-center p-2 text-center">
-                                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500/30 via-violet-500/30 to-indigo-600/30 border border-cyan-400/40 flex items-center justify-center mb-1">
+                            <div id="cyberAvatarFallback"
+                                class="flex flex-col items-center justify-center p-2 text-center">
+                                <div
+                                    class="w-14 h-14 rounded-md bg-gradient-to-tr from-cyan-500/30 via-neonAmber/30 to-indigo-600/30 border border-cyan-400/40 flex items-center justify-center mb-1">
                                     <i data-lucide="user" class="w-7 h-7 text-cyan-300"></i>
                                 </div>
                                 <span class="text-[10px] text-slate-400 font-mono">Neural PIP Avatar</span>
                             </div>
 
                             <!-- Neural Face Mesh Indicator Overlay -->
-                            <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-cyan-300 flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                            <div
+                                class="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-cyan-300 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-md bg-cyan-400"></span>
                                 Face Mesh: Locked
                             </div>
                         </div>
@@ -366,7 +437,8 @@
                         <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-800">
                             <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
                                 <div class="text-[10px] text-slate-400 font-mono">Eye Contact</div>
-                                <div id="telemetryEyeContact" class="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                                <div id="telemetryEyeContact"
+                                    class="text-xs font-bold text-emerald-400 flex items-center gap-1">
                                     <span>94%</span>
                                     <span class="text-[9px] text-slate-400 font-normal">Optimal</span>
                                 </div>
@@ -374,12 +446,13 @@
 
                             <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
                                 <div class="text-[10px] text-slate-400 font-mono">Lighting & Audio</div>
-                                <div id="telemetryLighting" class="text-xs font-bold text-cyan-400">Optimal (48kHz)</div>
+                                <div id="telemetryLighting" class="text-xs font-bold text-cyan-400">Optimal (48kHz)
+                                </div>
                             </div>
 
                             <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
                                 <div class="text-[10px] text-slate-400 font-mono">Speech Pacing</div>
-                                <div id="telemetryPacing" class="text-xs font-bold text-violet-300">135 WPM</div>
+                                <div id="telemetryPacing" class="text-xs font-bold text-neonAmber">135 WPM</div>
                             </div>
 
                             <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
@@ -393,19 +466,23 @@
                 <!-- Quick Action Buttons Footer -->
                 <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
                     <div class="flex items-center gap-2">
-                        <button id="startTimerBtn" class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition-all shadow-neon-cyan">
+                        <button id="startTimerBtn"
+                            class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition-all shadow-neon-cyan">
                             Start Answering
                         </button>
-                        <button id="redoBtn" class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
+                        <button id="redoBtn"
+                            class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
                             Redo
                         </button>
-                        <button id="skipBtn" class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
-                            Skip Question ➔
+                        <button id="skipBtn"
+                            class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
+                            Skip Question &rarr;
                         </button>
                     </div>
 
                     <!-- Submit Button with Neural Loading State -->
-                    <button id="submitEvaluationBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white shadow-neon-violet transition-all">
+                    <button id="submitEvaluationBtn"
+                        class="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-neonAmber hover:from-cyan-400 hover:to-neonAmber text-white shadow-neon-cyan transition-all">
                         <i data-lucide="sparkles" class="w-4 h-4"></i>
                         <span id="submitBtnLabel">Submit for AI Evaluation</span>
                     </button>
@@ -419,10 +496,12 @@
         <section id="evaluationPanel" class="space-y-6">
             <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card space-y-6">
                 <!-- Top Banner: Summary Feedback & Overall Readiness Gauge -->
-                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+                <div
+                    class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
                     <div class="space-y-2 max-w-2xl">
                         <div class="flex items-center gap-2">
-                            <span class="px-3 py-1 rounded-md text-xs font-mono font-bold bg-violet-500/20 text-violet-300 border border-violet-500/40">
+                            <span
+                                class="px-3 py-1 rounded-md text-xs font-mono font-bold bg-neonAmber/20 text-neonAmber border border-neonAmber/40">
                                 AI Evaluation Report
                             </span>
                             <span id="evalTimestamp" class="text-xs text-slate-400 font-mono">Just Now</span>
@@ -431,28 +510,37 @@
                             Performance Breakdown & Readiness Verdict
                         </h3>
                         <p id="evalSummaryText" class="text-sm text-slate-300 leading-relaxed">
-                            Exceptional command of distributed systems nuances. The distinction between Token Bucket and Sliding Window Log with Lua atomicity demonstrated Staff-level maturity under high concurrency.
+                            Exceptional command of distributed systems nuances. The distinction between Token Bucket and
+                            Sliding Window Log with Lua atomicity demonstrated Staff-level maturity under high
+                            concurrency.
                         </p>
                     </div>
 
                     <!-- Circular Score Gauge -->
                     <div class="shrink-0 w-full lg:w-auto flex justify-center">
-                        <div class="flex flex-col items-center justify-center p-6 glass-panel-subtle rounded-2xl border border-indigo-500/20 shadow-inner">
+                        <div
+                            class="flex flex-col items-center justify-center p-6 glass-panel-subtle rounded-2xl border border-indigo-500/20 shadow-inner">
                             <div class="relative w-36 h-36 flex items-center justify-center">
                                 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
                                     <!-- Background Track -->
-                                    <circle cx="64" cy="64" r="54" stroke="#1e293b" stroke-width="10" fill="transparent"></circle>
+                                    <circle cx="64" cy="64" r="54" stroke="#1e293b" stroke-width="10"
+                                        fill="transparent"></circle>
                                     <!-- Animated Progress Ring (Circumference ~ 339.29) -->
-                                    <circle id="gaugeProgressCircle" class="gauge-circle" cx="64" cy="64" r="54" stroke="#10b981" stroke-width="10" stroke-dasharray="339.29" stroke-dashoffset="30.5" stroke-linecap="round" fill="transparent"></circle>
+                                    <circle id="gaugeProgressCircle" class="gauge-circle" cx="64" cy="64" r="54"
+                                        stroke="#10b981" stroke-width="10" stroke-dasharray="339.29"
+                                        stroke-dashoffset="30.5" stroke-linecap="round" fill="transparent"></circle>
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span id="gaugeScoreNumber" class="text-3xl font-black tracking-tight text-white font-mono">
+                                    <span id="gaugeScoreNumber"
+                                        class="text-3xl font-black tracking-tight text-white font-mono">
                                         91<span class="text-xs text-slate-400 font-sans">%</span>
                                     </span>
-                                    <span class="text-[10px] uppercase font-mono tracking-widest text-slate-400 mt-0.5">Readiness</span>
+                                    <span
+                                        class="text-[10px] uppercase font-mono tracking-widest text-slate-400 mt-0.5">Readiness</span>
                                 </div>
                             </div>
-                            <div id="gaugeGradeBadge" class="mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border border-emerald-500/30 text-emerald-400 shadow-neon-cyan">
+                            <div id="gaugeGradeBadge"
+                                class="mt-4 px-3 py-1 rounded-md text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border border-emerald-500/30 text-emerald-400 shadow-neon-cyan">
                                 Strong Hire
                             </div>
                         </div>
@@ -461,7 +549,8 @@
 
                 <!-- Dimensional Metric Bars (Out of 10) -->
                 <div>
-                    <h4 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
+                    <h4
+                        class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
                         <i data-lucide="bar-chart-3" class="w-4 h-4 text-neonCyan"></i>
                         Dimensional Metric Bars (Out of 10)
                     </h4>
@@ -475,10 +564,13 @@
                                     <span id="mScore1">9.4</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar1" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 94%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar1"
+                                    class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000"
+                                    style="width: 94%;"></div>
                             </div>
-                            <p id="mDesc1" class="text-[11px] text-slate-400 leading-snug">Flawless distributed concurrency modeling with Redis Lua scripts and local proxy caches.</p>
+                            <p id="mDesc1" class="text-[11px] text-slate-400 leading-snug">Flawless distributed
+                                concurrency modeling with Redis Lua scripts and local proxy caches.</p>
                         </div>
 
                         <!-- Metric 2 -->
@@ -489,38 +581,49 @@
                                     <span id="mScore2">8.8</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar2" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 88%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar2"
+                                    class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000"
+                                    style="width: 88%;"></div>
                             </div>
-                            <p id="mDesc2" class="text-[11px] text-slate-400 leading-snug">Clear architectural progression from single instance to clustered Envoy proxies.</p>
+                            <p id="mDesc2" class="text-[11px] text-slate-400 leading-snug">Clear architectural
+                                progression from single instance to clustered Envoy proxies.</p>
                         </div>
 
                         <!-- Metric 3 -->
                         <div class="glass-panel-subtle rounded-xl p-4">
                             <div class="flex justify-between items-center mb-1.5">
-                                <span class="text-xs font-semibold text-slate-200">3. Delivery & Communication Poise</span>
+                                <span class="text-xs font-semibold text-slate-200">3. Delivery & Communication
+                                    Poise</span>
                                 <span class="text-xs font-mono font-bold text-cyan-300">
                                     <span id="mScore3">9.2</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar3" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 92%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar3"
+                                    class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000"
+                                    style="width: 92%;"></div>
                             </div>
-                            <p id="mDesc3" class="text-[11px] text-slate-400 leading-snug">Steady pacing (138 WPM), sustained eye contact, and negligible filler words.</p>
+                            <p id="mDesc3" class="text-[11px] text-slate-400 leading-snug">Steady pacing (138 WPM),
+                                sustained eye contact, and negligible filler words.</p>
                         </div>
 
                         <!-- Metric 4 -->
                         <div class="glass-panel-subtle rounded-xl p-4">
                             <div class="flex justify-between items-center mb-1.5">
-                                <span class="text-xs font-semibold text-slate-200">4. Conciseness & Time Management</span>
+                                <span class="text-xs font-semibold text-slate-200">4. Conciseness & Time
+                                    Management</span>
                                 <span class="text-xs font-mono font-bold text-cyan-300">
                                     <span id="mScore4">9.0</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar4" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 90%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar4"
+                                    class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000"
+                                    style="width: 90%;"></div>
                             </div>
-                            <p id="mDesc4" class="text-[11px] text-slate-400 leading-snug">Concluded cleanly in 2m 44s, leaving sufficient margin for follow-up cross-examination.</p>
+                            <p id="mDesc4" class="text-[11px] text-slate-400 leading-snug">Concluded cleanly in 2m 44s,
+                                leaving sufficient margin for follow-up cross-examination.</p>
                         </div>
                     </div>
                 </div>
@@ -537,16 +640,19 @@
                         </div>
                         <ul id="keyStrengthsList" class="space-y-2">
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
-                                <span>Atomic execution via Redis Lua scripts effectively prevented distributed race conditions.</span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span>Atomic execution via Redis Lua scripts effectively prevented distributed race
+                                    conditions.</span>
                             </li>
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
-                                <span>Proactively factored in local proxy caching to safeguard the central Redis cluster against hot-key bottlenecks.</span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span>Proactively factored in local proxy caching to safeguard the central Redis cluster
+                                    against hot-key bottlenecks.</span>
                             </li>
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
-                                <span>Clearly distinguished between client-side throttling (HTTP 429 Retry-After) and server-side traffic shedding.</span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span>Clearly distinguished between client-side throttling (HTTP 429 Retry-After) and
+                                    server-side traffic shedding.</span>
                             </li>
                         </ul>
                     </div>
@@ -561,12 +667,14 @@
                         </div>
                         <ul id="criticalGapsList" class="space-y-2">
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"></span>
-                                <span>Did not explicitly address NTP clock drift issues across distributed nodes when calculating sliding timestamps.</span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-amber-400 mt-1.5 shrink-0"></span>
+                                <span>Did not explicitly address NTP clock drift issues across distributed nodes when
+                                    calculating sliding timestamps.</span>
                             </li>
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"></span>
-                                <span>Could further clarify fail-open versus fail-closed policy if the Redis caching tier undergoes split-brain partitioning.</span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-amber-400 mt-1.5 shrink-0"></span>
+                                <span>Could further clarify fail-open versus fail-closed policy if the Redis caching
+                                    tier undergoes split-brain partitioning.</span>
                             </li>
                         </ul>
                     </div>
@@ -576,42 +684,46 @@
                 <div class="glass-panel-subtle rounded-xl p-4 transition-all">
                     <button id="toggleSampleAnswerBtn" class="w-full flex items-center justify-between text-left">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
-                                <span class="text-xs">🏆</span>
+                            <div
+                                class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+                                <span class="text-xs"><i class="fa-solid fa-award"></i> </span>
                             </div>
                             <div>
                                 <h5 class="text-sm font-bold text-white flex items-center gap-2">
-                                    "How to Answer Better" — Gold Standard Model Answer
+                                    "How to Answer Better" - Gold Standard Model Answer
                                 </h5>
-                                <p class="text-[11px] text-slate-400">Curated Staff-level benchmark with phase breakdown</p>
+                                <p class="text-[11px] text-slate-400">Curated Staff-level benchmark with phase breakdown
+                                </p>
                             </div>
                         </div>
-                        <span id="sampleAnswerAction" class="text-xs font-mono text-cyan-400 hover:underline">Expand Answer ▾</span>
+                        <span id="sampleAnswerAction" class="text-xs font-mono text-cyan-400 hover:underline">Expand
+                            Answer ▾</span>
                     </button>
 
                     <div id="sampleAnswerBody" class="hidden mt-4 pt-4 border-t border-slate-800 space-y-4">
                         <p id="goldAnswerSummary" class="text-xs text-slate-300 italic">
-                            A Staff-level answer combines high-level API contracts with deep atomic database guarantees and edge CDN tiering.
+                            A Staff-level answer combines high-level API contracts with deep atomic database guarantees
+                            and edge CDN tiering.
                         </p>
 
                         <!-- Breakdown Phases -->
                         <div id="goldAnswerBreakdown" class="grid grid-cols-1 md:grid-cols-3 gap-3">
                             <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-                                <div class="text-xs font-semibold text-violet-300 mb-1.5">1. Requirements & Scoping</div>
+                                <div class="text-xs font-semibold text-neonAmber mb-1.5">1. Requirements & Scoping</div>
                                 <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
                                     <li>100k peak QPS, 5ms SLA budget</li>
                                     <li>Sliding window precision guarantees</li>
                                 </ul>
                             </div>
                             <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-                                <div class="text-xs font-semibold text-violet-300 mb-1.5">2. Algorithmic Choice</div>
+                                <div class="text-xs font-semibold text-neonAmber mb-1.5">2. Algorithmic Choice</div>
                                 <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
                                     <li>Sliding Window Counter in Redis Sorted Sets</li>
                                     <li>Atomic Lua execution to prevent race conditions</li>
                                 </ul>
                             </div>
                             <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-                                <div class="text-xs font-semibold text-violet-300 mb-1.5">3. Reliability & Faults</div>
+                                <div class="text-xs font-semibold text-neonAmber mb-1.5">3. Reliability & Faults</div>
                                 <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
                                     <li>Local Envoy in-memory token bucket</li>
                                     <li>Fail-open policy under network partitions</li>
@@ -620,9 +732,15 @@
                         </div>
 
                         <!-- Verbatim Script Excerpt -->
-                        <div class="p-3.5 bg-slate-950/80 rounded-lg border border-slate-800 text-xs text-slate-300 font-mono leading-relaxed">
+                        <div
+                            class="p-3.5 bg-slate-950/80 rounded-lg border border-slate-800 text-xs text-slate-300 font-mono leading-relaxed">
                             <span class="text-amber-400 font-bold block mb-1">Verbatim Model Response Excerpt:</span>
-                            <span id="goldAnswerVerbatim">"To design a globally scalable rate limiter, I decompose the problem into three tiers: the edge gateway layer (Envoy), the central state tier (Redis Cluster), and the fallback circuit breaker. For 100k QPS, direct queries to Redis would saturate network IO; therefore, each local Envoy proxy maintains an in-memory token bucket replenished asynchronously from the Redis cluster via atomic Lua scripts..."</span>
+                            <span id="goldAnswerVerbatim">"To design a globally scalable rate limiter, I decompose the
+                                problem into three tiers: the edge gateway layer (Envoy), the central state tier (Redis
+                                Cluster), and the fallback circuit breaker. For 100k QPS, direct queries to Redis would
+                                saturate network IO; therefore, each local Envoy proxy maintains an in-memory token
+                                bucket replenished asynchronously from the Redis cluster via atomic Lua
+                                scripts..."</span>
                         </div>
                     </div>
                 </div>
@@ -635,7 +753,8 @@
     <!-- 4. PERFORMANCE ANALYTICS & HISTORY DRAWER (SLIDE-OVER) -->
     <!-- ===================================================================== -->
     <div id="historyDrawer" class="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-sm hidden">
-        <div class="w-full max-w-xl bg-cyberDark border-l border-indigo-500/25 h-full overflow-y-auto p-6 flex flex-col justify-between shadow-2xl">
+        <div
+            class="w-full max-w-xl bg-cyberDark border-l border-indigo-500/25 h-full overflow-y-auto p-6 flex flex-col justify-between shadow-2xl">
             <div class="space-y-6">
                 <!-- Drawer Header -->
                 <div class="flex items-center justify-between pb-4 border-b border-slate-800">
@@ -643,9 +762,11 @@
                         <h3 class="text-lg font-bold text-white flex items-center gap-2">
                             Performance Analytics & History
                         </h3>
-                        <p class="text-xs text-slate-400">Track candidate interview readiness and historical sessions</p>
+                        <p class="text-xs text-slate-400">Track candidate interview readiness and historical sessions
+                        </p>
                     </div>
-                    <button id="closeHistoryBtn" class="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300">
+                    <button id="closeHistoryBtn"
+                        class="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -658,9 +779,12 @@
                     <div class="relative w-[240px] h-[240px]">
                         <svg class="w-full h-full" viewBox="0 0 240 240">
                             <!-- Background Web Rings -->
-                            <circle cx="120" cy="120" r="20" fill="none" stroke="#1e293b" stroke-dasharray="2,2"></circle>
-                            <circle cx="120" cy="120" r="40" fill="none" stroke="#1e293b" stroke-dasharray="2,2"></circle>
-                            <circle cx="120" cy="120" r="60" fill="none" stroke="#1e293b" stroke-dasharray="2,2"></circle>
+                            <circle cx="120" cy="120" r="20" fill="none" stroke="#1e293b" stroke-dasharray="2,2">
+                            </circle>
+                            <circle cx="120" cy="120" r="40" fill="none" stroke="#1e293b" stroke-dasharray="2,2">
+                            </circle>
+                            <circle cx="120" cy="120" r="60" fill="none" stroke="#1e293b" stroke-dasharray="2,2">
+                            </circle>
                             <circle cx="120" cy="120" r="80" fill="none" stroke="#334155" stroke-width="1.5"></circle>
 
                             <!-- Spoke Lines (6 axes) -->
@@ -672,7 +796,8 @@
                             <line x1="120" y1="120" x2="51" y2="80" stroke="#1e293b"></line>
 
                             <!-- Candidate Radar Area Polygon -->
-                            <polygon id="radarPolygon" points="120,45 185,82 178,155 120,192 56,155 58,84" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="2"></polygon>
+                            <polygon id="radarPolygon" points="120,45 185,82 178,155 120,192 56,155 58,84"
+                                fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="2"></polygon>
 
                             <!-- Point markers -->
                             <circle cx="120" cy="45" r="3.5" fill="#8b5cf6" stroke="#fff" stroke-width="1"></circle>
@@ -686,11 +811,21 @@
 
                     <!-- Labels under radar -->
                     <div class="flex flex-wrap justify-center gap-1.5 mt-2">
-                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">DSA: 92%</span>
-                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Arch: 95%</span>
-                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Comm: 88%</span>
-                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">STAR: 90%</span>
-                        <span class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Scale: 96%</span>
+                        <span
+                            class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">DSA:
+                            92%</span>
+                        <span
+                            class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Arch:
+                            95%</span>
+                        <span
+                            class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Comm:
+                            88%</span>
+                        <span
+                            class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">STAR:
+                            90%</span>
+                        <span
+                            class="text-[10px] font-mono text-slate-300 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Scale:
+                            96%</span>
                     </div>
                 </div>
 
@@ -707,7 +842,8 @@
 
             <!-- Drawer Footer -->
             <div class="pt-6 border-t border-slate-800 mt-6 flex justify-end">
-                <button id="closeHistoryBtn2" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-xl font-medium">
+                <button id="closeHistoryBtn2"
+                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-xl font-medium">
                     Close Drawer
                 </button>
             </div>
@@ -719,19 +855,35 @@
     <!-- ===================================================================== -->
     <script>
         // Initialize Lucide Icons
-        if (typeof lucide !== 'undefined' && lucide.createIcons) {
-            lucide.createIcons();
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof lucide !== 'undefined' && lucide.createIcons) {
-                lucide.createIcons();
-            }
-        });
+        lucide.createIcons();
 
         // ---------------------------------------------------------------------
         // Mock Questions Repository
         // ---------------------------------------------------------------------
         const MOCK_QUESTIONS = [
+            {
+                id: 'fullstack-junior-000',
+                role: 'Fullstack Engineer',
+                difficulty: 'Junior',
+                category: 'Data Structures & Algorithms',
+                roundTitle: 'Round 1 of 4: Core Fundamentals & Problem Solving',
+                roundIndex: 1,
+                totalRounds: 4,
+                title: 'Two Sum & In-Memory Hash Table Lookup Optimization',
+                scenario: 'Given an array of integers and a target sum, implement an optimal function to return the indices of the two numbers that add up to the target. Explain brute-force O(N^2) limitations and demonstrate how a Hash Map achieves O(N) time complexity with O(N) auxiliary space.',
+                interviewerPersona: {
+                    name: 'Alex Rivera',
+                    title: 'Lead Software Engineer @ CloudTech',
+                    focusAreas: ['Time Complexity', 'Hash Collision Handling', 'Edge Case Validation'],
+                    expectations: 'Demonstrate structured explanation: edge cases (null inputs, duplicate values), space-time tradeoffs, and readable variable naming.'
+                },
+                hints: [
+                    'Consider single-pass hash map insertion while checking for complement.',
+                    'Discuss what happens when duplicate elements exist in the input array.'
+                ],
+                expectedKeywords: ['Hash Map', 'O(N)', 'Complement', 'Lookup Time', 'Space Complexity'],
+                timeLimitSeconds: 180
+            },
             {
                 id: 'fullstack-senior-001',
                 role: 'Fullstack Engineer',
@@ -803,11 +955,34 @@
                 timeLimitSeconds: 180
             },
             {
-                id: 'pm-mid-004',
+                id: 'dist-architect-004',
+                role: 'Distributed Systems Architect',
+                difficulty: 'Senior',
+                category: 'Distributed Systems',
+                roundTitle: 'Round 4 of 4: Global Consensus & Partition Tolerance',
+                roundIndex: 4,
+                totalRounds: 4,
+                title: 'Design a Globally Distributed Consensus Store with Raft Protocol',
+                scenario: 'Design a distributed key-value metadata store supporting linearizable reads and writes across 5 geographic zones. Walk through Raft leader election, log replication, handling network partitions (split-brain prevention), and lease-based read optimizations.',
+                interviewerPersona: {
+                    name: 'Elena Rostova',
+                    title: 'Principal Systems Architect @ CoreInfra',
+                    focusAreas: ['Raft Consensus', 'Linearizability', 'Quorum Math', 'Read Index / Leases'],
+                    expectations: 'Evaluate deep understanding of distributed consistency models, network partition survival, and hardware failure modes.'
+                },
+                hints: [
+                    'Explain why Raft requires a majority quorum (N/2 + 1) to commit log entries.',
+                    'Detail how leader leases prevent stale reads without running full consensus on read paths.'
+                ],
+                expectedKeywords: ['Raft', 'Quorum', 'Log Replication', 'Leader Election', 'Linearizable'],
+                timeLimitSeconds: 180
+            },
+            {
+                id: 'pm-mid-005',
                 role: 'Product Manager',
                 difficulty: 'Mid-Level',
                 category: 'Behavioral (STAR)',
-                roundTitle: 'Round 2 of 3: Product Strategy & Ruthless Prioritization',
+                roundTitle: 'Round 2 of 3: Product Strategy & Prioritization',
                 roundIndex: 2,
                 totalRounds: 3,
                 title: 'Launching a GenAI Feature in a Heavily Regulated Industry',
@@ -1009,7 +1184,7 @@
             personaTitle.innerText = q.interviewerPersona.title;
             personaExpectations.innerText = q.interviewerPersona.expectations;
             personaFocusTags.innerHTML = q.interviewerPersona.focusAreas
-                .map(a => `<span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">${a}</span>`)
+                .map(a => `<span class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">${a}</span>`)
                 .join('');
 
             // Hints
@@ -1104,7 +1279,7 @@
             recordingStatusText.innerText = 'Capturing audio with spectral noise suppression...';
 
             if (speechRecognition) {
-                try { speechRecognition.start(); } catch (e) {}
+                try { speechRecognition.start(); } catch (e) { }
             } else {
                 liveTranscriptionCard.classList.remove('hidden');
                 liveTranscriptionText.innerText = 'Speech recognition not supported in this browser. Please switch to Written / Code mode to submit your response.';
@@ -1118,7 +1293,7 @@
             recordBtnLabel.innerText = 'Click to Speak (Record)';
             recordingStatusText.innerText = 'Web Speech API active. Voice transcription auto-indexes below in real-time.';
             if (speechRecognition) {
-                try { speechRecognition.stop(); } catch (e) {}
+                try { speechRecognition.stop(); } catch (e) { }
             }
         }
 
@@ -1140,7 +1315,7 @@
 
         tabWrittenBtn.addEventListener('click', () => {
             inputMode = 'written';
-            tabWrittenBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/40 shadow-neon-violet transition-all';
+            tabWrittenBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-neonAmber/20 text-neonAmber border border-neonAmber/40 shadow-neon-cyan transition-all';
             tabVoiceBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all';
             writtenModeContainer.classList.remove('hidden');
             voiceModeContainer.classList.add('hidden');
@@ -1262,8 +1437,8 @@
         });
 
         roleSelector.addEventListener('change', (e) => {
-            const matched = MOCK_QUESTIONS.find(q => q.role === e.target.value);
-            if (matched) loadQuestion(matched);
+            const matched = MOCK_QUESTIONS.find(q => q.role === e.target.value) || MOCK_QUESTIONS[0];
+            loadQuestion(matched);
         });
 
         // Difficulty segmented buttons
@@ -1273,15 +1448,15 @@
                 document.querySelectorAll('.diff-btn').forEach(b => {
                     b.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all';
                 });
-                btn.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all';
+                btn.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-neon-cyan font-semibold transition-all';
                 questionDifficultyPill.innerText = diff;
 
                 const currentRole = roleSelector.value;
                 const matched = MOCK_QUESTIONS.find(q => q.role === currentRole && q.difficulty.toLowerCase() === diff.toLowerCase())
-                    || MOCK_QUESTIONS.find(q => q.difficulty.toLowerCase() === diff.toLowerCase());
-                if (matched) {
-                    loadQuestion(matched);
-                }
+                    || MOCK_QUESTIONS.find(q => q.difficulty.toLowerCase() === diff.toLowerCase())
+                    || MOCK_QUESTIONS.find(q => q.role === currentRole)
+                    || MOCK_QUESTIONS[0];
+                loadQuestion(matched);
             });
         });
 
@@ -1306,7 +1481,7 @@
             const badge = document.getElementById('gaugeGradeBadge');
             if (badge) {
                 badge.innerText = grade;
-                badge.className = `mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
+                badge.className = `mt-4 px-3 py-1 rounded-md text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
             }
 
             // Update Dimensional Metric Bars
@@ -1394,31 +1569,31 @@
 
                     renderEvaluation(score, grade, summary);
 
-                // Reset button state
-                submitEvaluationBtn.disabled = false;
-                submitBtnLabel.innerText = 'Submit for AI Evaluation';
-                submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white shadow-neon-violet transition-all';
+                    // Reset button state
+                    submitEvaluationBtn.disabled = false;
+                    submitBtnLabel.innerText = 'Submit for AI Evaluation';
+                    submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-neonAmber hover:from-cyan-400 hover:to-neonAmber text-white shadow-neon-cyan transition-all';
 
-                // Scroll to evaluation panel
-                document.getElementById('evaluationPanel').scrollIntoView({ behavior: 'smooth' });
+                    // Scroll to evaluation panel
+                    document.getElementById('evaluationPanel').scrollIntoView({ behavior: 'smooth' });
 
-                // Add to history
-                const newSess = {
-                    id: 'hist-' + Date.now(),
-                    date: 'Today',
-                    role: activeQuestion.role,
-                    difficulty: activeQuestion.difficulty,
-                    category: activeQuestion.category,
-                    title: activeQuestion.title,
-                    score: score,
-                    grade: grade,
-                    duration: 180 - timerSeconds,
-                    summary: summary
-                };
-                sessionHistory.unshift(newSess);
-                renderHistory();
-            }, 1200);
-        });
+                    // Add to history
+                    const newSess = {
+                        id: 'hist-' + Date.now(),
+                        date: 'Today',
+                        role: activeQuestion.role,
+                        difficulty: activeQuestion.difficulty,
+                        category: activeQuestion.category,
+                        title: activeQuestion.title,
+                        score: score,
+                        grade: grade,
+                        duration: 180 - timerSeconds,
+                        summary: summary
+                    };
+                    sessionHistory.unshift(newSess);
+                    renderHistory();
+                }, 1200);
+            });
 
         // ---------------------------------------------------------------------
         // History Drawer Management
@@ -1445,7 +1620,7 @@
             `).join('');
         }
 
-        window.reviewSession = function(id) {
+        window.reviewSession = function (id) {
             const found = sessionHistory.find(s => s.id === id);
             if (found) {
                 historyDrawer.classList.add('hidden');
@@ -1465,4 +1640,5 @@
         loadQuestion(MOCK_QUESTIONS[0]);
     </script>
 </body>
+
 </html>
