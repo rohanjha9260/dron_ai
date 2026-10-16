@@ -128,21 +128,21 @@ function renderProfile(data) {
     // 3. Platform Handles HTML
     const githubHtml = links.github_username
         ? `<a href="https://github.com/${encodeURIComponent(links.github_username)}" target="_blank" rel="noopener noreferrer" class="handle-chip">
-             🐙 @${escapeHtml(links.github_username)}
+             <i class="fa-brands fa-github"></i>  @${escapeHtml(links.github_username)}
            </a>`
-        : `<span class="handle-chip empty">🐙 GitHub: Not set</span>`;
+        : `<span class="handle-chip empty"><i class="fa-brands fa-github"></i>  GitHub: Not set</span>`;
 
     const leetcodeHtml = links.leetcode_username
         ? `<a href="https://leetcode.com/${encodeURIComponent(links.leetcode_username)}" target="_blank" rel="noopener noreferrer" class="handle-chip">
-             ⚡ @${escapeHtml(links.leetcode_username)}
+             <i class="fa-solid fa-bolt"></i>  @${escapeHtml(links.leetcode_username)}
            </a>`
-        : `<span class="handle-chip empty">⚡ LeetCode: Not set</span>`;
+        : `<span class="handle-chip empty"><i class="fa-solid fa-bolt"></i>  LeetCode: Not set</span>`;
 
     const linkedinHtml = links.linkedin_url
         ? `<a href="${escapeHtml(links.linkedin_url)}" target="_blank" rel="noopener noreferrer" class="handle-chip">
-             💼 LinkedIn Profile
+             <i class="fa-brands fa-linkedin"></i>  LinkedIn Profile
            </a>`
-        : `<span class="handle-chip empty">💼 LinkedIn: Not set</span>`;
+        : `<span class="handle-chip empty"><i class="fa-brands fa-linkedin"></i>  LinkedIn: Not set</span>`;
 
     // 4. Secondary Platform & Project Metrics
     const projectCount = skills.project_count !== undefined && skills.project_count !== null ? skills.project_count : 0;

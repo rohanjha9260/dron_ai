@@ -235,13 +235,13 @@ function runPitchAnalysis() {
         let feedbackHTML = "";
 
         if (totalFillerCount > 2) {
-            feedbackHTML += `⚠️ <strong>Filler Word Alert:</strong> We noticed you used filler phrases like <em>"${detectedFillers.map(f => f.word + ' (' + f.count + ')').join(', ')}"</em>. Replace these with deliberate 1-second pauses.<br><br>`;
+            feedbackHTML += `<i class="fa-solid fa-triangle-exclamation"></i>  <strong>Filler Word Alert:</strong> We noticed you used filler phrases like <em>"${detectedFillers.map(f => f.word + ' (' + f.count + ')').join(', ')}"</em>. Replace these with deliberate 1-second pauses.<br><br>`;
         }
 
         if (detectedPower.length >= 3) {
-            feedbackHTML += `🌟 <strong>Great Engineering Impact:</strong> High-value action verbs detected: <code>${detectedPower.join(', ')}</code>.<br><br>`;
+            feedbackHTML += `<i class="fa-solid fa-star"></i>  <strong>Great Engineering Impact:</strong> High-value action verbs detected: <code>${detectedPower.join(', ')}</code>.<br><br>`;
         } else {
-            feedbackHTML += `💡 <strong>Pro Tip:</strong> Strengthen your impact by using verbs like <em>architected, streamlined, deployed,</em> or <em>benchmarked</em> instead of passive phrases like "I worked on" or "we made".<br><br>`;
+            feedbackHTML += `<i class="fa-solid fa-lightbulb"></i>  <strong>Pro Tip:</strong> Strengthen your impact by using verbs like <em>architected, streamlined, deployed,</em> or <em>benchmarked</em> instead of passive phrases like "I worked on" or "we made".<br><br>`;
         }
 
         if (totalWords >= 80 && totalWords <= 170 && totalFillerCount <= 1) {
@@ -497,7 +497,7 @@ Best regards,
 Rohan Jha`,
 
     coldemail: (company, name, role, jobId) =>
-`Subject: Application for ${role} (${jobId}) — Rohan Jha (B.Tech CSE)
+`Subject: Application for ${role} (${jobId})  -  Rohan Jha (B.Tech CSE)
 
 Dear ${name},
 
@@ -518,7 +518,7 @@ Sincerely,
 Rohan Jha`,
 
     thankyou: (company, name, role, jobId) =>
-`Subject: Thank You — Technical Interview for ${role} — Rohan Jha
+`Subject: Thank You  -  Technical Interview for ${role}  -  Rohan Jha
 
 Hi ${name},
 
@@ -532,7 +532,7 @@ Warm regards,
 Rohan Jha`,
 
     negotiate: (company, name, role, jobId) =>
-`Subject: Offer Discussion & Clarification — ${role} — Rohan Jha
+`Subject: Offer Discussion & Clarification  -  ${role}  -  Rohan Jha
 
 Dear ${name},
 

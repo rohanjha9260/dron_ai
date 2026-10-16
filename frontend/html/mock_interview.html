@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dron AI - Interactive AI Mock Interview & Real-Time Performance Analytics Dashboard">
-    <title>Dron AI — NeuroMock Interview & Analytics Dashboard</title>
+    <title>Dron AI  -  NeuroMock Interview & Analytics Dashboard</title>
 
     <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
                         cyberCard: 'rgba(15, 23, 42, 0.85)',
                         cyberBorder: 'rgba(255, 122, 0, 0.28)',
                         neonCyan: '#ff7a00',
-                        neonViolet: '#ff9838',
+                        neonAmber: '#ff9838',
                         neonEmerald: '#10b981',
                         neonAmber: '#f59e0b',
                     },
@@ -79,7 +79,7 @@
         }
         ::-webkit-scrollbar-thumb {
             background: #334155;
-            border-radius: 9999px;
+            border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #06b6d4;
@@ -109,18 +109,18 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <!-- Brand & Progress Tracker -->
             <div class="flex items-center gap-4">
-                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-violet-500/30 border border-cyan-500/30 shadow-neon-cyan">
+                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-neonAmber/30 border border-cyan-500/30 shadow-neon-cyan">
                     <i data-lucide="cpu" class="w-6 h-6 text-neonCyan"></i>
                     <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-md bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-md h-3 w-3 bg-cyan-500"></span>
                     </span>
                 </div>
 
                 <div>
                     <div class="flex items-center gap-2">
                         <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                            Dron AI <span class="text-[11px] px-2 py-0.5 rounded-full bg-violet-500/20 border border-violet-500/40 text-violet-300 font-mono">NeuroMock v2.4</span>
+                            Dron AI <span class="text-[11px] px-2 py-0.5 rounded-md bg-neonAmber/20 border border-neonAmber/40 text-neonAmber font-mono">NeuroMock v2.4</span>
                         </h1>
                     </div>
                     <div class="flex items-center gap-2 mt-0.5">
@@ -190,19 +190,19 @@
             <!-- A. Question Display Banner -->
             <div class="w-full glass-panel rounded-2xl p-6 shadow-glass-card relative overflow-hidden">
                 <!-- Glowing accent spheres -->
-                <div class="absolute -right-24 -top-24 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -right-24 -top-24 w-72 h-72 bg-neonAmber/10 rounded-md blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyan-500/10 rounded-md blur-3xl pointer-events-none"></div>
 
                 <!-- Banner Header: Category Pill & Audio TTS Playback -->
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                        <span id="questionCategoryPill" class="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-neon-cyan">
+                        <span id="questionCategoryPill" class="px-3 py-1 rounded-md text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-neon-cyan">
                             System Design
                         </span>
                         <span id="questionDifficultyPill" class="text-xs font-mono text-slate-400 px-2.5 py-0.5 rounded bg-slate-800/80 border border-slate-700/60">
                             Senior Level
                         </span>
-                        <span id="questionRolePill" class="text-xs font-mono text-violet-300 px-2.5 py-0.5 rounded bg-violet-500/10 border border-violet-500/20">
+                        <span id="questionRolePill" class="text-xs font-mono text-neonAmber px-2.5 py-0.5 rounded bg-neonAmber/10 border border-neonAmber/20">
                             Fullstack Engineer
                         </span>
                     </div>
@@ -228,9 +228,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4 border-t border-slate-800">
                     <!-- Persona Accordion -->
                     <div class="glass-panel-subtle rounded-xl p-3.5 transition-all">
-                        <button id="togglePersonaBtn" class="w-full flex items-center justify-between text-left text-xs font-semibold text-violet-300 hover:text-violet-200">
+                        <button id="togglePersonaBtn" class="w-full flex items-center justify-between text-left text-xs font-semibold text-neonAmber hover:text-neonAmber">
                             <div class="flex items-center gap-2">
-                                <i data-lucide="user-check" class="w-4 h-4 text-neonViolet"></i>
+                                <i data-lucide="user-check" class="w-4 h-4 text-neonAmber"></i>
                                 <span id="personaNameLabel">Interviewer Persona: Dr. Aris Thorne</span>
                             </div>
                             <span id="personaArrow" class="text-slate-400 text-xs font-mono">View ▾</span>
@@ -240,9 +240,9 @@
                             <p id="personaTitle" class="text-slate-400 italic">Principal Distributed Systems Architect @ HyperScale</p>
                             <p id="personaExpectations" class="leading-relaxed">Looking for end-to-end depth: client state representation, transport framing, memory bounds on document state vectors, and graceful fallback when clients disconnect unexpectedly.</p>
                             <div id="personaFocusTags" class="flex flex-wrap gap-1.5 pt-1">
-                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">CRDT vs OT</span>
-                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">WebSocket Fanout</span>
-                                <span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">Vector Clocks</span>
+                                <span class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">CRDT vs OT</span>
+                                <span class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">WebSocket Fanout</span>
+                                <span class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">Vector Clocks</span>
                             </div>
                         </div>
                     </div>
@@ -273,11 +273,11 @@
                     <!-- Tabbed Input Toggle -->
                     <div class="flex items-center gap-2 bg-slate-900/80 p-1 rounded-xl border border-indigo-500/20">
                         <button id="tabVoiceBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan transition-all">
-                            <span>🎙️ Voice Mode</span>
-                            <span id="voiceActivePing" class="hidden w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span><i class="fa-solid fa-microphone"></i>  Voice Mode</span>
+                            <span id="voiceActivePing" class="hidden w-2 h-2 rounded-md bg-emerald-400 animate-ping"></span>
                         </button>
                         <button id="tabWrittenBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all">
-                            <span>⌨️ Written Response</span>
+                            <span><i class="fa-solid fa-keyboard"></i>  Written Response</span>
                         </button>
                     </div>
 
@@ -334,7 +334,7 @@
                     <div class="lg:col-span-4 flex flex-col justify-between glass-panel-subtle rounded-xl p-4 relative overflow-hidden">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="w-2 h-2 rounded-md bg-emerald-400 animate-pulse"></span>
                                 Vision Telemetry
                             </span>
                             <button id="cameraToggleBtn" class="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 underline">
@@ -349,7 +349,7 @@
 
                             <!-- Cyber Avatar Fallback -->
                             <div id="cyberAvatarFallback" class="flex flex-col items-center justify-center p-2 text-center">
-                                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500/30 via-violet-500/30 to-indigo-600/30 border border-cyan-400/40 flex items-center justify-center mb-1">
+                                <div class="w-14 h-14 rounded-md bg-gradient-to-tr from-cyan-500/30 via-neonAmber/30 to-indigo-600/30 border border-cyan-400/40 flex items-center justify-center mb-1">
                                     <i data-lucide="user" class="w-7 h-7 text-cyan-300"></i>
                                 </div>
                                 <span class="text-[10px] text-slate-400 font-mono">Neural PIP Avatar</span>
@@ -357,7 +357,7 @@
 
                             <!-- Neural Face Mesh Indicator Overlay -->
                             <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-cyan-300 flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-cyan-400"></span>
                                 Face Mesh: Locked
                             </div>
                         </div>
@@ -379,7 +379,7 @@
 
                             <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
                                 <div class="text-[10px] text-slate-400 font-mono">Speech Pacing</div>
-                                <div id="telemetryPacing" class="text-xs font-bold text-violet-300">135 WPM</div>
+                                <div id="telemetryPacing" class="text-xs font-bold text-neonAmber">135 WPM</div>
                             </div>
 
                             <div class="bg-slate-900/70 p-2 rounded-lg border border-slate-800">
@@ -400,12 +400,12 @@
                             Redo
                         </button>
                         <button id="skipBtn" class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium transition-all">
-                            Skip Question ➔
+                            Skip Question &rarr;
                         </button>
                     </div>
 
                     <!-- Submit Button with Neural Loading State -->
-                    <button id="submitEvaluationBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white shadow-neon-violet transition-all">
+                    <button id="submitEvaluationBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-neonAmber hover:from-cyan-400 hover:to-neonAmber text-white shadow-neon-cyan transition-all">
                         <i data-lucide="sparkles" class="w-4 h-4"></i>
                         <span id="submitBtnLabel">Submit for AI Evaluation</span>
                     </button>
@@ -422,7 +422,7 @@
                 <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
                     <div class="space-y-2 max-w-2xl">
                         <div class="flex items-center gap-2">
-                            <span class="px-3 py-1 rounded-md text-xs font-mono font-bold bg-violet-500/20 text-violet-300 border border-violet-500/40">
+                            <span class="px-3 py-1 rounded-md text-xs font-mono font-bold bg-neonAmber/20 text-neonAmber border border-neonAmber/40">
                                 AI Evaluation Report
                             </span>
                             <span id="evalTimestamp" class="text-xs text-slate-400 font-mono">Just Now</span>
@@ -452,7 +452,7 @@
                                     <span class="text-[10px] uppercase font-mono tracking-widest text-slate-400 mt-0.5">Readiness</span>
                                 </div>
                             </div>
-                            <div id="gaugeGradeBadge" class="mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border border-emerald-500/30 text-emerald-400 shadow-neon-cyan">
+                            <div id="gaugeGradeBadge" class="mt-4 px-3 py-1 rounded-md text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border border-emerald-500/30 text-emerald-400 shadow-neon-cyan">
                                 Strong Hire
                             </div>
                         </div>
@@ -475,8 +475,8 @@
                                     <span id="mScore1">9.4</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar1" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 94%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar1" class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000" style="width: 94%;"></div>
                             </div>
                             <p id="mDesc1" class="text-[11px] text-slate-400 leading-snug">Flawless distributed concurrency modeling with Redis Lua scripts and local proxy caches.</p>
                         </div>
@@ -489,8 +489,8 @@
                                     <span id="mScore2">8.8</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar2" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 88%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar2" class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000" style="width: 88%;"></div>
                             </div>
                             <p id="mDesc2" class="text-[11px] text-slate-400 leading-snug">Clear architectural progression from single instance to clustered Envoy proxies.</p>
                         </div>
@@ -503,8 +503,8 @@
                                     <span id="mScore3">9.2</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar3" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 92%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar3" class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000" style="width: 92%;"></div>
                             </div>
                             <p id="mDesc3" class="text-[11px] text-slate-400 leading-snug">Steady pacing (138 WPM), sustained eye contact, and negligible filler words.</p>
                         </div>
@@ -517,8 +517,8 @@
                                     <span id="mScore4">9.0</span> <span class="text-slate-500">/ 10</span>
                                 </span>
                             </div>
-                            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-2">
-                                <div id="mBar4" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-1000" style="width: 90%;"></div>
+                            <div class="w-full h-2 rounded-md bg-slate-800 overflow-hidden mb-2">
+                                <div id="mBar4" class="h-full rounded-md bg-gradient-to-r from-cyan-500 to-neonAmber transition-all duration-1000" style="width: 90%;"></div>
                             </div>
                             <p id="mDesc4" class="text-[11px] text-slate-400 leading-snug">Concluded cleanly in 2m 44s, leaving sufficient margin for follow-up cross-examination.</p>
                         </div>
@@ -537,15 +537,15 @@
                         </div>
                         <ul id="keyStrengthsList" class="space-y-2">
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-emerald-400 mt-1.5 shrink-0"></span>
                                 <span>Atomic execution via Redis Lua scripts effectively prevented distributed race conditions.</span>
                             </li>
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-emerald-400 mt-1.5 shrink-0"></span>
                                 <span>Proactively factored in local proxy caching to safeguard the central Redis cluster against hot-key bottlenecks.</span>
                             </li>
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-emerald-400 mt-1.5 shrink-0"></span>
                                 <span>Clearly distinguished between client-side throttling (HTTP 429 Retry-After) and server-side traffic shedding.</span>
                             </li>
                         </ul>
@@ -561,11 +561,11 @@
                         </div>
                         <ul id="criticalGapsList" class="space-y-2">
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-amber-400 mt-1.5 shrink-0"></span>
                                 <span>Did not explicitly address NTP clock drift issues across distributed nodes when calculating sliding timestamps.</span>
                             </li>
                             <li class="flex items-start gap-2.5 text-xs text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-amber-400 mt-1.5 shrink-0"></span>
                                 <span>Could further clarify fail-open versus fail-closed policy if the Redis caching tier undergoes split-brain partitioning.</span>
                             </li>
                         </ul>
@@ -577,11 +577,11 @@
                     <button id="toggleSampleAnswerBtn" class="w-full flex items-center justify-between text-left">
                         <div class="flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
-                                <span class="text-xs">🏆</span>
+                                <span class="text-xs"><i class="fa-solid fa-award"></i> </span>
                             </div>
                             <div>
                                 <h5 class="text-sm font-bold text-white flex items-center gap-2">
-                                    "How to Answer Better" — Gold Standard Model Answer
+                                    "How to Answer Better"  -  Gold Standard Model Answer
                                 </h5>
                                 <p class="text-[11px] text-slate-400">Curated Staff-level benchmark with phase breakdown</p>
                             </div>
@@ -597,21 +597,21 @@
                         <!-- Breakdown Phases -->
                         <div id="goldAnswerBreakdown" class="grid grid-cols-1 md:grid-cols-3 gap-3">
                             <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-                                <div class="text-xs font-semibold text-violet-300 mb-1.5">1. Requirements & Scoping</div>
+                                <div class="text-xs font-semibold text-neonAmber mb-1.5">1. Requirements & Scoping</div>
                                 <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
                                     <li>100k peak QPS, 5ms SLA budget</li>
                                     <li>Sliding window precision guarantees</li>
                                 </ul>
                             </div>
                             <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-                                <div class="text-xs font-semibold text-violet-300 mb-1.5">2. Algorithmic Choice</div>
+                                <div class="text-xs font-semibold text-neonAmber mb-1.5">2. Algorithmic Choice</div>
                                 <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
                                     <li>Sliding Window Counter in Redis Sorted Sets</li>
                                     <li>Atomic Lua execution to prevent race conditions</li>
                                 </ul>
                             </div>
                             <div class="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-                                <div class="text-xs font-semibold text-violet-300 mb-1.5">3. Reliability & Faults</div>
+                                <div class="text-xs font-semibold text-neonAmber mb-1.5">3. Reliability & Faults</div>
                                 <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
                                     <li>Local Envoy in-memory token bucket</li>
                                     <li>Fail-open policy under network partitions</li>
@@ -718,13 +718,38 @@
     <!-- INTERACTIVE APP JAVASCRIPT LOGIC -->
     <!-- ===================================================================== -->
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+        // Initialize Lucide Icons safely
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
 
         // ---------------------------------------------------------------------
         // Mock Questions Repository
         // ---------------------------------------------------------------------
         const MOCK_QUESTIONS = [
+            {
+                id: 'fullstack-junior-000',
+                role: 'Fullstack Engineer',
+                difficulty: 'Junior',
+                category: 'Data Structures & Algorithms',
+                roundTitle: 'Round 1 of 4: Core Fundamentals & Problem Solving',
+                roundIndex: 1,
+                totalRounds: 4,
+                title: 'Two Sum & In-Memory Hash Table Lookup Optimization',
+                scenario: 'Given an array of integers and a target sum, implement an optimal function to return the indices of the two numbers that add up to the target. Explain brute-force O(N^2) limitations and demonstrate how a Hash Map achieves O(N) time complexity with O(N) auxiliary space.',
+                interviewerPersona: {
+                    name: 'Alex Rivera',
+                    title: 'Lead Software Engineer @ CloudTech',
+                    focusAreas: ['Time Complexity', 'Hash Collision Handling', 'Edge Case Validation'],
+                    expectations: 'Demonstrate structured explanation: edge cases (null inputs, duplicate values), space-time tradeoffs, and readable variable naming.'
+                },
+                hints: [
+                    'Consider single-pass hash map insertion while checking for complement.',
+                    'Discuss what happens when duplicate elements exist in the input array.'
+                ],
+                expectedKeywords: ['Hash Map', 'O(N)', 'Complement', 'Lookup Time', 'Space Complexity'],
+                timeLimitSeconds: 180
+            },
             {
                 id: 'fullstack-senior-001',
                 role: 'Fullstack Engineer',
@@ -796,11 +821,34 @@
                 timeLimitSeconds: 180
             },
             {
-                id: 'pm-mid-004',
+                id: 'dist-architect-004',
+                role: 'Distributed Systems Architect',
+                difficulty: 'Senior',
+                category: 'Distributed Systems',
+                roundTitle: 'Round 4 of 4: Global Consensus & Partition Tolerance',
+                roundIndex: 4,
+                totalRounds: 4,
+                title: 'Design a Globally Distributed Consensus Store with Raft Protocol',
+                scenario: 'Design a distributed key-value metadata store supporting linearizable reads and writes across 5 geographic zones. Walk through Raft leader election, log replication, handling network partitions (split-brain prevention), and lease-based read optimizations.',
+                interviewerPersona: {
+                    name: 'Elena Rostova',
+                    title: 'Principal Systems Architect @ CoreInfra',
+                    focusAreas: ['Raft Consensus', 'Linearizability', 'Quorum Math', 'Read Index / Leases'],
+                    expectations: 'Evaluate deep understanding of distributed consistency models, network partition survival, and hardware failure modes.'
+                },
+                hints: [
+                    'Explain why Raft requires a majority quorum (N/2 + 1) to commit log entries.',
+                    'Detail how leader leases prevent stale reads without running full consensus on read paths.'
+                ],
+                expectedKeywords: ['Raft', 'Quorum', 'Log Replication', 'Leader Election', 'Linearizable'],
+                timeLimitSeconds: 180
+            },
+            {
+                id: 'pm-mid-005',
                 role: 'Product Manager',
                 difficulty: 'Mid-Level',
                 category: 'Behavioral (STAR)',
-                roundTitle: 'Round 2 of 3: Product Strategy & Ruthless Prioritization',
+                roundTitle: 'Round 2 of 3: Product Strategy & Prioritization',
                 roundIndex: 2,
                 totalRounds: 3,
                 title: 'Launching a GenAI Feature in a Heavily Regulated Industry',
@@ -1002,7 +1050,7 @@
             personaTitle.innerText = q.interviewerPersona.title;
             personaExpectations.innerText = q.interviewerPersona.expectations;
             personaFocusTags.innerHTML = q.interviewerPersona.focusAreas
-                .map(a => `<span class="px-2 py-0.5 bg-violet-500/15 text-violet-300 rounded border border-violet-500/25 text-[10px]">${a}</span>`)
+                .map(a => `<span class="px-2 py-0.5 bg-neonAmber/15 text-neonAmber rounded border border-neonAmber/25 text-[10px]">${a}</span>`)
                 .join('');
 
             // Hints
@@ -1133,7 +1181,7 @@
 
         tabWrittenBtn.addEventListener('click', () => {
             inputMode = 'written';
-            tabWrittenBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/40 shadow-neon-violet transition-all';
+            tabWrittenBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-neonAmber/20 text-neonAmber border border-neonAmber/40 shadow-neon-cyan transition-all';
             tabVoiceBtn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition-all';
             writtenModeContainer.classList.remove('hidden');
             voiceModeContainer.classList.add('hidden');
@@ -1255,8 +1303,8 @@
         });
 
         roleSelector.addEventListener('change', (e) => {
-            const matched = MOCK_QUESTIONS.find(q => q.role === e.target.value);
-            if (matched) loadQuestion(matched);
+            const matched = MOCK_QUESTIONS.find(q => q.role === e.target.value) || MOCK_QUESTIONS[0];
+            loadQuestion(matched);
         });
 
         // Difficulty segmented buttons
@@ -1266,15 +1314,15 @@
                 document.querySelectorAll('.diff-btn').forEach(b => {
                     b.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all';
                 });
-                btn.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-neon-cyan font-semibold transition-all';
+                btn.className = 'diff-btn px-2.5 py-1 text-xs font-medium rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-neon-cyan font-semibold transition-all';
                 questionDifficultyPill.innerText = diff;
 
                 const currentRole = roleSelector.value;
                 const matched = MOCK_QUESTIONS.find(q => q.role === currentRole && q.difficulty.toLowerCase() === diff.toLowerCase())
-                    || MOCK_QUESTIONS.find(q => q.difficulty.toLowerCase() === diff.toLowerCase());
-                if (matched) {
-                    loadQuestion(matched);
-                }
+                    || MOCK_QUESTIONS.find(q => q.difficulty.toLowerCase() === diff.toLowerCase())
+                    || MOCK_QUESTIONS.find(q => q.role === currentRole)
+                    || MOCK_QUESTIONS[0];
+                loadQuestion(matched);
             });
         });
 
@@ -1299,7 +1347,7 @@
             const badge = document.getElementById('gaugeGradeBadge');
             if (badge) {
                 badge.innerText = grade;
-                badge.className = `mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
+                badge.className = `mt-4 px-3 py-1 rounded-md text-xs font-mono font-bold uppercase tracking-wider bg-slate-900 border ${gradeColor}`;
             }
 
             // Update Dimensional Metric Bars
@@ -1390,7 +1438,7 @@
                 // Reset button state
                 submitEvaluationBtn.disabled = false;
                 submitBtnLabel.innerText = 'Submit for AI Evaluation';
-                submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white shadow-neon-violet transition-all';
+                submitEvaluationBtn.className = 'flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 via-indigo-600 to-neonAmber hover:from-cyan-400 hover:to-neonAmber text-white shadow-neon-cyan transition-all';
 
                 // Scroll to evaluation panel
                 document.getElementById('evaluationPanel').scrollIntoView({ behavior: 'smooth' });
