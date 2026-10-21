@@ -1,0 +1,609 @@
+/*
+ * Dron-AI Legal & Compliance Stylesheet
+ *
+ * Theme: Modern Minimalist Light SaaS with High Contrast & WCAG 2.1 AA Accessibility
+ * Styles for:
+ *   - privacy.html (DPDP Act 2023 compliant)
+ *   - terms.html
+ *   - cookies.html
+ *   - refund.html
+ *   - Cookie & Storage Consent Banner
+ *   - Accessible Semantic Tables & Skip Links
+ */
+
+/* ── 1. Accessibility: Skip Link ── */
+.skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: #16A34A;
+    color: #FFFFFF !important;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    z-index: 9999;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skip-to-content:focus {
+    top: 1rem;
+    outline: 3px solid #0F172A;
+    outline-offset: 3px;
+}
+
+/* ── 2. Universal High-Contrast Focus Visible Rings ── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2.5px solid #16A34A !important;
+    outline-offset: 2.5px !important;
+    border-radius: 6px;
+}
+
+/* ── 3. Legal Layout & Containers ── */
+.legal-page {
+    background-color: #F8FAFC !important;
+    color: #0F172A !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+.legal-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E2E8F0;
+    padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+    position: relative;
+}
+
+.legal-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 3.5vw, 2.5rem);
+}
+
+.legal-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #64748B;
+    margin-bottom: 1rem;
+}
+
+.legal-breadcrumbs a {
+    color: #16A34A;
+    text-decoration: none;
+}
+
+.legal-breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.legal-title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+}
+
+.legal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    font-size: 0.875rem;
+    color: #475569;
+}
+
+.legal-badge-dpdp {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #DCFCE7;
+    color: #166534;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ── 4. Legal Grid with Table of Contents ── */
+.legal-body-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: clamp(2rem, 4vw, 3.5rem) 0 5rem;
+    align-items: start;
+}
+
+.legal-toc-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 5.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.legal-toc-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748B;
+    margin-bottom: 1rem;
+}
+
+.legal-toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0;
+    margin: 0;
+}
+
+.legal-toc-list a {
+    color: #475569;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    display: block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.legal-toc-list a:hover {
+    color: #16A34A;
+    background: #F0FDF4;
+}
+
+.legal-content-main {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.legal-section {
+    margin-bottom: 2.75rem;
+    scroll-margin-top: 6.5rem;
+}
+
+.legal-section:last-child {
+    margin-bottom: 0;
+}
+
+.legal-section h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 1rem;
+    letter-spacing: -0.015em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.legal-section h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 1.5rem 0 0.6rem;
+}
+
+.legal-section p,
+.legal-section li {
+    font-size: 0.96rem;
+    color: #334155;
+    line-height: 1.75;
+}
+
+.legal-section p {
+    margin-bottom: 1rem;
+}
+
+.legal-section ul,
+.legal-section ol {
+    margin: 0 0 1.25rem 1.5rem;
+    padding: 0;
+}
+
+.legal-section li {
+    margin-bottom: 0.5rem;
+}
+
+/* ── 5. Callouts & Important Notes ── */
+.legal-alert {
+    background: #F0FDF4;
+    border-left: 4px solid #16A34A;
+    border-radius: 0 12px 12px 0;
+    padding: 1.1rem 1.35rem;
+    margin: 1.25rem 0;
+    font-size: 0.92rem;
+    color: #14532D;
+    line-height: 1.65;
+}
+
+.legal-alert strong {
+    color: #166534;
+}
+
+.legal-warning {
+    background: #FFFBEB;
+    border-left: 4px solid #F59E0B;
+    border-radius: 0 12px 12px 0;
+    padding: 1.1rem 1.35rem;
+    margin: 1.25rem 0;
+    font-size: 0.92rem;
+    color: #78350F;
+    line-height: 1.65;
+}
+
+/* ── 6. Semantic Accessible Data Tables ── */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+}
+
+.legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    text-align: left;
+    background: #FFFFFF;
+}
+
+.legal-table caption {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: left;
+    color: #64748B;
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.legal-table th {
+    background: #F1F5F9;
+    color: #0F172A;
+    font-weight: 700;
+    padding: 0.85rem 1rem;
+    border-bottom: 2px solid #CBD5E1;
+}
+
+.legal-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #E2E8F0;
+    color: #334155;
+    vertical-align: top;
+}
+
+.legal-table tr:nth-child(even) td {
+    background: #F8FAFC;
+}
+
+.legal-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ── 7. Business & Grievance Officer Card ── */
+.officer-card {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.officer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 0.85rem;
+}
+
+.officer-item {
+    font-size: 0.88rem;
+}
+
+.officer-label {
+    font-weight: 700;
+    color: #64748B;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.officer-val {
+    color: #0F172A;
+    font-weight: 600;
+}
+
+/* ── 8. Global Comprehensive Footer ── */
+.dron-footer {
+    background: #0F172A;
+    color: #E2E8F0;
+    padding: 4.5rem 0 2.5rem;
+    border-top: 1px solid #1E293B;
+}
+
+.footer-inner {
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 3.8vw, 4.5rem);
+}
+
+.footer-top-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    margin-bottom: 3.5rem;
+}
+
+.footer-brand-col p {
+    color: #94A3B8;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-top: 1rem;
+    max-width: 380px;
+}
+
+.footer-col-title {
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.02em;
+}
+
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links-list a {
+    color: #94A3B8;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.15s ease;
+}
+
+.footer-links-list a:hover {
+    color: #86EFAC;
+}
+
+.footer-business-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.25rem;
+    font-size: 0.82rem;
+    color: #94A3B8;
+    line-height: 1.6;
+}
+
+.footer-business-box strong {
+    color: #F8FAFC;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.footer-bottom-bar {
+    border-top: 1px solid #1E293B;
+    padding-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.82rem;
+    color: #64748B;
+}
+
+.footer-bottom-disclaimer {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.85rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    border-left: 3px solid #16A34A;
+    font-size: 0.78rem;
+    color: #94A3B8;
+    line-height: 1.55;
+}
+
+/* ── 9. Cookie & Storage Consent Banner ── */
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    max-width: 780px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.06);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: slideUpBanner 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpBanner {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cookie-consent-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.cookie-consent-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #ECFDF5;
+    color: #16A34A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.cookie-consent-text h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 4px;
+}
+
+.cookie-consent-text p {
+    font-size: 0.84rem;
+    color: #475569;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.cookie-consent-text a {
+    color: #16A34A;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.cookie-consent-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn-cookie-accept {
+    background: #16A34A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.btn-cookie-accept:hover {
+    background: #15803D;
+}
+
+.btn-cookie-essential {
+    background: #F1F5F9;
+    color: #334155;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-cookie-essential:hover {
+    background: #E2E8F0;
+    color: #0F172A;
+}
+
+/* ── 10. Form Consent Checkbox ── */
+.form-consent-group {
+    margin: 0.75rem 0 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.5;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 3px;
+    width: 17px;
+    height: 17px;
+    accent-color: #16A34A;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-label a {
+    color: #16A34A;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* ── Responsive Polish ── */
+@media (max-width: 900px) {
+    .legal-body-grid {
+        grid-template-columns: 1fr;
+    }
+    .legal-toc-card {
+        position: static;
+        margin-bottom: 2rem;
+    }
+    .footer-top-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 580px) {
+    .footer-top-grid {
+        grid-template-columns: 1fr;
+    }
+    .cookie-consent-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+    .cookie-consent-actions button {
+        flex: 1;
+    }
+}

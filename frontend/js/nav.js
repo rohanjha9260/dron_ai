@@ -89,6 +89,11 @@ function buildSidebar() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 Logout
             </button>
+            <div style="display: flex; justify-content: center; gap: 8px; margin-top: 8px; font-size: 0.7rem;">
+                <a href="privacy.html" style="color: var(--color-text-muted); text-decoration: none;">Privacy</a> &bull;
+                <a href="terms.html" style="color: var(--color-text-muted); text-decoration: none;">Terms</a> &bull;
+                <a href="cookies.html" style="color: var(--color-text-muted); text-decoration: none;">Cookies</a>
+            </div>
         </div>
     </aside>`;
 }
@@ -223,7 +228,7 @@ function applyGuestUi(guestBadge, logoutBtn) {
     if (sidebarFooter && !document.getElementById("guest-register-prompt")) {
         const prompt = document.createElement("a");
         prompt.id = "guest-register-prompt";
-        prompt.href = "register.html";
+        prompt.href = "login.html?tab=signup";
         prompt.className = "btn btn-primary btn-small";
         prompt.style.cssText = "width: 100%; margin-bottom: 8px; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;";
         prompt.innerHTML = `
