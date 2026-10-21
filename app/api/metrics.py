@@ -13,6 +13,7 @@ import requests
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+from app.extensions import limiter
 from app.services import metrics_service
 
 logger = logging.getLogger(__name__)
@@ -21,6 +22,7 @@ metrics_bp = Blueprint("metrics", __name__)
 
 
 @metrics_bp.route("/fetch", methods=["POST"])
+@limiter.limit("5 per minute")
 @jwt_required()
 def fetch_metrics():
     """

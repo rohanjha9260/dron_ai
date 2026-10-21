@@ -9,12 +9,30 @@ from flask import jsonify
 
 def success_response(data: dict, status_code: int = 200):
     """Create a standardized success JSON response."""
-    return jsonify({"status": "success", "data": data}), status_code
+    return jsonify({"success": True, "data": data, "status": "success"}), status_code
 
 
 def error_response(message: str, status_code: int = 400):
-    """Create a standardized error JSON response."""
-    return jsonify({"status": "error", "error": message}), status_code
+    """
+    Create a standardized error JSON response.
+
+    Schema:
+        {
+            "success": false,
+            "error": {
+                "code": status_code,
+                "message": message
+            }
+        }
+    """
+    payload = {
+        "success": False,
+        "error": {
+            "code": status_code,
+            "message": message,
+        },
+    }
+    return jsonify(payload), status_code
 
 
 def validate_required_fields(data: dict, required_fields: list) -> list:

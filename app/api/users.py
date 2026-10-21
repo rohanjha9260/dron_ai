@@ -10,6 +10,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app.services import profile_service
+from app.utils.sanitizer import sanitize_input
 
 users_bp = Blueprint("users", __name__)
 
@@ -72,8 +73,10 @@ def update_profile():
     if data is None or not isinstance(data, dict):
         return jsonify({"error": "Request body must be valid JSON object"}), 400
 
+    sanitized_data = sanitize_input(data)
+
     try:
-        updated_profile = profile_service.update_student_profile(student_id, data)
+        updated_profile = profile_service.update_student_profile(student_id, sanitized_data)
     except ValueError as exc:
         msg = str(exc)
         if msg == "Profile not found":

@@ -10,14 +10,16 @@ Endpoints:
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.extensions import db
+from app.extensions import db, limiter
 from app.models.user import User
 from app.services import auth_service
+from app.utils.sanitizer import sanitize_string
 
 auth_bp = Blueprint("auth", __name__)
 
 
 @auth_bp.route("/register", methods=["POST"])
+@limiter.limit("10 per minute")
 def register():
     """
     Register a new student.
@@ -37,11 +39,17 @@ def register():
         409: { "error": "Email already registered" }
     """
     data = request.get_json(silent=True)
-    if not data:
+    if not data or not isinstance(data, dict):
         return jsonify({"error": "Request body must be valid JSON"}), 400
 
+    clean_data = dict(data)
+    if "full_name" in clean_data and isinstance(clean_data["full_name"], str):
+        clean_data["full_name"] = sanitize_string(clean_data["full_name"])
+    if "academic_branch" in clean_data and isinstance(clean_data["academic_branch"], str):
+        clean_data["academic_branch"] = sanitize_string(clean_data["academic_branch"])
+
     try:
-        result = auth_service.register_student(data)
+        result = auth_service.register_student(clean_data)
     except ValueError as exc:
         reason = str(exc)
         if reason == "email_taken":
@@ -53,6 +61,7 @@ def register():
 
 
 @auth_bp.route("/login", methods=["POST"])
+@limiter.limit("10 per minute")
 def login():
     """
     Authenticate student and issue JWT.
@@ -111,6 +120,7 @@ def get_current_user():
 
 
 @auth_bp.route("/guest", methods=["POST"])
+@limiter.limit("10 per minute")
 def guest_login():
     """
     Log in as a guest student without requiring credentials.

@@ -48,5 +48,5 @@ jwt = JWTManager()
 # Rate Limiting (per IP address)
 limiter = Limiter(
     key_func=get_remote_address,
-    default_limits=["200 per hour", "50 per minute"],
+    default_limits=["60 per minute"],
 )

@@ -607,3 +607,212 @@ class TestHealthEndpoint:
         assert "secret" not in data["error"]
 
 
+# ── Hardening Tests: Error Handlers, Rate Limiting & Sanitization ─────────────
+
+class TestSecurityAndHardening:
+    """Tests for rate limiting, centralized JSON error handlers, CORS, and sanitization."""
+
+    def test_centralized_error_handlers_format(self, client):
+        """Malformed JSON or standard errors return standardized JSON error schema."""
+        # 404 Not Found
+        resp = client.get("/api/nonexistent-endpoint")
+        assert resp.status_code == 404
+        body = resp.get_json()
+        assert body["success"] is False
+        assert body["error"]["code"] == 404
+        assert "Resource not found" in body["error"]["message"]
+
+        # 400 Bad Request (malformed JSON string)
+        resp = client.post(
+            "/api/auth/register",
+            data="{malformed: json,",
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+        body = resp.get_json()
+        assert body["success"] is False
+        assert body["error"]["code"] == 400
+        assert isinstance(body["error"]["message"], str)
+
+    def test_rate_limiting_exceeded(self, client):
+        """Rate limit triggers 429 Too Many Requests when threshold is exceeded."""
+        payload = {"email": "spam@example.com", "password": "password"}
+        hit_429 = False
+
+        # /api/auth/login has 10/minute rate limit
+        for _ in range(15):
+            resp = client.post(
+                "/api/auth/login",
+                data=json.dumps(payload),
+                content_type="application/json",
+            )
+            if resp.status_code == 429:
+                hit_429 = True
+                body = resp.get_json()
+                assert body["success"] is False
+                assert body["error"]["code"] == 429
+                assert "Too Many Requests" in body["error"]["message"] or "per minute" in body["error"]["message"]
+                break
+
+        assert hit_429, "Expected 429 Too Many Requests after exceeding threshold"
+
+    def test_input_sanitization_xss_stripped(self, client, registered_user):
+        """Input strings strip malicious script/HTML tags before reaching DB."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        malicious_name = "Jane Doe<script>alert('xss')</script><b>Bold</b>"
+
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({"full_name": malicious_name}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+
+        # Verify via GET profile
+        get_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        profile = get_resp.get_json()
+        stored_name = profile["user"]["full_name"]
+
+        # Ensure script tag and contents are eliminated
+        assert "<script>" not in stored_name
+        assert "alert('xss')" not in stored_name
+        assert "Jane Doe" in stored_name
+
+    def test_input_sanitization_does_not_html_escape_quotes_or_urls(self, client, registered_user):
+        """Do not HTML-escape values before storing: quotes and URLs with query parameters stay clean."""
+        token = _get_jwt(client, registered_user["email"], registered_user["password"])
+        name_with_apostrophe = "Conan O'Brien"
+        linkedin_with_query = "https://linkedin.com/in/obrien?a=1&b=2"
+
+        resp = client.put(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+            data=json.dumps({
+                "full_name": name_with_apostrophe,
+                "platform_links": {"linkedin_url": linkedin_with_query},
+            }),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+
+        get_resp = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        profile = get_resp.get_json()
+        assert profile["user"]["full_name"] == "Conan O'Brien"
+        assert "&#x27;" not in profile["user"]["full_name"]
+        assert profile["platform_links"]["linkedin_url"] == "https://linkedin.com/in/obrien?a=1&b=2"
+        assert "&amp;" not in profile["platform_links"]["linkedin_url"]
+
+    def test_numeric_bounds_rejects_nan_and_inf(self):
+        """validate_numeric_bounds, validate_cgpa, validate_attendance, and validate_skill_score reject NaN and Inf."""
+        import pytest
+        from app.utils.sanitizer import (
+            validate_numeric_bounds,
+            validate_cgpa,
+            validate_attendance,
+            validate_skill_score,
+        )
+
+        for nan_val in (float("nan"), "nan", "NaN"):
+            with pytest.raises(ValueError, match="finite"):
+                validate_numeric_bounds(nan_val, min_val=0.0, max_val=10.0, field_name="cgpa")
+            with pytest.raises(ValueError, match="finite"):
+                validate_cgpa(nan_val)
+            with pytest.raises(ValueError, match="finite"):
+                validate_attendance(nan_val)
+            with pytest.raises(ValueError, match="finite"):
+                validate_skill_score(nan_val)
+
+        for inf_val in (float("inf"), float("-inf"), "inf", "-inf"):
+            with pytest.raises(ValueError, match="finite"):
+                validate_numeric_bounds(inf_val, min_val=0.0, max_val=10.0, field_name="cgpa")
+
+    def test_cors_headers_present(self, client):
+        """Verify CORS headers are returned for API preflight and requests."""
+        resp = client.open(
+            "/api/health",
+            method="OPTIONS",
+            headers={"Origin": "http://localhost:8000"},
+        )
+        assert resp.status_code in (200, 204)
+        assert "Access-Control-Allow-Origin" in resp.headers
+
+    def test_production_cors_validation_rejects_regex_and_wildcards(self, monkeypatch):
+        """ProductionConfig.validate() must reject regex patterns like '.*' or wildcards like '*'."""
+        import pytest
+        from config import ProductionConfig
+
+        # Valid secure production setup with domain, custom port, IPv4, and bracketed IPv6
+        monkeypatch.setattr(ProductionConfig, "SECRET_KEY", "real-prod-secret-key-32-chars-long!")
+        monkeypatch.setattr(ProductionConfig, "JWT_SECRET_KEY", "real-prod-jwt-key-32-chars-long!!")
+        monkeypatch.setattr(
+            ProductionConfig,
+            "CORS_ORIGINS",
+            [
+                "https://dron.ai",
+                "https://app.dron.ai:8000",
+                "http://127.0.0.1:5000",
+                "https://[::1]:8443",
+                "https://[2001:db8::1]",
+            ],
+        )
+        ProductionConfig.validate()  # Passes
+
+        # Reject wildcard '*'
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["*"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject regex wildcard '.*'
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", [".*"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject partial regex pattern 'https://.*\.dron\.ai'
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", [r"https://.*\.dron\.ai"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject out-of-range port (e.g. 99999)
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["https://example.com:99999"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject out-of-range IPv4 octets (e.g. 999.999.999.999)
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["http://999.999.999.999"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject unbracketed or invalid IPv6
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["https://::1:8443"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject trailing slash (browsers never send trailing slash in Origin header)
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["https://dron.ai/"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject uppercase scheme
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["HTTPS://dron.ai"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject empty port colon
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["https://dron.ai:"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+        # Reject embedded whitespace or newline
+        monkeypatch.setattr(ProductionConfig, "CORS_ORIGINS", ["https://dron.ai\n"])
+        with pytest.raises(ValueError, match="Origins in production must be explicit literal URLs"):
+            ProductionConfig.validate()
+
+
+

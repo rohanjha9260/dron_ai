@@ -38,7 +38,29 @@ def create_app(config_name="development"):
     db.init_app(app)
     jwt.init_app(app)
     limiter.init_app(app)
-    CORS(app)
+
+    # CORS Policy Configuration
+    cors_origins = app.config.get("CORS_ORIGINS", "*")
+    CORS(
+        app,
+        resources={r"/api/*": {"origins": cors_origins}},
+        methods=app.config.get("CORS_METHODS", ["GET", "POST", "PUT", "DELETE", "OPTIONS"]),
+        allow_headers=app.config.get("CORS_ALLOW_HEADERS", ["Content-Type", "Authorization"]),
+    )
+
+    # Register centralized JSON error handlers
+    _register_error_handlers(app)
+
+    # Validate JSON payloads before reaching blueprint views
+    @app.before_request
+    def validate_json_content():
+        from flask import request, abort
+        if request.is_json and request.data:
+            try:
+                # Triggers 400 Bad Request if json is malformed
+                request.get_json(silent=False)
+            except Exception:
+                abort(400, description="Invalid JSON format in request body")
 
     # Load ML models into memory (singleton pattern)
     with app.app_context():
@@ -131,4 +153,92 @@ def _register_health_endpoint(app):
                 "models_active": False,
                 "error": "Internal health check error",
             }), 500
+
+
+def _register_error_handlers(app):
+    """
+    Register standardized JSON error handlers for common HTTP status codes
+    and uncaught exceptions across all application routes.
+
+    Standard schema:
+        {
+            "success": false,
+            "error": {
+                "code": <http_status_code>,
+                "message": "<descriptive_message>"
+            }
+        }
+    """
+    from werkzeug.exceptions import HTTPException
+    from flask_limiter.errors import RateLimitExceeded
+
+    def _json_error(code: int, message: str):
+        payload = {
+            "success": False,
+            "error": {
+                "code": code,
+                "message": message,
+            },
+        }
+        return jsonify(payload), code
+
+    @app.errorhandler(400)
+    def bad_request(e):
+        msg = getattr(e, "description", None) or "Bad Request"
+        return _json_error(400, str(msg))
+
+    @app.errorhandler(401)
+    def unauthorized(e):
+        msg = getattr(e, "description", None) or "Unauthorized"
+        return _json_error(401, str(msg))
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        msg = getattr(e, "description", None) or "Forbidden"
+        return _json_error(403, str(msg))
+
+    @app.errorhandler(404)
+    def not_found(e):
+        desc = getattr(e, "description", "")
+        # If it's the standard Werkzeug default 404 text or empty, use "Resource not found"
+        if not desc or "The requested URL was not found on the server" in str(desc):
+            msg = "Resource not found"
+        else:
+            msg = str(desc)
+        return _json_error(404, msg)
+
+    @app.errorhandler(409)
+    def conflict(e):
+        msg = getattr(e, "description", None) or "Conflict"
+        return _json_error(409, str(msg))
+
+    @app.errorhandler(429)
+    def ratelimit_handler(e):
+        desc = getattr(e, "description", None)
+        msg = f"Too Many Requests: {desc}" if desc else "Too Many Requests"
+        return _json_error(429, msg)
+
+    @app.errorhandler(RateLimitExceeded)
+    def handle_rate_limit_exceeded(e):
+        desc = getattr(e, "description", None)
+        msg = f"Too Many Requests: {desc}" if desc else "Too Many Requests"
+        return _json_error(429, msg)
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        app.logger.error("Internal Server Error (500): %s", e, exc_info=True)
+        return _json_error(500, "Internal server error")
+
+    @app.errorhandler(HTTPException)
+    def handle_http_exception(e):
+        code = e.code or 500
+        msg = e.description or "An error occurred"
+        return _json_error(code, str(msg))
+
+    @app.errorhandler(Exception)
+    def handle_uncaught_exception(e):
+        if app.testing or app.config.get("PROPAGATE_EXCEPTIONS"):
+            raise e
+        app.logger.error("Unhandled exception caught by error handler: %s", e, exc_info=True)
+        return _json_error(500, "Internal server error")
 
