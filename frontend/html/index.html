@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dron AI: AI-Powered Student Career Platform — Predictive Career Intelligence & Roadmaps">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Dron AI — Career Intelligence</title>
     <!-- Google Fonts: Inter & Caveat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="../css/styles.css?v=2">
+    <link rel="stylesheet" href="../css/legal.css">
     
     <style>
         /* ═══════════════════════════════════════════════════════════════
@@ -218,21 +222,43 @@
         }
 
         .dron-nav-item.active .dron-nav-link {
-            color: var(--text-dark);
-            font-weight: 600;
+            color: var(--brand-green);
+            font-weight: 700;
             background: transparent !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
         }
 
-        /* Clean green underline indicator matching mockup */
-        .dron-nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 100%;
-            height: 2.5px;
-            background: var(--brand-green);
-            border-radius: 2px;
+        /* Completely eradicate ANY green line / underline / pseudo-element from the entire top navbar */
+        .dron-navbar *::after,
+        .dron-navbar *::before,
+        .dron-nav-list::after,
+        .dron-nav-list::before,
+        .dron-nav-item::after,
+        .dron-nav-item::before,
+        .dron-nav-item.active::after,
+        .dron-nav-item.active::before,
+        .dron-nav-link::after,
+        .dron-nav-link::before,
+        .dron-nav-link.active::after,
+        .dron-nav-link.active::before {
+            display: none !important;
+            content: none !important;
+            height: 0 !important;
+            width: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        .dron-nav-link {
+            cursor: pointer;
+            text-decoration: none !important;
+            border: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
         }
 
         .navbar-right {
@@ -838,9 +864,172 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ── Landing Page Tab View Panels ── */
+        .landing-tab-panel {
+            display: none !important;
+            width: 100%;
+        }
+
+        .landing-tab-panel.active {
+            display: block !important;
+            animation: fadeInLandingTab 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInLandingTab {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-section-header {
+            text-align: center;
+            max-width: 780px;
+            margin: 2.2rem auto 2.8rem;
+        }
+
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: clamp(2rem, 4vw, 4rem);
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 1100px) {
+            .how-it-works-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        /* ── Modern Compact Footer ── */
+        .dron-footer {
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 2.25rem 0 1.75rem;
+            border-top: 1px solid #1E293B;
+            width: 100%;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 3.8vw, 3.5rem);
+        }
+
+        .footer-compact-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-compact-brand {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        .footer-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #16A34A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+        }
+
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-tagline {
+            font-size: 0.85rem;
+            color: #64748B;
+            border-left: 1px solid #334155;
+            padding-left: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .footer-compact-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-compact-nav a {
+            color: #94A3B8;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .footer-compact-nav a:hover {
+            color: #86EFAC;
+        }
+
+        .footer-compact-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding-top: 1.25rem;
+            font-size: 0.82rem;
+            color: #64748B;
+        }
+
+        @media (max-width: 768px) {
+            .footer-compact-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+            }
+            .footer-tagline {
+                border-left: none;
+                padding-left: 0;
+                width: 100%;
+            }
+            .footer-compact-nav {
+                gap: 1rem 1.25rem;
+            }
+            .footer-compact-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body class="dron-landing">
+    <!-- Accessibility Skip to Main Content Link -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
     <!-- Ambient background soft tints -->
     <div class="ambient-blob-left" aria-hidden="true"></div>
@@ -852,7 +1041,7 @@
     <header class="dron-navbar">
         <div class="navbar-inner">
             <!-- Brand Logo -->
-            <a href="index.html" class="navbar-brand">
+            <a href="#home" class="navbar-brand" onclick="switchLandingTab('tab-home'); return false;">
                 <div class="brand-logo-sq">
                     <i class="fa-solid fa-brain"></i>
                 </div>
@@ -862,19 +1051,19 @@
                 </div>
             </a>
 
-            <!-- Center Navigation Links -->
-            <ul class="dron-nav-list">
-                <li class="dron-nav-item active">
-                    <a href="index.html" class="dron-nav-link">Home</a>
+            <!-- Center Navigation Links (Interactive Tab Switching) -->
+            <ul class="dron-nav-list" role="tablist">
+                <li class="dron-nav-item active" data-tab="tab-home">
+                    <a href="#home" class="dron-nav-link" data-tab-target="tab-home" onclick="switchLandingTab('tab-home'); return false;" role="tab" aria-selected="true">Home</a>
                 </li>
-                <li class="dron-nav-item">
-                    <a href="#features" class="dron-nav-link">Features</a>
+                <li class="dron-nav-item" data-tab="tab-features">
+                    <a href="#features" class="dron-nav-link" data-tab-target="tab-features" onclick="switchLandingTab('tab-features'); return false;" role="tab" aria-selected="false">Features</a>
                 </li>
-                <li class="dron-nav-item">
-                    <a href="#how-it-works" class="dron-nav-link">How It Works</a>
+                <li class="dron-nav-item" data-tab="tab-how-it-works">
+                    <a href="#how-it-works" class="dron-nav-link" data-tab-target="tab-how-it-works" onclick="switchLandingTab('tab-how-it-works'); return false;" role="tab" aria-selected="false">How It Works</a>
                 </li>
-                <li class="dron-nav-item">
-                    <a href="#about" class="dron-nav-link">About</a>
+                <li class="dron-nav-item" data-tab="tab-about">
+                    <a href="#about" class="dron-nav-link" data-tab-target="tab-about" onclick="switchLandingTab('tab-about'); return false;" role="tab" aria-selected="false">About</a>
                 </li>
             </ul>
 
@@ -892,8 +1081,8 @@
                 </button>
 
                 <!-- Action Button -->
-                <a href="dashboard.html" class="btn-dashboard-pill">
-                    <span>Go to Dashboard</span>
+                <a href="login.html?redirect=dashboard.html" class="btn-dashboard-pill" id="landing-get-started-btn">
+                    <span>Get Started</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -903,140 +1092,149 @@
     <!-- ═══════════════════════════════════════════════════════════════
          Main Landing Page Content (Fluid Widescreen)
          ═══════════════════════════════════════════════════════════════ -->
-    <main class="landing-wrap">
+    <main class="landing-wrap" id="main-content" role="main">
 
-        <!-- 1. Hero Section -->
-        <section class="hero-section">
-            <div class="hero-grid">
-                
-                <!-- Hero Left: Text & CTAs -->
-                <div class="hero-left">
-                    <div class="hero-badge">
-                        <span class="badge-dot"></span>
-                        <span>AI-Powered Student Career Platform</span>
-                    </div>
-
-                    <h1 class="hero-heading">
-                        Turn Your College<br>
-                        Journey into a Clear<br>
-                        <span class="hero-highlight">Career Path.</span>
-                    </h1>
-
-                    <p class="hero-desc">
-                        Dron AI analyzes your academic performance, skills and interests to provide personalized career insights, placement predictions and actionable roadmaps.
-                    </p>
-
-                    <div class="hero-actions">
-                        <a href="#features" class="btn-hero-primary">
-                            <span>Explore Features</span>
-                            <i class="fa-solid fa-arrow-down"></i>
-                        </a>
-                        <a href="#about" class="btn-hero-secondary">
-                            <span>Learn More</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Hero Right: Mountain Journey Card -->
-                <div class="journey-card" id="how-it-works">
+        <!-- ═══════════════════════════════════════════════════════════
+             TAB 1: HOME (Hero & Journey Showcase)
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="landing-tab-panel active" id="tab-home" role="tabpanel">
+            <section class="hero-section">
+                <div class="hero-grid">
                     
-                    <!-- SVG Mountain Graphic with Milestone Path & Summit Flag -->
-                    <svg class="journey-card-svg" viewBox="0 0 650 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <defs>
-                            <!-- Background mountain gradient -->
-                            <linearGradient id="mtnBackGrad" x1="450" y1="120" x2="650" y2="440" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#E2F7E9" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.2"/>
-                            </linearGradient>
-                            <!-- Foreground mountain gradient -->
-                            <linearGradient id="mtnFrontGrad" x1="400" y1="80" x2="650" y2="440" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#A7F3D0" stop-opacity="0.55"/>
-                                <stop offset="40%" stop-color="#D1FAE5" stop-opacity="0.45"/>
-                                <stop offset="100%" stop-color="#F0FDF4" stop-opacity="0.1"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Background rolling hills -->
-                        <path d="M 0 440 L 0 340 C 130 320, 260 290, 390 220 C 470 170, 540 140, 650 170 L 650 440 Z" fill="url(#mtnBackGrad)"/>
-
-                        <!-- Primary Mountain Slope culminating at summit (580, 80) -->
-                        <path d="M 120 440 C 240 400, 350 350, 440 270 C 500 220, 550 140, 580 80 C 595 130, 615 230, 650 270 L 650 440 Z" fill="url(#mtnFrontGrad)"/>
-
-                        <!-- Mountain Summit Flagpole & Flag at (580, 80) -->
-                        <line x1="580" y1="80" x2="580" y2="52" stroke="#15803D" stroke-width="2.4" stroke-linecap="round"/>
-                        <path d="M 580 52 Q 593 47, 606 55 L 606 66 Q 593 59, 580 67 Z" fill="#15803D"/>
-
-                        <!-- Milestone Connected Dashed Path -->
-                        <path d="M 95 155 C 145 200, 190 220, 240 235 C 300 255, 380 270, 445 275 C 510 280, 550 300, 575 320" 
-                              stroke="#86EFAC" stroke-width="2.5" stroke-dasharray="6 6" fill="none"/>
-
-                        <!-- Sketched Curved Arrow to the Summit Flag -->
-                        <path d="M 500 70 C 512 85, 520 95, 532 92 C 545 90, 555 80, 570 70" 
-                              stroke="#15803D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        <!-- Arrowhead -->
-                        <path d="M 562 67 L 573 69 L 568 79" stroke="#15803D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-
-                    <!-- Handwritten Cursive Annotation: "From College To Career" -->
-                    <div class="handwriting-note">
-                        From College<br>To Career
-                    </div>
-
-                    <!-- Milestone 1: Your Profile -->
-                    <div class="milestone-node node-profile">
-                        <div class="node-icon-circle">
-                            <i class="fa-solid fa-graduation-cap"></i>
+                    <!-- Hero Left: Text & CTAs -->
+                    <div class="hero-left">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            <span>AI-Powered Student Career Platform</span>
                         </div>
-                        <div class="node-texts">
-                            <span class="node-title">Your Profile</span>
-                            <span class="node-sub">Academic &amp; Skills</span>
+
+                        <h1 class="hero-heading">
+                            Turn Your College<br>
+                            Journey into a Clear<br>
+                            <span class="hero-highlight">Career Path.</span>
+                        </h1>
+
+                        <p class="hero-desc">
+                            Dron AI analyzes your academic performance, skills and interests to provide personalized career insights, placement predictions and actionable roadmaps.
+                        </p>
+
+                        <div class="hero-actions">
+                            <button type="button" class="btn-hero-primary" onclick="switchLandingTab('tab-features');">
+                                <span>Explore Features</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button type="button" class="btn-hero-secondary" onclick="switchLandingTab('tab-how-it-works');">
+                                <span>How It Works</span>
+                            </button>
+                            <button type="button" class="btn-hero-secondary" onclick="switchLandingTab('tab-about');">
+                                <span>About Platform</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Milestone 2: AI Analysis -->
-                    <div class="milestone-node node-analysis">
-                        <div class="node-icon-circle">
-                            <i class="fa-solid fa-chart-simple"></i>
-                        </div>
-                        <div class="node-texts">
-                            <span class="node-title">AI Analysis</span>
-                            <span class="node-sub">Predict &amp; Match</span>
-                        </div>
-                    </div>
+                    <!-- Hero Right: Mountain Journey Card -->
+                    <div class="journey-card" onclick="switchLandingTab('tab-how-it-works');" style="cursor: pointer;" title="Click to view full How It Works guide">
+                        
+                        <!-- SVG Mountain Graphic with Milestone Path & Summit Flag -->
+                        <svg class="journey-card-svg" viewBox="0 0 650 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="mtnBackGrad" x1="450" y1="120" x2="650" y2="440" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#E2F7E9" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.2"/>
+                                </linearGradient>
+                                <linearGradient id="mtnFrontGrad" x1="400" y1="80" x2="650" y2="440" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#A7F3D0" stop-opacity="0.55"/>
+                                    <stop offset="40%" stop-color="#D1FAE5" stop-opacity="0.45"/>
+                                    <stop offset="100%" stop-color="#F0FDF4" stop-opacity="0.1"/>
+                                </linearGradient>
+                            </defs>
 
-                    <!-- Milestone 3: Career Insights -->
-                    <div class="milestone-node node-career">
-                        <div class="node-icon-circle">
-                            <i class="fa-solid fa-bullseye"></i>
-                        </div>
-                        <div class="node-texts">
-                            <span class="node-title">Career Insights</span>
-                            <span class="node-sub">Explore Opportunities</span>
-                        </div>
-                    </div>
+                            <path d="M 0 440 L 0 340 C 130 320, 260 290, 390 220 C 470 170, 540 140, 650 170 L 650 440 Z" fill="url(#mtnBackGrad)"/>
+                            <path d="M 120 440 C 240 400, 350 350, 440 270 C 500 220, 550 140, 580 80 C 595 130, 615 230, 650 270 L 650 440 Z" fill="url(#mtnFrontGrad)"/>
+                            <line x1="580" y1="80" x2="580" y2="52" stroke="#15803D" stroke-width="2.4" stroke-linecap="round"/>
+                            <path d="M 580 52 Q 593 47, 606 55 L 606 66 Q 593 59, 580 67 Z" fill="#15803D"/>
+                            <path d="M 95 155 C 145 200, 190 220, 240 235 C 300 255, 380 270, 445 275 C 510 280, 550 300, 575 320" 
+                                  stroke="#86EFAC" stroke-width="2.5" stroke-dasharray="6 6" fill="none"/>
+                            <path d="M 500 70 C 512 85, 520 95, 532 92 C 545 90, 555 80, 570 70" 
+                                  stroke="#15803D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M 562 67 L 573 69 L 568 79" stroke="#15803D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
 
-                    <!-- Milestone 4: Your Roadmap -->
-                    <div class="milestone-node node-roadmap">
-                        <div class="node-icon-circle">
-                            <i class="fa-solid fa-map"></i>
+                        <!-- Handwritten Cursive Annotation: "From College To Career" -->
+                        <div class="handwriting-note">
+                            From College<br>To Career
                         </div>
-                        <div class="node-texts">
-                            <span class="node-title">Your Roadmap</span>
-                            <span class="node-sub">Learn &amp; Grow</span>
+
+                        <!-- Milestone 1: Your Profile -->
+                        <div class="milestone-node node-profile">
+                            <div class="node-icon-circle">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="node-texts">
+                                <span class="node-title">Your Profile</span>
+                                <span class="node-sub">Academic &amp; Skills</span>
+                            </div>
                         </div>
+
+                        <!-- Milestone 2: AI Analysis -->
+                        <div class="milestone-node node-analysis">
+                            <div class="node-icon-circle">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </div>
+                            <div class="node-texts">
+                                <span class="node-title">AI Analysis</span>
+                                <span class="node-sub">Predict &amp; Match</span>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 3: Career Insights -->
+                        <div class="milestone-node node-career">
+                            <div class="node-icon-circle">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <div class="node-texts">
+                                <span class="node-title">Career Insights</span>
+                                <span class="node-sub">Explore Opportunities</span>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 4: Your Roadmap -->
+                        <div class="milestone-node node-roadmap">
+                            <div class="node-icon-circle">
+                                <i class="fa-solid fa-map"></i>
+                            </div>
+                            <div class="node-texts">
+                                <span class="node-title">Your Roadmap</span>
+                                <span class="node-sub">Learn &amp; Grow</span>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
+            </section>
+        </div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             TAB 2: FEATURES (Isolated Clean View)
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="landing-tab-panel" id="tab-features" role="tabpanel">
+            <div class="tab-section-header">
+                <div class="about-badge" style="margin: 0 auto 1rem;">
+                    <i class="fa-solid fa-shapes"></i>
+                    <span>CORE CAPABILITIES</span>
+                </div>
+                <h2 class="about-title" style="text-align: center; margin-bottom: 0.75rem;">Platform Intelligence Modules</h2>
+                <p class="about-desc" style="margin: 0 auto; text-align: center; max-width: 680px;">
+                    Five specialized AI modules engineered to assess, forecast, and accelerate student placement readiness.
+                </p>
             </div>
-        </section>
 
-        <!-- 2. Features Row (5 Cards) -->
-        <section class="features-section" id="features">
+            <!-- Features Grid (5 Cards) -->
             <div class="features-grid">
 
                 <!-- Feature 1: Academic Prediction -->
-                <a href="academic.html" class="feature-card theme-academic">
+                <a href="login.html?redirect=academic.html" data-target="academic.html" class="feature-card theme-academic">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-graduation-cap"></i>
@@ -1052,7 +1250,7 @@
                 </a>
 
                 <!-- Feature 2: Career Recommendations -->
-                <a href="career.html" class="feature-card theme-career">
+                <a href="login.html?redirect=career.html" data-target="career.html" class="feature-card theme-career">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-bullseye"></i>
@@ -1068,7 +1266,7 @@
                 </a>
 
                 <!-- Feature 3: Placement Readiness -->
-                <a href="placement.html" class="feature-card theme-placement">
+                <a href="login.html?redirect=placement.html" data-target="placement.html" class="feature-card theme-placement">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-chart-simple"></i>
@@ -1084,7 +1282,7 @@
                 </a>
 
                 <!-- Feature 4: Personalized Roadmap -->
-                <a href="roadmap.html" class="feature-card theme-roadmap">
+                <a href="login.html?redirect=roadmap.html" data-target="roadmap.html" class="feature-card theme-roadmap">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-map"></i>
@@ -1100,7 +1298,7 @@
                 </a>
 
                 <!-- Feature 5: Interview Guide -->
-                <a href="mock_interview.html" class="feature-card theme-interview">
+                <a href="login.html?redirect=mock_interview.html" data-target="mock_interview.html" class="feature-card theme-interview">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-microphone"></i>
@@ -1116,78 +1314,361 @@
                 </a>
 
             </div>
-        </section>
 
-        <!-- 3. About Section ("Why Dron AI?" / "Our Objective") -->
-        <section class="about-section" id="about">
-            <div class="about-grid">
-                
-                <!-- Left Column: Why Dron AI? -->
-                <div class="about-left">
-                    <div class="about-badge">
-                        <span class="badge-dot"></span>
-                        <span>About Dron AI</span>
-                    </div>
-
-                    <h2 class="about-title">Why Dron AI?</h2>
-
-                    <p class="about-desc">
-                        Many students face confusion about their career path, lack personalized guidance and are unaware of the skills required for their dream roles. Dron AI bridges this gap by using data-driven insights to help you make informed decisions and prepare effectively for the future.
-                    </p>
-
-                    <div class="about-benefits-row">
-                        <div class="benefit-item">
-                            <i class="fa-regular fa-lightbulb benefit-icon"></i>
-                            <span>Clear Career Direction</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fa-solid fa-user-group benefit-icon"></i>
-                            <span>Better Placement Preparation</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fa-solid fa-chart-column benefit-icon"></i>
-                            <span>Data-Driven Decisions</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Our Objective Card -->
-                <div class="objective-card">
-                    <h3 class="objective-heading">Our Objective</h3>
-                    <p class="objective-lead">
-                        To empower every student with personalized career insights, actionable guidance and the tools to build a successful future.
-                    </p>
-
-                    <ul class="objective-list">
-                        <li>
-                            <i class="fa-solid fa-circle-check objective-check"></i>
-                            <span>Analyze academic performance and skills</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-circle-check objective-check"></i>
-                            <span>Recommend the most suitable career paths</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-circle-check objective-check"></i>
-                            <span>Predict placement readiness</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-circle-check objective-check"></i>
-                            <span>Provide a personalized learning roadmap</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-circle-check objective-check"></i>
-                            <span>Help you prepare for interviews and real-world opportunities</span>
-                        </li>
-                    </ul>
-                </div>
-
+            <!-- Single Dedicated Info Footnote -->
+            <div style="text-align: center; margin: 3rem auto 1.5rem; padding: 1.25rem 2rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 18px; max-width: 860px;">
+                <p style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; margin: 0;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--brand-green); margin-right: 0.5rem;"></i>
+                    Click any card above to launch its predictive tool or sign in as a student for personalized analytics.
+                </p>
             </div>
-        </section>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             TAB 3: HOW IT WORKS (Full Journey & Step Breakdown)
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="landing-tab-panel" id="tab-how-it-works" role="tabpanel">
+            <div class="tab-section-header">
+                <div class="about-badge" style="margin: 0 auto 1rem;">
+                    <i class="fa-solid fa-route"></i>
+                    <span>ARCHITECTURE &amp; WORKFLOW</span>
+                </div>
+                <h2 class="about-title" style="text-align: center; margin-bottom: 0.75rem;">How Dron AI Works</h2>
+                <p class="about-desc" style="margin: 0 auto; text-align: center; max-width: 680px;">
+                    From multi-dimensional academic telemetry to sub-2ms ML placement clearance and personalized roadmaps.
+                </p>
+            </div>
+
+            <div class="how-it-works-grid">
+                <!-- Mountain Graphic Showcase -->
+                <div class="journey-card" style="margin: 0; min-height: 420px;">
+                    <svg class="journey-card-svg" viewBox="0 0 650 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="mtnBackGrad2" x1="450" y1="120" x2="650" y2="440" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#E2F7E9" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.2"/>
+                            </linearGradient>
+                            <linearGradient id="mtnFrontGrad2" x1="400" y1="80" x2="650" y2="440" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#A7F3D0" stop-opacity="0.55"/>
+                                <stop offset="40%" stop-color="#D1FAE5" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#F0FDF4" stop-opacity="0.1"/>
+                            </linearGradient>
+                        </defs>
+
+                        <path d="M 0 440 L 0 340 C 130 320, 260 290, 390 220 C 470 170, 540 140, 650 170 L 650 440 Z" fill="url(#mtnBackGrad2)"/>
+                        <path d="M 120 440 C 240 400, 350 350, 440 270 C 500 220, 550 140, 580 80 C 595 130, 615 230, 650 270 L 650 440 Z" fill="url(#mtnFrontGrad2)"/>
+                        <line x1="580" y1="80" x2="580" y2="52" stroke="#15803D" stroke-width="2.4" stroke-linecap="round"/>
+                        <path d="M 580 52 Q 593 47, 606 55 L 606 66 Q 593 59, 580 67 Z" fill="#15803D"/>
+                        <path d="M 95 155 C 145 200, 190 220, 240 235 C 300 255, 380 270, 445 275 C 510 280, 550 300, 575 320" 
+                              stroke="#86EFAC" stroke-width="2.5" stroke-dasharray="6 6" fill="none"/>
+                        <path d="M 500 70 C 512 85, 520 95, 532 92 C 545 90, 555 80, 570 70" 
+                              stroke="#15803D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M 562 67 L 573 69 L 568 79" stroke="#15803D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+
+                    <div class="handwriting-note">
+                        From College<br>To Career
+                    </div>
+
+                    <div class="milestone-node node-profile">
+                        <div class="node-icon-circle"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="node-texts"><span class="node-title">Your Profile</span><span class="node-sub">Academic &amp; Skills</span></div>
+                    </div>
+                    <div class="milestone-node node-analysis">
+                        <div class="node-icon-circle"><i class="fa-solid fa-chart-simple"></i></div>
+                        <div class="node-texts"><span class="node-title">AI Analysis</span><span class="node-sub">Predict &amp; Match</span></div>
+                    </div>
+                    <div class="milestone-node node-career">
+                        <div class="node-icon-circle"><i class="fa-solid fa-bullseye"></i></div>
+                        <div class="node-texts"><span class="node-title">Career Insights</span><span class="node-sub">Explore Opportunities</span></div>
+                    </div>
+                    <div class="milestone-node node-roadmap">
+                        <div class="node-icon-circle"><i class="fa-solid fa-map"></i></div>
+                        <div class="node-texts"><span class="node-title">Your Roadmap</span><span class="node-sub">Learn &amp; Grow</span></div>
+                    </div>
+                </div>
+
+                <!-- Structured Process Steps -->
+                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 1.35rem 1.6rem; display: flex; gap: 1.15rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                        <div style="width: 42px; height: 42px; border-radius: 12px; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">1</div>
+                        <div>
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.35rem;">Academic &amp; Telemetry Profile</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin: 0;">Ingests semester SGPA, attendance percentage, active backlogs, GitHub commits, and LeetCode problem solving metrics into a canonical 13D vector.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 1.35rem 1.6rem; display: flex; gap: 1.15rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                        <div style="width: 42px; height: 42px; border-radius: 12px; background: #DBEAFE; color: #2563EB; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">2</div>
+                        <div>
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.35rem;">Sub-2ms ML Inference</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin: 0;">Trained XGBoost classifier predicts placement clearing odds with TreeSHAP feature attributions, identifying exactly which factors boost your employability.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 1.35rem 1.6rem; display: flex; gap: 1.15rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                        <div style="width: 42px; height: 42px; border-radius: 12px; background: #F3E8FF; color: #9333EA; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">3</div>
+                        <div>
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.35rem;">Cosine Career Matching</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin: 0;">Evaluates Euclidean angular distance between your skill vector and 10 industry role vectors to recommend high-probability career paths.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 1.35rem 1.6rem; display: flex; gap: 1.15rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                        <div style="width: 42px; height: 42px; border-radius: 12px; background: #FEF3C7; color: #D97706; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">4</div>
+                        <div>
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.35rem;">Dynamic Learning Roadmap</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin: 0;">Vector deficit subtraction identifies missing competencies, generating phased milestones, capstone project blueprints, and mock drills.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             TAB 4: ABOUT (Why Dron AI? & Institutional Objective)
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="landing-tab-panel" id="tab-about" role="tabpanel">
+            <section class="about-section" style="padding-top: 2rem;">
+                <div class="about-grid">
+                    
+                    <!-- Left Column: Why Dron AI? -->
+                    <div class="about-left">
+                        <div class="about-badge">
+                            <span class="badge-dot"></span>
+                            <span>About Dron AI</span>
+                        </div>
+
+                        <h2 class="about-title">Why Dron AI?</h2>
+
+                        <p class="about-desc">
+                            Many students face confusion about their career path, lack personalized guidance and are unaware of the skills required for their dream roles. Dron AI bridges this gap by using data-driven insights to help you make informed decisions and prepare effectively for the future.
+                        </p>
+
+                        <div class="about-benefits-row">
+                            <div class="benefit-item">
+                                <i class="fa-regular fa-lightbulb benefit-icon"></i>
+                                <span>Clear Career Direction</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fa-solid fa-user-group benefit-icon"></i>
+                                <span>Better Placement Preparation</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fa-solid fa-chart-column benefit-icon"></i>
+                                <span>Data-Driven Decisions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Our Objective Card -->
+                    <div class="objective-card">
+                        <h3 class="objective-heading">Our Objective</h3>
+                        <p class="objective-lead">
+                            To empower every student with personalized career insights, actionable guidance and the tools to build a successful future.
+                        </p>
+
+                        <ul class="objective-list">
+                            <li>
+                                <i class="fa-solid fa-circle-check objective-check"></i>
+                                <span>Analyze academic performance and skills</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check objective-check"></i>
+                                <span>Recommend the most suitable career paths</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check objective-check"></i>
+                                <span>Predict placement readiness</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check objective-check"></i>
+                                <span>Provide a personalized learning roadmap</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check objective-check"></i>
+                                <span>Help you prepare for interviews and real-world opportunities</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+        </div>
 
     </main>
 
+    <!-- Clean Modern Compact Student Platform Footer -->
+    <footer class="dron-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-compact-row">
+                <!-- Brand Info -->
+                <div class="footer-compact-brand">
+                    <a href="index.html" class="footer-logo-link">
+                        <div class="footer-logo-icon">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <span class="footer-logo-text">Dron AI</span>
+                    </a>
+                    <span class="footer-tagline">AI-Powered Career &amp; Placement Readiness</span>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="footer-compact-nav" aria-label="Footer Navigation">
+                    <a href="#home" onclick="switchLandingTab('tab-home'); return false;">Home</a>
+                    <a href="#features" onclick="switchLandingTab('tab-features'); return false;">Features</a>
+                    <a href="#how-it-works" onclick="switchLandingTab('tab-how-it-works'); return false;">How It Works</a>
+                    <a href="#about" onclick="switchLandingTab('tab-about'); return false;">About</a>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="login.html">Sign In</a>
+                </nav>
+            </div>
+
+            <div class="footer-compact-bottom">
+                <div>&copy; 2026 Dron AI &bull; Built for Engineering Students</div>
+                <div>Placement Readiness &bull; Skill Gap Analysis &bull; Predictive Learning Roadmap</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dedicated Tab Switching Controller (Evaluated before app.js) -->
+    <script>
+        // ── Dynamic Tab View Controller (Home, Features, How It Works, About) ──
+        function switchLandingTab(tabId) {
+            if (!tabId) tabId = 'tab-home';
+            var cleanId = tabId.indexOf('tab-') === 0 ? tabId : 'tab-' + tabId.replace(/^#/, '');
+
+            var panels = document.querySelectorAll('.landing-tab-panel');
+            var targetPanel = document.getElementById(cleanId);
+            if (!targetPanel) {
+                targetPanel = document.getElementById('tab-home');
+            }
+
+            for (var i = 0; i < panels.length; i++) {
+                panels[i].classList.remove('active');
+                panels[i].style.setProperty('display', 'none', 'important');
+            }
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+                targetPanel.style.setProperty('display', 'block', 'important');
+            }
+
+            var navItems = document.querySelectorAll('.dron-nav-item');
+            for (var j = 0; j < navItems.length; j++) {
+                var item = navItems[j];
+                var itemTarget = item.getAttribute('data-tab');
+                var isMatch = itemTarget === (targetPanel ? targetPanel.id : 'tab-home');
+                var link = item.querySelector('.dron-nav-link');
+                if (isMatch) {
+                    item.classList.add('active');
+                    if (link) {
+                        link.setAttribute('aria-selected', 'true');
+                        link.style.color = '#16A34A';
+                        link.style.fontWeight = '700';
+                    }
+                } else {
+                    item.classList.remove('active');
+                    if (link) {
+                        link.setAttribute('aria-selected', 'false');
+                        link.style.color = '#334155';
+                        link.style.fontWeight = '500';
+                    }
+                }
+            }
+
+            // Smooth scroll to top of main content
+            try {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                window.scrollTo(0, 0);
+            }
+
+            var hashName = (targetPanel ? targetPanel.id : 'tab-home').replace('tab-', '');
+            try {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, null, '#' + hashName);
+                }
+            } catch (histErr) {}
+        }
+        window.switchLandingTab = switchLandingTab;
+    </script>
+
     <!-- Client-Side Animation & State Engine -->
     <script src="../js/app.js"></script>
+    <script>
+
+        // Synchronize landing page auth state and protected deep-link navigation
+        document.addEventListener("DOMContentLoaded", () => {
+            // Bind navigation link click events
+            document.querySelectorAll('.dron-nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-tab-target');
+                    if (target) {
+                        switchLandingTab(target);
+                    }
+                });
+            });
+
+            // Check initial hash on page load
+            const initialHash = window.location.hash ? window.location.hash.replace(/^#/, '') : 'home';
+            if (initialHash && ['home', 'features', 'how-it-works', 'about'].includes(initialHash)) {
+                switchLandingTab('tab-' + initialHash);
+            }
+
+            // Listen for browser back / forward hash navigation
+            window.addEventListener('hashchange', () => {
+                const h = window.location.hash ? window.location.hash.replace(/^#/, '') : 'home';
+                if (h && ['home', 'features', 'how-it-works', 'about'].includes(h)) {
+                    switchLandingTab('tab-' + h);
+                }
+            });
+
+            const token = localStorage.getItem("dron_ai_token");
+            const getStartedBtn = document.getElementById("landing-get-started-btn");
+            const featureCards = document.querySelectorAll(".features-grid .feature-card");
+
+            if (token) {
+                if (getStartedBtn) {
+                    getStartedBtn.href = "dashboard.html";
+                    const span = getStartedBtn.querySelector("span");
+                    if (span) span.textContent = "Go to Dashboard";
+                }
+                featureCards.forEach(card => {
+                    const target = card.getAttribute("data-target");
+                    if (target) card.href = target;
+                });
+            } else {
+                if (getStartedBtn) {
+                    getStartedBtn.href = "login.html?redirect=dashboard.html";
+                    const span = getStartedBtn.querySelector("span");
+                    if (span) span.textContent = "Get Started";
+                }
+                featureCards.forEach(card => {
+                    const target = card.getAttribute("data-target");
+                    if (target) {
+                        card.href = `login.html?redirect=${encodeURIComponent(target)}`;
+                    }
+                });
+            }
+
+            // Click interceptor for guaranteed protection
+            featureCards.forEach(card => {
+                card.addEventListener("click", function(e) {
+                    const currentToken = localStorage.getItem("dron_ai_token");
+                    const target = this.getAttribute("data-target") || "dashboard.html";
+                    if (currentToken) {
+                        e.preventDefault();
+                        window.location.href = target;
+                    } else {
+                        e.preventDefault();
+                        window.location.href = `login.html?redirect=${encodeURIComponent(target)}`;
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Cookie Consent Banner Module -->
+    <script src="../js/cookie_consent.js"></script>
 </body>
 </html>

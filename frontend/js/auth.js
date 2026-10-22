@@ -2,13 +2,47 @@
  * Dron-AI Authentication Module
  *
  * Handles:
- *   - Login form submission & JWT token storage
- *   - Registration form submission & validation
- *   - Password visibility toggling
- *   - Error & success alert banner presentations without layout shifts
- *   - Logout functionality
- *   - Auth state checking (redirect if unauthenticated)
+ *   - Unified Login, Sign Up, and Guest Access (Dev Mode)
+ *   - Post-login open-redirect safe target resolution
+ *   - Seamless segmented tab switching
+ *   - Password visibility toggles
+ *   - Non-blocking error and success alerts
+ *   - Session state management and logout
  */
+
+/**
+ * Safely resolve post-authentication redirection target.
+ * Allowed targets: relative paths within the Dron-AI frontend.
+ * Defends against open-redirect vulnerabilities.
+ */
+function getPostLoginRedirectUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const redirectParam = params.get("redirect");
+
+    const allowedPages = [
+        "dashboard.html",
+        "academic.html",
+        "career.html",
+        "placement.html",
+        "roadmap.html",
+        "mock_interview.html",
+        "telemetry.html",
+        "settings.html",
+        "softskills.html",
+        "input.html"
+    ];
+
+    if (redirectParam) {
+        // Strip leading slashes/directories to prevent open redirects
+        const cleanTarget = redirectParam.split("/").pop();
+        if (allowedPages.includes(cleanTarget)) {
+            return cleanTarget;
+        }
+    }
+
+    // Default fallback destination
+    return "dashboard.html";
+}
 
 /**
  * Check if the user is authenticated.
@@ -17,7 +51,12 @@
 function checkAuth() {
     const token = getToken();
     if (!token) {
-        window.location.href = "login.html";
+        const currentPage = window.location.pathname.split("/").pop();
+        if (currentPage && currentPage !== "login.html" && currentPage !== "register.html" && currentPage !== "index.html") {
+            window.location.href = `login.html?redirect=${encodeURIComponent(currentPage)}`;
+        } else {
+            window.location.href = "login.html";
+        }
     }
 }
 
@@ -28,8 +67,7 @@ function checkAuth() {
  */
 function displayError(errorElement, message) {
     if (!errorElement) return;
-    
-    // Clean, formatted error message with icon
+
     errorElement.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
             <circle cx="12" cy="12" r="10"/>
@@ -48,7 +86,7 @@ function displayError(errorElement, message) {
  */
 function displaySuccess(successElement, message) {
     if (!successElement) return;
-    
+
     successElement.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -60,7 +98,7 @@ function displaySuccess(successElement, message) {
 }
 
 /**
- * Escape HTML to prevent XSS in error banners.
+ * Escape HTML to prevent XSS in alert banners.
  */
 function escapeHtml(text) {
     if (!text) return "";
@@ -74,7 +112,7 @@ function escapeHtml(text) {
  */
 function initPasswordToggles() {
     const toggleButtons = document.querySelectorAll(".password-toggle-btn");
-    
+
     toggleButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
             const targetId = btn.getAttribute("data-target");
@@ -106,6 +144,56 @@ function initPasswordToggles() {
             }
         });
     });
+}
+
+/**
+ * Initialize segmented tabs between Sign In and Sign Up.
+ */
+function initAuthTabs() {
+    const loginTabBtn = document.getElementById("tab-login-btn");
+    const registerTabBtn = document.getElementById("tab-register-btn");
+    const loginPanel = document.getElementById("panel-login");
+    const registerPanel = document.getElementById("panel-register");
+    const switchToRegisterLink = document.getElementById("switch-to-register-link");
+    const switchToLoginLink = document.getElementById("switch-to-login-link");
+    const headerTag = document.getElementById("auth-header-tag");
+
+    function activateTab(tabName) {
+        const isRegister = tabName === "register" || tabName === "signup";
+        if (loginTabBtn && registerTabBtn) {
+            loginTabBtn.classList.toggle("active", !isRegister);
+            loginTabBtn.setAttribute("aria-selected", !isRegister ? "true" : "false");
+            registerTabBtn.classList.toggle("active", isRegister);
+            registerTabBtn.setAttribute("aria-selected", isRegister ? "true" : "false");
+        }
+        if (loginPanel && registerPanel) {
+            loginPanel.classList.toggle("active", !isRegister);
+            registerPanel.classList.toggle("active", isRegister);
+        }
+        if (headerTag) {
+            headerTag.textContent = isRegister ? "New Registration" : "Student Portal";
+        }
+    }
+
+    if (loginTabBtn) {
+        loginTabBtn.addEventListener("click", () => activateTab("login"));
+    }
+    if (registerTabBtn) {
+        registerTabBtn.addEventListener("click", () => activateTab("register"));
+    }
+    if (switchToRegisterLink) {
+        switchToRegisterLink.addEventListener("click", () => activateTab("register"));
+    }
+    if (switchToLoginLink) {
+        switchToLoginLink.addEventListener("click", () => activateTab("login"));
+    }
+
+    // Check URL parameters for tab preference (?tab=signup or ?tab=register)
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab");
+    if (tabParam === "register" || tabParam === "signup") {
+        activateTab("register");
+    }
 }
 
 /**
@@ -157,7 +245,8 @@ function initLoginForm() {
 
             if (data && data.access_token) {
                 setToken(data.access_token);
-                window.location.href = "index.html";
+                localStorage.removeItem("dron_is_guest");
+                window.location.href = getPostLoginRedirectUrl();
             } else {
                 throw new Error(data.error || "Authentication failed: No access token received.");
             }
@@ -191,7 +280,6 @@ function initRegisterForm() {
     const cohortInput = document.getElementById("reg-cohort");
     const branchInput = document.getElementById("reg-branch");
 
-    // Clear alert banners when user modifies any input
     [nameInput, emailInput, passwordInput, cohortInput, branchInput].forEach((input) => {
         if (input) {
             input.addEventListener("input", () => {
@@ -210,7 +298,6 @@ function initRegisterForm() {
         const cohortYear = cohortInput && cohortInput.value ? Number(cohortInput.value) : null;
         const branch = branchInput ? branchInput.value : null;
 
-        // Basic front-end validations
         if (!fullName || !email || !password) {
             displayError(errorDiv, "Full Name, Email, and Password are required.");
             return;
@@ -228,6 +315,12 @@ function initRegisterForm() {
 
         if (cohortYear !== null && (!Number.isInteger(cohortYear) || cohortYear < 2000 || cohortYear > 2099)) {
             displayError(errorDiv, "Cohort year must be between 2000 and 2099.");
+            return;
+        }
+
+        const consentCheckbox = document.getElementById("reg-consent");
+        if (consentCheckbox && !consentCheckbox.checked) {
+            displayError(errorDiv, "Please accept the Terms & Conditions and Privacy Policy (DPDP Act 2023) to continue.");
             return;
         }
 
@@ -251,12 +344,21 @@ function initRegisterForm() {
 
             displaySuccess(
                 successDiv,
-                (data && data.message ? data.message : "Account created successfully!") + " Redirecting to login..."
+                (data && data.message ? data.message : "Account created successfully!") + " Switching to sign in..."
             );
 
+            // Pre-fill email in login tab
+            const loginEmail = document.getElementById("login-email");
+            if (loginEmail) loginEmail.value = email;
+
             setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1400);
+                const loginTabBtn = document.getElementById("tab-login-btn");
+                if (loginTabBtn) {
+                    loginTabBtn.click();
+                } else {
+                    window.location.href = "login.html";
+                }
+            }, 1200);
         } catch (error) {
             let errorMsg = error.message;
             if (errorMsg.includes("Failed to fetch") || errorMsg.includes("NetworkError")) {
@@ -270,7 +372,7 @@ function initRegisterForm() {
 }
 
 /**
- * Handle Guest Login flow.
+ * Handle Guest Login flow (Option 3: Quick Dev Mode).
  */
 function initGuestLogin() {
     const guestBtn = document.getElementById("guest-login-btn");
@@ -284,19 +386,45 @@ function initGuestLogin() {
 
         const originalHtml = guestBtn.innerHTML;
         guestBtn.disabled = true;
-        guestBtn.innerHTML = `<span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> <span>Entering Guest Mode...</span>`;
+        guestBtn.innerHTML = `
+            <div class="guest-dev-main">
+                <span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;vertical-align:middle;"></span>
+                <span>Entering Guest Mode...</span>
+            </div>
+            <div class="guest-dev-subtext">
+                <span>Setting up demo environment...</span>
+            </div>
+        `;
 
         try {
-            const data = await apiRequest("/auth/guest", {
-                method: "POST",
-            });
+            let token = null;
 
-            if (data && data.access_token) {
-                setToken(data.access_token);
+            // Primary attempt: /api/auth/guest
+            try {
+                const data = await apiRequest("/auth/guest", { method: "POST" });
+                if (data && data.access_token) {
+                    token = data.access_token;
+                }
+            } catch (guestErr) {
+                console.warn("/auth/guest endpoint failed, attempting demo account login fallback:", guestErr);
+                // Fallback attempt: pre-seeded demo credentials (rohan@dron.ai / password123)
+                const loginData = await apiRequest("/auth/login", {
+                    method: "POST",
+                    body: { email: "rohan@dron.ai", password: "password123" }
+                });
+                if (loginData && loginData.access_token) {
+                    token = loginData.access_token;
+                } else {
+                    throw guestErr;
+                }
+            }
+
+            if (token) {
+                setToken(token);
                 localStorage.setItem("dron_is_guest", "true");
-                window.location.href = "index.html";
+                window.location.href = getPostLoginRedirectUrl();
             } else {
-                throw new Error(data.error || "Unable to enter guest session.");
+                throw new Error("Unable to obtain guest session token.");
             }
         } catch (error) {
             let errorMsg = error.message;
@@ -327,9 +455,9 @@ function initLogout() {
 // Auto-initialize on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
     initPasswordToggles();
+    initAuthTabs();
     initLoginForm();
     initRegisterForm();
     initGuestLogin();
     initLogout();
 });
-
