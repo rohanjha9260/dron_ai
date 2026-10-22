@@ -32,7 +32,7 @@ def main():
     # 2. Start Frontend Static HTTP Server on port 8000
     print("[2/2] Starting Frontend Web Server on http://localhost:8000 ...")
     frontend = subprocess.Popen(
-        [sys.executable, "-m", "http.server", "8000"],
+        [sys.executable, "-m", "http.server", "8000", "--bind", "127.0.0.1"],
         cwd="frontend",
     )
 
