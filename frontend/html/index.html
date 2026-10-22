@@ -225,18 +225,32 @@
             color: var(--brand-green);
             font-weight: 700;
             background: transparent !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
         }
 
-        /* Completely remove the green line / underline from top navbar */
+        /* Completely eradicate ANY green line / underline / pseudo-element from the entire top navbar */
+        .dron-navbar *::after,
+        .dron-navbar *::before,
+        .dron-nav-list::after,
+        .dron-nav-list::before,
         .dron-nav-item::after,
+        .dron-nav-item::before,
         .dron-nav-item.active::after,
-        .dron-nav-link::after {
+        .dron-nav-item.active::before,
+        .dron-nav-link::after,
+        .dron-nav-link::before,
+        .dron-nav-link.active::after,
+        .dron-nav-link.active::before {
             display: none !important;
             content: none !important;
             height: 0 !important;
             width: 0 !important;
             background: transparent !important;
+            background-color: transparent !important;
             border: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
         }
 
         .dron-nav-link {
@@ -244,6 +258,7 @@
             text-decoration: none !important;
             border: none !important;
             border-bottom: none !important;
+            box-shadow: none !important;
         }
 
         .navbar-right {
@@ -852,13 +867,13 @@
 
         /* ── Landing Page Tab View Panels ── */
         .landing-tab-panel {
-            display: none;
+            display: none !important;
             width: 100%;
-            animation: fadeInLandingTab 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .landing-tab-panel.active {
-            display: block;
+            display: block !important;
+            animation: fadeInLandingTab 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fadeInLandingTab {
@@ -1427,48 +1442,71 @@
         </div>
     </footer>
 
-    <!-- Client-Side Animation & State Engine -->
-    <script src="../js/app.js"></script>
+    <!-- Dedicated Tab Switching Controller (Evaluated before app.js) -->
     <script>
         // ── Dynamic Tab View Controller (Home, Features, How It Works, About) ──
         function switchLandingTab(tabId) {
             if (!tabId) tabId = 'tab-home';
-            const cleanId = tabId.startsWith('tab-') ? tabId : 'tab-' + tabId.replace(/^#/, '');
+            var cleanId = tabId.indexOf('tab-') === 0 ? tabId : 'tab-' + tabId.replace(/^#/, '');
 
-            const panels = document.querySelectorAll('.landing-tab-panel');
-            let targetPanel = document.getElementById(cleanId);
+            var panels = document.querySelectorAll('.landing-tab-panel');
+            var targetPanel = document.getElementById(cleanId);
             if (!targetPanel) {
                 targetPanel = document.getElementById('tab-home');
             }
 
-            panels.forEach(p => p.classList.remove('active'));
+            for (var i = 0; i < panels.length; i++) {
+                panels[i].classList.remove('active');
+                panels[i].style.setProperty('display', 'none', 'important');
+            }
             if (targetPanel) {
                 targetPanel.classList.add('active');
+                targetPanel.style.setProperty('display', 'block', 'important');
             }
 
-            const navItems = document.querySelectorAll('.dron-nav-item');
-            navItems.forEach(item => {
-                const itemTarget = item.getAttribute('data-tab');
-                if (itemTarget === (targetPanel ? targetPanel.id : 'tab-home')) {
+            var navItems = document.querySelectorAll('.dron-nav-item');
+            for (var j = 0; j < navItems.length; j++) {
+                var item = navItems[j];
+                var itemTarget = item.getAttribute('data-tab');
+                var isMatch = itemTarget === (targetPanel ? targetPanel.id : 'tab-home');
+                var link = item.querySelector('.dron-nav-link');
+                if (isMatch) {
                     item.classList.add('active');
-                    const link = item.querySelector('.dron-nav-link');
-                    if (link) link.setAttribute('aria-selected', 'true');
+                    if (link) {
+                        link.setAttribute('aria-selected', 'true');
+                        link.style.color = '#16A34A';
+                        link.style.fontWeight = '700';
+                    }
                 } else {
                     item.classList.remove('active');
-                    const link = item.querySelector('.dron-nav-link');
-                    if (link) link.setAttribute('aria-selected', 'false');
+                    if (link) {
+                        link.setAttribute('aria-selected', 'false');
+                        link.style.color = '#334155';
+                        link.style.fontWeight = '500';
+                    }
                 }
-            });
+            }
 
             // Smooth scroll to top of main content
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            const hashName = (targetPanel ? targetPanel.id : 'tab-home').replace('tab-', '');
-            if (history.replaceState) {
-                history.replaceState(null, null, '#' + hashName);
+            try {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                window.scrollTo(0, 0);
             }
+
+            var hashName = (targetPanel ? targetPanel.id : 'tab-home').replace('tab-', '');
+            try {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, null, '#' + hashName);
+                }
+            } catch (histErr) {}
         }
         window.switchLandingTab = switchLandingTab;
+    </script>
+
+    <!-- Client-Side Animation & State Engine -->
+    <script src="../js/app.js"></script>
+    <script>
 
         // Synchronize landing page auth state and protected deep-link navigation
         document.addEventListener("DOMContentLoaded", () => {
