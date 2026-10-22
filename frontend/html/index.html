@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dron AI: AI-Powered Student Career Platform — Predictive Career Intelligence & Roadmaps">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Dron AI — Career Intelligence</title>
     <!-- Google Fonts: Inter & Caveat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -219,26 +222,28 @@
         }
 
         .dron-nav-item.active .dron-nav-link {
-            color: var(--text-dark);
-            font-weight: 600;
+            color: var(--brand-green);
+            font-weight: 700;
             background: transparent !important;
         }
 
-        /* Clean green underline indicator matching mockup */
-        .dron-nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 100%;
-            height: 2.5px;
-            background: var(--brand-green);
-            border-radius: 2px;
-            transition: all 0.25s ease;
+        /* Completely remove the green line / underline from top navbar */
+        .dron-nav-item::after,
+        .dron-nav-item.active::after,
+        .dron-nav-link::after {
+            display: none !important;
+            content: none !important;
+            height: 0 !important;
+            width: 0 !important;
+            background: transparent !important;
+            border: none !important;
         }
 
         .dron-nav-link {
             cursor: pointer;
+            text-decoration: none !important;
+            border: none !important;
+            border-bottom: none !important;
         }
 
         .navbar-right {
@@ -916,16 +921,16 @@
             <!-- Center Navigation Links (Interactive Tab Switching) -->
             <ul class="dron-nav-list" role="tablist">
                 <li class="dron-nav-item active" data-tab="tab-home">
-                    <a href="#home" class="dron-nav-link" data-tab-target="tab-home" role="tab" aria-selected="true">Home</a>
+                    <a href="#home" class="dron-nav-link" data-tab-target="tab-home" onclick="switchLandingTab('tab-home'); return false;" role="tab" aria-selected="true">Home</a>
                 </li>
                 <li class="dron-nav-item" data-tab="tab-features">
-                    <a href="#features" class="dron-nav-link" data-tab-target="tab-features" role="tab" aria-selected="false">Features</a>
+                    <a href="#features" class="dron-nav-link" data-tab-target="tab-features" onclick="switchLandingTab('tab-features'); return false;" role="tab" aria-selected="false">Features</a>
                 </li>
                 <li class="dron-nav-item" data-tab="tab-how-it-works">
-                    <a href="#how-it-works" class="dron-nav-link" data-tab-target="tab-how-it-works" role="tab" aria-selected="false">How It Works</a>
+                    <a href="#how-it-works" class="dron-nav-link" data-tab-target="tab-how-it-works" onclick="switchLandingTab('tab-how-it-works'); return false;" role="tab" aria-selected="false">How It Works</a>
                 </li>
                 <li class="dron-nav-item" data-tab="tab-about">
-                    <a href="#about" class="dron-nav-link" data-tab-target="tab-about" role="tab" aria-selected="false">About</a>
+                    <a href="#about" class="dron-nav-link" data-tab-target="tab-about" onclick="switchLandingTab('tab-about'); return false;" role="tab" aria-selected="false">About</a>
                 </li>
             </ul>
 
