@@ -3,81 +3,481 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dron-AI Student Login - Intelligent AI-Powered Student Guidance and Placement Platform">
-    <title>Dron-AI | Student Login</title>
+    <meta name="description" content="Dron-AI Student Career Intelligence — 3D Open Diary Portal">
+    <title>Dron-AI | Student Career Intelligence</title>
+    <!-- Google Fonts: Inter for clean UI and Caveat for natural handwritten annotations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/auth.css">
 </head>
-<body>
-    <div class="auth-container" id="login-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="auth-logo-badge" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <h1>Dron-AI</h1>
-                <p>Intelligent Student Career Platform</p>
-                <span class="auth-tag">Student Portal</span>
-            </div>
+<body class="notebook-body">
 
-            <form id="login-form" class="auth-form">
-                <div class="form-group">
-                    <label for="login-email">Email Address</label>
-                    <div class="input-with-icon">
-                        <input type="email" id="login-email" name="email" placeholder="student@university.edu" required autocomplete="email">
-                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect width="20" height="16" x="2" y="4" rx="2"/>
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                        </svg>
+    <!-- Floating Topbar: Back to Landing Page and System Health -->
+    <header class="notebook-topbar">
+        <a href="index.html" class="notebook-back-btn" title="Return to Landing Page">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+        <div class="notebook-status-pill" id="system-status-pill" title="Backend & AI Engine status">
+            <span class="status-indicator-dot" id="system-status-dot"></span>
+            <span class="status-indicator-text" id="system-status-text">SYSTEM ONLINE</span>
+        </div>
+    </header>
+
+    <!-- Main 3D Notebook Stage -->
+    <main class="notebook-stage" role="main">
+        <div class="notebook-3d-scene" id="notebook-scene">
+            
+            <!-- 3D Open Hardcover Book (Angled at Fold) -->
+            <div class="notebook-book" id="notebook-book">
+
+                <!-- Dark Forest Green Hardcover Base Tray (Visible under & around pages) -->
+                <div class="book-leather-cradle" aria-hidden="true">
+                    <div class="leather-stitch-border"></div>
+                </div>
+
+                <!-- Silk Bookmark Ribbon Pinned on Top-Right Edge -->
+                <div class="notebook-ribbon" title="Career Guidance Diary">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+
+                <!-- Center Spine Headbands (Top & Bottom Spine Ribbons) -->
+                <div class="spine-headband spine-headband-top" aria-hidden="true"></div>
+                <div class="spine-headband spine-headband-bottom" aria-hidden="true"></div>
+
+                <!-- ═══════════════════════════════════════════════════
+                     LEFT PAGE BLOCK (Angled Fold: +16deg)
+                     ═══════════════════════════════════════════════════ -->
+                <div class="page-block page-block-left" id="page-block-left">
+                    <!-- Physical 3D stacked paper thickness on the left -->
+                    <div class="page-thickness-left" aria-hidden="true"></div>
+
+                    <!-- Base Left Page Surface: Welcome Tagline Sheet -->
+                    <div class="page-sheet-surface" id="page-left-content">
+                        <div class="paper-ruling"></div>
+                        <div class="page-sheet-content">
+                            
+                            <!-- Brand Header -->
+                            <div class="page-header-row">
+                                <div class="page-logo-icon">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <div class="page-logo-text">
+                                    <span class="page-title">Dron <span class="page-accent">AI</span></span>
+                                    <span class="page-sub">CAREER INTELLIGENCE</span>
+                                </div>
+                            </div>
+
+                            <!-- Handwritten Tagline & Hero Description -->
+                            <div class="tagline-hero-block">
+                                <div class="handwritten-title-wrap">
+                                    <h1 class="handwritten-tagline-title">Your Career Journey<br>Starts Here</h1>
+                                    <svg class="handwritten-swoosh" viewBox="0 0 160 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M 3 12 C 45 4, 110 5, 155 10" stroke="#16A34A" stroke-width="2.4" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <p class="tagline-hero-desc">
+                                    Empowering students with AI-driven placement readiness, real-time skill gap analysis, and tailored career roadmaps.
+                                </p>
+                            </div>
+
+                            <!-- Frosted Feature Cards -->
+                            <div class="tagline-feature-list">
+                                <div class="tagline-feature-item">
+                                    <div class="feature-icon-box"><i class="fa-solid fa-compass"></i></div>
+                                    <div class="feature-text">
+                                        <strong>Intelligent Career Matching</strong>
+                                        <span>Discover high-fit roles tailored to your academic &amp; coding profile.</span>
+                                    </div>
+                                </div>
+                                <div class="tagline-feature-item">
+                                    <div class="feature-icon-box"><i class="fa-solid fa-chart-line"></i></div>
+                                    <div class="feature-text">
+                                        <strong>Placement Readiness Score</strong>
+                                        <span>Benchmark your DSA, LeetCode, and GitHub metrics against industry SLAs.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paper Plane Doodle Flying Toward Top-Right -->
+                            <div class="welcome-plane-doodle" aria-hidden="true">
+                                <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+                                    <path d="M 6 44 C 18 36, 28 22, 30 14" stroke="#16A34A" stroke-width="1.8" stroke-dasharray="3 3" stroke-linecap="round"/>
+                                    <path d="M 32 12 L 46 4 L 40 22 L 34 17 Z" stroke="#16A34A" stroke-width="2" fill="#ECFDF5" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+
+                            <!-- Botanical Branch Sketch in Bottom-Left Corner -->
+                            <div class="botanical-corner botanical-left" aria-hidden="true">
+                                <svg viewBox="0 0 90 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 15 130 C 35 90, 50 50, 75 10" stroke="#16A34A" stroke-width="1.6" opacity="0.55"/>
+                                    <path d="M 32 105 C 16 98, 8 86, 16 76 C 26 72, 34 88, 35 98" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    <path d="M 44 80 C 60 72, 70 60, 65 50 C 55 45, 46 64, 43 74" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    <path d="M 55 54 C 40 44, 32 32, 38 24 C 48 20, 56 38, 57 48" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    <path d="M 66 30 C 80 20, 86 12, 80 6 C 72 4, 65 18, 64 26" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                </svg>
+                            </div>
+
+                            <!-- Architectural Campus Sketch at Bottom -->
+                            <div class="campus-sketch" aria-hidden="true">
+                                <svg viewBox="0 0 420 85" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+                                    <line x1="10" y1="78" x2="410" y2="78" stroke="#8CA895" stroke-width="1.2" stroke-dasharray="4 2"/>
+                                    <rect x="35" y="45" width="65" height="33" stroke="#8CA895" stroke-width="1.2" fill="#FAFBF7"/>
+                                    <path d="M 32 45 L 67 32 L 102 45 Z" stroke="#8CA895" stroke-width="1.2" fill="#FAFBF7"/>
+                                    <rect x="108" y="28" width="80" height="50" stroke="#8CA895" stroke-width="1.4" fill="#FAFBF7"/>
+                                    <polygon points="104,28 148,10 192,28" stroke="#8CA895" stroke-width="1.4" fill="#FAFBF7"/>
+                                    <rect x="138" y="2" width="20" height="8" stroke="#8CA895" stroke-width="1"/>
+                                    <circle cx="148" cy="22" r="5" stroke="#8CA895" stroke-width="1"/>
+                                    <path d="M 140 78 L 140 65 Q 148 60 156 65 L 156 78 Z" stroke="#8CA895" stroke-width="1.2" fill="#FAFBF7"/>
+                                    <rect x="195" y="42" width="75" height="36" stroke="#8CA895" stroke-width="1.2" fill="#FAFBF7"/>
+                                    <path d="M 192 42 L 232 30 L 272 42 Z" stroke="#8CA895" stroke-width="1.2" fill="#FAFBF7"/>
+                                    <path d="M 275 78 C 290 68, 320 64, 360 78" stroke="#8CA895" stroke-width="0.9" stroke-dasharray="3 2"/>
+                                </svg>
+                            </div>
+
+                            <div class="bottom-handwritten-note">
+                                <span>Same Student, Brighter Future &rarr;</span>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <div class="input-with-icon">
-                        <input type="password" id="login-password" name="password" placeholder="••••••••" required autocomplete="current-password">
-                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
-                        <button type="button" class="password-toggle-btn" data-target="login-password" aria-label="Toggle password visibility">
-                            <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                                <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                        </button>
-                    </div>
+                <!-- ═══════════════════════════════════════════════════
+                     CENTRAL SPINE CREASE & GUTTER SHADOW
+                     ═══════════════════════════════════════════════════ -->
+                <div class="book-center-gutter" aria-hidden="true">
+                    <div class="gutter-shadow-gradient"></div>
+                    <div class="gutter-thread-stitch"></div>
                 </div>
 
-                <div id="login-error" class="error-message" style="display: none;" role="alert"></div>
+                <!-- ═══════════════════════════════════════════════════
+                     RIGHT PAGE BLOCK (Angled Fold: -16deg)
+                     ═══════════════════════════════════════════════════ -->
+                <div class="page-block page-block-right" id="page-block-right">
+                    <!-- Physical 3D stacked paper thickness on the right -->
+                    <div class="page-thickness-right" aria-hidden="true"></div>
 
-                <button type="submit" id="login-submit-btn" class="btn btn-primary">
-                    <span>Sign In</span>
-                </button>
-            </form>
+                    <!-- ─────────────────────────────────────────────
+                         BASE UNDERNEATH PAGE: SIGN UP FORM
+                         (Revealed when the turning leaf flips to left)
+                         ───────────────────────────────────────────── -->
+                    <section class="page-sheet-surface page-signup-under" id="page-signup-under" aria-label="Sign Up Form">
+                        <div class="paper-ruling"></div>
+                        <div class="page-sheet-content">
+                            
+                            <!-- Brand Header -->
+                            <div class="page-header-row">
+                                <div class="page-logo-icon"><i class="fa-solid fa-brain"></i></div>
+                                <div class="page-logo-text">
+                                    <span class="page-title">Dron <span class="page-accent">AI</span></span>
+                                    <span class="page-sub">CAREER INTELLIGENCE</span>
+                                </div>
+                            </div>
 
-            <div class="auth-divider">
-                <span>or explore without an account</span>
-            </div>
+                            <!-- Handwritten Title & Subtitle -->
+                            <div class="page-heading-block">
+                                <h2 class="handwritten-title">Create Your Profile</h2>
+                                <p class="handwritten-sub">Take the first step towards your career goals.</p>
+                            </div>
 
-            <button type="button" id="guest-login-btn" class="btn btn-guest">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <span>Use as Guest</span>
-            </button>
+                            <!-- Segmented Mode Switcher -->
+                            <div class="notebook-tabs" role="tablist" aria-label="Authentication Options">
+                                <button type="button" class="notebook-tab" id="tab-login-btn-right" role="tab" aria-selected="false">
+                                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                    <span>Login</span>
+                                </button>
+                                <button type="button" class="notebook-tab active" id="tab-register-btn-right" role="tab" aria-selected="true">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>Sign Up</span>
+                                </button>
+                            </div>
 
-            <div class="auth-footer">
-                <p>Don't have an account? <a href="register.html" id="go-to-register">Register Now</a></p>
+                            <!-- Minimal Sign Up Form -->
+                            <form id="register-form" class="notebook-form" novalidate>
+                                
+                                <div class="form-group">
+                                    <label for="reg-name">Full Name</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-regular fa-user input-icon" aria-hidden="true"></i>
+                                        <input type="text" id="reg-name" name="full_name" placeholder="Enter your full name" required autocomplete="name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-email">Email / College ID</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-regular fa-envelope input-icon" aria-hidden="true"></i>
+                                        <input type="email" id="reg-email" name="email" placeholder="Enter your email or college ID" required autocomplete="email">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-password">Password</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                        <input type="password" id="reg-password" name="password" placeholder="Create a password (min. 6 characters)" required minlength="6" autocomplete="new-password">
+                                        <button type="button" class="password-toggle-btn" data-target="reg-password" aria-label="Toggle password visibility">
+                                            <i class="fa-regular fa-eye eye-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-confirm-password">Confirm Password</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                        <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Confirm your password" required minlength="6" autocomplete="new-password">
+                                        <button type="button" class="password-toggle-btn" data-target="reg-confirm-password" aria-label="Toggle confirm password visibility">
+                                            <i class="fa-regular fa-eye eye-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-aux-row">
+                                    <label class="notebook-checkbox-label" for="reg-consent">
+                                        <input type="checkbox" id="reg-consent" name="consent" required>
+                                        <span class="custom-checkmark"></span>
+                                        <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a></span>
+                                    </label>
+                                </div>
+
+                                <div id="register-error" class="error-banner" style="display: none;" role="alert"></div>
+                                <div id="register-success" class="success-banner" style="display: none;" role="status"></div>
+
+                                <button type="submit" id="register-submit-btn" class="btn-notebook-primary">
+                                    <span>Create Account</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </form>
+
+                            <div class="notebook-switch-link">
+                                <span>Already have an account?</span>
+                                <button type="button" class="btn-text-link" id="switch-to-login-link">Login</button>
+                            </div>
+
+                            <!-- Botanical Sketch in Corner -->
+                            <div class="botanical-corner botanical-right" aria-hidden="true">
+                                <svg viewBox="0 0 90 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 75 130 C 55 90, 40 50, 15 10" stroke="#16A34A" stroke-width="1.6" opacity="0.55"/>
+                                    <path d="M 58 105 C 74 98, 82 86, 74 76 C 64 72, 56 88, 55 98" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    <path d="M 46 80 C 30 72, 20 60, 25 50 C 35 45, 44 64, 47 74" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    <path d="M 35 54 C 50 44, 58 32, 52 24 C 42 20, 34 38, 33 48" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    <path d="M 24 30 C 10 20, 4 12, 10 6 C 18 4, 25 18, 26 26" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                </svg>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- ─────────────────────────────────────────────
+                         THE 3D TURNING LEAF
+                         Front: Login Form (0deg, facing right)
+                         Back: Account Creation Taglines (180deg, lands on left)
+                         ───────────────────────────────────────────── -->
+                    <div class="page-flipper-leaf" id="page-flipper-leaf">
+                        
+                        <!-- Dynamic Shading Gradients -->
+                        <div class="flipper-shadow-front" id="flipper-shadow-front" aria-hidden="true"></div>
+                        <div class="flipper-shadow-back" id="flipper-shadow-back" aria-hidden="true"></div>
+
+                        <!-- FRONT FACE: LOGIN FORM (Resting on Right at 0deg) -->
+                        <div class="leaf-face leaf-front" id="leaf-front" aria-label="Login Form">
+                            <div class="paper-ruling"></div>
+                            <div class="page-sheet-content">
+                                
+                                <!-- Brand Header -->
+                                <div class="page-header-row">
+                                    <div class="page-logo-icon"><i class="fa-solid fa-brain"></i></div>
+                                    <div class="page-logo-text">
+                                        <span class="page-title">Dron <span class="page-accent">AI</span></span>
+                                        <span class="page-sub">CAREER INTELLIGENCE</span>
+                                    </div>
+                                    <!-- Graduation Cap Line Sketch -->
+                                    <div class="header-cap-sketch" aria-hidden="true">
+                                        <svg width="40" height="32" viewBox="0 0 40 32" fill="none">
+                                            <polygon points="20,4 38,13 20,22 2,13" stroke="#8CA895" stroke-width="1.4" fill="#FAFBF7"/>
+                                            <path d="M 10 18 L 10 26 C 10 29, 30 29, 30 26 L 30 18" stroke="#8CA895" stroke-width="1.2" fill="none"/>
+                                            <line x1="33" y1="15" x2="33" y2="24" stroke="#8CA895" stroke-width="1.2"/>
+                                            <circle cx="33" cy="25" r="1.5" fill="#8CA895"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Handwritten Title & Subtitle -->
+                                <div class="page-heading-block">
+                                    <h2 class="handwritten-title">Welcome Back !</h2>
+                                    <p class="handwritten-sub">Continue your journey towards a brighter future.</p>
+                                </div>
+
+                                <!-- Segmented Tab Switcher (Login View) -->
+                                <div class="notebook-tabs" role="tablist" aria-label="Authentication Switcher">
+                                    <button type="button" class="notebook-tab active" id="tab-login-btn" role="tab" aria-selected="true">
+                                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                        <span>Login</span>
+                                    </button>
+                                    <button type="button" class="notebook-tab" id="tab-register-btn" role="tab" aria-selected="false">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <span>Sign Up</span>
+                                    </button>
+                                </div>
+
+                                <!-- Login Form -->
+                                <form id="login-form" class="notebook-form" novalidate>
+                                    
+                                    <div class="form-group">
+                                        <label for="login-email">Email / College ID</label>
+                                        <div class="input-wrapper">
+                                            <i class="fa-regular fa-envelope input-icon" aria-hidden="true"></i>
+                                            <input type="email" id="login-email" name="email" placeholder="Enter your email or college ID" required autocomplete="email">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="login-password">Password</label>
+                                        <div class="input-wrapper">
+                                            <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                            <input type="password" id="login-password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                                            <button type="button" class="password-toggle-btn" data-target="login-password" aria-label="Toggle password visibility">
+                                                <i class="fa-regular fa-eye eye-icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-aux-row">
+                                        <label class="notebook-checkbox-label" for="login-remember">
+                                            <input type="checkbox" id="login-remember" name="remember_me">
+                                            <span class="custom-checkmark"></span>
+                                            <span>Remember me</span>
+                                        </label>
+                                        <a href="#" id="forgot-password-link" class="link-forgot">Forgot password?</a>
+                                    </div>
+
+                                    <div id="login-error" class="error-banner" style="display: none;" role="alert"></div>
+
+                                    <button type="submit" id="login-submit-btn" class="btn-notebook-primary">
+                                        <span>Login</span>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </button>
+                                </form>
+
+                                <!-- Divider -->
+                                <div class="form-or-divider">
+                                    <span>or</span>
+                                </div>
+
+                                <div class="notebook-switch-link">
+                                    <span>Don't have an account?</span>
+                                    <button type="button" class="btn-text-link" id="switch-to-signup-link">Sign Up</button>
+                                </div>
+
+                                <!-- Botanical Branch in Bottom-Right Corner -->
+                                <div class="botanical-corner botanical-right" aria-hidden="true">
+                                    <svg viewBox="0 0 90 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M 75 130 C 55 90, 40 50, 15 10" stroke="#16A34A" stroke-width="1.6" opacity="0.55"/>
+                                        <path d="M 58 105 C 74 98, 82 86, 74 76 C 64 72, 56 88, 55 98" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                        <path d="M 46 80 C 30 72, 20 60, 25 50 C 35 45, 44 64, 47 74" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                        <path d="M 35 54 C 50 44, 58 32, 52 24 C 42 20, 34 38, 33 48" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                        <path d="M 24 30 C 10 20, 4 12, 10 6 C 18 4, 25 18, 26 26" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    </svg>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE: ACCOUNT CREATION TAGLINES (Lands on Left at -180deg) -->
+                        <div class="leaf-face leaf-back" id="leaf-back" aria-label="Account Creation Tagline Page">
+                            <div class="paper-ruling"></div>
+                            <div class="page-sheet-content">
+                                
+                                <!-- Brand Header -->
+                                <div class="page-header-row">
+                                    <div class="page-logo-icon"><i class="fa-solid fa-brain"></i></div>
+                                    <div class="page-logo-text">
+                                        <span class="page-title">Dron <span class="page-accent">AI</span></span>
+                                        <span class="page-sub">CAREER INTELLIGENCE</span>
+                                    </div>
+                                </div>
+
+                                <!-- Handwritten Heading for Sign Up -->
+                                <div class="tagline-hero-block">
+                                    <div class="handwritten-title-wrap">
+                                        <h1 class="handwritten-tagline-title">Create Your Profile<br>to Get Started</h1>
+                                        <svg class="handwritten-swoosh" viewBox="0 0 160 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M 3 12 C 45 4, 110 5, 155 10" stroke="#16A34A" stroke-width="2.4" stroke-linecap="round"/>
+                                        </svg>
+                                    </div>
+                                    <p class="tagline-hero-desc">
+                                        Unlock automated placement readiness evaluation, skill gap diagnostics, and verified career milestones.
+                                    </p>
+                                </div>
+
+                                <!-- Milestone Checklist Cards -->
+                                <div class="signup-milestone-checklist">
+                                    <div class="milestone-item">
+                                        <div class="milestone-check"><i class="fa-solid fa-circle-check"></i></div>
+                                        <div class="milestone-info">
+                                            <strong>Define Your Target Role</strong>
+                                            <span>SDE, AI/ML, Data Engineer, or DevOps specialist paths.</span>
+                                        </div>
+                                    </div>
+                                    <div class="milestone-item">
+                                        <div class="milestone-check"><i class="fa-solid fa-circle-check"></i></div>
+                                        <div class="milestone-info">
+                                            <strong>Sync Coding Profiles</strong>
+                                            <span>Connect your GitHub repositories and LeetCode contest rating.</span>
+                                        </div>
+                                    </div>
+                                    <div class="milestone-item">
+                                        <div class="milestone-check"><i class="fa-solid fa-circle-check"></i></div>
+                                        <div class="milestone-info">
+                                            <strong>Personalized Learning Roadmap</strong>
+                                            <span>Get sequenced weekly milestones to reach top placement readiness.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Quote and Slogan at Bottom -->
+                                <div class="signup-bottom-slogan">
+                                    <svg class="curved-slogan-arrow" width="30" height="24" viewBox="0 0 30 24" fill="none">
+                                        <path d="M 4 2 C 10 14, 18 18, 26 16" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round"/>
+                                        <path d="M 21 11 L 27 16 L 22 21" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span class="slogan-text">Turn the page to a better you</span>
+                                </div>
+
+                                <!-- Botanical Branch in Bottom-Left Corner -->
+                                <div class="botanical-corner botanical-left" aria-hidden="true">
+                                    <svg viewBox="0 0 90 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M 15 130 C 35 90, 50 50, 75 10" stroke="#16A34A" stroke-width="1.6" opacity="0.55"/>
+                                        <path d="M 32 105 C 16 98, 8 86, 16 76 C 26 72, 34 88, 35 98" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                        <path d="M 44 80 C 60 72, 70 60, 65 50 C 55 45, 46 64, 43 74" fill="#16A34A" fill-opacity="0.22" stroke="#16A34A" stroke-width="1.2"/>
+                                    </svg>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
+    <!-- Footer with Legal Links -->
+    <footer class="notebook-footer">
+        <div>&copy; 2026 Dron-AI Technologies &bull; <a href="privacy.html">Privacy Policy</a> &bull; <a href="terms.html">Terms of Service</a> &bull; <a href="cookies.html">Cookie Policy</a></div>
+    </footer>
+
+    <!-- Client-side API & Auth Script Modules -->
     <script src="../js/api.js"></script>
+    <script src="../js/app.js"></script>
     <script src="../js/auth.js"></script>
 </body>
 </html>

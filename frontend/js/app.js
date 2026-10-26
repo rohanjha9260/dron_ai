@@ -114,6 +114,13 @@ async function getAuthToken() {
     let token = localStorage.getItem("dron_ai_token");
     if (token) return token;
 
+    // Do not auto-authenticate on public landing/login/legal pages
+    const path = window.location.pathname;
+    const isPublic = path.endsWith("index.html") || path.endsWith("login.html") || path === "/" || path.endsWith("privacy.html") || path.endsWith("terms.html") || path.endsWith("cookies.html");
+    if (isPublic) {
+        return null;
+    }
+
     if (inFlightAuthPromise) {
         return inFlightAuthPromise;
     }

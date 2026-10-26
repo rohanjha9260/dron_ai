@@ -1,301 +1,1188 @@
 /*
- * Dron-AI Authentication Page Styles
+ * Dron-AI Notebook-Style Authentication Design
+ * Theme: Authentic 3D Angled Hardcover Book
  *
- * Theme: Premium White & Mint Green SaaS
- * Styles for login.html and register.html
+ * Palette:
+ *   - Desk Background: #DCEEE2 / #E8F6ED
+ *   - Dark Forest Green Leather: #14532D / #0F4022
+ *   - Warm Archival Cream Paper: #FFFDF7 / #FBF8EE
+ *   - Brand Primary Green: #16A34A / #15803D
+ *   - Text Deep Charcoal: #0F172A
+ *   - Text Muted Slate: #64748B
+ *   - Paper Borders: #D8E2D8
  */
 
-.auth-container {
+/* ═══════════════════════════════════════════════════════════════
+   1. Canvas & Desk Background
+   ═══════════════════════════════════════════════════════════════ */
+.notebook-body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #E2F2E7;
+    background-image:
+        radial-gradient(ellipse at 85% 15%, rgba(134, 239, 172, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at 15% 85%, rgba(20, 83, 45, 0.1) 0%, transparent 55%),
+        linear-gradient(180deg, #E2F2E7 0%, #D3E7DA 100%);
+    background-attachment: fixed;
+    color: #0F172A;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2. Floating Topbar
+   ═══════════════════════════════════════════════════════════════ */
+.notebook-topbar {
+    width: 100%;
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    z-index: 50;
+}
+
+.notebook-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    color: #14532D;
+    border: 1px solid rgba(20, 83, 45, 0.15);
+    padding: 0.45rem 1.15rem;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.notebook-back-btn:hover {
+    background: #FFFFFF;
+    color: #16A34A;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.18);
+}
+
+.notebook-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(22, 163, 74, 0.25);
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #15803D;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.notebook-status-pill .status-indicator-dot {
+    width: 7px;
+    height: 7px;
+    background: #22C55E;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #22C55E;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. 3D Scene & Perspective Environment
+   ═══════════════════════════════════════════════════════════════ */
+.notebook-stage {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    padding: var(--space-xl) var(--space-md);
-    background: 
-        radial-gradient(ellipse at 50% 0%, rgba(134, 239, 172, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
-        var(--color-bg-dark);
-    position: relative;
-    overflow: hidden;
+    padding: 1.5rem 1.5rem 2.5rem;
+    box-sizing: border-box;
 }
 
-/* Subtle Ambient Background Mesh */
-.auth-container::before {
-    content: '';
+.notebook-3d-scene {
+    position: relative;
+    max-width: 1080px;
+    width: 100%;
+    perspective: 2400px;
+    perspective-origin: 50% 45%;
+    margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. The 3D Open Book Container (Angled Fold Spread)
+   ═══════════════════════════════════════════════════════════════ */
+.notebook-book {
+    position: relative;
+    display: grid;
+    /* Left Page Block 1fr, Center Spine Gutter 20px, Right Page Block 1fr */
+    grid-template-columns: 1fr 20px 1fr;
+    min-height: 640px;
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+    /* Perspective desk angle looking down at open book */
+    transform: rotateX(13deg) rotateY(-1.5deg);
+    padding: 14px 18px 20px 18px;
+    border-radius: 24px;
+}
+
+/* Dark Green Leather Cradle (Underlying Hardcover Base Tray) */
+.book-leather-cradle {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-        radial-gradient(rgba(134, 239, 172, 0.04) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* ── Centered Glassmorphism Auth Card ── */
-.auth-card {
-    width: 100%;
-    max-width: 460px;
-    background: var(--color-bg-glass);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(134, 239, 172, 0.2);
-    position: relative;
+    background: linear-gradient(145deg, #185c33 0%, #14532D 50%, #0d381e 100%);
+    border-radius: 24px;
+    box-shadow:
+        0 35px 85px -15px rgba(15, 23, 42, 0.38),
+        0 14px 34px -4px rgba(15, 23, 42, 0.22),
+        inset 0 1px 3px rgba(255, 255, 255, 0.25),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.35);
     z-index: 1;
-    transition: box-shadow var(--transition-slow), border-color var(--transition-slow);
+    pointer-events: none;
 }
 
-.auth-card.auth-card-wide {
-    max-width: 520px;
-}
-
-.auth-card:hover {
-    border-color: rgba(134, 239, 172, 0.4);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(134, 239, 172, 0.25);
-}
-
-/* Top Gold Glow Accent Line */
-.auth-card::before {
-    content: '';
+.leather-stitch-border {
     position: absolute;
-    top: 0;
-    left: 15%;
-    right: 15%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-primary-light), var(--color-primary), transparent);
-    border-radius: var(--radius-full);
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border: 1px dashed rgba(255, 255, 255, 0.25);
+    border-radius: 18px;
 }
 
-/* ── Header ── */
-.auth-header {
-    text-align: center;
-    margin-bottom: var(--space-xl);
-}
-
-.auth-logo-badge {
-    display: inline-flex;
+/* Silk Bookmark Ribbon clipped onto the right page block */
+.notebook-ribbon {
+    position: absolute;
+    top: -4px;
+    right: 56px;
+    width: 42px;
+    height: 56px;
+    background: #14532D;
+    border-radius: 4px 4px 0 0;
+    z-index: 40;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 54px;
-    height: 54px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(134, 239, 172, 0.15), #FFFFFF);
-    border: 1px solid rgba(134, 239, 172, 0.35);
-    box-shadow: none;
-    margin-bottom: var(--space-md);
-    color: var(--color-primary);
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+    transition: transform 0.25s ease;
 }
 
-.auth-logo-badge svg {
-    width: 28px;
-    height: 28px;
-    stroke: var(--color-primary);
+.notebook-ribbon:hover {
+    transform: translateY(-3px);
 }
 
-.auth-header h1 {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-extrabold);
-    background: var(--gradient-gold-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-    margin-bottom: var(--space-xs);
+/* Center Spine Headbands (Head/Tail Ribbon Accents) */
+.spine-headband {
+    position: absolute;
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 6px;
+    background: repeating-linear-gradient(45deg, #22C55E, #22C55E 3px, #F59E0B 3px, #F59E0B 6px);
+    border-radius: 2px;
+    z-index: 16;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-.auth-header p {
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-normal);
+.spine-headband-top {
+    top: 8px;
 }
 
-.auth-header .auth-tag {
-    display: inline-block;
-    margin-top: var(--space-xs);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-light);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+.spine-headband-bottom {
+    bottom: 8px;
 }
 
-/* ── Form Styling ── */
-.auth-form {
+/* ═══════════════════════════════════════════════════════════════
+   5. Center Spine Crease & Gutter
+   ═══════════════════════════════════════════════════════════════ */
+.book-center-gutter {
+    position: relative;
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gutter-shadow-gradient {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -12px;
+    right: -12px;
+    background: linear-gradient(to right,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(10, 44, 23, 0.85) 50%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.65);
+    border-radius: 2px;
+}
+
+.gutter-thread-stitch {
+    position: relative;
+    z-index: 2;
+    width: 2px;
+    height: 94%;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 1px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6. 3D Angled Page Blocks (Folded at Spine)
+   ═══════════════════════════════════════════════════════════════ */
+.page-block {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    z-index: 5;
+}
+
+/* LEFT PAGE BLOCK: Folded upward at +16deg */
+.page-block-left {
+    transform-origin: right center;
+    transform: rotateY(16deg);
+}
+
+/* RIGHT PAGE BLOCK: Folded upward at -16deg */
+.page-block-right {
+    transform-origin: left center;
+    transform: rotateY(-16deg);
+}
+
+/* 3D Stacked Page Thickness Layers */
+.page-thickness-left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 14px 0 0 14px;
+    box-shadow:
+        -2px 2px 0 #F4F1E4,
+        -4px 4px 0 #EBE7D6,
+        -6px 6px 0 #E2DEC8,
+        -8px 8px 0 #D8D4BC,
+        -10px 10px 0 #CDC8AF,
+        -18px 18px 30px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.page-thickness-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0 14px 14px 0;
+    box-shadow:
+        2px 2px 0 #F4F1E4,
+        4px 4px 0 #EBE7D6,
+        6px 6px 0 #E2DEC8,
+        8px 8px 0 #D8D4BC,
+        10px 10px 0 #CDC8AF,
+        18px 18px 30px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. Page Sheet Surface & Ruling
+   ═══════════════════════════════════════════════════════════════ */
+.page-sheet-surface {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #FFFDF7;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
 
-.auth-form .form-group {
-    margin-bottom: var(--space-md);
+.page-block-left .page-sheet-surface {
+    border-radius: 12px 0 0 12px;
+    box-shadow:
+        inset -15px 0 25px -8px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(216, 226, 216, 0.45);
 }
 
-.input-with-icon {
+.page-block-right .page-sheet-surface {
+    border-radius: 0 12px 12px 0;
+    box-shadow:
+        inset 15px 0 25px -8px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(216, 226, 216, 0.45);
+}
+
+.page-signup-under {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Subtle Ruled Notebook Lines */
+.paper-ruling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgba(216, 226, 216, 0.38) 1px, transparent 1px);
+    background-size: 100% 32px;
+    background-position: 0 38px;
+    opacity: 0.85;
+    z-index: 1;
+}
+
+.page-sheet-content {
     position: relative;
+    z-index: 2;
+    padding: 2.25rem 2.6rem 1.85rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   8. Left Page Content (Welcome Taglines & Features)
+   ═══════════════════════════════════════════════════════════════ */
+.page-header-row {
     display: flex;
     align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
 }
 
-.input-icon {
-    position: absolute;
-    left: 1rem;
-    width: 18px;
-    height: 18px;
-    color: var(--color-text-muted);
-    pointer-events: none;
-    transition: color var(--transition-fast);
-}
-
-.input-with-icon input,
-.input-with-icon select {
-    padding-left: 2.75rem;
-}
-
-/* Reserve space on the right so the password-toggle button never overlaps typed text */
-.input-with-icon input[type="password"],
-.input-with-icon input[type="text"].password-visible {
-    padding-right: 2.75rem;
-}
-
-.input-with-icon input:focus ~ .input-icon,
-.input-with-icon select:focus ~ .input-icon {
-    color: var(--color-primary);
-}
-
-/* Password Visibility Toggle */
-.password-toggle-btn {
-    position: absolute;
-    right: 0.85rem;
-    background: transparent;
-    border: none;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    padding: 0.25rem;
+.page-logo-icon {
+    width: 36px;
+    height: 36px;
+    background: #16A34A;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-xs);
-    transition: color var(--transition-fast);
+    color: #FFFFFF;
+    font-size: 1.15rem;
+    box-shadow: 0 3px 8px rgba(22, 163, 74, 0.25);
 }
 
-.password-toggle-btn:hover {
-    color: var(--color-primary-light);
-}
-
-.password-toggle-btn svg {
-    width: 18px;
-    height: 18px;
-}
-
-/* Submit Button */
-.auth-form .btn-primary {
-    width: 100%;
-    padding: 0.85rem 1.5rem;
-    margin-top: var(--space-sm);
-    font-size: var(--font-size-base);
-    letter-spacing: 0.02em;
-}
-
-/* ── Auth Divider ── */
-.auth-divider {
+.page-logo-text {
     display: flex;
-    align-items: center;
-    text-align: center;
-    margin: var(--space-lg) 0 var(--space-md);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-    letter-spacing: 0.08em;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.page-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+}
+
+.page-accent {
+    color: #16A34A;
+}
+
+.page-sub {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #64748B;
     text-transform: uppercase;
 }
 
-.auth-divider::before,
-.auth-divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid rgba(134, 239, 172, 0.15);
+.header-cap-sketch {
+    margin-left: auto;
+    opacity: 0.75;
 }
 
-.auth-divider span {
-    padding: 0 var(--space-sm);
-    font-weight: var(--font-weight-medium);
+/* Tagline Hero Block */
+.tagline-hero-block {
+    margin-bottom: 1.1rem;
 }
 
-/* ── Guest Access Button ── */
-.btn-guest {
-    width: 100%;
+.handwritten-title-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.35rem;
+}
+
+.handwritten-tagline-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2.15rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+    line-height: 1.15;
+}
+
+.handwritten-swoosh {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 140px;
+    height: 14px;
+    pointer-events: none;
+}
+
+.tagline-hero-desc {
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0.25rem 0 0 0;
+    max-width: 420px;
+}
+
+/* Frosted Feature Cards on Left Page */
+.tagline-feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 0.65rem;
+    max-width: 420px;
+}
+
+.tagline-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: rgba(248, 250, 252, 0.78);
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 0.65rem 0.95rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.feature-icon-box {
+    width: 32px;
+    height: 32px;
+    background: #DCFCE7;
+    color: #15803D;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-sm);
-    padding: 0.8rem 1.5rem;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-gold);
-    background: rgba(134, 239, 172, 0.06);
-    border: 1px solid rgba(134, 239, 172, 0.3);
-    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.feature-text strong {
+    font-size: 0.85rem;
+    color: #0F172A;
+    font-weight: 700;
+}
+
+.feature-text span {
+    font-size: 0.78rem;
+    color: #64748B;
+    line-height: 1.35;
+}
+
+/* Paper Plane Doodle */
+.welcome-plane-doodle {
+    position: absolute;
+    right: 2.5rem;
+    top: 7rem;
+    pointer-events: none;
+}
+
+/* Botanical Branches */
+.botanical-corner {
+    position: absolute;
+    width: 80px;
+    height: 125px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.botanical-left {
+    bottom: 0.75rem;
+    left: 1.25rem;
+}
+
+.botanical-right {
+    bottom: 0.75rem;
+    right: 1.25rem;
+}
+
+/* Architectural Campus Sketch at Bottom */
+.campus-sketch {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    width: 100%;
+    max-height: 75px;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.campus-sketch svg {
+    width: 100%;
+    height: 100%;
+}
+
+.bottom-handwritten-note {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #475569;
+    text-align: right;
+    margin-top: 0.2rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   9. Right Page Content (Login & Sign Up Forms)
+   ═══════════════════════════════════════════════════════════════ */
+.page-heading-block {
+    margin-bottom: 1.15rem;
+}
+
+.handwritten-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.95rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 0.2rem 0;
+    line-height: 1.1;
+}
+
+.handwritten-sub {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Segmented Tabs */
+.notebook-tabs {
+    display: inline-flex;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    padding: 3px;
+    margin-bottom: 1.25rem;
+    gap: 2px;
+    width: fit-content;
+}
+
+.notebook-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 1.2rem;
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #64748B;
     cursor: pointer;
-    transition: all var(--transition-base);
-    text-decoration: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.notebook-tab.active {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+    box-shadow: 0 1px 4px rgba(22, 163, 74, 0.14);
+}
+
+.notebook-tab:hover:not(.active) {
+    color: #0F172A;
+}
+
+/* Form Styles */
+.notebook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+    max-width: 440px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.form-group label {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    left: 13px;
+    color: #94A3B8;
+    font-size: 0.92rem;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 42px;
+    border: 1.5px solid #D8E2D8;
+    border-radius: 10px;
+    background: #FFFFFF;
+    padding: 0 2.5rem 0 2.45rem;
+    font-size: 0.88rem;
+    color: #0F172A;
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-wrapper input::placeholder {
+    color: #94A3B8;
+    font-size: 0.85rem;
+}
+
+.input-wrapper input:focus {
+    border-color: #16A34A;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.14);
+    background: #FFFFFF;
+}
+
+.input-wrapper input:focus ~ .input-icon {
+    color: #16A34A;
+}
+
+/* Password Eye Toggle */
+.password-toggle-btn {
+    position: absolute;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+    color: #16A34A;
+}
+
+/* Auxiliary Controls */
+.form-aux-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #64748B;
+    margin-top: 0.05rem;
+}
+
+.notebook-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
     user-select: none;
+    font-weight: 500;
 }
 
-.btn-guest:hover {
-    background: rgba(134, 239, 172, 0.15);
-    border-color: var(--color-primary);
-    color: var(--color-text-primary);
+.notebook-checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-checkmark {
+    width: 16px;
+    height: 16px;
+    background: #FFFFFF;
+    border: 1.5px solid #D8E2D8;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.notebook-checkbox-label input:checked ~ .custom-checkmark {
+    background: #16A34A;
+    border-color: #16A34A;
+}
+
+.notebook-checkbox-label input:checked ~ .custom-checkmark::after {
+    content: "✓";
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.link-forgot {
+    color: #16A34A;
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+}
+
+.link-forgot:hover {
+    color: #15803D;
+}
+
+/* Primary Green Button */
+.btn-notebook-primary {
+    width: 100%;
+    height: 44px;
+    background: #16A34A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+    transition: all 0.2s ease;
+    font-family: inherit;
+    margin-top: 0.35rem;
+}
+
+.btn-notebook-primary:hover {
+    background: #15803D;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
 }
 
-.btn-guest:active {
+.btn-notebook-primary:active {
     transform: translateY(0);
 }
 
-.btn-guest svg {
-    color: var(--color-primary);
-    transition: transform var(--transition-fast);
+.btn-notebook-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.btn-guest:hover svg {
-    transform: scale(1.1);
+/* Or Divider */
+.form-or-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.65rem 0 0.35rem;
+    color: #94A3B8;
+    font-size: 0.82rem;
+    position: relative;
 }
 
-/* ── Footer ── */
-.auth-footer {
+.form-or-divider::before,
+.form-or-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #E2E8F0;
+    margin: 0 0.85rem;
+}
+
+/* Switch Links */
+.notebook-switch-link {
+    margin-top: 0.2rem;
     text-align: center;
-    margin-top: var(--space-xl);
-    padding-top: var(--space-lg);
-    border-top: 1px solid rgba(42, 39, 32, 0.8);
+    font-size: 0.84rem;
+    color: #64748B;
 }
 
-.auth-footer p {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+.btn-text-link {
+    background: none;
+    border: none;
+    color: #16A34A;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.84rem;
+    text-decoration: underline;
+    font-family: inherit;
 }
 
-.auth-footer a {
-    color: var(--color-primary-light);
-    font-weight: var(--font-weight-semibold);
-    margin-left: 0.25rem;
+.btn-text-link:hover {
+    color: #15803D;
 }
 
-.auth-footer a:hover {
-    color: var(--color-primary);
+/* ═══════════════════════════════════════════════════════════════
+   10. The 3D Turning Leaf (Physics & Paper Curve)
+   ═══════════════════════════════════════════════════════════════ */
+.page-flipper-leaf {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    z-index: 10;
+    pointer-events: auto;
+    will-change: transform, box-shadow;
+    transform: rotateY(0deg);
+}
+
+/* Front & Back Faces */
+.leaf-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: #FFFDF7;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Front Face: Login Form (Facing Right at 0deg) */
+.leaf-front {
+    z-index: 2;
+    transform: rotateY(0deg);
+    border-radius: 0 12px 12px 0;
+    box-shadow:
+        inset 15px 0 25px -8px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(216, 226, 216, 0.45);
+}
+
+/* Back Face: Account Creation Tagline (Facing Left at -180deg) */
+.leaf-back {
+    z-index: 1;
+    transform: rotateY(180deg);
+    border-radius: 12px 0 0 12px;
+    box-shadow:
+        inset -15px 0 25px -8px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(216, 226, 216, 0.45);
+}
+
+/* Back Face Content Styles */
+.signup-milestone-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 0.75rem;
+}
+
+.milestone-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: rgba(240, 253, 244, 0.7);
+    border: 1.5px solid #BBF7D0;
+    border-radius: 12px;
+    padding: 0.65rem 0.95rem;
+}
+
+.milestone-check {
+    color: #16A34A;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.milestone-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.milestone-info strong {
+    font-size: 0.85rem;
+    color: #14532D;
+    font-weight: 700;
+}
+
+.milestone-info span {
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.35;
+}
+
+.signup-bottom-slogan {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+}
+
+.slogan-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #15803D;
+}
+
+/* Dynamic Shading Overlays */
+.flipper-shadow-front,
+.flipper-shadow-back {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 5;
+    transition: opacity 0.85s ease;
+}
+
+.flipper-shadow-front {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.28) 0%, transparent 60%);
+}
+
+.flipper-shadow-back {
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.28) 0%, transparent 60%);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3D Page-Turn Animation Keyframes (Fold Angle Aware)
+   ───────────────────────────────────────────────────────────── */
+
+/* Turning from Login (0deg) to Sign Up (-180deg) */
+.notebook-book.turning-to-signup .page-flipper-leaf {
+    animation: pageCurlToSignup 0.85s cubic-bezier(0.28, 0, 0.22, 1) forwards;
+}
+
+@keyframes pageCurlToSignup {
+    0% {
+        transform: rotateY(0deg) rotateZ(0deg) skewY(0deg) scale(1);
+        box-shadow: inset 15px 0 25px -8px rgba(0, 0, 0, 0.12);
+    }
+    28% {
+        /* Bottom-right corner lifts with paper bend */
+        transform: rotateY(-48deg) rotateZ(-3.2deg) skewY(-2.8deg) scale(0.985);
+        box-shadow: inset 35px 0 35px -8px rgba(0, 0, 0, 0.22), -15px 12px 25px rgba(0, 0, 0, 0.16);
+    }
+    58% {
+        /* Arcs across the center spine */
+        transform: rotateY(-105deg) rotateZ(-3.5deg) skewY(-1.8deg) scale(0.975);
+        box-shadow: inset -35px 0 35px -8px rgba(0, 0, 0, 0.25), -22px 14px 30px rgba(0, 0, 0, 0.18);
+    }
+    88% {
+        /* Lands smoothly onto the left angled block */
+        transform: rotateY(-165deg) rotateZ(-1deg) skewY(-0.6deg) scale(0.99);
+        box-shadow: inset -20px 0 25px -8px rgba(0, 0, 0, 0.16);
+    }
+    100% {
+        transform: rotateY(-180deg) rotateZ(0deg) skewY(0deg) scale(1);
+        box-shadow: inset -15px 0 20px -8px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* Turning from Sign Up (-180deg) back to Login (0deg) */
+.notebook-book.turning-to-login .page-flipper-leaf {
+    animation: pageCurlToLogin 0.85s cubic-bezier(0.28, 0, 0.22, 1) forwards;
+}
+
+@keyframes pageCurlToLogin {
+    0% {
+        transform: rotateY(-180deg) rotateZ(0deg) skewY(0deg) scale(1);
+        box-shadow: inset -15px 0 20px -8px rgba(0, 0, 0, 0.12);
+    }
+    28% {
+        transform: rotateY(-132deg) rotateZ(3.2deg) skewY(2.8deg) scale(0.985);
+        box-shadow: inset -35px 0 35px -8px rgba(0, 0, 0, 0.22), -18px 12px 25px rgba(0, 0, 0, 0.16);
+    }
+    58% {
+        transform: rotateY(-75deg) rotateZ(3.5deg) skewY(1.8deg) scale(0.975);
+        box-shadow: inset 35px 0 35px -8px rgba(0, 0, 0, 0.25), 18px 14px 30px rgba(0, 0, 0, 0.18);
+    }
+    88% {
+        transform: rotateY(-18deg) rotateZ(1deg) skewY(0.6deg) scale(0.99);
+        box-shadow: inset 20px 0 25px -8px rgba(0, 0, 0, 0.16);
+    }
+    100% {
+        transform: rotateY(0deg) rotateZ(0deg) skewY(0deg) scale(1);
+        box-shadow: inset 15px 0 25px -8px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* In Sign Up state: leaf rests at -180deg, back face is facing forward on left! */
+.notebook-book.state-signup .page-flipper-leaf {
+    transform: rotateY(-180deg);
+}
+
+.notebook-book.state-signup .page-signup-under {
+    z-index: 5;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   11. Alert Banners & Spinner
+   ═══════════════════════════════════════════════════════════════ */
+.error-banner {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+    border-radius: 8px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    line-height: 1.35;
+}
+
+.success-banner {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #15803D;
+    border-radius: 8px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    line-height: 1.35;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #FFFFFF;
+    border-radius: 50%;
+    animation: notebookSpin 0.7s linear infinite;
+    display: inline-block;
+}
+
+@keyframes notebookSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   12. Footer
+   ═══════════════════════════════════════════════════════════════ */
+.notebook-footer {
+    text-align: center;
+    padding: 1rem 2rem 1.5rem;
+    font-size: 0.78rem;
+    color: #64748B;
+}
+
+.notebook-footer a {
+    color: #15803D;
+    text-decoration: none;
+    margin: 0 0.25rem;
+}
+
+.notebook-footer a:hover {
     text-decoration: underline;
 }
 
-/* ── Responsive Polish ── */
-@media (max-width: 480px) {
-    .auth-card {
-        padding: var(--space-xl) var(--space-lg) var(--space-lg);
+/* ═══════════════════════════════════════════════════════════════
+   13. Responsive Layouts
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Laptops & Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+    .notebook-3d-scene {
+        max-width: 920px;
     }
 
-    .auth-header h1 {
-        font-size: var(--font-size-2xl);
+    .notebook-book {
+        grid-template-columns: 1fr 18px 1fr;
+        padding: 10px 14px 16px 14px;
+    }
+
+    .page-sheet-content {
+        padding: 2rem 2rem 1.75rem;
+    }
+
+    .welcome-plane-doodle {
+        display: none;
+    }
+}
+
+/* Mobile & Small Screens (<= 768px): Single Page Mode */
+@media (max-width: 768px) {
+    .notebook-stage {
+        padding: 1rem;
+    }
+
+    .notebook-book {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 8px;
+        transform: none;
+    }
+
+    .page-block-left,
+    .book-center-gutter {
+        display: none;
+    }
+
+    .page-block-right {
+        transform: none;
+    }
+
+    .page-thickness-right {
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    }
+
+    .page-sheet-content {
+        padding: 1.75rem 1.5rem;
+    }
+
+    .notebook-ribbon {
+        right: 20px;
+        top: -8px;
+        width: 32px;
+        height: 46px;
+        font-size: 0.85rem;
+    }
+
+    .campus-sketch,
+    .botanical-corner {
+        display: none;
+    }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, .page-flipper-leaf, .notebook-book, .page-block-left, .page-block-right {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }
