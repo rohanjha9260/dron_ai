@@ -39,3 +39,7 @@ ml_engine/saved_models/*.joblib
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Node
+node_modules/
+package-lock.json
