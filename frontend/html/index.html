@@ -293,6 +293,48 @@
             color: #FFFFFF;
         }
 
+        .auth-nav-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .btn-nav-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: #FFFFFF;
+            color: var(--text-dark);
+            border: 1px solid var(--border-card);
+            padding: 0.62rem 1.15rem;
+            border-radius: 9px;
+            font-size: 0.90rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-nav-outline:hover {
+            background: var(--brand-green-light);
+            border-color: var(--brand-green);
+            color: var(--brand-green);
+            transform: translateY(-1px);
+        }
+
+        .btn-nav-outline.btn-logout {
+            color: #DC2626;
+            border-color: #FECACA;
+            background: #FEF2F2;
+        }
+
+        .btn-nav-outline.btn-logout:hover {
+            background: #FEE2E2;
+            border-color: #EF4444;
+            color: #B91C1C;
+        }
+
         /* ── Hero Section (Fluid Widescreen) ── */
         .hero-section {
             padding: clamp(3rem, 5vw, 5rem) 0 clamp(2.5rem, 4vw, 4rem);
@@ -891,11 +933,29 @@
                     <i class="fa-regular fa-sun"></i>
                 </button>
 
-                <!-- Action Button -->
-                <a href="dashboard.html" class="btn-dashboard-pill">
-                    <span>Go to Dashboard</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+                <!-- Action Controls: Unauthenticated (Sign In / Sign Up) -->
+                <div class="auth-nav-group" id="nav-unauth-group">
+                    <a href="login.html?tab=login&redirect=dashboard.html" class="btn-nav-outline" id="landing-login-btn">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span>Sign In</span>
+                    </a>
+                    <a href="login.html?tab=signup&redirect=dashboard.html" class="btn-dashboard-pill" id="landing-signup-btn">
+                        <span>Sign Up</span>
+                        <i class="fa-solid fa-user-plus"></i>
+                    </a>
+                </div>
+
+                <!-- Action Controls: Authenticated (Go to Dashboard / Logout) -->
+                <div class="auth-nav-group" id="nav-auth-group" style="display: none;">
+                    <a href="dashboard.html" class="btn-dashboard-pill" id="landing-dashboard-btn">
+                        <span>Go to Dashboard</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <button type="button" class="btn-nav-outline btn-logout" id="landing-logout-btn" title="Sign out of Dron AI">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -1036,7 +1096,7 @@
             <div class="features-grid">
 
                 <!-- Feature 1: Academic Prediction -->
-                <a href="academic.html" class="feature-card theme-academic">
+                <a href="academic.html" data-target="academic.html" class="feature-card theme-academic">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-graduation-cap"></i>
@@ -1052,7 +1112,7 @@
                 </a>
 
                 <!-- Feature 2: Career Recommendations -->
-                <a href="career.html" class="feature-card theme-career">
+                <a href="career.html" data-target="career.html" class="feature-card theme-career">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-bullseye"></i>
@@ -1068,7 +1128,7 @@
                 </a>
 
                 <!-- Feature 3: Placement Readiness -->
-                <a href="placement.html" class="feature-card theme-placement">
+                <a href="placement.html" data-target="placement.html" class="feature-card theme-placement">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-chart-simple"></i>
@@ -1084,7 +1144,7 @@
                 </a>
 
                 <!-- Feature 4: Personalized Roadmap -->
-                <a href="roadmap.html" class="feature-card theme-roadmap">
+                <a href="roadmap.html" data-target="roadmap.html" class="feature-card theme-roadmap">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-map"></i>
@@ -1100,7 +1160,7 @@
                 </a>
 
                 <!-- Feature 5: Interview Guide -->
-                <a href="mock_interview.html" class="feature-card theme-interview">
+                <a href="mock_interview.html" data-target="mock_interview.html" class="feature-card theme-interview">
                     <div class="feature-top">
                         <div class="feature-icon-box">
                             <i class="fa-solid fa-microphone"></i>
@@ -1187,35 +1247,66 @@
 
     </main>
 
-    <!-- Client-Side Animation & State Engine -->
+    <!-- Client-Side Authentication Route Guard & State Engine -->
+    <script src="../js/auth_guard.js"></script>
     <script src="../js/app.js"></script>
     <script>
-        // Synchronize landing page navigation and protected deep-link navigation
+        // Synchronize landing page navigation, auth buttons and feature deep-links
         document.addEventListener("DOMContentLoaded", () => {
-            const token = localStorage.getItem("dron_ai_token");
-            const getStartedBtn = document.getElementById("landing-get-started-btn");
+            const unauthGroup = document.getElementById("nav-unauth-group");
+            const authGroup = document.getElementById("nav-auth-group");
+            const logoutBtn = document.getElementById("landing-logout-btn");
             const featureCards = document.querySelectorAll(".features-grid .feature-card");
 
-            // Top-right CTA: always route to login portal
-            if (getStartedBtn) {
-                getStartedBtn.href = "login.html?redirect=dashboard.html";
-                const span = getStartedBtn.querySelector("span");
-                if (span) span.textContent = "Get Started";
-                getStartedBtn.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    window.location.href = "login.html?redirect=dashboard.html";
+            function updateNavAuthState() {
+                const token = sessionStorage.getItem("dron_ai_token");
+                const isAuthenticated = Boolean(token);
+
+                if (isAuthenticated) {
+                    if (unauthGroup) unauthGroup.style.display = "none";
+                    if (authGroup) authGroup.style.display = "inline-flex";
+                } else {
+                    if (unauthGroup) unauthGroup.style.display = "inline-flex";
+                    if (authGroup) authGroup.style.display = "none";
+                }
+
+                // Feature cards: if authenticated -> direct to target; if unauthenticated -> route to login first
+                featureCards.forEach(card => {
+                    const target = card.getAttribute("data-target") || card.getAttribute("href") || "dashboard.html";
+                    if (isAuthenticated) {
+                        card.href = target;
+                        card.onclick = null;
+                    } else {
+                        card.href = `login.html?tab=login&redirect=${encodeURIComponent(target)}`;
+                        card.onclick = function(e) {
+                            e.preventDefault();
+                            window.location.href = `login.html?tab=login&redirect=${encodeURIComponent(target)}`;
+                        };
+                    }
                 });
             }
 
-            // Feature cards: always route through login portal before entering target view
-            featureCards.forEach(card => {
-                const target = card.getAttribute("data-target") || card.getAttribute("href") || "dashboard.html";
-                card.href = `login.html?redirect=${encodeURIComponent(target)}`;
-                card.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    window.location.href = `login.html?redirect=${encodeURIComponent(target)}`;
+            // Initial state evaluation
+            updateNavAuthState();
+
+            // Landing Page Logout button handler
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    if (typeof logoutUser === "function") {
+                        logoutUser();
+                    } else {
+                        try {
+                            sessionStorage.removeItem("dron_ai_token");
+                            sessionStorage.removeItem("dron_student_id");
+                            sessionStorage.removeItem("dron_is_guest");
+                            localStorage.removeItem("dron_ai_token");
+                            localStorage.removeItem("dron_student_id");
+                            localStorage.removeItem("dron_is_guest");
+                        } catch (_) {}
+                        updateNavAuthState();
+                    }
                 });
-            });
+            }
         });
     </script>
 </body>

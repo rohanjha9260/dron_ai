@@ -95,7 +95,7 @@ function formatSyncTime(isoString) {
  * Extract active user identity from token or student storage.
  */
 function getActiveUserId() {
-    const token = typeof getToken === "function" ? getToken() : localStorage.getItem("dron_ai_token");
+    const token = typeof getToken === "function" ? getToken() : (sessionStorage.getItem("dron_ai_token") || localStorage.getItem("dron_ai_token"));
     if (!token) return null;
     try {
         const parts = token.split(".");
@@ -108,7 +108,7 @@ function getActiveUserId() {
     } catch {
         // ignore parse error
     }
-    const studentId = localStorage.getItem("dron_student_id");
+    const studentId = sessionStorage.getItem("dron_student_id") || localStorage.getItem("dron_student_id");
     return studentId ? String(studentId) : null;
 }
 

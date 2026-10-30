@@ -704,6 +704,10 @@
 }
 
 /* Auxiliary Controls */
+.form-aux-row.form-aux-end {
+    justify-content: flex-end;
+}
+
 .form-aux-row {
     display: flex;
     align-items: center;

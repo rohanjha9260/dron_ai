@@ -10,7 +10,7 @@
  *   - Comprehensive client-side form validation
  *   - Backend authentication API: POST /api/auth/login and POST /api/auth/register
  *   - Open-redirect safe destination routing
- *   - Remember-me persistence in localStorage
+ *   - Session-scoped token authentication (per-visit authentication)
  *   - System health monitor
  */
 
@@ -33,14 +33,17 @@ function getPostLoginRedirectUrl() {
         "placement.html",
         "roadmap.html",
         "mock_interview.html",
+        "interview.html",
         "telemetry.html",
         "settings.html",
         "softskills.html",
+        "profile.html",
+        "predictions.html",
         "input.html"
     ];
 
     if (redirectParam) {
-        const cleanTarget = redirectParam.split("/").pop().split("?")[0];
+        const cleanTarget = redirectParam.replace(/\\/g, "/").split("/").pop().split("?")[0].split("#")[0];
         if (allowedPages.includes(cleanTarget)) {
             return cleanTarget;
         }
@@ -327,7 +330,7 @@ function initAuthTabs() {
 }
 
 /**
- * Handle Login Form submission and remember-me persistence.
+ * Handle Login Form submission and session authentication.
  */
 function initLoginForm() {
     const form = document.getElementById("login-form");
@@ -337,18 +340,16 @@ function initLoginForm() {
     const submitBtn = document.getElementById("login-submit-btn");
     const emailInput = document.getElementById("login-email");
     const passwordInput = document.getElementById("login-password");
-    const rememberCheckbox = document.getElementById("login-remember");
     const forgotLink = document.getElementById("forgot-password-link");
 
-    // Restore saved email if previously remembered
+    // Clear any lingering localStorage tokens or remembered credentials
     try {
-        const savedEmail = localStorage.getItem("dron_remembered_email");
-        if (savedEmail && emailInput) {
-            emailInput.value = savedEmail;
-            if (rememberCheckbox) rememberCheckbox.checked = true;
-        }
+        localStorage.removeItem("dron_remembered_email");
+        localStorage.removeItem("dron_ai_token");
+        localStorage.removeItem("dron_student_id");
+        localStorage.removeItem("dron_is_guest");
     } catch (e) {
-        console.warn("Storage access not available:", e);
+        console.warn("Storage cleanup error:", e);
     }
 
     // Auto-clear error when user types
@@ -392,17 +393,6 @@ function initLoginForm() {
 
         if (errorDiv) errorDiv.style.display = "none";
 
-        // Remember me storage
-        try {
-            if (rememberCheckbox && rememberCheckbox.checked) {
-                localStorage.setItem("dron_remembered_email", email);
-            } else {
-                localStorage.removeItem("dron_remembered_email");
-            }
-        } catch (e) {
-            console.warn("Storage write error:", e);
-        }
-
         submitBtn.disabled = true;
         const originalBtnHtml = submitBtn.innerHTML;
         submitBtn.innerHTML = `<span class="spinner"></span> <span>Logging in...</span>`;
@@ -416,10 +406,15 @@ function initLoginForm() {
             if (data && data.access_token) {
                 setToken(data.access_token);
                 if (data.student_id) {
-                    localStorage.setItem("dron_student_id", data.student_id);
+                    try { sessionStorage.setItem("dron_student_id", data.student_id); } catch (_) {}
+                    try { localStorage.removeItem("dron_student_id"); } catch (_) {}
                 }
-                localStorage.removeItem("dron_is_guest");
-                window.location.href = getPostLoginRedirectUrl();
+                try { sessionStorage.removeItem("dron_is_guest"); } catch (_) {}
+                try { localStorage.removeItem("dron_is_guest"); } catch (_) {}
+                try { localStorage.removeItem("dron_remembered_email"); } catch (_) {}
+
+                const targetUrl = getPostLoginRedirectUrl();
+                window.location.href = targetUrl;
             } else {
                 throw new Error(data.error || "Authentication failed: No access token received.");
             }
@@ -596,7 +591,6 @@ function initLogout() {
 
     logoutBtn.addEventListener("click", () => {
         clearToken();
-        localStorage.removeItem("dron_is_guest");
         window.location.href = "login.html";
     });
 }

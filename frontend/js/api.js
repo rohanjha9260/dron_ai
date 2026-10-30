@@ -13,27 +13,42 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
 /**
- * Get the stored JWT access token.
+ * Get the stored JWT access token for the active session.
  * @returns {string|null} The JWT token or null if not authenticated
  */
 function getToken() {
-    return localStorage.getItem("dron_ai_token");
+    return sessionStorage.getItem("dron_ai_token");
 }
 
 /**
- * Store the JWT access token.
+ * Store the JWT access token across session and local storage.
  * @param {string} token - The JWT access token
  */
 function setToken(token) {
-    localStorage.setItem("dron_ai_token", token);
+    if (!token) return;
+    try {
+        sessionStorage.setItem("dron_ai_token", token);
+    } catch (_) {}
+    try {
+        localStorage.removeItem("dron_ai_token");
+    } catch (_) {}
 }
 
 /**
- * Remove the stored JWT access token.
+ * Remove any stored JWT access token and session state.
  */
 function clearToken() {
-    localStorage.removeItem("dron_ai_token");
-    localStorage.removeItem("dron_is_guest");
+    try {
+        sessionStorage.removeItem("dron_ai_token");
+        sessionStorage.removeItem("dron_student_id");
+        sessionStorage.removeItem("dron_is_guest");
+    } catch (_) {}
+    try {
+        localStorage.removeItem("dron_ai_token");
+        localStorage.removeItem("dron_student_id");
+        localStorage.removeItem("dron_is_guest");
+        localStorage.removeItem("dron_remembered_email");
+    } catch (_) {}
 }
 
 /**

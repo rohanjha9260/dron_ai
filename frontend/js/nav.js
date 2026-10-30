@@ -193,9 +193,14 @@ function initNavigation() {
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            if (typeof clearToken === "function") clearToken();
-            localStorage.removeItem("dron_is_guest");
-            window.location.href = "login.html";
+            if (typeof logoutUser === "function") {
+                logoutUser();
+            } else {
+                if (typeof clearToken === "function") clearToken();
+                sessionStorage.removeItem("dron_is_guest");
+                try { localStorage.removeItem("dron_is_guest"); } catch (_) {}
+                window.location.href = "login.html";
+            }
         });
     }
 

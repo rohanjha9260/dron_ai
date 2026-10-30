@@ -111,45 +111,20 @@ async function fetchWithTimeout(resource, options = {}, timeoutMs = 4000) {
 }
 
 async function getAuthToken() {
-    let token = localStorage.getItem("dron_ai_token");
+    let token = (typeof getToken === "function" ? getToken() : null) || sessionStorage.getItem("dron_ai_token");
     if (token) return token;
 
-    // Do not auto-authenticate on public landing/login/legal pages
-    const path = window.location.pathname;
-    const isPublic = path.endsWith("index.html") || path.endsWith("login.html") || path === "/" || path.endsWith("privacy.html") || path.endsWith("terms.html") || path.endsWith("cookies.html");
+    // Do not redirect on public landing/login/legal pages
+    const path = window.location.pathname.replace(/\\/g, "/");
+    const isPublic = path.endsWith("index.html") || path.endsWith("login.html") || path === "/" || path.endsWith("privacy.html") || path.endsWith("terms.html") || path.endsWith("cookies.html") || path.endsWith("refund.html");
     if (isPublic) {
         return null;
     }
 
-    if (inFlightAuthPromise) {
-        return inFlightAuthPromise;
-    }
-
-    inFlightAuthPromise = (async () => {
-        try {
-            const baseUrl = getApiBaseUrl();
-            const res = await fetchWithTimeout(`${baseUrl}/auth/guest`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({}),
-            }, 4000);
-            if (res.ok) {
-                const data = await res.json();
-                if (data.access_token) {
-                    localStorage.setItem("dron_ai_token", data.access_token);
-                    localStorage.setItem("dron_student_id", data.student_id);
-                    return data.access_token;
-                }
-            }
-        } catch (e) {
-            console.warn("Guest authentication offline:", e);
-        } finally {
-            inFlightAuthPromise = null;
-        }
-        return null;
-    })();
-
-    return inFlightAuthPromise;
+    // Mandatory authentication guard: route to login with redirect back
+    const currentPage = path.split("/").pop().split("?")[0].split("#")[0] || "dashboard.html";
+    window.location.replace(`login.html?redirect=${encodeURIComponent(currentPage)}`);
+    return null;
 }
 
 async function apiCall(endpoint, method = "GET", body = null, allowReauth = true) {
@@ -167,15 +142,25 @@ async function apiCall(endpoint, method = "GET", body = null, allowReauth = true
             body: body ? JSON.stringify(body) : undefined,
         }, 4000);
 
-        if (res.status === 401 && allowReauth) {
-            localStorage.removeItem("dron_ai_token");
-            token = await getAuthToken();
-            if (token) {
-                if (typeof syncProfileToBackend === "function" && typeof getStudentProfile === "function") {
-                    await syncProfileToBackend(getStudentProfile(), false);
-                }
-                return await apiCall(endpoint, method, body, false);
+        if (res.status === 401) {
+            sessionStorage.removeItem("dron_ai_token");
+            sessionStorage.removeItem("dron_student_id");
+            sessionStorage.removeItem("dron_is_guest");
+            try {
+                localStorage.removeItem("dron_ai_token");
+                localStorage.removeItem("dron_student_id");
+                localStorage.removeItem("dron_is_guest");
+            } catch (_) {}
+
+            const path = window.location.pathname.replace(/\\/g, "/");
+            const isPublic = path.endsWith("index.html") || path.endsWith("login.html") || path === "/" || path.endsWith("privacy.html") || path.endsWith("terms.html") || path.endsWith("cookies.html") || path.endsWith("refund.html");
+            if (isPublic) {
+                return null;
             }
+
+            const currentPage = path.split("/").pop().split("?")[0].split("#")[0] || "index.html";
+            window.location.replace(`login.html?redirect=${encodeURIComponent(currentPage)}`);
+            return null;
         }
 
         if (res.ok) {
