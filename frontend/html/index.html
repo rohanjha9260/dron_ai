@@ -1209,7 +1209,7 @@
 
             // Feature cards: always route through login portal before entering target view
             featureCards.forEach(card => {
-                const target = card.getAttribute("data-target") || "dashboard.html";
+                const target = card.getAttribute("data-target") || card.getAttribute("href") || "dashboard.html";
                 card.href = `login.html?redirect=${encodeURIComponent(target)}`;
                 card.addEventListener("click", function(e) {
                     e.preventDefault();

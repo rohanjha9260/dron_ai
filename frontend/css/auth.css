@@ -332,7 +332,8 @@
     right: 0;
     bottom: 0;
     z-index: 1;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Subtle Ruled Notebook Lines */
@@ -677,7 +678,7 @@
     background: #FFFFFF;
 }
 
-.input-wrapper input:focus ~ .input-icon {
+.input-wrapper:focus-within .input-icon {
     color: #16A34A;
 }
 
@@ -739,6 +740,11 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+}
+
+.notebook-checkbox-label input:focus-visible ~ .custom-checkmark {
+    outline: 2px solid #16A34A;
+    outline-offset: 2px;
 }
 
 .notebook-checkbox-label input:checked ~ .custom-checkmark {
@@ -1143,7 +1149,7 @@
 
     .notebook-book {
         grid-template-columns: 1fr;
-        min-height: auto;
+        min-height: 680px;
         padding: 8px;
         transform: none;
     }
@@ -1155,6 +1161,14 @@
 
     .page-block-right {
         transform: none;
+        min-height: 680px;
+        height: auto;
+    }
+
+    .leaf-face,
+    .page-signup-under {
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .page-thickness-right {
