@@ -96,7 +96,7 @@ Run both the Flask backend API and the frontend web server concurrently from a s
 
 ```bash
 # Starts Backend (port 5000) + Frontend (port 8000) and automatically opens your browser
-python scripts/start_servers.py
+/* 
 ```
 
 **What this command does for you:**
